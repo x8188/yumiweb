@@ -1,57 +1,36 @@
 <template>
-    <div class="geno-viewer-container">
-      <div class="geno-form">
-        <el-card>
-          <div class="geno-title">
-            <span/>
-            <div>{{ viewerTitle }}</div>
-          </div>
-          <div class="tip-info">Browse the genotype of certain germplasms.Simply select a analusis,and the selectyour interested germplasms and genomic regions to get the genotype information</div>
-          <div class="form-container">
-            <div class="gene-select"></div>
-            <div class="germplasm-select"></div>
-            <div class="region-select"></div>
-          </div>
-        </el-card>
-      </div>
-    </div>
+  <div>
+    <transition name="fade-transform" mode="out-in">
+      <GenoViewer  v-show="!showResult" @showResult="showResultData" />
+    </transition>
+    <transition name="fade-transform" mode="out-in">
+      <ResultInfos v-show="showResult" @returnMultiExpression="returnMultiExpression"/>
+    </transition>
+  </div>
 </template>
 
 <script>
+import ResultInfos from './components/result-infos.vue' 
+import GenoViewer from './components/geno-viewer.vue'
 export default {
-    data() {
-      return {
-        viewerTitle: 'Geno viewer'
-      }
+  components: {  GenoViewer, ResultInfos },
+  data() {
+    return {
+      showResult: false,
+      formInfo : ''
     }
+  },
+  methods: {
+    showResultData(form) {
+      this.showResult = true
+      this.formInfo = form
+    },
+    returnMultiExpression() {
+      this.showResult = false
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-$mainColor: #09A620;
-$deepMainColor: #19692C;
-.geno-viewer-container {
-  position: relative;
-  width: 100%;
-  background-color: #F5F6F5;
-}
-.geno-form {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-}
-.geno-title {
-  display: flex;
-  div {
-    line-height: 1.5rem;
-  }
-  span {
-    display: inline-block;
-    height: 1.5rem;
-    width: 5px;
-    background-color: $mainColor;
-    margin-right: 15px;
-  }
-}
 </style>

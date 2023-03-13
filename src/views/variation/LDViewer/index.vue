@@ -1,15 +1,17 @@
 <template>
     <div class="">
-      LDViewer
+      <LdViewer />
+      <ResultViewer />
     </div>
 </template>
 
 <script>
+import LdViewer from './components/ld-viewer.vue'
+import ResultViewer from './components/result-viewer.vue'
 export default {
-    
+  components: { LdViewer, ResultViewer }
 }
 </script>
 
 <style scoped>
-
 </style>
