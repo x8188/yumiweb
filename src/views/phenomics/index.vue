@@ -1,38 +1,16 @@
 <template>
   <div class="phenomics-container">
-    <div class="menu-container" style="width:350px;">
-      <el-menu ref="menus" @close="handleClose" :default-openeds="openeds"  :collapse.sync="isCollapse" class="drawer-container" active-text-color="#303133">
-          <el-submenu :index="String(8)">
-            <template slot="title" >
-              <i @click="closeMenu(isCollapse)">
-                <SvgIcon icon-class="angle-double-left" color="63C470" />
-              </i>
-              <span style="margin-left: 160px; color: #000;">Fliters
-                <SvgIcon icon-class="refresh-left" color="000" style="margin-left: 7px;"></SvgIcon>
-              </span>
-            </template>
-          </el-submenu>
-        <div>
-          <div v-for="(name,index) in filterNames" >
-            <el-submenu :index="String(index)">
-              <template slot="title">
-                <i>
-                  <SvgIcon :icon-class="filterIcons[index]" color="212121"></SvgIcon>
-                </i>
-              <span slot="title" style="margin-left: 10px;">{{ bigFilterNames[index] }}</span>
-            </template>
-              <el-select index="0" v-model="filters[name]" placeholder="" style="margin-left: 40px"></el-select>
-          </el-submenu>
-          </div>
-        </div>
-      </el-menu>
-    </div>
-
+    <SideBar />
     <div class="data-container">
       <div class="data-top">
         <div class="info-nums">
           <span>Show</span>
-          <el-select v-model="infoNums" style="width: 80px;margin: 0 10px;"></el-select>
+          <el-select @change="getPhenomics" v-model="page.pageSize" style="width: 80px;margin: 0 10px;">
+            <el-option label="5" value="5"></el-option>
+            <el-option label="10" value="10"></el-option>
+            <el-option label="15" value="15"></el-option>
+            <el-option label="20" value="20"></el-option>
+          </el-select>
           <span>results</span>
         </div>
         <div class="download-FTP">
@@ -41,6 +19,7 @@
       </div>
       <div class="data-table" style="margin-top: 30px;">
         <el-table
+        v-loading="loading"
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
@@ -53,46 +32,55 @@
         <el-table-column
           label="UID"
         >
-          <template slot-scope="scope">{{ scope.row.date }}</template>
+          <template slot-scope="scope">{{ scope.row.uid }}</template>
         </el-table-column>
         <el-table-column
           label="Category"
+          prop="category"
         >
         </el-table-column>
         <el-table-column
           label="Type"
+          prop="type"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="Analysis"
+          prop="analysis"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="Name"
+          prop="name"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="Location"
+          prop="location"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="TraitDateLoc"
+          prop="traitDateLoc"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="Year"
+          prop="year"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="Tissue"
+          prop="tissue"
           show-overflow-tooltip>
         </el-table-column>
       </el-table>
       <el-pagination
         background
+        @current-change="changePage"
         layout="prev, pager, next"
-        :total="1000"
-        style="margin-top: 25px;float: right;">
+        :total="page.total"
+        style="margin-top: 25px;margin-bottom: 50px;float: right;">
       </el-pagination>
       </div>
     </div>
@@ -100,12 +88,19 @@
 </template>
 
 <script>
-import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
+import SideBar from './components/sidebar.vue'
+import { phenomics } from './data'
+import { getPhenomics } from '@/api/phenomics'
 export default {
-components: { SvgIcon },
+components: { SideBar },
 data() {
   return {
-
+    page: {
+      pageSize: 5,
+      pageNum : 1,
+      total: 0
+    },
+    loading: false,
     // {
     //     date: '2016-05-03',
     //     name: '王小虎',
@@ -113,24 +108,26 @@ data() {
     //   }
     tableData: [],
     multipleSelection: [],
-
-    infoNums: '50',
-    openeds: ['0','1','2','3','4','5','6','7'],
-    isCollapse: false,
-    filterNames: ['category','type','analysis','name','location','traitDateLoc','year'],
-    filterIcons: ['calendar-alt','Type-Tool','gene','build','locate1f','location-fill','year'],
-    filters: {
-      category: '',
-      type: '',
-      analysis: '',
-      name: '',
-      location: '',
-      traitDateLoc: '',
-      year: ''
-    }
   }
 },
+created() {
+  this.getPhenomics()
+},
 methods: {
+  async getPhenomics() {
+    console.log(this.page);
+    this.loading = true
+    // const res = await getPhenomics(this.page)
+    const res = phenomics
+    this.tableData = res.rows
+    this.page.total = res.total
+    this.loading = false
+    console.log(res);
+  },
+  changePage(newVal) {
+    this.page.pageNum = newVal
+    ths.getPhenomics()
+  },
   toggleSelection(rows) {
     if (rows) {
       rows.forEach(row => {
@@ -143,13 +140,6 @@ methods: {
   handleSelectionChange(val) {
     this.multipleSelection = val;
   },
-  handleClose(key, keyPath) {
-     this.$refs.menus.open(keyPath);
-  },
-  closeMenu(val) {
-    // this.isCollapse = !val
-    // this.handleClose()
-  }
 },
 computed: {
   bigFilterNames() {
@@ -177,7 +167,6 @@ visibility: hidden
 }
 .data-container {
 width: 100%;
-height: 650px;
 padding: 25px 15px;
 }
 .data-top {

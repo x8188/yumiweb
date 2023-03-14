@@ -14,6 +14,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {
     to.meta.title && store.dispatch('settings/setTitle', to.meta.title)
+    console.log("待做");
     /* has token*/
     if (to.path === '/login') {
       next({ path: '/' })
