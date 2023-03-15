@@ -638,7 +638,7 @@ export default {
           {
             label: "flower",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: [
               "B73_Female_Spikelet_Collected_on_day_as_silk",
               "B73_Mature_Pollen",
@@ -649,7 +649,7 @@ export default {
           {
             label: "leaf",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: [
               "B73_Leaf_zone_1_Symmetrical ",
               "B73_Leaf_Zone_3_Growth",
@@ -661,7 +661,7 @@ export default {
           {
             label: "leaf",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: [
               "B73_Leaf_zone_1_Symmetrical ",
               "B73_Leaf_Zone_3_Growth",
@@ -673,7 +673,7 @@ export default {
           {
             label: "flower",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: [
               "B73_Female_Spikelet_Collected_on_day_as_silk",
               "B73_Mature_Pollen",
@@ -684,7 +684,7 @@ export default {
           {
             label: "leaf",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: [
               "B73_Leaf_zone_1_Symmetrical ",
               "B73_Leaf_Zone_3_Growth",
@@ -699,14 +699,14 @@ export default {
           {
             label: "Mixed",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: ["05wo0", "05wN230647", "7884-4HT", "8902", "B113"],
             isIndeterminate: true,
           },
           {
             label: "NSS",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: ["05wo0", "05wN230647", "7884-4HT"],
             isIndeterminate: true,
           },
@@ -716,7 +716,7 @@ export default {
           {
             label: "Feild",
             checkAll: false,
-            checkedop: ["", ""],
+            checkedop: [],
             op: ["normal feild conditions"],
             isIndeterminate: true,
           },
