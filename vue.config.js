@@ -34,8 +34,12 @@ module.exports = {
     open: true,
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
+      // 'dev-api/admin/acl':{
+      //   target:'http://39.98.123.211:8170',
+      //   pathRewrite:{'^/dev-api/admin/acl':'/admin/acl'}
+      // },
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://43.143.200.52:8900`,
+        target: `http://43.143.200.52:8800`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
