@@ -99,6 +99,7 @@
   </div>
 </template>
 <script>
+import { dropDownReference, dropDownVersion } from '@/api/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 import Title from '@/components/CommonComponents/Title.vue'
 export default {
@@ -117,10 +118,22 @@ components: { Title, SvgIcon },
       chr: ''
     }
   },
+  created() {
+    this.dropDownReference()
+    this.dropDownVersion()
+  },
   methods:{
+    async dropDownReference() {
+      const { data } = await dropDownReference()
+      console.log('reference',data)
+    },
+    async dropDownVersion() {
+      const { data } = await dropDownVersion()
+      console.log('version', data)
+    },
     submitForm() {
     this.$emit('showResult', 1211)
-  },
+    },
   reset() {
       this.region= '1',
       this.viewerTitle= 'Geno viewer',
