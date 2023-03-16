@@ -34,12 +34,17 @@ module.exports = {
     open: true,
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      // 'dev-api/admin/acl':{
-      //   target:'http://39.98.123.211:8170',
-      //   pathRewrite:{'^/dev-api/admin/acl':'/admin/acl'}
+
+      // 'dev-api/zeamap/expression':{
+      //   target:'http://43.143.200.52:8800',
+      //   pathRewrite:{'^/dev-api/zeamap/expression':''}
+      // },
+      // 'dev-api/zeamap/xxx':{
+      //   target:'http://43.143.200.52:8900',
+      //   pathRewrite:{'^/dev-api/zeamap/expression':''}
       // },
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://43.143.200.52:8800`,
+        target: `http://43.143.200.52:8900`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
