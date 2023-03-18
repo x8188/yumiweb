@@ -1,9 +1,9 @@
 <template>
   <div>
-    <transition name="fade-transform" mode="out-in" >
+    <transition name="fade-trans" mode="out-in">
       <GenoViewer v-show="!showResult" @showResult="showResultData" />
     </transition>
-    <transition name="fade-transform" mode="out-in" >
+    <transition name="fade-trans" mode="out-in">
       <ResultInfos v-show="showResult" @returnMultiExpression="returnMultiExpression"/>
     </transition>
   </div>
@@ -33,4 +33,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-trans--move,
+.fade-trans-leave-active,
+.fade-trans-enter-active {
+  transition: all 0.8s;
+}
+
+.fade-trans-leave-active {
+  position: absolute;
+}
+
+.fade-trans-enter {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.fade-trans-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
 </style>

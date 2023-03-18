@@ -17,7 +17,7 @@
               <span>results</span>
             </div>
             <div class="download-FTP">
-              <el-button><SvgIcon icon-class="download02" color="16AA2B" style="margin-right: 5px" />Go to FTP</el-button>
+              <el-button><SvgIcon icon-class="download02" color="16AA2B" style="margin-right: 5px" />下载</el-button>
             </div>
           </div>
           <div class="data-table" style="margin-top: 30px;">
