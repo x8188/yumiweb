@@ -37,7 +37,6 @@ const user = {
       const res = await login(userInfo)
       ctx.commit('SET_TOKEN',  res.token)
       setToken(res.token)
-      // 这写的也太难看了
       // const username = userInfo.username.trim()
       // const password = userInfo.password
       // return new Promise((resolve, reject) => {

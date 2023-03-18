@@ -1,9 +1,9 @@
 <template>
   <div>
-    <transition name="fade-transform" mode="out-in">
-      <GenoViewer  v-show="!showResult" @showResult="showResultData" />
+    <transition name="fade-transform" mode="out-in" >
+      <GenoViewer v-show="!showResult" @showResult="showResultData" />
     </transition>
-    <transition name="fade-transform" mode="out-in">
+    <transition name="fade-transform" mode="out-in" >
       <ResultInfos v-show="showResult" @returnMultiExpression="returnMultiExpression"/>
     </transition>
   </div>
