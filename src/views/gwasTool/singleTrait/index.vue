@@ -77,17 +77,17 @@
       </div>
     </div>
 
-    <remote-js src="/js/jquery.js"></remote-js>
-    <remote-js src="/js/single_trait/locuszoom.vendor.min.js"></remote-js>
-    <remote-js src="/js/single_trait/locuszoom.app.min.js"></remote-js>
-    <remote-js src="/js/single_trait/lz-dynamic-urls.min.js"></remote-js>
+    <!-- <remote-js src="/js/jquery.js"></remote-js> -->
+    <!-- <remote-js src="/js/single_trait/locuszoom.vendor.min.js"></remote-js> -->
+    <!-- <remote-js src="/js/single_trait/locuszoom.app.min.js"></remote-js> -->
+    <!-- <remote-js src="/js/single_trait/lz-dynamic-urls.min.js"></remote-js>
     <remote-js src="/js/ext/jquery.ztree.core.js"></remote-js>
     <remote-js src="/js/ext/jquery.ztree.excheck.js"></remote-js>
     <remote-js src="/js/ext/jquery.ztree.exedit.js"></remote-js>
     <remote-js src="/js/ext/jquery.ztree.exhide.js"></remote-js>
     <remote-js src="/js/ext/fuzzysearch.js"></remote-js>
-    <remote-js src="/js/ext/echarts.min.js"></remote-js>
-    <remote-js src="/js/single_trait/zmap_gwasviz_single_trait.js"></remote-js>
+    <remote-js src="/js/ext/echarts.min.js"></remote-js> -->
+    <!-- <remote-js src="/js/single_trait/zmap_gwasviz_single_trait.js"></remote-js> -->
   </div>
 </template>
 
@@ -95,10 +95,10 @@
 // const globalObj = {};
 // Object.assign(globalObj, window);
 
-// import "../../../../public/js/jquery.js";
-// import "../../../../public/js/single_trait/locuszoom.vendor.min.js";
-// import "../../../../public/js/single_trait/locuszoom.app.min.js";
-// import "../../../../public/js/single_trait/lz-dynamic-urls.min.js"
+// import "../js/jquery.js";
+// import "../js/single_trait/locuszoom.vendor.min.js";
+// import "../js/single_trait/locuszoom.app.min.js";
+// import "..c/js/single_trait/lz-dynamic-urls.min.js"
 // import "../js/ext/jquery.ztree.core.js"
 // import "../js/ext/jquery.ztree.excheck.js"
 // import "../js/ext/jquery.ztree.exedit.js"
@@ -108,6 +108,9 @@
 // import "../js/single_trait/zmap_gwasviz_single_trait.js"
 
 // import LocusZoom from '../js/single_trait/locuszoom.app.min.js';
+
+
+import LocusZoom from "locuszoom"
 
 export default {
   components: {
@@ -134,34 +137,99 @@ export default {
   },
 
   mounted() {
-    // console.log(window.LocusZoom)
-    // window.LocusZoom=LocusZoom
-    // console.log(window.LocusZoom)
+    window.LocusZoom=LocusZoom
 
-    // const globalObj = {};
-    // Object.assign(globalObj, window);
+    // console.log(d3)
 
     // let script1 = document.createElement("script");
     // script1.type = "text/javascript";
-    // script1.src = require("../js/jquery.js");
+    // script1.src = "/js/jquery.js";
+    // script1.async = true;
+    // document.head.appendChild(script1);
 
     // let script2 = document.createElement("script");
     // script2.type = "text/javascript";
-    // script2.src = require("../js/single_trait/locuszoom.vendor.min.js");
+    // script2.src = "/js/single_trait/locuszoom.vendor.min.js";
+    // script2.async = true;
+    // document.head.appendChild(script2);
 
     // let script3 = document.createElement("script");
     // script3.type = "text/javascript";
-    // script3.src = require("../js/single_trait/locuszoom.app.min.js");
+    // script3.src = "/js/single_trait/locuszoom.app.min.js";
+    // script3.async = true;
+    // document.head.appendChild(script3);
+
+    // script3.onload = () => {
+    //   let script4 = document.createElement("script");
+    //   script4.type = "text/javascript";
+    //   script4.src = "/js/single_trait/lz-dynamic-urls.min.js";
+    //   script4.async = true;
+    //   document.head.appendChild(script4);
+    // };
+
+    // let script1 = document.createElement("script");
+    // script1.type = "text/javascript";
+    // script1.async=true
+    // script1.src = require("@/../public/js/jquery.js");
+
+    // let script2 = document.createElement("script");
+    // script2.type = "text/javascript";
+    // script2.src = require("@/../public/js/single_trait/locuszoom.vendor.min.js");
+    
+
+    // let script3 = document.createElement("script");
+    // script3.type = "text/javascript";
+    // script3.src = require("@/../public/js/single_trait/locuszoom.app.min.js")
 
     // let script = document.createElement("script");
     // script.type = "text/javascript";
-    // script.src = require("../js/single_trait/lz-dynamic-urls.min.js");
+    // script.src = require("@/../public/js/single_trait/lz-dynamic-urls.min.js");
 
-    // let script = document.createElement('script');
-    // script.type = "text/javascript";
-    // script.src = '/js/single_trait/locuszoom.app.min.js';
-    // document.head.appendChild(script);
+    // console.log("$:",$)
+    // console.log("jQuery:",jQuery)
 
+
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = require("@/../public/js/single_trait/lz-dynamic-urls.min.js");
+
+    // console.log(LocusZoom.ext)
+
+    let script1 = document.createElement("script");
+    script1.type = "text/javascript";
+    script1.src = require("@/../public/js/ext/jquery.ztree.core.js");
+
+    let script2 = document.createElement("script");
+    script2.type = "text/javascript";
+    script2.src = require("@/../public/js/ext/jquery.ztree.excheck.js");
+
+    let script3 = document.createElement("script");
+    script3.type = "text/javascript";
+    script3.src = require("@/../public/js/ext/jquery.ztree.exedit.js");
+
+    let script4 = document.createElement("script");
+    script4.type = "text/javascript";
+    script4.src = require("@/../public/js/ext/jquery.ztree.exhide.js");
+
+    let script5 = document.createElement("script");
+    script5.type = "text/javascript";
+    script5.src = require("@/../public/js/ext/fuzzysearch.js");
+
+    let script6 = document.createElement("script");
+    script6.type = "text/javascript";
+    script6.src = require("@/../public/js/ext/echarts.min.js");
+    
+    let script7 = document.createElement("script");
+    script7.type = "text/javascript";
+    script7.src = require("@/../public/js/single_trait/zmap_gwasviz_single_trait.js");
+
+    // let script7 = document.createElement("script");
+    // script7.type = "text/javascript";
+    // script7.src = "/js/single_trait/locuszoom.app.min.js";
+    // script7.async = true;
+    // document.head.appendChild(script7);
+
+    console.log(LocusZoom)
   },
 };
 </script>
