@@ -4,9 +4,9 @@
           <el-submenu :index="String(8)">
             <template slot="title">
               <el-row style="display: flex;">
-                <el-col style="margin-top: 5px;">
+                <el-col style="margin-top: 5px;margin-left: 20px;">
                   <el-button size="small" @click="clearPhenomics">
-                    <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;"></SvgIcon>
+                    <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
                     <span style="color: #20AE35">清空</span>
                  </el-button>
                 </el-col>
@@ -87,7 +87,6 @@ export default {
     async getPhenomicsDropDown() {
       const { data }= await getPhenomicsDropDown()
       // 这块用解构赋值怎么写来着 忘了 回来改
-      // 不能改拦截器真烦人
       this.options.Category = data.Category
       this.options.Type = data.Type
       this.options.Analysis = data.Analysis

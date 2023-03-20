@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="geno-viewer-container">
     <transition name="fade-trans" mode="out-in">
       <GenoViewer v-show="!showResult" @showResult="showResultData" />
     </transition>
@@ -36,7 +36,7 @@ export default {
 .fade-trans--move,
 .fade-trans-leave-active,
 .fade-trans-enter-active {
-  transition: all 0.8s;
+  transition: all 0.6s;
 }
 
 .fade-trans-leave-active {

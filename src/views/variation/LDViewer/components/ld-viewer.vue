@@ -175,6 +175,7 @@ left: 50%;
 transform: translateX(-50%);
 width: 90%;
 min-width: 900px;
+padding-top: 30px; 
 }
 .form-container {
 margin: 20px 0;
