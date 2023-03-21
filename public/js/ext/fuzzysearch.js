@@ -11,7 +11,7 @@
  * 
  * @returns
  */	
- function fuzzySearch(zTreeId, searchField, isHighLight, isExpand){
+export default function fuzzySearch(zTreeId, searchField, isHighLight, isExpand){
 	var zTreeObj = $.fn.zTree.getZTreeObj(zTreeId);//get the ztree object by ztree id
 	if(!zTreeObj){
 		alert("fail to get ztree object");

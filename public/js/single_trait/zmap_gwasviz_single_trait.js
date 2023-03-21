@@ -1,4 +1,5 @@
 import request from "@/utils/request.js"
+import fuzzySearch from "../ext/fuzzysearch.js"
 $(document).ready(function(){
     window.onresize = function(){
         var plot_width = $('#lz-plot').css('width');
@@ -16,7 +17,9 @@ $(document).ready(function(){
     });
 
     var query_trait = getQueryVariable('trait') ? getQueryVariable('trait') : 'cobcolor';
-	get_region = get_bestregion(query_trait);
+	// get_region = get_bestregion(query_trait);
+	var get_region = get_bestregion(query_trait);
+    ////////////////////////////////////////////////////////尚未解决被弃用的问题
     var query_chr = getQueryVariable('chrom') ? getQueryVariable('chrom') : get_region.substr(0, get_region.indexOf(':'));
     var query_chr_start = getQueryVariable('start') ? getQueryVariable('start') : get_region.substr(get_region.indexOf(':')+1, get_region.indexOf('-'));
     var query_chr_end = getQueryVariable('end') ? getQueryVariable('end') : get_region.substr(get_region.indexOf('-')+1);
@@ -76,7 +79,7 @@ $(document).ready(function(){
     // /////////////下面这段代码时上面ajax的假数据/////////////////////////////
     var data
 
-    $.getJSON("././data/retrive_trait_category.json", function (res){
+    $.getJSON("/data/retrive_trait_category.json", function (res){
         data=res
         !(function(data){
             console.log(data)
@@ -162,8 +165,10 @@ $(document).ready(function(){
     
     var data_sources;
 
-    zmap_gwasviz_api = "/api/gwasviz";
-    zmap_gwasviz_single_trait_api = "/api/gwasviz/single_trait";
+    // zmap_gwasviz_api = "/api/gwasviz";
+    // zmap_gwasviz_single_trait_api = "/api/gwasviz/single_trait";
+    var zmap_gwasviz_api = "/api/gwasviz";
+    var zmap_gwasviz_single_trait_api = "/api/gwasviz/single_trait";
     data_sources = new LocusZoom.DataSources()
         .add("assoc", ["AssociationLZ", {url: zmap_gwasviz_api + "/retrive_assoc", params: {source: 45, id_field: "variant"}}])
         .add("ld", ["LDLZ2", {url: zmap_gwasviz_single_trait_api + "/ld"}])
@@ -180,9 +185,11 @@ $(document).ready(function(){
         initialState = {trait: 'cobcolor', chr: 1, start: 48000000, end: 48500000};
     }
 	*/
-	
-	initialState = {trait: query_trait, chr: query_chr, start: query_chr_start, end: query_chr_end};
-    layout = LocusZoom.Layouts.get("plot", "standard_association", {state: initialState});
+	// initialState = {trait: query_trait, chr: query_chr, start: query_chr_start, end: query_chr_end};
+    // layout = LocusZoom.Layouts.get("plot", "standard_association", {state: initialState});
+    var initialState = {trait: query_trait, chr: query_chr, start: query_chr_start, end: query_chr_end};
+    console.log(initialState)
+    var layout = LocusZoom.Layouts.get("plot", "standard_association", {state: initialState});
     layout.dashboard = LocusZoom.Layouts.get("dashboard", "region_nav_plot");
 
     // Generate the LocusZoom plot, and reflect the initial plot state in url
@@ -190,6 +197,7 @@ $(document).ready(function(){
     ///////////////////////////在这里的接口是 retrive_gene，retrive_assoc。
     // 因为数据返回是在源码里进行的。所以尚且无法使用假数据
     // 初步的想法是写一个返回加数据的接口，直接当作参数传到data_sources当中
+    //////////////////////////////////////////////////////////////
     window.plot = LocusZoom.populate("#lz-plot", data_sources, layout);
 
     // Changes in the plot can be reflected in the URL, and vice versa (eg browser back button can go back to
@@ -373,7 +381,7 @@ $(document).ready(function(){
         
         var data
         // /////////////下面这段代码时上面ajax的假数据/////////////////////////////
-        $.getJSON("././data/echart-gwas.json", function (res){
+        $.getJSON("/data/echart-gwas.json", function (res){
             data=res
             !(function(data){
                 console.log(data)

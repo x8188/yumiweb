@@ -111,6 +111,7 @@
 
 
 import LocusZoom from "locuszoom"
+import * as echarts from 'echarts';
 
 export default {
   components: {
@@ -138,6 +139,7 @@ export default {
 
   mounted() {
     window.LocusZoom=LocusZoom
+    window.echarts=echarts
 
     // console.log(d3)
 
@@ -215,10 +217,10 @@ export default {
     script5.type = "text/javascript";
     script5.src = require("@/../public/js/ext/fuzzysearch.js");
 
-    let script6 = document.createElement("script");
-    script6.type = "text/javascript";
-    script6.src = require("@/../public/js/ext/echarts.min.js");
-    
+    // let script6 = document.createElement("script");
+    // script6.type = "text/javascript";
+    // script6.src = require("@/../public/js/ext/echarts.min.js");
+
     let script7 = document.createElement("script");
     script7.type = "text/javascript";
     script7.src = require("@/../public/js/single_trait/zmap_gwasviz_single_trait.js");
@@ -229,7 +231,7 @@ export default {
     // script7.async = true;
     // document.head.appendChild(script7);
 
-    console.log(LocusZoom)
+    // console.log(LocusZoom)
   },
 };
 </script>
