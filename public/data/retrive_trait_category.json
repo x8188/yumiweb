@@ -1,0 +1,3375 @@
+[
+    {
+        "id": "1",
+        "pId": "0",
+        "name": "AminoAcid",
+        "t": "id=1",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "2",
+        "pId": "1",
+        "name": "Ala",
+        "t": "id=2",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "3",
+        "pId": "1",
+        "name": "Arg",
+        "t": "id=3",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "4",
+        "pId": "1",
+        "name": "Asp",
+        "t": "id=4",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "5",
+        "pId": "1",
+        "name": "Cys",
+        "t": "id=5",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "6",
+        "pId": "1",
+        "name": "Glu",
+        "t": "id=6",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "7",
+        "pId": "1",
+        "name": "Gly",
+        "t": "id=7",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "8",
+        "pId": "1",
+        "name": "His",
+        "t": "id=8",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "9",
+        "pId": "1",
+        "name": "Ile",
+        "t": "id=9",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "10",
+        "pId": "1",
+        "name": "Leu",
+        "t": "id=10",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "11",
+        "pId": "1",
+        "name": "Lys",
+        "t": "id=11",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "12",
+        "pId": "1",
+        "name": "Met",
+        "t": "id=12",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "13",
+        "pId": "1",
+        "name": "NH3",
+        "t": "id=13",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "14",
+        "pId": "1",
+        "name": "Phe",
+        "t": "id=14",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "15",
+        "pId": "1",
+        "name": "Pro",
+        "t": "id=15",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "16",
+        "pId": "1",
+        "name": "Ser",
+        "t": "id=16",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "17",
+        "pId": "1",
+        "name": "Thr",
+        "t": "id=17",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "18",
+        "pId": "1",
+        "name": "total",
+        "t": "id=18",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "19",
+        "pId": "1",
+        "name": "Tyr",
+        "t": "id=19",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "20",
+        "pId": "1",
+        "name": "Val",
+        "t": "id=20",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "21",
+        "pId": "0",
+        "name": "AgronomicTraits",
+        "t": "id=21",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "22",
+        "pId": "21",
+        "name": "100grainweight",
+        "t": "id=22",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "23",
+        "pId": "21",
+        "name": "cobcolor",
+        "t": "id=23",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "24",
+        "pId": "21",
+        "name": "Cobdiameter",
+        "t": "id=24",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "25",
+        "pId": "21",
+        "name": "cobweight",
+        "t": "id=25",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "26",
+        "pId": "21",
+        "name": "Eardiameter",
+        "t": "id=26",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "27",
+        "pId": "21",
+        "name": "Earheight",
+        "t": "id=27",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "28",
+        "pId": "21",
+        "name": "Earleaflength",
+        "t": "id=28",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "29",
+        "pId": "21",
+        "name": "Earleafwidth",
+        "t": "id=29",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "30",
+        "pId": "21",
+        "name": "Earlength",
+        "t": "id=30",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "31",
+        "pId": "21",
+        "name": "Earrownumber",
+        "t": "id=31",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "32",
+        "pId": "21",
+        "name": "Headingdate",
+        "t": "id=32",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "33",
+        "pId": "21",
+        "name": "kernellength",
+        "t": "id=33",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "34",
+        "pId": "21",
+        "name": "Kernelthickness",
+        "t": "id=34",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "35",
+        "pId": "21",
+        "name": "Kernelwidth",
+        "t": "id=35",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "36",
+        "pId": "21",
+        "name": "Kernernumberperrow",
+        "t": "id=36",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "37",
+        "pId": "21",
+        "name": "Leafnumberaboveear",
+        "t": "id=37",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "38",
+        "pId": "21",
+        "name": "Plantheight",
+        "t": "id=38",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "39",
+        "pId": "21",
+        "name": "Pollenshed",
+        "t": "id=39",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "40",
+        "pId": "21",
+        "name": "Silkingtime",
+        "t": "id=40",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "41",
+        "pId": "21",
+        "name": "Tasselbranchnumber",
+        "t": "id=41",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "42",
+        "pId": "21",
+        "name": "Tasselmainaxislength",
+        "t": "id=42",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "43",
+        "pId": "0",
+        "name": "Oil_Related",
+        "t": "id=43",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "44",
+        "pId": "43",
+        "name": "C16_0",
+        "t": "id=44",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "45",
+        "pId": "43",
+        "name": "C16_0P",
+        "t": "id=45",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "46",
+        "pId": "43",
+        "name": "C16_1",
+        "t": "id=46",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "47",
+        "pId": "43",
+        "name": "C16_1P",
+        "t": "id=47",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "48",
+        "pId": "43",
+        "name": "C160_C161",
+        "t": "id=48",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "49",
+        "pId": "43",
+        "name": "C160_C180",
+        "t": "id=49",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "50",
+        "pId": "43",
+        "name": "C18_0",
+        "t": "id=50",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "51",
+        "pId": "43",
+        "name": "C18_0P",
+        "t": "id=51",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "52",
+        "pId": "43",
+        "name": "C18_1",
+        "t": "id=52",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "53",
+        "pId": "43",
+        "name": "C18_1P",
+        "t": "id=53",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "54",
+        "pId": "43",
+        "name": "C18_2",
+        "t": "id=54",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "55",
+        "pId": "43",
+        "name": "C18_2P",
+        "t": "id=55",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "56",
+        "pId": "43",
+        "name": "C18_3",
+        "t": "id=56",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "57",
+        "pId": "43",
+        "name": "C18_3P",
+        "t": "id=57",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "58",
+        "pId": "43",
+        "name": "C180_C181",
+        "t": "id=58",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "59",
+        "pId": "43",
+        "name": "C180_C200",
+        "t": "id=59",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "60",
+        "pId": "43",
+        "name": "C181_C182",
+        "t": "id=60",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "61",
+        "pId": "43",
+        "name": "C182_C183",
+        "t": "id=61",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "62",
+        "pId": "43",
+        "name": "C20_0",
+        "t": "id=62",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "63",
+        "pId": "43",
+        "name": "C20_0P",
+        "t": "id=63",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "64",
+        "pId": "43",
+        "name": "C20_1",
+        "t": "id=64",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "65",
+        "pId": "43",
+        "name": "C20_1P",
+        "t": "id=65",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "66",
+        "pId": "43",
+        "name": "C200_C201",
+        "t": "id=66",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "67",
+        "pId": "43",
+        "name": "C200_C220",
+        "t": "id=67",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "68",
+        "pId": "43",
+        "name": "C22_0",
+        "t": "id=68",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "69",
+        "pId": "43",
+        "name": "C22_0P",
+        "t": "id=69",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "70",
+        "pId": "43",
+        "name": "C220_C240",
+        "t": "id=70",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "71",
+        "pId": "43",
+        "name": "C24_0",
+        "t": "id=71",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "72",
+        "pId": "43",
+        "name": "C24_0P",
+        "t": "id=72",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "73",
+        "pId": "43",
+        "name": "OIL",
+        "t": "id=73",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "74",
+        "pId": "43",
+        "name": "SFA_USFA",
+        "t": "id=74",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "75",
+        "pId": "0",
+        "name": "Metabolome",
+        "t": "id=75",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "76",
+        "pId": "75",
+        "name": "Alkaloid",
+        "t": "id=76",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "77",
+        "pId": "76",
+        "name": "Indole_3_carboxyaldehyde_E1",
+        "t": "id=77",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "78",
+        "pId": "76",
+        "name": "Acetylintermedine_E2",
+        "t": "id=78",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "79",
+        "pId": "76",
+        "name": "Acetylintermedine_E3",
+        "t": "id=79",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "80",
+        "pId": "76",
+        "name": "Trigonelline_E1",
+        "t": "id=80",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "81",
+        "pId": "76",
+        "name": "Trigonelline_E3",
+        "t": "id=81",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "82",
+        "pId": "76",
+        "name": "Bufotenine_O_glucoside_E2",
+        "t": "id=82",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "83",
+        "pId": "76",
+        "name": "Bufotenine_O_glucoside_E3",
+        "t": "id=83",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "84",
+        "pId": "75",
+        "name": "Amino_acid",
+        "t": "id=84",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "85",
+        "pId": "84",
+        "name": "L_Tyrosine_E1",
+        "t": "id=85",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "86",
+        "pId": "84",
+        "name": "Glutamine_E1",
+        "t": "id=86",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "87",
+        "pId": "84",
+        "name": "L_Lysine_E1",
+        "t": "id=87",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "88",
+        "pId": "84",
+        "name": "L_Glutamic_acid_E1",
+        "t": "id=88",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "89",
+        "pId": "84",
+        "name": "L_Phenylalanine_E1",
+        "t": "id=89",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "90",
+        "pId": "84",
+        "name": "L_Serine_E1",
+        "t": "id=90",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "91",
+        "pId": "84",
+        "name": "L_Valine_E1",
+        "t": "id=91",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "92",
+        "pId": "84",
+        "name": "L_Valine_E3",
+        "t": "id=92",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "93",
+        "pId": "84",
+        "name": "L_Threonine_E1",
+        "t": "id=93",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "94",
+        "pId": "84",
+        "name": "L_Threonine_E3",
+        "t": "id=94",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "95",
+        "pId": "84",
+        "name": "Pyroglutamic_acid_E1",
+        "t": "id=95",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "96",
+        "pId": "84",
+        "name": "Pyroglutamic_acid_E2",
+        "t": "id=96",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "97",
+        "pId": "84",
+        "name": "Pyroglutamic_acid_E3",
+        "t": "id=97",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "98",
+        "pId": "84",
+        "name": "L_Pipecolate_E1",
+        "t": "id=98",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "99",
+        "pId": "84",
+        "name": "L_Pipecolate_E2",
+        "t": "id=99",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "100",
+        "pId": "84",
+        "name": "L_Pipecolate_E3",
+        "t": "id=100",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "101",
+        "pId": "84",
+        "name": "L_Aspartic_acid_E1",
+        "t": "id=101",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "102",
+        "pId": "84",
+        "name": "L_Aspartic_acid_E2",
+        "t": "id=102",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "103",
+        "pId": "84",
+        "name": "L_Aspartic_acid_E3",
+        "t": "id=103",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "104",
+        "pId": "84",
+        "name": "L_Methionine_E2",
+        "t": "id=104",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "105",
+        "pId": "84",
+        "name": "L_Methionine_E3",
+        "t": "id=105",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "106",
+        "pId": "84",
+        "name": "L_Arginine_E1",
+        "t": "id=106",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "107",
+        "pId": "84",
+        "name": "L_Arginine_E2",
+        "t": "id=107",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "108",
+        "pId": "84",
+        "name": "L_Arginine_E3",
+        "t": "id=108",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "109",
+        "pId": "84",
+        "name": "L_saccharopine_E1",
+        "t": "id=109",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "110",
+        "pId": "84",
+        "name": "L_saccharopine_E2",
+        "t": "id=110",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "111",
+        "pId": "84",
+        "name": "L_saccharopine_E3",
+        "t": "id=111",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "112",
+        "pId": "84",
+        "name": "L_Histidine_E2",
+        "t": "id=112",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "113",
+        "pId": "84",
+        "name": "L_Histidine_E3",
+        "t": "id=113",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "114",
+        "pId": "84",
+        "name": "L_Leucine_E1",
+        "t": "id=114",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "115",
+        "pId": "84",
+        "name": "L_Isoleucine_E1",
+        "t": "id=115",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "116",
+        "pId": "84",
+        "name": "L_Tryptophan_E1",
+        "t": "id=116",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "117",
+        "pId": "84",
+        "name": "L_Tryptophan_E2",
+        "t": "id=117",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "118",
+        "pId": "84",
+        "name": "L_Tryptophan_E3",
+        "t": "id=118",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "119",
+        "pId": "84",
+        "name": "L_Proline_E1",
+        "t": "id=119",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "120",
+        "pId": "84",
+        "name": "L_Proline_E2",
+        "t": "id=120",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "121",
+        "pId": "84",
+        "name": "L_Proline_E3",
+        "t": "id=121",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "122",
+        "pId": "84",
+        "name": "Asparagine_E1",
+        "t": "id=122",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "123",
+        "pId": "84",
+        "name": "O_Acetyl_L_serine_E1",
+        "t": "id=123",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "124",
+        "pId": "75",
+        "name": "Anthocyanin",
+        "t": "id=124",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "125",
+        "pId": "124",
+        "name": "Cyanidin_3_O_glucoside_E2",
+        "t": "id=125",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "126",
+        "pId": "124",
+        "name": "Cyanidin_3_O_glucoside_E3",
+        "t": "id=126",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "127",
+        "pId": "124",
+        "name": "Malvidin_3_O_hexoside_E2",
+        "t": "id=127",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "128",
+        "pId": "124",
+        "name": "Malvidin_3_O_hexoside_E3",
+        "t": "id=128",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "129",
+        "pId": "124",
+        "name": "Malvidin_di_O_hexoside_E2",
+        "t": "id=129",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "130",
+        "pId": "124",
+        "name": "Malvidin_di_O_hexoside_E3",
+        "t": "id=130",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "131",
+        "pId": "75",
+        "name": "Carboxylic_acids",
+        "t": "id=131",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "132",
+        "pId": "131",
+        "name": "Phenylpyruvic_acid_E1",
+        "t": "id=132",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "133",
+        "pId": "131",
+        "name": "Phenylpyruvic_acid_E2",
+        "t": "id=133",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "134",
+        "pId": "131",
+        "name": "Phenylpyruvic_acid_E3",
+        "t": "id=134",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "135",
+        "pId": "131",
+        "name": "4_Coumaric_acid_E1",
+        "t": "id=135",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "136",
+        "pId": "131",
+        "name": "Sinapoyl_glucose_E1",
+        "t": "id=136",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "137",
+        "pId": "131",
+        "name": "Sinapoyl_glucose_E3",
+        "t": "id=137",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "138",
+        "pId": "75",
+        "name": "Fatty_Acids",
+        "t": "id=138",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "139",
+        "pId": "138",
+        "name": "Linolenic_acid_E1",
+        "t": "id=139",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "140",
+        "pId": "138",
+        "name": "Linolenic_acid_E2",
+        "t": "id=140",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "141",
+        "pId": "138",
+        "name": "Linolenic_acid_E3",
+        "t": "id=141",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "142",
+        "pId": "138",
+        "name": "Linoleic_acid_E1",
+        "t": "id=142",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "143",
+        "pId": "138",
+        "name": "Linoleic_acid_E2",
+        "t": "id=143",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "144",
+        "pId": "138",
+        "name": "Linoleic_acid_E3",
+        "t": "id=144",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "145",
+        "pId": "138",
+        "name": "7_Oxo_11_dodecenoic_acid_E1",
+        "t": "id=145",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "146",
+        "pId": "138",
+        "name": "7_Oxo_11_dodecenoic_acid_E2",
+        "t": "id=146",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "147",
+        "pId": "138",
+        "name": "7_Oxo_11_dodecenoic_acid_E3",
+        "t": "id=147",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "148",
+        "pId": "138",
+        "name": "9_Oxo_12_octadecenoic_acid_E2",
+        "t": "id=148",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "149",
+        "pId": "138",
+        "name": "9_Oxo_12_octadecenoic_acid_E3",
+        "t": "id=149",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "150",
+        "pId": "138",
+        "name": "Hydroxylinoleic_acid_E1",
+        "t": "id=150",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "151",
+        "pId": "138",
+        "name": "Hydroxylinoleic_acid_E2",
+        "t": "id=151",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "152",
+        "pId": "138",
+        "name": "Hydroxylinoleic_acid_E3",
+        "t": "id=152",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "153",
+        "pId": "75",
+        "name": "Flavonoid",
+        "t": "id=153",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "154",
+        "pId": "153",
+        "name": "Naringenin_E2",
+        "t": "id=154",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "155",
+        "pId": "153",
+        "name": "Naringenin_E3",
+        "t": "id=155",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "156",
+        "pId": "153",
+        "name": "Naringenin_derivative_E1",
+        "t": "id=156",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "157",
+        "pId": "153",
+        "name": "Naringenin_derivative_E2",
+        "t": "id=157",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "158",
+        "pId": "153",
+        "name": "Naringenin_derivative_E3",
+        "t": "id=158",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "159",
+        "pId": "153",
+        "name": "Methylchrysoeriol_C_hexoside_E2",
+        "t": "id=159",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "160",
+        "pId": "153",
+        "name": "2pp.6pp_O_Diacetyloninin_E1",
+        "t": "id=160",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "161",
+        "pId": "153",
+        "name": "2pp.6pp_O_Diacetyloninin_E2",
+        "t": "id=161",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "162",
+        "pId": "153",
+        "name": "2pp.6pp_O_Diacetyloninin_E3",
+        "t": "id=162",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "163",
+        "pId": "153",
+        "name": "Tricin_4p_O_threo_beta_guaiacylglyceryl_ether_E2",
+        "t": "id=163",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "164",
+        "pId": "153",
+        "name": "Tricin_4p_O_threo_beta_guaiacylglyceryl_ether_E3",
+        "t": "id=164",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "165",
+        "pId": "153",
+        "name": "Tricin_4p_O_threo_beta_guaiacylglyceryl_ether_E2",
+        "t": "id=165",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "166",
+        "pId": "153",
+        "name": "Tricin_4p_O_threo_beta_guaiacylglyceryl_ether_E3",
+        "t": "id=166",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "167",
+        "pId": "153",
+        "name": "Apigenin_C_hexosyl_C_pentoside_E1",
+        "t": "id=167",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "168",
+        "pId": "153",
+        "name": "Apigenin_C_hexosyl_C_pentoside_E2",
+        "t": "id=168",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "169",
+        "pId": "153",
+        "name": "Apigenin_C_hexosyl_C_pentoside_E3",
+        "t": "id=169",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "170",
+        "pId": "153",
+        "name": "Apigenin_E2",
+        "t": "id=170",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "171",
+        "pId": "153",
+        "name": "Apigenin_E3",
+        "t": "id=171",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "172",
+        "pId": "153",
+        "name": "Tricin_E1",
+        "t": "id=172",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "173",
+        "pId": "153",
+        "name": "Tricin_E2",
+        "t": "id=173",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "174",
+        "pId": "153",
+        "name": "Tricin_E3",
+        "t": "id=174",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "175",
+        "pId": "153",
+        "name": "Apigenin_C_pentoside_E2",
+        "t": "id=175",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "176",
+        "pId": "153",
+        "name": "Apigenin_7_O_glucoside_E2",
+        "t": "id=176",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "177",
+        "pId": "153",
+        "name": "Apigenin_7_O_glucoside_E3",
+        "t": "id=177",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "178",
+        "pId": "153",
+        "name": "Vitexin_E2",
+        "t": "id=178",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "179",
+        "pId": "153",
+        "name": "Vitexin_E3",
+        "t": "id=179",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "180",
+        "pId": "153",
+        "name": "Apigenin_8_C_glucoside_E2",
+        "t": "id=180",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "181",
+        "pId": "153",
+        "name": "Chrysoeriol_O_hexoside_E2",
+        "t": "id=181",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "182",
+        "pId": "153",
+        "name": "Chrysoeriol_O_hexoside_E3",
+        "t": "id=182",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "183",
+        "pId": "153",
+        "name": "Tricin_4p_O_erythro_beta_guaiacylglyceryl_ether_E2",
+        "t": "id=183",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "184",
+        "pId": "153",
+        "name": "Tricin_4p_O_erythro_beta_guaiacylglyceryl_ether_E3",
+        "t": "id=184",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "185",
+        "pId": "153",
+        "name": "Apigenin_C_pentosyl_C_pentoside_E2",
+        "t": "id=185",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "186",
+        "pId": "153",
+        "name": "Apigenin_C_pentosyl_C_pentoside_E3",
+        "t": "id=186",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "187",
+        "pId": "153",
+        "name": "Tricin_derivative_E2",
+        "t": "id=187",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "188",
+        "pId": "153",
+        "name": "Tricin_derivative_E3",
+        "t": "id=188",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "189",
+        "pId": "153",
+        "name": "Chrysoeriol_C_hexosyl_O_pentoside_E2",
+        "t": "id=189",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "190",
+        "pId": "153",
+        "name": "Chrysoeriol_C_hexosyl_O_pentoside_E3",
+        "t": "id=190",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "191",
+        "pId": "153",
+        "name": "Chrysoeriol_O_rhamnosyl_O_hexoside_E2",
+        "t": "id=191",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "192",
+        "pId": "153",
+        "name": "Chrysoeriol_O_rhamnosyl_O_hexoside_E3",
+        "t": "id=192",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "193",
+        "pId": "153",
+        "name": "Chrysoeriol_di_O_hexoside_E2",
+        "t": "id=193",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "194",
+        "pId": "153",
+        "name": "Chrysoeriol_di_O_hexoside_E3",
+        "t": "id=194",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "195",
+        "pId": "153",
+        "name": "Tricin_4p_O_erythro_beta_guaiacylglyceryl_ether_O_hexoside_E2",
+        "t": "id=195",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "196",
+        "pId": "153",
+        "name": "Tricin_4p_O_erythro_beta_guaiacylglyceryl_ether_O_hexoside_E3",
+        "t": "id=196",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "197",
+        "pId": "153",
+        "name": "Apigenin_C_pentosyl_O_coumaroylhexoside_E2",
+        "t": "id=197",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "198",
+        "pId": "153",
+        "name": "Apigenin_C_pentosyl_O_coumaroylhexoside_E3",
+        "t": "id=198",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "199",
+        "pId": "153",
+        "name": "C_pentosyl_apigenin_O_caffeoylhexoside_E2",
+        "t": "id=199",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "200",
+        "pId": "153",
+        "name": "C_pentosyl_apigenin_O_caffeoylhexoside_E3",
+        "t": "id=200",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "201",
+        "pId": "153",
+        "name": "Chrysoeriol_E2",
+        "t": "id=201",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "202",
+        "pId": "153",
+        "name": "Chrysoeriol_E3",
+        "t": "id=202",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "203",
+        "pId": "153",
+        "name": "Hesperetin_E1",
+        "t": "id=203",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "204",
+        "pId": "153",
+        "name": "Hesperetin_E2",
+        "t": "id=204",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "205",
+        "pId": "153",
+        "name": "Hesperetin_E3",
+        "t": "id=205",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "206",
+        "pId": "153",
+        "name": "Quercetin_E1",
+        "t": "id=206",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "207",
+        "pId": "153",
+        "name": "Quercetin_E2",
+        "t": "id=207",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "208",
+        "pId": "153",
+        "name": "Quercetin_E3",
+        "t": "id=208",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "209",
+        "pId": "153",
+        "name": "Selgin_derivative_E2",
+        "t": "id=209",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "210",
+        "pId": "153",
+        "name": "Selgin_derivative_E3",
+        "t": "id=210",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "211",
+        "pId": "153",
+        "name": "Tricin_O_hexoside_E2",
+        "t": "id=211",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "212",
+        "pId": "153",
+        "name": "Tricin_O_hexoside_E3",
+        "t": "id=212",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "213",
+        "pId": "153",
+        "name": "3p.4p.5p_Tricetin_O_hexoside_E2",
+        "t": "id=213",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "214",
+        "pId": "153",
+        "name": "3p.4p.5p_Tricetin_O_hexoside_E3",
+        "t": "id=214",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "215",
+        "pId": "153",
+        "name": "Apigenin_di_C_hexoside_E3",
+        "t": "id=215",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "216",
+        "pId": "153",
+        "name": "Chrysoeriol_C_hexosyl_O_rhamnoside_E2",
+        "t": "id=216",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "217",
+        "pId": "153",
+        "name": "Chrysoeriol_C_hexosyl_O_rhamnoside_E3",
+        "t": "id=217",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "218",
+        "pId": "153",
+        "name": "Hesperidin_E2",
+        "t": "id=218",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "219",
+        "pId": "153",
+        "name": "Hesperidin_E3",
+        "t": "id=219",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "220",
+        "pId": "153",
+        "name": "Chrysoeriol_di_C_hexoside_E2",
+        "t": "id=220",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "221",
+        "pId": "153",
+        "name": "Chrysoeriol_di_C_hexoside_E3",
+        "t": "id=221",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "222",
+        "pId": "153",
+        "name": "Tricin_O_pentosyl_O_hexoside_E2",
+        "t": "id=222",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "223",
+        "pId": "153",
+        "name": "Tricin_O_pentosyl_O_hexoside_E3",
+        "t": "id=223",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "224",
+        "pId": "153",
+        "name": "Tricin_O_rhamnosyl_O_hexoside_E2",
+        "t": "id=224",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "225",
+        "pId": "153",
+        "name": "Tricin_O_rhamnosyl_O_hexoside_E3",
+        "t": "id=225",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "226",
+        "pId": "153",
+        "name": "3p.4p.5p_Tricetin_O_rhamnosyl_O_hexoside_E2",
+        "t": "id=226",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "227",
+        "pId": "153",
+        "name": "3p.4p.5p_Tricetin_O_rhamnosyl_O_hexoside_E3",
+        "t": "id=227",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "228",
+        "pId": "75",
+        "name": "Hormones",
+        "t": "id=228",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "229",
+        "pId": "228",
+        "name": "Abscisic_acid_E1",
+        "t": "id=229",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "230",
+        "pId": "228",
+        "name": "IAA_E1",
+        "t": "id=230",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "231",
+        "pId": "75",
+        "name": "Lysophosphatide",
+        "t": "id=231",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "232",
+        "pId": "231",
+        "name": "LPC1_acyl_16:1_1_E1",
+        "t": "id=232",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "233",
+        "pId": "231",
+        "name": "LPC1_acyl_16:0_1_E1",
+        "t": "id=233",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "234",
+        "pId": "231",
+        "name": "LPC1_acyl_18:2_2_E1",
+        "t": "id=234",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "235",
+        "pId": "231",
+        "name": "Glycerol_1_tetradecanoate_3_phosphocholine_E1",
+        "t": "id=235",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "236",
+        "pId": "231",
+        "name": "Glycerol_1_tetradecanoate_3_phosphocholine_E2",
+        "t": "id=236",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "237",
+        "pId": "231",
+        "name": "Glycerol_1_tetradecanoate_3_phosphocholine_E3",
+        "t": "id=237",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "238",
+        "pId": "231",
+        "name": "LPC1_acyl_16:1_2_E1",
+        "t": "id=238",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "239",
+        "pId": "231",
+        "name": "LPC1_acyl_16:1_2_E2",
+        "t": "id=239",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "240",
+        "pId": "231",
+        "name": "LPC1_acyl_16:1_2_E3",
+        "t": "id=240",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "241",
+        "pId": "231",
+        "name": "LPC1_acyl_16:0_2_E1",
+        "t": "id=241",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "242",
+        "pId": "231",
+        "name": "LPC1_acyl_16:0_2_E2",
+        "t": "id=242",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "243",
+        "pId": "231",
+        "name": "LPC1_acyl_18:2_1_E1",
+        "t": "id=243",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "244",
+        "pId": "231",
+        "name": "LPC1_acyl_18:2_1_E2",
+        "t": "id=244",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "245",
+        "pId": "231",
+        "name": "LPC1_acyl_18:2_1_E3",
+        "t": "id=245",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "246",
+        "pId": "231",
+        "name": "LPC1_acyl_18:1_E2",
+        "t": "id=246",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "247",
+        "pId": "231",
+        "name": "LPC1_acyl_18:1_E3",
+        "t": "id=247",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "248",
+        "pId": "231",
+        "name": "LPC1_acyl_18:0_E2",
+        "t": "id=248",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "249",
+        "pId": "231",
+        "name": "LPC1_acyl_18:0_E3",
+        "t": "id=249",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "250",
+        "pId": "231",
+        "name": "LPC1_acyl_20:4_E1",
+        "t": "id=250",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "251",
+        "pId": "231",
+        "name": "LPC1_acyl_20:4_E2",
+        "t": "id=251",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "252",
+        "pId": "231",
+        "name": "LPC1_acyl_20:4_E3",
+        "t": "id=252",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "253",
+        "pId": "231",
+        "name": "LPC1_acyl_15:0_1_E2",
+        "t": "id=253",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "254",
+        "pId": "231",
+        "name": "LPC1_acyl_15:0_1_E3",
+        "t": "id=254",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "255",
+        "pId": "231",
+        "name": "LPC1_acyl_15:0_2_E2",
+        "t": "id=255",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "256",
+        "pId": "231",
+        "name": "LPC1_acyl_15:0_2_E3",
+        "t": "id=256",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "257",
+        "pId": "231",
+        "name": "LPC1_acyl_18:3_1_E1",
+        "t": "id=257",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "258",
+        "pId": "231",
+        "name": "LPC1_acyl_18:3_1_E2",
+        "t": "id=258",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "259",
+        "pId": "231",
+        "name": "LPC1_acyl_18:3_1_E3",
+        "t": "id=259",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "260",
+        "pId": "231",
+        "name": "LPC1_acyl_18:3_2_E1",
+        "t": "id=260",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "261",
+        "pId": "231",
+        "name": "LPC1_acyl_18:3_2_E2",
+        "t": "id=261",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "262",
+        "pId": "231",
+        "name": "LPC1_acyl_18:3_2_E3",
+        "t": "id=262",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "263",
+        "pId": "75",
+        "name": "Nucleoside",
+        "t": "id=263",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "264",
+        "pId": "263",
+        "name": "Adenosine_E1",
+        "t": "id=264",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "265",
+        "pId": "263",
+        "name": "Adenylic_acid_E1",
+        "t": "id=265",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "266",
+        "pId": "263",
+        "name": "Adenylic_acid_E2",
+        "t": "id=266",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "267",
+        "pId": "263",
+        "name": "Adenylic_acid_E3",
+        "t": "id=267",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "268",
+        "pId": "263",
+        "name": "Guanosine_E1",
+        "t": "id=268",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "269",
+        "pId": "263",
+        "name": "Guanosine_E2",
+        "t": "id=269",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "270",
+        "pId": "263",
+        "name": "Guanosine_E3",
+        "t": "id=270",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "271",
+        "pId": "263",
+        "name": "Uracil_E1",
+        "t": "id=271",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "272",
+        "pId": "263",
+        "name": "Uracil_E2",
+        "t": "id=272",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "273",
+        "pId": "75",
+        "name": "Organic_acid",
+        "t": "id=273",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "274",
+        "pId": "273",
+        "name": "Ferulic_acid_E1",
+        "t": "id=274",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "275",
+        "pId": "273",
+        "name": "Ferulic_acid_E2",
+        "t": "id=275",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "276",
+        "pId": "273",
+        "name": "Ferulic_acid_E3",
+        "t": "id=276",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "277",
+        "pId": "75",
+        "name": "Phenolamides",
+        "t": "id=277",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "278",
+        "pId": "277",
+        "name": "N1.N10_Dicoumaroylspermidine_E1",
+        "t": "id=278",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "279",
+        "pId": "277",
+        "name": "N_Coumaroylspermidine_E1",
+        "t": "id=279",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "280",
+        "pId": "277",
+        "name": "Np.Npp_Coumaroyl.Feruloylspermidine_E1",
+        "t": "id=280",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "281",
+        "pId": "277",
+        "name": "N_Feruloylputrescine_E1",
+        "t": "id=281",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "282",
+        "pId": "277",
+        "name": "N_Feruloylputrescine_E2",
+        "t": "id=282",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "283",
+        "pId": "277",
+        "name": "N_Feruloylputrescine_E3",
+        "t": "id=283",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "284",
+        "pId": "277",
+        "name": "N_coumaroyl_O_hexoside_spermidine_E1",
+        "t": "id=284",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "285",
+        "pId": "277",
+        "name": "N_coumaroyl_O_hexoside_spermidine_E2",
+        "t": "id=285",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "286",
+        "pId": "277",
+        "name": "N_coumaroyl_O_hexoside_spermidine_E3",
+        "t": "id=286",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "287",
+        "pId": "277",
+        "name": "Dicoumaroylputrescine_E1",
+        "t": "id=287",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "288",
+        "pId": "277",
+        "name": "Dicoumaroylputrescine_E2",
+        "t": "id=288",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "289",
+        "pId": "277",
+        "name": "Dicoumaroylputrescine_E3",
+        "t": "id=289",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "290",
+        "pId": "277",
+        "name": "N_caffeoyl_O_hexoside_spermidine_E1",
+        "t": "id=290",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "291",
+        "pId": "277",
+        "name": "N_caffeoyl_O_hexoside_spermidine_E2",
+        "t": "id=291",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "292",
+        "pId": "277",
+        "name": "N_caffeoyl_O_hexoside_spermidine_E3",
+        "t": "id=292",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "293",
+        "pId": "277",
+        "name": "Diferuloylputrescine_E1",
+        "t": "id=293",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "294",
+        "pId": "277",
+        "name": "Diferuloylputrescine_E2",
+        "t": "id=294",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "295",
+        "pId": "277",
+        "name": "Diferuloylputrescine_E3",
+        "t": "id=295",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "296",
+        "pId": "277",
+        "name": "N_feruloyl_O_hexoside_spermidine_E1",
+        "t": "id=296",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "297",
+        "pId": "277",
+        "name": "N_feruloyl_O_hexoside_spermidine_E2",
+        "t": "id=297",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "298",
+        "pId": "277",
+        "name": "N_feruloyl_O_hexoside_spermidine_E3",
+        "t": "id=298",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "299",
+        "pId": "277",
+        "name": "N1.N10_Diferuloylspermidine_E2",
+        "t": "id=299",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "300",
+        "pId": "277",
+        "name": "N1.N10_Diferuloylspermidine_E3",
+        "t": "id=300",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "301",
+        "pId": "277",
+        "name": "Np.Npp_Feruloyl.caffeoyl_spermidine_derivative_E1",
+        "t": "id=301",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "302",
+        "pId": "277",
+        "name": "Np.Npp_Feruloyl.caffeoyl_spermidine_derivative_E2",
+        "t": "id=302",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "303",
+        "pId": "277",
+        "name": "Np.Npp_Feruloyl.caffeoyl_spermidine_derivative_E3",
+        "t": "id=303",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "304",
+        "pId": "277",
+        "name": "N_Coumaroylputrescine_E2",
+        "t": "id=304",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "305",
+        "pId": "277",
+        "name": "N_Coumaroylputrescine_E3",
+        "t": "id=305",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "306",
+        "pId": "277",
+        "name": "N_Coumaroylagmatine_E2",
+        "t": "id=306",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "307",
+        "pId": "277",
+        "name": "N_Coumaroylagmatine_E3",
+        "t": "id=307",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "308",
+        "pId": "277",
+        "name": "N_Coumaroyl_spermidine_derivative_E1",
+        "t": "id=308",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "309",
+        "pId": "277",
+        "name": "N_Coumaroyl_spermidine_derivative_E2",
+        "t": "id=309",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "310",
+        "pId": "277",
+        "name": "N_Coumaroyl_spermidine_derivative_E3",
+        "t": "id=310",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "311",
+        "pId": "277",
+        "name": "N.N_Di_coumaroyl_N_feruloylspermidine_E1",
+        "t": "id=311",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "312",
+        "pId": "277",
+        "name": "N.N_Di_coumaroyl_N_feruloylspermidine_E2",
+        "t": "id=312",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "313",
+        "pId": "277",
+        "name": "N.N_Di_coumaroyl_N_feruloylspermidine_E3",
+        "t": "id=313",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "314",
+        "pId": "277",
+        "name": "Feruloylagmatine_derivative_E1",
+        "t": "id=314",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "315",
+        "pId": "277",
+        "name": "Feruloylagmatine_derivative_E2",
+        "t": "id=315",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "316",
+        "pId": "277",
+        "name": "Feruloylagmatine_derivative_E3",
+        "t": "id=316",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "317",
+        "pId": "277",
+        "name": "N_Feruloylagmatine_E2",
+        "t": "id=317",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "318",
+        "pId": "277",
+        "name": "N_Feruloylagmatine_E3",
+        "t": "id=318",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "319",
+        "pId": "277",
+        "name": "N_Feruloyl.N_methoxyagmatine_E2",
+        "t": "id=319",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "320",
+        "pId": "277",
+        "name": "N_Feruloyl.N_methoxyagmatine_E3",
+        "t": "id=320",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "321",
+        "pId": "277",
+        "name": "N.N_caffeoyl.Feruloyl_spermidine_derivative_E1",
+        "t": "id=321",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "322",
+        "pId": "277",
+        "name": "N.N_caffeoyl.Feruloyl_spermidine_derivative_E2",
+        "t": "id=322",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "323",
+        "pId": "277",
+        "name": "N.N_caffeoyl.Feruloyl_spermidine_derivative_E3",
+        "t": "id=323",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "324",
+        "pId": "75",
+        "name": "Phosphorylcholine",
+        "t": "id=324",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "325",
+        "pId": "324",
+        "name": "sn_Glycero_3_Phosphocholine_E2",
+        "t": "id=325",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "326",
+        "pId": "324",
+        "name": "sn_Glycero_3_Phosphocholine_E3",
+        "t": "id=326",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "327",
+        "pId": "75",
+        "name": "Phytoalexin",
+        "t": "id=327",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "328",
+        "pId": "327",
+        "name": "Sakuranetin_E2",
+        "t": "id=328",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "329",
+        "pId": "327",
+        "name": "Sakuranetin_E3",
+        "t": "id=329",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "330",
+        "pId": "327",
+        "name": "Pro_Leu_E1",
+        "t": "id=330",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "331",
+        "pId": "327",
+        "name": "Pro_Leu_E2",
+        "t": "id=331",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "332",
+        "pId": "327",
+        "name": "Pro_Leu_E3",
+        "t": "id=332",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "333",
+        "pId": "327",
+        "name": "Glu_Glu_E2",
+        "t": "id=333",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "334",
+        "pId": "75",
+        "name": "Phytoalexin",
+        "t": "id=334",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "335",
+        "pId": "334",
+        "name": "5_Hydroxyindoleacetic_acid_E1",
+        "t": "id=335",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "336",
+        "pId": "334",
+        "name": "5_Hydroxyindoleacetic_acid_E2",
+        "t": "id=336",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "337",
+        "pId": "334",
+        "name": "5_Hydroxyindoleacetic_acid_E3",
+        "t": "id=337",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "338",
+        "pId": "334",
+        "name": "N_Coumaroyltryptamine_E1",
+        "t": "id=338",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "339",
+        "pId": "334",
+        "name": "N_Coumaroyltryptamine_E2",
+        "t": "id=339",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "340",
+        "pId": "334",
+        "name": "N_Coumaroyltryptamine_E3",
+        "t": "id=340",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "341",
+        "pId": "334",
+        "name": "Coumaroylserotonin_E1",
+        "t": "id=341",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "342",
+        "pId": "334",
+        "name": "Coumaroylserotonin_E2",
+        "t": "id=342",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "343",
+        "pId": "334",
+        "name": "Coumaroylserotonin_E3",
+        "t": "id=343",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "344",
+        "pId": "334",
+        "name": "Feruloyltryptamine_E1",
+        "t": "id=344",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "345",
+        "pId": "334",
+        "name": "Feruloyltryptamine_E2",
+        "t": "id=345",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "346",
+        "pId": "334",
+        "name": "Feruloyltryptamine_E3",
+        "t": "id=346",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "347",
+        "pId": "334",
+        "name": "Feruloylserotonin_E1",
+        "t": "id=347",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "348",
+        "pId": "334",
+        "name": "Feruloylserotonin_E2",
+        "t": "id=348",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "349",
+        "pId": "334",
+        "name": "Feruloylserotonin_E3",
+        "t": "id=349",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "350",
+        "pId": "334",
+        "name": "Tryptamine_E1",
+        "t": "id=350",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "351",
+        "pId": "334",
+        "name": "Serotonin_E2",
+        "t": "id=351",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "352",
+        "pId": "334",
+        "name": "Serotonin_E3",
+        "t": "id=352",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "353",
+        "pId": "334",
+        "name": "Caffeoyltryptamine_E2",
+        "t": "id=353",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "354",
+        "pId": "334",
+        "name": "Caffeoyltryptamine_E3",
+        "t": "id=354",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "355",
+        "pId": "75",
+        "name": "Vitamin",
+        "t": "id=355",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "356",
+        "pId": "355",
+        "name": "Pyridoxine_E1",
+        "t": "id=356",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "357",
+        "pId": "355",
+        "name": "Choline_E1",
+        "t": "id=357",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "358",
+        "pId": "355",
+        "name": "Nicotinic_Acid_E1",
+        "t": "id=358",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "359",
+        "pId": "355",
+        "name": "Nicotinic_Acid_E3",
+        "t": "id=359",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "360",
+        "pId": "355",
+        "name": "D_Pantothenic_acid_E1",
+        "t": "id=360",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "361",
+        "pId": "355",
+        "name": "D_Pantothenic_acid_E2",
+        "t": "id=361",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "362",
+        "pId": "355",
+        "name": "D_Pantothenic_acid_E3",
+        "t": "id=362",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "363",
+        "pId": "355",
+        "name": "L_Carnitine_E1",
+        "t": "id=363",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "364",
+        "pId": "355",
+        "name": "L_Carnitine_E2",
+        "t": "id=364",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "365",
+        "pId": "355",
+        "name": "L_Carnitine_E3",
+        "t": "id=365",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "366",
+        "pId": "355",
+        "name": "Pyridoxate_2_E1",
+        "t": "id=366",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "367",
+        "pId": "355",
+        "name": "Pyridoxate_2_E2",
+        "t": "id=367",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "368",
+        "pId": "355",
+        "name": "Pyridoxate_2_E3",
+        "t": "id=368",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "369",
+        "pId": "355",
+        "name": "Adenine_E1",
+        "t": "id=369",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "370",
+        "pId": "355",
+        "name": "Adenine_E3",
+        "t": "id=370",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "371",
+        "pId": "355",
+        "name": "Thiamin_E1",
+        "t": "id=371",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "372",
+        "pId": "355",
+        "name": "Thiamin_E2",
+        "t": "id=372",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "373",
+        "pId": "355",
+        "name": "Thiamin_E3",
+        "t": "id=373",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "374",
+        "pId": "355",
+        "name": "Pyridoxate_1_E1",
+        "t": "id=374",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "375",
+        "pId": "75",
+        "name": "Others",
+        "t": "id=375",
+        "nocheck": true,
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/folder.png"
+    },
+    {
+        "id": "376",
+        "pId": "375",
+        "name": "Vanillin_E1",
+        "t": "id=376",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "377",
+        "pId": "375",
+        "name": "N_Acetyl_L_glutamic_acid_E1",
+        "t": "id=377",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "378",
+        "pId": "375",
+        "name": "Lyratyl_acetate_E1",
+        "t": "id=378",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "379",
+        "pId": "375",
+        "name": "Ferulic_acid_derivative_E1",
+        "t": "id=379",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "380",
+        "pId": "375",
+        "name": "2.6_diformyl_4_methylphenol_E1",
+        "t": "id=380",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "381",
+        "pId": "375",
+        "name": "2.6_diformyl_4_methylphenol_E2",
+        "t": "id=381",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "382",
+        "pId": "375",
+        "name": "2.6_diformyl_4_methylphenol_E3",
+        "t": "id=382",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "383",
+        "pId": "375",
+        "name": "Gluconolactone_E2",
+        "t": "id=383",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "384",
+        "pId": "375",
+        "name": "3_2_Hydroxyethyl_4_methyl_1.2.3.4_pentanetetrol_E1",
+        "t": "id=384",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "385",
+        "pId": "375",
+        "name": "3_2_Hydroxyethyl_4_methyl_1.2.3.4_pentanetetrol_E2",
+        "t": "id=385",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "386",
+        "pId": "375",
+        "name": "3_2_Hydroxyethyl_4_methyl_1.2.3.4_pentanetetrol_E3",
+        "t": "id=386",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "387",
+        "pId": "375",
+        "name": "DL_Indole_3_lactic_acid_3_Indolelactic_acid_E2",
+        "t": "id=387",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "388",
+        "pId": "375",
+        "name": "N_3_Indolylacetyl_L_alanine_E1",
+        "t": "id=388",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "389",
+        "pId": "375",
+        "name": "N_3_Indolylacetyl_L_alanine_E2",
+        "t": "id=389",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "390",
+        "pId": "375",
+        "name": "N_3_Indolylacetyl_L_alanine_E3",
+        "t": "id=390",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "391",
+        "pId": "375",
+        "name": "12_Hydroxy_6_epi_albrassitriol_E1",
+        "t": "id=391",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "392",
+        "pId": "375",
+        "name": "12_Hydroxy_6_epi_albrassitriol_E2",
+        "t": "id=392",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "393",
+        "pId": "375",
+        "name": "12_Hydroxy_6_epi_albrassitriol_E3",
+        "t": "id=393",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "394",
+        "pId": "375",
+        "name": "Norcinnamolaurine_E1",
+        "t": "id=394",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "395",
+        "pId": "375",
+        "name": "Norcinnamolaurine_E2",
+        "t": "id=395",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "396",
+        "pId": "375",
+        "name": "Norcinnamolaurine_E3",
+        "t": "id=396",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "397",
+        "pId": "375",
+        "name": "5_Methylthioadenosine_E1",
+        "t": "id=397",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "398",
+        "pId": "375",
+        "name": "5_Methylthioadenosine_E2",
+        "t": "id=398",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "399",
+        "pId": "375",
+        "name": "5_Methylthioadenosine_E3",
+        "t": "id=399",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "400",
+        "pId": "375",
+        "name": "Lehmbachol_A_E2",
+        "t": "id=400",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "401",
+        "pId": "375",
+        "name": "Lehmbachol_A_E3",
+        "t": "id=401",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "402",
+        "pId": "375",
+        "name": "Viscumamide_E1",
+        "t": "id=402",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "403",
+        "pId": "375",
+        "name": "Viscumamide_E2",
+        "t": "id=403",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "404",
+        "pId": "375",
+        "name": "Viscumamide_E3",
+        "t": "id=404",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "405",
+        "pId": "375",
+        "name": "Triornicin_E2",
+        "t": "id=405",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "406",
+        "pId": "375",
+        "name": "Triornicin_E3",
+        "t": "id=406",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "407",
+        "pId": "375",
+        "name": "Diaminopimelic_acid_E1",
+        "t": "id=407",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "408",
+        "pId": "375",
+        "name": "Diaminopimelic_acid_E2",
+        "t": "id=408",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "409",
+        "pId": "375",
+        "name": "Diaminopimelic_acid_E3",
+        "t": "id=409",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "410",
+        "pId": "375",
+        "name": "Carpacin_E1",
+        "t": "id=410",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "411",
+        "pId": "375",
+        "name": "Scopoletin_E1",
+        "t": "id=411",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "412",
+        "pId": "375",
+        "name": "Scopoletin_E2",
+        "t": "id=412",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "413",
+        "pId": "375",
+        "name": "Scopoletin_E3",
+        "t": "id=413",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "414",
+        "pId": "375",
+        "name": "N_Acetyldopamine_E1",
+        "t": "id=414",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "415",
+        "pId": "375",
+        "name": "N_Acetyldopamine_E3",
+        "t": "id=415",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "416",
+        "pId": "375",
+        "name": "DIMBOA_E3",
+        "t": "id=416",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "417",
+        "pId": "375",
+        "name": "Modiolin_E1",
+        "t": "id=417",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "418",
+        "pId": "375",
+        "name": "Nalidixic_acid_E1",
+        "t": "id=418",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "419",
+        "pId": "375",
+        "name": "Nalidixic_acid_E2",
+        "t": "id=419",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "420",
+        "pId": "375",
+        "name": "Nalidixic_acid_E3",
+        "t": "id=420",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "421",
+        "pId": "375",
+        "name": "2_Amino_1.3.4_hexadecanetriol_E1",
+        "t": "id=421",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "422",
+        "pId": "375",
+        "name": "2_Amino_1.3.4_hexadecanetriol_E2",
+        "t": "id=422",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "423",
+        "pId": "375",
+        "name": "2_Amino_1.3.4_hexadecanetriol_E3",
+        "t": "id=423",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "424",
+        "pId": "375",
+        "name": "N_acetylneuraminic_acid_E2",
+        "t": "id=424",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "425",
+        "pId": "375",
+        "name": "N_acetylneuraminic_acid_E3",
+        "t": "id=425",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "426",
+        "pId": "375",
+        "name": "Gibberellin_A4_E1",
+        "t": "id=426",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "427",
+        "pId": "375",
+        "name": "Gibberellin_A4_E2",
+        "t": "id=427",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "428",
+        "pId": "375",
+        "name": "Gibberellin_A4_E3",
+        "t": "id=428",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "429",
+        "pId": "375",
+        "name": "Benzamidine_E1",
+        "t": "id=429",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "430",
+        "pId": "375",
+        "name": "Benzamidine_E3",
+        "t": "id=430",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "431",
+        "pId": "375",
+        "name": "Caffeic_acid_derivative_E2",
+        "t": "id=431",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "432",
+        "pId": "375",
+        "name": "Elaeokanine_C_E2",
+        "t": "id=432",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "433",
+        "pId": "375",
+        "name": "Elaeokanine_C_E3",
+        "t": "id=433",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "434",
+        "pId": "375",
+        "name": "Ethyl_syringate_E2",
+        "t": "id=434",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "435",
+        "pId": "375",
+        "name": "Ethyl_syringate_E3",
+        "t": "id=435",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "436",
+        "pId": "375",
+        "name": "Halaminol_A_E1",
+        "t": "id=436",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "437",
+        "pId": "375",
+        "name": "Halaminol_A_E2",
+        "t": "id=437",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "438",
+        "pId": "375",
+        "name": "Halaminol_A_E3",
+        "t": "id=438",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "439",
+        "pId": "375",
+        "name": "Apodophyllone_E2",
+        "t": "id=439",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "440",
+        "pId": "375",
+        "name": "Apodophyllone_E3",
+        "t": "id=440",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "441",
+        "pId": "375",
+        "name": "Austricine_E1",
+        "t": "id=441",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "442",
+        "pId": "375",
+        "name": "Austricine_E2",
+        "t": "id=442",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "443",
+        "pId": "375",
+        "name": "Austricine_E3",
+        "t": "id=443",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "444",
+        "pId": "375",
+        "name": "Crotonoside_E1",
+        "t": "id=444",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "445",
+        "pId": "375",
+        "name": "Crotonoside_E2",
+        "t": "id=445",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "446",
+        "pId": "375",
+        "name": "Crotonoside_E3",
+        "t": "id=446",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "447",
+        "pId": "375",
+        "name": "Sphinganine_E2",
+        "t": "id=447",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "448",
+        "pId": "375",
+        "name": "Sphinganine_E3",
+        "t": "id=448",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "449",
+        "pId": "375",
+        "name": "N2.N2_Dimethylguanosine_E1",
+        "t": "id=449",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "450",
+        "pId": "375",
+        "name": "N2.N2_Dimethylguanosine_E2",
+        "t": "id=450",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "451",
+        "pId": "375",
+        "name": "N2.N2_Dimethylguanosine_E3",
+        "t": "id=451",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "452",
+        "pId": "375",
+        "name": "2_Amino_9_methyl_4_octadecene_1.3.8_triol_E2",
+        "t": "id=452",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "453",
+        "pId": "375",
+        "name": "2_Amino_9_methyl_4_octadecene_1.3.8_triol_E3",
+        "t": "id=453",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "454",
+        "pId": "375",
+        "name": "Fructose_1.6_diphosphate_E1",
+        "t": "id=454",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "455",
+        "pId": "375",
+        "name": "Fructose_1.6_diphosphate_E2",
+        "t": "id=455",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "456",
+        "pId": "375",
+        "name": "Fructose_1.6_diphosphate_E3",
+        "t": "id=456",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "457",
+        "pId": "375",
+        "name": "Zeanoside_B_E2",
+        "t": "id=457",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "458",
+        "pId": "375",
+        "name": "Zeanoside_B_E3",
+        "t": "id=458",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "459",
+        "pId": "375",
+        "name": "trans_Zeatin_O_glucoside_E2",
+        "t": "id=459",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "460",
+        "pId": "375",
+        "name": "trans_Zeatin_O_glucoside_E3",
+        "t": "id=460",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "461",
+        "pId": "375",
+        "name": "Succinyladenosine_E2",
+        "t": "id=461",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "462",
+        "pId": "375",
+        "name": "Succinyladenosine_E3",
+        "t": "id=462",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "463",
+        "pId": "375",
+        "name": "Acetosyringone_E1",
+        "t": "id=463",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "464",
+        "pId": "375",
+        "name": "Acetosyringone_E2",
+        "t": "id=464",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "465",
+        "pId": "375",
+        "name": "Acetosyringone_E3",
+        "t": "id=465",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "466",
+        "pId": "375",
+        "name": "Lincomycin_E1",
+        "t": "id=466",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "467",
+        "pId": "375",
+        "name": "Lincomycin_E2",
+        "t": "id=467",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "468",
+        "pId": "375",
+        "name": "Lincomycin_E3",
+        "t": "id=468",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "469",
+        "pId": "375",
+        "name": "D_Glucose_6_phosphate_E2",
+        "t": "id=469",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "470",
+        "pId": "375",
+        "name": "D_Glucose_6_phosphate_E3",
+        "t": "id=470",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "471",
+        "pId": "375",
+        "name": "3_Oxo_2_2_entenylcyclopentaneoctanoic_acid_E2",
+        "t": "id=471",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "472",
+        "pId": "375",
+        "name": "3_Oxo_2_2_entenylcyclopentaneoctanoic_acid_E3",
+        "t": "id=472",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "473",
+        "pId": "375",
+        "name": "Glutathione_E1",
+        "t": "id=473",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "474",
+        "pId": "375",
+        "name": "Glutathione_E2",
+        "t": "id=474",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "475",
+        "pId": "375",
+        "name": "Glutathione_E3",
+        "t": "id=475",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "476",
+        "pId": "375",
+        "name": "trans_Zeatin_riboside_E2",
+        "t": "id=476",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "477",
+        "pId": "375",
+        "name": "DIMBOA_glucoside_E1",
+        "t": "id=477",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "478",
+        "pId": "375",
+        "name": "DIMBOA_glucoside_E3",
+        "t": "id=478",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    },
+    {
+        "id": "479",
+        "pId": "375",
+        "name": "Diosgenin_E1",
+        "t": "id=479",
+        "icon": "/sites/all/modules/zmap_gwasviz/theme/css/img/trait.png"
+    }
+]
