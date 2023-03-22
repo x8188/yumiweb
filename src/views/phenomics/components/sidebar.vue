@@ -47,7 +47,6 @@
 <script>
 import { getPhenomicsDropDown } from '@/api/phenomics/phenomics'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import { Transform } from 'stream';
 export default {
   components: { SvgIcon },
   data() {

@@ -25,7 +25,7 @@
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select v-model="formData.version" placeholder=""  @focus="focusSelect('version')">
+                  <el-select v-model="formData.version" placeholder="" >
                     <el-option
                       v-for="(item,i) in options.version"
                       :key="i"
@@ -143,14 +143,15 @@ components: { Title, SvgIcon },
     async dropDownReference() {
       const { data }= await dropDownReference()
       let arr = Object.values(data)
-      arr = arr.slice(1,31)
+      arr = arr.slice(1,51)
       this.options.reference = arr
 
     },
     async dropDownVersion() {
       const { data }= await dropDownVersion()
+      console.log(data);
       let arr = Object.values(data)
-      arr = arr.slice(1,31)
+      arr = arr.slice(1,51)
       this.options.version = arr
     },
     submitForm() {
@@ -161,7 +162,7 @@ components: { Title, SvgIcon },
       if(this.options[name].length === 0) {
         this.$notify({
           title: '已成功请求',
-          message: '数据请求较慢，请稍等',
+          message: '数据正在拉取中，请稍等',
           type: 'success'
         })
       }

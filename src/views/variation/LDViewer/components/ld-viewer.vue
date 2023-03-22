@@ -126,13 +126,13 @@ components: { Title, SvgIcon },
     async dropDownReference() {
       const { data }= await dropDownReference()
       let arr = Object.values(data)
-      arr = arr.slice(1,31)
+      arr = arr.slice(1,51)
       this.options.reference = arr
     },
     async dropDownVersion() {
       const { data }= await dropDownVersion()
       let arr = Object.values(data)
-      arr = arr.slice(1,31)
+      arr = arr.slice(1,51)
       this.options.version = arr
     },
     // 疯狂道歉

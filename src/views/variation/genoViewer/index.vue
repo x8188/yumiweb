@@ -36,7 +36,7 @@ export default {
 .fade-trans--move,
 .fade-trans-leave-active,
 .fade-trans-enter-active {
-  transition: all 0.6s;
+  transition: all 0.5s linear;
 }
 
 .fade-trans-leave-active {

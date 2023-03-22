@@ -56,7 +56,6 @@ export default {
             let halfWidth = 6
             let firstLineNum = 42
             const colorArr = this.initColor()
-            console.log(colorArr[1][1]);
             for(let i= 0; i < firstLineNum; i++) {
                 // 21列
                 for(let j=0; j < firstLineNum -i;j++) {
@@ -88,7 +87,7 @@ export default {
         mouseInit(e) {
            this.screen.screenX = e.screenX
            this.screen.screenY = e.screenY
-           console.log(this.screen);
+        //    console.log(this.screen);
         },
     }
 }

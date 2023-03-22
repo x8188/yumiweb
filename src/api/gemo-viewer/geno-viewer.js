@@ -10,6 +10,6 @@ export function dropDownReference() {
 // 下拉框选择version
 export function dropDownVersion() {
   return request({
-    url: '/zeamap/expression/reference?reference=87',
+    url: '/zeamap/expression/version?reference=is_symmetric',
   })
 }
