@@ -23,7 +23,7 @@
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select v-model="formData.version" placeholder="" @focus="focusSelect('version')">
+                  <el-select v-model="formData.version" placeholder="" >
                     <el-option
                       v-for="(item,i) in options.version"
                       :key="i"
