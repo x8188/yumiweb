@@ -7,7 +7,10 @@
           <div class="info-nums">
            <span>show</span> 
             <el-select v-model="infoNums" placeholder="" style="width: 80px; margin: 0 8px;">
-              <el-option label="123" value="123">123</el-option>
+              <el-option label="10" value="10"></el-option>
+              <el-option label="20" value="20"></el-option>
+              <el-option label="30" value="30"></el-option>
+              <el-option label="50" value="50"></el-option>
             </el-select>
             <span>results</span>
           </div>
@@ -82,7 +85,7 @@ export default {
   components: { Title, SvgIcon },
   data() {
     return {
-      infoNums: 50
+      infoNums: 10
     }
   },
   methods: {

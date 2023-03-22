@@ -88,10 +88,10 @@ export default {
     }
   },
   created() {
-    this.getCode();
     this.getCookie();
   },
   methods: {
+
     getCookie() {
       const username = Cookies.get("username");
       const password = Cookies.get("password");
@@ -116,8 +116,8 @@ export default {
             Cookies.remove('rememberMe');
           }
           this.$store.dispatch("Login", this.loginForm).then(() => {
-            // { path: this.redirect || "/" }
-            this.$router.push('/index')
+            this.$router.push({ path: this.redirect || "/" })
+            // this.$router.push('/index')
           }).catch(() => {
             this.loading = false;
             if (this.captchaEnabled) {
