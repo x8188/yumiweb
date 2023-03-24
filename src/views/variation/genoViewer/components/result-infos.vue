@@ -80,9 +80,8 @@
 </template>
 <script>
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import Title from '@/components/CommonComponents/Title.vue'
 export default {
-  components: { Title, SvgIcon },
+  components: { SvgIcon },
   data() {
     return {
       infoNums: 10

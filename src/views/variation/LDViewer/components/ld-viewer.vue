@@ -94,9 +94,8 @@
 <script>
 import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import Title from '@/components/CommonComponents/Title.vue'
 export default {
-components: { Title, SvgIcon },
+components: {  SvgIcon },
   data() {
     return {
       region: '1',

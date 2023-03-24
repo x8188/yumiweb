@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import Title from "@/components/CommonComponents/Title.vue";
 export default {
   name: "FirstTask",
   components: { Title },

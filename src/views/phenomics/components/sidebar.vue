@@ -1,47 +1,48 @@
 <template>
-      <div class="menu-container" style="width:350px;">
-      <el-menu  ref="menus" @close="handleClose" :default-openeds="openeds"  :collapse.sync="isCollapse" class="drawer-container" active-text-color="#303133">
-          <el-submenu :index="String(8)">
-            <template slot="title">
-              <el-row style="display: flex;">
-                <el-col style="margin-top: 5px;margin-left: 20px;">
-                  <el-button size="small" @click="clearPhenomics">
-                    <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
-                    <span style="color: #20AE35">清空</span>
-                 </el-button>
-                </el-col>
-                <el-col style="margin-top: 5px;">
-                  <el-button type="primary" size="small" @click="checkPhenomics">
-                    查询
-                      <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
-                 </el-button>
-                </el-col>
-              </el-row>
-            </template>
-          </el-submenu>
-        <div>
-          <div v-for="(name,index) in filterNames" >
-            <el-submenu :index="String(index)" style="padding-right: 30px;">
-              <template slot="title">
-                <i>
-                  <SvgIcon :icon-class="filterIcons[index]" color="212121"></SvgIcon>
-                </i>
-              <span slot="title" style="margin-left: 10px;">{{ name }}</span>
-            </template>
-              <el-select index="0" v-model="filters[name]" placeholder="" style="margin-left: 40px;width: 180px;">
-                <el-option
-                v-for="(item,i) in options[name]"
-                :key="i"
-                :label="item"
-                :value="item"
-                ></el-option>
-              </el-select>
-          </el-submenu>
+  <div class="container">
+      <div class="menu-container" v-if="isCollapse">
+          <div class="title-collpase" @click="isCollapse = !isCollapse" >
+            <i  class="el-icon-s-unfold icon" style="font-size: 30px;color: #489E38;"></i>
+          </div>
+            <div class="main" v-show="isCollapse">
+              <div  class="menu-item" v-for="(name,i) in filterNames" :key="i">
+                <div class="title">
+                  <SvgIcon :icon-class="filterIcons[i]" color="212121" style="margin-right: 10px;"></SvgIcon>
+                  <span>{{ name }}</span>
+                </div>
+                <div class="select">
+                  <el-select v-model="filters[name]" placeholder="" style="margin-left: 40px;width: 180px;margin-right: 40px;">
+                    <el-option
+                    v-for="(item,i) in options[name]"
+                    :key="i"
+                    :label="item"
+                    :value="item"
+                    ></el-option>
+                  </el-select>
+                </div>
+              </div>
+        
+              <!-- 底部 -->
+              <template>
+                <div class="footer">
+                  <el-button type="primary" size="small" style="margin-right: 8px;">查询</el-button>
+                  <el-button size="small" >清空</el-button>
+                </div>
+              </template>
+            </div>
+      </div>
+
+      <div class="hide-container" v-else>
+        <div class="title-collpase" @click="isCollapse = !isCollapse" style="margin-bottom: 15px;" >
+          <i  class="el-icon-s-unfold icon" style="font-size: 30px;color: #489E38;"></i>
+        </div>
+        <div  v-for="(name,i) in filterNames" :key="i">
+          <div class="hide-icon" @click="isCollapse = true">
+            <SvgIcon :icon-class="filterIcons[i]" ></SvgIcon>
           </div>
         </div>
-      </el-menu>
-    </div>
-
+      </div>
+  </div>
 </template>
 
 <script>
@@ -51,10 +52,8 @@ export default {
   components: { SvgIcon },
   data() {
     return {
-        // 默认打开的侧边栏
-        openeds: ['0','1','2','3','4','5','6','7'],
         // 侧边栏伸缩
-        isCollapse: false,
+        isCollapse: true,
         // 左边的filter 考虑抽出去
         filterNames: ['Category','Type','Analysis','Name','Location','TraitDateLoc','Year'],
         filterIcons: ['calendar-alt','Type-Tool','gene','build','locate1f','location-fill','year'],
@@ -113,18 +112,61 @@ export default {
     },
     handleClose(key, keyPath) {
       this.$refs.menus.open(keyPath);
-    },
-    closeMenu(val) {
-      // this.isCollapse = !val
-      // this.handleClose()
     }
   }
 }
 </script>
 
-<style scoped>
-.drawer-container {
-  padding-bottom: 70px;
-  height: 100%;
+<style lang="scss" scoped>
+.menu-container {
+  border-right: 1px solid #DFE6EC;
+  height: 670px;
+  padding: 10px 20px;
+  width: 270px;
+}
+.hide-container {
+  width: 50px;
+  border-right: 1px solid #DFE6EC;
+  height: 670px;
+  padding: 0 10px;
+}
+.title-collpase {
+  height: 50px;
+  .icon {
+    float: right;
+    line-height: 50px;
+  }
+}
+.hide-icon {
+  margin-bottom: 30px;
+  margin-left: 5px;
+}
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .title {
+    margin-left: 13px;
+    margin-bottom: 10px;
+  }
+  .select {
+    margin-bottom: 15px;
+  }
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.trans-enter-active,
+.trans-leave-active {
+  transition: all .5s;
+}
+
+.trans-enter, .trans-leave-to
+ {
+  transform: translateX(100px);
+  opacity: 0;
 }
 </style>

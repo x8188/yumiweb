@@ -16,9 +16,6 @@
               </el-select>
               <span>results</span>
             </div>
-            <div class="download-FTP">
-              <el-button><SvgIcon icon-class="download02" color="16AA2B" style="margin-right: 5px" />下载</el-button>
-            </div>
           </div>
           <div class="data-table" style="margin-top: 30px;">
             <el-table
@@ -27,11 +24,7 @@
             :data="tableData"
             tooltip-effect="dark"
             style="width: 100%"
-            @selection-change="handleSelectionChange">
-            <el-table-column
-              type="selection"
             >
-            </el-table-column>
             <el-table-column
               label="UID"
               width="250px"
@@ -56,7 +49,7 @@
             </el-table-column>
             <el-table-column
               label="Analysis"
-              prop="analysis.analysisId"
+              prop="analysis.name"
               show-overflow-tooltip>
             </el-table-column>
             <el-table-column
@@ -167,10 +160,7 @@ methods: {
     } else {
       this.$refs.multipleTable.clearSelection();
     }
-  },
-  handleSelectionChange(val) {
-    this.multipleSelection = val;
-  },
+  }
 },
 computed: {
   bigFilterNames() {
@@ -187,6 +177,9 @@ computed: {
 </script>
 
 <style lang="scss" scoped>
+.phenomics {
+  min-width: 100px;
+}
 .phenomics-container {
 display: flex;
 }
@@ -197,7 +190,7 @@ background-color: #fff;
 visibility: hidden
 }
 .data-container {
-width: 100%;
+  min-width: 1200px;
 padding: 25px 15px;
 }
 .data-top {

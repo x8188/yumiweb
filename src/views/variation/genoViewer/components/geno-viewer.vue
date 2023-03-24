@@ -100,7 +100,9 @@
           </div>
         </el-form>
           <div class="submit-buttons">
-            <el-button type="primary" style="margin-right: 40px;" @click="reset()"><i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset </el-button>
+            <el-button type="primary" style="margin-right: 40px;" @click="reset()">
+              <i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset 
+            </el-button>
             <el-button type="primary" icon="el-icon-check" @click="submitForm()">Submit</el-button>
           </div>
         </div>
@@ -111,9 +113,8 @@
 <script>
 import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import Title from '@/components/CommonComponents/Title.vue'
 export default {
-components: { Title, SvgIcon },
+components: { SvgIcon },
   data() {
     return {
       region: '1',
