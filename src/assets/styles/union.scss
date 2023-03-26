@@ -1,0 +1,15 @@
+$mainGreen: #58C267;
+$deepGreen: #228B22;
+.hover-green-link {
+  &:hover {
+    color: $mainGreen;
+    text-decoration: underline;
+  }
+}
+.origin-link-green {
+  color: $mainGreen;
+  text-decoration: underline;
+  &:hover {
+    color: $deepGreen;
+  }
+}
