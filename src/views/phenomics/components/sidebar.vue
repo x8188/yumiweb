@@ -1,25 +1,25 @@
 <template>
-  <div class="menu-container" style="width:300px;height: 700px;border-right: 1px solid #DCDFE6;">
-  <div  ref="menus" class="main-container">
-      <div v-for="(name,index) in filterNames" >
-        <div :index="String(index)" style="padding-right: 30px;">
-          <div class="title" style="margin-bottom: 10px;;">
-            <i>
-              <SvgIcon :icon-class="filterIcons[index]" color="212121"></SvgIcon>
-            </i>
-            <span slot="title" style="margin-left: 10px;">{{ name }}</span>
-          </div>
-          <el-select index="0" v-model="filters[name]" placeholder="" style="margin-left: 40px;width: 180px;">
-            <el-option
-            v-for="(item,i) in options[name]"
-            :key="i"
-            :label="item"
-            :value="item"
-            ></el-option>
-          </el-select>
-      </div>
-      </div>
-    <div >
+  <div class="menu-container" >
+    <div v-for="(name,index) in filterNames" class="menu-item">
+      <div :index="String(index)"  style="width: 80%;">
+        <!-- bfc -->
+        <div class="title" style="margin-bottom: 10px;">
+          <i>
+            <SvgIcon :icon-class="filterIcons[index]" color="212121"></SvgIcon>
+          </i>
+          <span slot="title" style="margin-left: 10px;">{{ name }}</span>
+        </div>
+        <el-select index="0" v-model="filters[name]" placeholder="" style="margin-left: 40px;width: 70%;">
+          <el-option
+          v-for="(item,i) in options[name]"
+          :key="i"
+          :label="item"
+          :value="item"
+          ></el-option>
+        </el-select>
+    </div>
+    </div>
+    <div  class="footer">
           <el-row style="display: flex;">
             <el-col style="margin-top: 5px;margin-left: 20px;">
               <el-button size="small" @click="clearPhenomics">
@@ -35,7 +35,6 @@
             </el-col>
           </el-row>
       </div>
-  </div>
 </div>
 
 </template>
@@ -112,10 +111,19 @@ clearPhenomics() {
 </script>
 
 <style scoped>
-.main-container {
+.menu-container {
+  width: 20%;
+  max-width:300px;
+  height: 700px;
+  border-right: 1px solid #DCDFE6;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 30px;
+  padding: 30px 0;
+}
+.menu-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>
