@@ -40,6 +40,9 @@ import DictData from '@/components/DictData'
 
 // 自己的UI组件
 import UI from '@/components/UnionStyle/index'
+// 定义API接口
+import API from "@/api"
+Vue.prototype.$API= API
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts

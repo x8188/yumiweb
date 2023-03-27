@@ -21,6 +21,7 @@
                   placeholder="请选择下拉选择Rederence"
                   clearable
                   :style="{ width: '100%' }"
+                  @change="getVerDownMenu"
                 >
                   <el-option
                     v-for="(item, index) in rederenceOptions"
@@ -39,6 +40,7 @@
                   placeholder="请选择Version"
                   clearable
                   :style="{ width: '100%' }"
+                  :disabled="formData.rederence == undefined"
                 >
                   <el-option
                     v-for="(item, index) in versionOptions"
@@ -340,9 +342,9 @@
                     @change="handleCheckedCitiesChange($event, index)"
                   >
                     <el-checkbox
-                      v-for="item in co_select.op"
+                      v-for="(item, opindex) in co_select.op"
                       :label="item"
-                      :key="item"
+                      :key="opindex"
                       >{{ item }}</el-checkbox
                     >
                   </el-checkbox-group>
@@ -357,8 +359,6 @@
 </template>
 
 <script>
-import index from "watch-size";
-
 export default {
   name: "multiExp",
   components: {},
@@ -374,50 +374,28 @@ export default {
       rules: {
         rederence: [
           {
-            required: true,
+            
             message: "请选择下拉选择Rederence",
             trigger: "change",
           },
         ],
         version: [
           {
-            required: true,
+            
             message: "请选择Version",
             trigger: "change",
           },
         ],
         geneId: [
           {
-            required: true,
+            
             message: "请输入Gene ID",
             trigger: "blur",
           },
         ],
       },
-      rederenceOptions: [
-        {
-          id: 1,
-          value: 1,
-          label: "选项1",
-          children: [
-            {
-              id: 2,
-              value: 2,
-              label: "选项1-1",
-            },
-          ],
-        },
-      ],
-      versionOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
+      rederenceOptions: [],
+      versionOptions: [],
 
       // 三个不同的筛选
       tissue_filter_data: {
@@ -428,21 +406,21 @@ export default {
       tissue_filter_rules: {
         analysis: [
           {
-            required: true,
+            
             message: "请选择Analysis",
             trigger: "change",
           },
         ],
         environment: [
           {
-            required: true,
+            
             message: "请选择environment",
             trigger: "change",
           },
         ],
         germplasm: [
           {
-            required: true,
+            
             message: "请选择Germplasm",
             trigger: "change",
           },
@@ -457,28 +435,28 @@ export default {
       germplasm_filter_rules: {
         analysis: [
           {
-            required: true,
+            
             message: "请选择Analysis",
             trigger: "change",
           },
         ],
         environment: [
           {
-            required: true,
+            
             message: "请选择environment",
             trigger: "change",
           },
         ],
         tissue: [
           {
-            required: true,
+            
             message: "请选择tissue",
             trigger: "change",
           },
         ],
         population: [
           {
-            required: true,
+            
             message: "请选择population",
             trigger: "change",
           },
@@ -494,35 +472,35 @@ export default {
       environment_filter_rules: {
         analysis: [
           {
-            required: true,
+            
             message: "请选择Analysis",
             trigger: "change",
           },
         ],
         tissue: [
           {
-            required: true,
+            
             message: "请选择tissue",
             trigger: "change",
           },
         ],
         population: [
           {
-            required: true,
+            
             message: "请选择population",
             trigger: "change",
           },
         ],
         subgroup: [
           {
-            required: true,
+            
             message: "请选择subgroup",
             trigger: "change",
           },
         ],
         germplasm: [
           {
-            required: true,
+            
             message: "请选择Germplasm",
             trigger: "change",
           },
@@ -530,66 +508,12 @@ export default {
       },
 
       // 选项
-      analysisOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      environmentOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      germplasmOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      tissueOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      populationOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      subgroupOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
+      analysisOptions: [],
+      environmentOptions: [],
+      germplasmOptions: [],
+      tissueOptions: [],
+      populationOptions: [],
+      subgroupOptions: [],
 
       compare_selector: [
         {
@@ -605,11 +529,14 @@ export default {
   computed: {},
   watch: {},
   created() {
-    this.changeCompare()
+    this.changeCompare();
+    this.getRefDownMenu();
+    this.getDownMenu();
   },
   mounted() {},
   methods: {
     submitForm() {
+      this.submitALL();
       this.$refs["muExpForm"].validate((valid) => {
         if (!valid) return;
         // TODO 提交表单
@@ -632,102 +559,158 @@ export default {
         checkedCount > 0 &&
         checkedCount < this.compare_selector[index].op.length;
     },
-    changeCompare() {
+    async changeCompare() {
+      Object.keys(this.tissue_filter_data).forEach((key) => {
+        this.tissue_filter_data[key] = undefined;
+      });
+      Object.keys(this.germplasm_filter_data).forEach((key) => {
+        this.germplasm_filter_data[key] = undefined;
+      });
+      Object.keys(this.environment_filter_data).forEach((key) => {
+        this.environment_filter_data[key] = undefined;
+      });
       if (this.dbxref_id == "tissue") {
-        this.compare_selector = [
-          {
-            label: "flower",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: [
-              "B73_Female_Spikelet_Collected_on_day_as_silk",
-              "B73_Mature_Pollen",
-              "B73_Silk",
-            ],
-            isIndeterminate: true,
-          },
-          {
-            label: "leaf",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: [
-              "B73_Leaf_zone_1_Symmetrical ",
-              "B73_Leaf_Zone_3_Growth",
-              "B73_Mature_Leaf_8",
-              "B73_Leaf_Zone_2_Stomatal",
-            ],
-            isIndeterminate: true,
-          },
-          {
-            label: "leaf",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: [
-              "B73_Leaf_zone_1_Symmetrical ",
-              "B73_Leaf_Zone_3_Growth",
-              "B73_Mature_Leaf_8",
-              "B73_Leaf_Zone_2_Stomatal",
-            ],
-            isIndeterminate: true,
-          },
-          {
-            label: "flower",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: [
-              "B73_Female_Spikelet_Collected_on_day_as_silk",
-              "B73_Mature_Pollen",
-              "B73_Silk",
-            ],
-            isIndeterminate: true,
-          },
-          {
-            label: "leaf",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: [
-              "B73_Leaf_zone_1_Symmetrical ",
-              "B73_Leaf_Zone_3_Growth",
-              "B73_Mature_Leaf_8",
-              "B73_Leaf_Zone_2_Stomatal",
-            ],
-            isIndeterminate: true,
-          },
-        ];
+        let result = await this.$API.multi.reqTissue();
+        if (result.code == 200) {
+          this.compare_selector = Object.entries(result.data).map(
+            ([label, op]) => ({
+              label,
+              op,
+              checkAll: false,
+              checkedop: [],
+              isIndeterminate: true,
+            })
+          );
+        }
       } else if (this.dbxref_id == "germplasm") {
-        this.compare_selector = [
-          {
-            label: "Mixed",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: ["05wo0", "05wN230647", "7884-4HT", "8902", "B113"],
-            isIndeterminate: true,
-          },
-          {
-            label: "NSS",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: ["05wo0", "05wN230647", "7884-4HT"],
-            isIndeterminate: true,
-          },
-        ];
-      }else{
-        this.compare_selector = [
-          {
-            label: "Feild",
-            checkAll: false,
-            checkedop: ["", ""],
-            op: ["normal feild conditions"],
-            isIndeterminate: true,
-          },
-        ];
+        let result = await this.$API.multi.reqGermplasm();
+        if (result.code == 200) {
+          this.compare_selector = Object.entries(result.data).map(
+            ([label, op]) => ({
+              label,
+              op,
+              checkAll: false,
+              checkedop: [],
+              isIndeterminate: true,
+            })
+          );
+        }
+      } else {
+        let result = await this.$API.multi.reqEnvironment();
+        if (result.code == 200) {
+          this.compare_selector = Object.entries(result.data).map(
+            ([label, op]) => ({
+              label,
+              op,
+              checkAll: false,
+              checkedop: [],
+              isIndeterminate: true,
+            })
+          );
+        }
       }
+    },
+    async getDownMenu() {
+      let MultiDownMenu = await this.$API.multi.reqMultiDownMenu();
+      if (MultiDownMenu.code == 200) {
+        let data = MultiDownMenu.data;
+        this.analysisOptions = data.Analysis.map((x) => ({
+          label: x,
+          value: x,
+        }));
+        this.germplasmOptions = data.Germplasm.map((x) => ({
+          label: x,
+          value: x,
+        }));
+        this.tissueOptions = data.Tissue.map((x) => ({
+          label: x,
+          value: x,
+        }));
+        this.environmentOptions = data.Environment.map((x) => ({
+          label: x,
+          value: x,
+        }));
+        this.populationOptions = data.Population.map((x) => ({
+          label: x,
+          value: x,
+        }));
+        this.subgroupOptions = data.Subgroup.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+    },
+    async getRefDownMenu() {
+      let RefDownMenu = await this.$API.multi.reqRefDownMenu();
+      if (RefDownMenu.code == 200) {
+        let ref = RefDownMenu.data.slice(0, 10);
+
+        this.rederenceOptions = ref.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+    },
+    async getVerDownMenu() {
+      let VerDownMenu = await this.$API.multi.reqVerDownMenu(
+        this.formData.rederence
+      );
+      if (VerDownMenu.code == 200) {
+        this.versionOptions = VerDownMenu.data.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+    },
+
+    async submitALL() {
+      let fullData = {
+        reference: "",
+        version: "",
+        analysis: "",
+        flag: 0,
+        environment: "",
+        germplasm: "",
+        population: "",
+        tissue: "",
+        subgroup: "",
+        geneIds: [],
+        selects: [],
+      };
+      fullData.reference = this.formData.rederence;
+      fullData.version = this.formData.version;
+
+      if (this.dbxref_id == "tissue") {
+        fullData.flag = 1;
+        fullData.analysis = this.tissue_filter_data.analysis;
+        fullData.environment = this.tissue_filter_data.environment;
+        fullData.germplasm = this.tissue_filter_data.germplasm;
+      } else if (this.dbxref_id == "germplasm") {
+        fullData.flag = 2;
+        fullData.analysis = this.germplasm_filter_data.analysis;
+        fullData.environment = this.germplasm_filter_data.environment;
+        fullData.tissue = this.germplasm_filter_data.tissue;
+        fullData.population = this.germplasm_filter_data.population;
+      } else {
+        fullData.flag = 3;
+        fullData.analysis = this.environment_filter_data.analysis;
+        fullData.germplasm = this.environment_filter_data.germplasm;
+        fullData.tissue = this.environment_filter_data.tissue;
+        fullData.population = this.environment_filter_data.population;
+        fullData.subgroup = this.environment_filter_data.subgroup;
+      }
+
+      fullData.selects=this.compare_selector.reduce((acc, item) => [...acc, ...item.checkedop], []);
+      
+      let result = await this.$API.multi.reqMultiFull(fullData);
+
+      console.log(result);
     },
   },
 };
 </script>
 <style scoped>
-.Multi{
+.Multi {
   margin-left: 30px;
 }
 .tryButton {
