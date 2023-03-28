@@ -178,7 +178,7 @@ computed: {
 
 <style lang="scss" scoped>
 .phenomics {
-  min-width: 100px;
+  width: 100%;
 }
 .phenomics-container {
 display: flex;
@@ -192,7 +192,7 @@ visibility: hidden
 }
 .data-container {
 min-width: 1200px;
-width: 80%;
+width: 100%;
 padding: 25px 15px;
 }
 .data-top {
@@ -206,6 +206,6 @@ justify-content: space-between;
   }
 }
 .phenomics-container {
-  transition: all 1s;
+  transition: all .5s;
 }
 </style>

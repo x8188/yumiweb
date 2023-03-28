@@ -1,42 +1,36 @@
 <template>
-  <div class="menu-container" >
-    <div v-for="(name,index) in filterNames" class="menu-item">
-      <div :index="String(index)"  style="width: 80%;">
-        <!-- bfc -->
-        <div class="title" style="margin-bottom: 10px;">
-          <i>
-            <SvgIcon :icon-class="filterIcons[index]" color="212121"></SvgIcon>
-          </i>
-          <span slot="title" style="margin-left: 10px;">{{ name }}</span>
-        </div>
-        <el-select index="0" v-model="filters[name]" placeholder="" style="margin-left: 40px;width: 70%;">
-          <el-option
-          v-for="(item,i) in options[name]"
-          :key="i"
-          :label="item"
-          :value="item"
-          ></el-option>
-        </el-select>
-    </div>
-    </div>
-    <div  class="footer">
-          <el-row style="display: flex;">
-            <el-col style="margin-top: 5px;margin-left: 20px;">
-              <el-button size="small" @click="clearPhenomics">
-                <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
-                <span style="color: #20AE35">清空</span>
-             </el-button>
-            </el-col>
-            <el-col style="margin-top: 5px;">
-              <el-button type="primary" size="small" @click="checkPhenomics">
-                查询
-                  <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
-             </el-button>
-            </el-col>
-          </el-row>
+    <div class="menu-container" :class="{ hide }" >
+      <div class="header">
+        <i v-show="!hide"  class="el-icon-s-fold" style="font-size: 30px;color: #489E38;" @click="changeShow"></i>
+        <i v-show="hide"  class="el-icon-s-unfold" style="font-size: 30px;color: #489E38;"  @click="changeShow"></i>
       </div>
-</div>
-
+        <div class="menu-list">
+          <div v-for="(name,index) in filterNames" class="menu-item">
+            <div :index="String(index)"  style="width: 90%;">
+              <!-- bfc -->
+              <div class="title" style="margin-bottom: 10px;">{{ name }}</div>
+              <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;">
+                <el-option
+                v-for="(item,i) in options[name]"
+                :key="i"
+                :label="item"
+                :value="item"
+                ></el-option>
+              </el-select>
+          </div>
+          </div>
+        </div>
+        <div  class="footer">
+          <el-button size="small" @click="clearPhenomics" style="margin-right: 15px;">
+            <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
+            <span style="color: #20AE35">清空</span>
+          </el-button>
+          <el-button type="primary" size="small" @click="checkPhenomics">
+            查询
+              <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
+          </el-button>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -46,11 +40,7 @@ export default {
 components: { SvgIcon },
 data() {
 return {
-    // 默认打开的侧边栏
-    openeds: ['0','1','2','3','4','5','6','7'],
-    // 侧边栏伸缩
-    isCollapse: false,
-    // 左边的filter 考虑抽出去
+    hide: false,
     filterNames: ['Category','Type','Analysis','Name','Location','TraitDateLoc','Year'],
     filterIcons: ['calendar-alt','Type-Tool','gene','build','locate1f','location-fill','year'],
   filters: {
@@ -77,6 +67,9 @@ created() {
 this.getPhenomicsDropDown()
 },
 methods: {
+changeShow() {
+  this.hide = !this.hide
+},
 // 获取下拉框数据
 async getPhenomicsDropDown() {
   const { data }= await getPhenomicsDropDown()
@@ -110,7 +103,7 @@ clearPhenomics() {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .menu-container {
   width: 20%;
   max-width:300px;
@@ -119,11 +112,43 @@ clearPhenomics() {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 30px 0;
+  padding-top: 25px;
 }
-.menu-item {
-  width: 100%;
+
+.menu-list {
+  flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-direction: column;
+  .menu-item {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+.footer {
+  margin-top: 20px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end
+}
+.header {
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+.title {
+  font-weight: 700;
+  color: #727377;
+  font-size: 14px;
+}
+.hide {
+  width: 30px;
+  padding-right: 20px; 
+  margin-right: 20px;
+  border: none;
+  .menu-list,
+  .footer {
+    display: none;
+  }
+  
 }
 </style>
