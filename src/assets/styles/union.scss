@@ -1,5 +1,8 @@
 $mainGreen: #58C267;
 $deepGreen: #228B22;
+p {
+  font-size: 20px;
+}
 .hover-green-link {
   &:hover {
     color: $mainGreen;

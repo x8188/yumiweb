@@ -1,11 +1,10 @@
 <template>
-  <div class="geno-viewer-container">
-    <div class="geno-form">
-      <el-card>
-        <Title>
-          {{ viewerTitle }}
-        </Title>
-        <div class="tip-info" style="line-height: 26px;">Browse the genotype of certain germplasms.Simply select a analysis,and the select your interested germplasms and genomic regions to get the genotype information.</div>
+    <ZeamapCard >
+      <template v-slot:header> 
+          <Title>Geno viewer</Title> 
+      </template>
+      <template>
+        <p class="tip-info" style="line-height: 26px;">Browse the genotype of certain germplasms.Simply select a analysis,and the select your interested germplasms and genomic regions to get the genotype information.</p>
         <div class="form-container">
           <el-form>
             <div class="gene-select">
@@ -99,16 +98,16 @@
             </div>
           </div>
         </el-form>
-          <div class="submit-buttons">
-            <el-button type="primary" style="margin-right: 40px;" @click="reset()">
-              <i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset 
-            </el-button>
-            <el-button type="primary" icon="el-icon-check" @click="submitForm()">Submit</el-button>
-          </div>
+        <div class="submit-buttons">
+          <el-button type="primary" style="margin-right: 40px;" @click="reset()">
+            <i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset 
+          </el-button>
+          <el-button type="primary" icon="el-icon-check" @click="submitForm()">Submit</el-button>
         </div>
-      </el-card>
-    </div>
-  </div>
+      </div>
+    </template>
+      
+  </ZeamapCard>
 </template>
 <script>
 import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
@@ -118,7 +117,6 @@ components: { SvgIcon },
   data() {
     return {
       region: '1',
-      viewerTitle: 'Geno viewer',
       formData: {
         reference: '',
         version: '',
@@ -187,18 +185,7 @@ components: { SvgIcon },
 <style lang="scss" scoped>
 $mainColor: #09A620;
 $deepMainColor: #19692C;
-.geno-viewer-container {
-background-color: #F5F6F5;
-}
-.geno-form {
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-width: 90%;
-min-width: 900px;
-padding-top: 30px;
-padding-bottom: 50px;
-}
+
 .form-container {
 margin: 20px 0;
 background: #F1F8F8;

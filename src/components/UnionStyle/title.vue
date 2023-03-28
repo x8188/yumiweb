@@ -17,7 +17,7 @@
   <style scoped>
   .title-content
   {
-    font-size: 22px;
+    font-size: 28px;
     line-height: 30px;
     padding-left: 10px;
     border-left: 5px solid forestgreen;

@@ -1,11 +1,11 @@
 <template>
     <div class="zeamap-card-container">
       <el-card :style="{width,height}" class="card-contianer">
-        <div class="header">
+        <div class="header" v-if="showHeader">
           <slot name="header"></slot>
         </div>
         <slot/>
-        <div class="footer">
+        <div class="footer" v-if="showFooter">
             <slot name="footer"></slot>
         </div>
       </el-card>
@@ -22,6 +22,14 @@ export default {
       height: {
         type: String,
         default: ''
+      },
+      showHeader: {
+        type: Boolean,
+        default: true
+      },
+      showFooter: {
+        type: Boolean,
+        default: false
       }
     }
 }

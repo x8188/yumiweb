@@ -1,101 +1,101 @@
 <template>
-  <div class="phenomics">
-      <transition name="fade-transform" mode="out-in">
-        <div class="phenomics-container" v-show="!showInfo">
-          <SideBar @getFilterData="getFilterData" />
-          <div class="data-container">
-            <div class="data-top">
-              <div class="info-nums">
-                <span>Show</span>
-                <el-select @change="changeResultsNums" v-model="page.pageSize" style="width: 80px;margin: 0 10px;">
-                  <el-option label="10" :value="10"></el-option>
-                  <el-option label="15" :value="15"></el-option>
-                  <el-option label="20" :value="20"></el-option>
-                  <el-option label="25" :value="25"></el-option>
-                  <el-option label="50" :value="50"></el-option>
-                </el-select>
-                <span>results</span>
+    <div class="phenomics">
+        <transition name="fade-transform" mode="out-in">
+          <div class="phenomics-container" v-show="!showInfo">
+            <SideBar @getFilterData="getFilterData" />
+            <div class="data-container">
+              <div class="data-top">
+                <div class="info-nums">
+                  <span>Show</span>
+                  <el-select @change="changeResultsNums" v-model="page.pageSize" style="width: 80px;margin: 0 10px;">
+                    <el-option label="10" :value="10"></el-option>
+                    <el-option label="15" :value="15"></el-option>
+                    <el-option label="20" :value="20"></el-option>
+                    <el-option label="25" :value="25"></el-option>
+                    <el-option label="50" :value="50"></el-option>
+                  </el-select>
+                  <span>results</span>
+                </div>
+              </div>
+              <div class="data-table" style="margin-top: 30px;">
+                <el-table
+                v-loading="loading"
+                ref="multipleTable"
+                :data="tableData"
+                tooltip-effect="dark"
+                style="width: 100%"
+                >
+                <el-table-column
+                  label="UID"
+                  width="250px"
+                >
+                  <template slot-scope="scope" >
+                    <div class="" @click="changeShowInfo(scope)">
+                      <span class="origin-link-green" >
+                      {{ scope.row.xotUid }}
+                      </span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="Category"
+                  prop="category"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="Type"
+                  prop="type"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="Analysis"
+                  prop="analysis.name"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="Name"
+                  prop="name"
+                  width="200px"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="Location"
+                  prop="location"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="TraitDateLoc"
+                  prop="traitDateLoc"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="Year"
+                  prop="year"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="Tissue"
+                  prop="tissue"
+                  show-overflow-tooltip>
+                </el-table-column>
+              </el-table>
+              <el-pagination
+                background
+                :page-size="page.pageSize"
+                @current-change="changePage"
+                layout="prev, pager, next"
+                :total="page.total"
+                style="margin-top: 25px;margin-bottom: 50px;float: right;">
+              </el-pagination>
               </div>
             </div>
-            <div class="data-table" style="margin-top: 30px;">
-              <el-table
-              v-loading="loading"
-              ref="multipleTable"
-              :data="tableData"
-              tooltip-effect="dark"
-              style="width: 100%"
-              >
-              <el-table-column
-                label="UID"
-                width="250px"
-              >
-                <template slot-scope="scope" >
-                  <div class="" @click="changeShowInfo(scope)">
-                    <span class="phenomicsUid" >
-                    {{ scope.row.xotUid }}
-                    </span>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="Category"
-                prop="category"
-              >
-              </el-table-column>
-              <el-table-column
-                label="Type"
-                prop="type"
-                show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column
-                label="Analysis"
-                prop="analysis.name"
-                show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column
-                label="Name"
-                prop="name"
-                width="200px"
-                show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column
-                label="Location"
-                prop="location"
-                show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column
-                label="TraitDateLoc"
-                prop="traitDateLoc"
-                show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column
-                label="Year"
-                prop="year"
-                show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column
-                label="Tissue"
-                prop="tissue"
-                show-overflow-tooltip>
-              </el-table-column>
-            </el-table>
-            <el-pagination
-              background
-              :page-size="page.pageSize"
-              @current-change="changePage"
-              layout="prev, pager, next"
-              :total="page.total"
-              style="margin-top: 25px;margin-bottom: 50px;float: right;">
-            </el-pagination>
-            </div>
           </div>
-        </div>
+        </transition>
+      
+      <transition name="fade-transform" mode="out-in">
+        <PhenomicsInfo :show-info.sync="showInfo" :info-item="infoItem"/>
       </transition>
-    
-    <transition name="fade-transform" mode="out-in">
-      <PhenomicsInfo :show-info.sync="showInfo" :info-item="infoItem"/>
-    </transition>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -198,12 +198,6 @@ padding: 25px 15px;
 .data-top {
 display: flex;
 justify-content: space-between;
-}
-.phenomicsUid {
-  color: #63C470;
-  &:hover {
-    text-decoration: underline;
-  }
 }
 .phenomics-container {
   transition: all .5s;

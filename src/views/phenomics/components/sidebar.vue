@@ -8,8 +8,8 @@
           <div v-for="(name,index) in filterNames" class="menu-item">
             <div :index="String(index)"  style="width: 90%;">
               <!-- bfc -->
-              <div class="title" style="margin-bottom: 10px;">{{ name }}</div>
-              <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;">
+              <span class="title" >{{ name }}</span>
+              <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;margin-top: 10px;">
                 <el-option
                 v-for="(item,i) in options[name]"
                 :key="i"

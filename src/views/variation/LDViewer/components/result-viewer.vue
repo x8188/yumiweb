@@ -1,24 +1,17 @@
 <template>
-  <div class="result-views-container">
-    <transition name="hello">
-      <div class="result-data">
-        <el-card>
-          <Title>Result</Title>
-          <div class="svg-container">
-            <div>
-              <BbMap />
-          </div>
-          </div>
-        </el-card>
-      </div>
-    </transition>
-  </div>
+  <ZeamapCard>
+    <template v-slot:header>
+      <Title>Result</Title>
+    </template>
+    <BbMap />
+  </ZeamapCard>
 </template>
 
 <script>
+import ZeamapCard from '@/components/UnionStyle/zeamap-card.vue';
 import BbMap from './bbmap.vue';
 export default {
-  components: { BbMap }
+  components: { BbMap, ZeamapCard }
 }
 </script>
 
