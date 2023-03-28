@@ -28,13 +28,13 @@
                   <el-select
                     v-model="formData.reference"
                     placeholder=""
-                    @focus="focusSelect('reference')"
+                    @change="getVersionOp"
                   >
                     <el-option
                       v-for="(item, i) in options.reference"
                       :key="i"
-                      :label="item"
-                      value="1"
+                      :label="item.label"
+                      :value="item.value"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -42,62 +42,110 @@
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select v-model="formData.version" placeholder="">
+                  <el-select
+                    v-model="formData.version"
+                    :disabled="formData.reference == undefined"
+                  >
                     <el-option
                       v-for="(item, i) in options.version"
                       :key="i"
-                      :label="item"
-                      value="1"
+                      :label="item.label"
+                      :value="item.value"
                     ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
             </div>
             <div class="germplasm-select">
-              <span>Germplasm</span>
-              <el-checkbox-group
-                v-model="checkBox"
-                class="germplasm-checkbox-group"
-              >
-                <el-collapse>
-                  <el-collapse-item>
-                    <template slot="title">
-                      <el-checkbox label="TST(211/211)"> TST </el-checkbox>
-                      <i
-                        class="el-icon-arrow-down"
-                        style="margin-left: 8px"
-                      ></i>
-                    </template>
-                  </el-collapse-item>
-                </el-collapse>
-              </el-checkbox-group>
+              <span>Trait Category</span>
+              <el-select v-model="formData.TraitCategory" placeholder="">
+                <el-option
+                  v-for="(item, i) in options.TraitCategory"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </div>
+            <div class="germplasm-select">
+              <span>Trait ID</span>
+              <el-select v-model="formData.TraitId" placeholder="">
+                <el-option
+                  v-for="(item, i) in options.TraitId"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </div>
+            <div class="germplasm-select" v-show="qtlType=='linkage'">
+              <span>Link Map</span>
+              <el-select v-model="formData.LinkMap" placeholder="">
+                <el-option
+                  v-for="(item, i) in options.LinkMap"
+                  :key="i"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
             </div>
             <div class="region-select">
               <span>Region</span>
+
               <div class="region-select-form">
-                <div class="form-radio">
-                  <el-radio v-model="region" label="1">Gene flanking</el-radio>
-                </div>
-                <div class="form-item">
-                  <div class="chr">
-                    <span>chr</span>
-                    <el-form-item>
-                      <el-select v-model="formData.chr" placeholder="">
-                        <el-option label="chr" value="chr"></el-option>
-                      </el-select>
-                    </el-form-item>
+                <el-radio-group v-model="region" @input="changeRegion">
+                  <el-radio label="all">all</el-radio>
+                  <el-radio label="range">range</el-radio>
+                  <el-radio label="flank">flank</el-radio>
+                </el-radio-group>
+                <div class="form-item" v-show="region == 'range'">
+                  <div>
+                    <div class="chr">
+                      <span>chr</span>
+                      <el-form-item>
+                        <el-select v-model="formData.chr" placeholder="">
+                          <el-option
+                            v-for="(item, i) in options.chr"
+                            :key="i"
+                            :label="item.label"
+                            :value="item.value"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </div>
+                    <div class="start">
+                      <span>start</span>
+                      <el-form-item>
+                        <el-input v-model="formData.start"></el-input>
+                      </el-form-item>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <span>end</span>
+                      <el-form-item>
+                        <el-input v-model="formData.end"></el-input>
+                      </el-form-item>
+                    </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="region-select">
+              <span>QTLs</span>
+              <div class="region-select-form">
+                <div class="form-item">
                   <div class="start">
-                    <span>start</span>
+                    <span>Leading -log10(P)</span>
                     <el-form-item>
-                      <el-input v-model="formData.start"></el-input>
+                      <el-input v-model="formData.QTLstart"></el-input>
                     </el-form-item>
                   </div>
                   <span class="start-to-end"></span>
                   <div class="end">
-                    <span>end</span>
+                    <span></span>
                     <el-form-item>
-                      <el-input v-model="formData.end"></el-input>
+                      <el-input v-model="formData.QTLend"></el-input>
                     </el-form-item>
                   </div>
                 </div>
@@ -115,7 +163,7 @@
                   style="margin-right: 5px" /></i
               >Reset
             </el-button>
-            <el-button type="primary" icon="el-icon-check" @click="submitForm()"
+            <el-button type="primary" icon="el-icon-check" @click="getQtl()"
               >Submit</el-button
             >
           </div>
@@ -125,10 +173,6 @@
   </div>
 </template>
 <script>
-import {
-  dropDownReference,
-  dropDownVersion,
-} from "@/api/gemo-viewer/geno-viewer";
 import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 import Title from "@/components/CommonComponents/Title.vue";
 export default {
@@ -137,67 +181,132 @@ export default {
     return {
       qtlType: "association",
 
-      region: "1",
+      region: "all",
       viewerTitle: "Sreach QTL",
       formData: {
-        reference: "",
+        reference: undefined,
         version: "",
         population: "",
         analysis: "",
         start: "",
         end: "",
         chr: "",
+        QTLstart: "",
+        QTLend: "",
+        LinkMap,
       },
       checkBox: [],
       options: {
         reference: [],
         version: [],
+        TraitId: [],
+        TraitCategory: [],
+        chr: [],
+        LinkMap
       },
     };
   },
   created() {
-    this.dropDownReference();
-    this.dropDownVersion();
+    this.getdata();
   },
   methods: {
-    // 获取下拉框信息
-    async dropDownReference() {
-      const { data } = await dropDownReference();
-      let arr = Object.values(data);
-      arr = arr.slice(1, 51);
-      this.options.reference = arr;
-    },
-    async dropDownVersion() {
-      const { data } = await dropDownVersion();
-      console.log(data);
-      let arr = Object.values(data);
-      arr = arr.slice(1, 51);
-      this.options.version = arr;
-    },
-    submitForm() {
-      this.$emit("showResult", 1211);
-    },
-    // 疯狂道歉
-    focusSelect(name) {
-      if (this.options[name].length === 0) {
-        this.$notify({
-          title: "已成功请求",
-          message: "数据正在拉取中，请稍等",
-          type: "success",
-        });
+    async getdata() {
+      if (this.qtlType == "association") {
+        let res1 = await this.$API.Qtl.reqselectaccession();
+        if (res1.code == 200) {
+          this.options.reference = res1.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+
+        let res3 = await this.$API.Qtl.reqselecttraitcategory();
+        if (res3.code == 200) {
+          this.options.TraitCategory = res3.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        let res4 = await this.$API.Qtl.reqselecttraitid();
+        if (res4.code == 200) {
+          this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+      } else {
+        let res1 = await this.$API.Qtl.reqselectaccession();
+        if (res1.code == 200) {
+          this.options.reference = res1.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+
+        let res3 = await this.$API.Qtl.reqselecttraitcategory();
+        if (res3.code == 200) {
+          this.options.TraitCategory = res3.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        let res4 = await this.$API.Qtl.reqselecttraitid();
+        if (res4.code == 200) {
+          this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
       }
     },
-    reset() {
-      (this.region = "1"),
-        (this.viewerTitle = "Geno viewer"),
-        (this.formData.reference = ""),
-        (this.formData.version = ""),
-        (this.formData.population = ""),
-        (this.formData.analysis = ""),
-        (this.formData.checkBox = []),
-        (this.formData.start = ""),
-        (this.formData.end = ""),
-        (this.formData.chr = "");
+    async getVersionOp() {
+      if (this.qtlType == "association") {
+        let res2 = await this.$API.Qtl.reqselectversion(
+          this.formData.reference
+        );
+        if (res2.code == 200) {
+          this.options.version = res2.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+      } else {
+      }
+    },
+    async changeRegion() {
+      if (this.region == "range") {
+        let res = await this.$API.Qtl.reqselectchr();
+
+        if (res.code == 200) {
+          this.options.chr = res.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+      }
+    },
+
+    async getQtl() {
+      if (this.qtlType == "association") {
+        let data = {
+          accession: this.formData.reference,
+          version: this.formData.version,
+          omics: this.formData.TraitCategory,
+          xot_uid: this.formData.TraitId,
+          chr: this.formData.chr,
+          start: this.formData.start,
+          end: this.formData.end,
+          log_min: 0.01,
+          log_max: 100.88,
+        };
+        let res = await this.$API.Qtl.reqassociation_qtl(data);
+
+        if (res.code == 200) {
+          console.log(res);
+        }
+      }else{
+
+      }
     },
   },
 };
@@ -231,12 +340,12 @@ $deepMainColor: #19692c;
   border-bottom: 1px solid #e6ecec;
   .select-item {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     flex-grow: 1;
     margin-right: 20px;
     span {
-      margin-bottom: 10px;
-      padding-left: 5px;
+      margin-top: 10px;
+      padding-right: 10px;
     }
   }
 }
