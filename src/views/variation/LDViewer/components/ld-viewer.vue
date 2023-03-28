@@ -3,7 +3,6 @@
       <template v-slot:header>
         <Title>LD viewer</Title>
       </template>
-
         <p style="line-height: 26px;">Select the specified genomic regions to visualize the LD(Linkage Disequilibrium) R² between twp genetic variations.</p>
         <div class="form-container">
           <el-form>
@@ -93,9 +92,8 @@
 <script>
 import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import ZeamapCard from '@/components/UnionStyle/zeamap-card.vue'
 export default {
-components: { SvgIcon, ZeamapCard },
+components: { SvgIcon },
   data() {
     return {
       region: '1',
