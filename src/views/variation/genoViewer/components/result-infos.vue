@@ -1,107 +1,146 @@
 <template>
-    <div class="result-container">
-      <el-card>
-        <Title>Result</Title>
-        <el-button type="primary" style="margin-bottom: 20px;" @click="returnMultiExpression()">Return</el-button>
-        <div class="table-title" style="display: flex;justify-content: space-between;">
-          <div class="info-nums">
-           <span>show</span> 
-            <el-select v-model="infoNums" placeholder="" style="width: 80px; margin: 0 8px;">
-              <el-option label="10" value="10"></el-option>
-              <el-option label="20" value="20"></el-option>
-              <el-option label="30" value="30"></el-option>
-              <el-option label="50" value="50"></el-option>
-            </el-select>
-            <span>results</span>
+    <div class="page">
+      <div class="content_page">
+          <div class="left">
+              <div class="navigation_bar">
+                  <h2>Catalog</h2>
+                  <el-tabs tab-position="left" style="height: 220px;" @tab-click="handleClick">
+                  <el-tab-pane v-for="title in titles" :key="title">
+                      <span slot="label" class="fontClass">{{title}}</span>
+                  </el-tab-pane>
+              </el-tabs>
+              </div>
+          </div> 
+          <div class="right">
+              <div class="info_box">
+                    <el-card class="box-card" v-for="(title) in titles" :key="title" :id="title">
+                      <div slot="header" class="clearfix">
+                          <h3>{{title}}</h3>
+                      </div>
+                      <el-table
+                      :data="tableData"
+                      style="width: 100%"
+                      :show-header="false"
+                      border>
+                      <el-table-column                        
+                          prop="date"
+                          label="key"
+                          width="250">
+                      </el-table-column>
+                      <!-- <el-table-column
+                          prop="name"
+                          label="姓名"
+                          width="180">
+                      </el-table-column> -->
+                      <el-table-column
+                          prop="address"
+                          label="value">
+                      </el-table-column>
+                    </el-table>
+                      </el-card>
+              </div>
           </div>
-          <button style="padding: 5px;">
-            <SvgIcon icon-class="download02" color="858585"/>
-            <span style="margin-left: 8px; color: #929292">Download the results</span>
-          </button>
-        </div>
-        <div class="table-container">
-          <el-table
-          border
-          style="width: 100%;margin-top: 30px;">
-          <el-table-column
-            label="Position"
-          >
-          </el-table-column>
-          <el-table-column
-            label="ID"
-          >
-          </el-table-column>
-          <el-table-column
-            label="REF">
-          </el-table-column>
-          <el-table-column
-            label="ALT">
-          </el-table-column>
-          <el-table-column
-            label="238">
-          </el-table-column>
-          <el-table-column
-            label="268">
-          </el-table-column>
-          <el-table-column
-            label="501">
-          </el-table-column>
-          <el-table-column
-            label="1462">
-          </el-table-column>
-          <el-table-column
-            label="4019">
-          </el-table-column>
-          <el-table-column
-            label="5237">
-          </el-table-column>
-          <el-table-column
-            label="5311">
-          </el-table-column>
-          <el-table-column
-            label="7327">
-          </el-table-column>
-          <el-table-column
-            label="7381">
-          </el-table-column>
-          <el-table-column
-            label="9782">
-          </el-table-column>
-          <el-table-column
-            label="526018">
-          </el-table-column>
-          <el-table-column
-            label="CIMBL">
-          </el-table-column>
-        </el-table>
-        </div>
-      </el-card>
+      </div>
     </div>
-</template>
-<script>
-import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import Title from '@/components/CommonComponents/Title.vue'
-export default {
-  components: { Title, SvgIcon },
-  data() {
-    return {
-      infoNums: 10
-    }
-  },
-  methods: {
-    returnMultiExpression() {
-      this.$emit('returnMultiExpression')
-    }
+  </template>
+  
+  <script>
+  export default {
+      name:'details',
+      data() {
+          return {
+              name:'details',
+            tableData: [{
+              date: '2016-05-02',
+              name: '王小虎',
+              address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+              date: '2016-05-04',
+              name: '王小虎',
+              address: '上海市普陀区金沙江路 1517 弄'
+            }, {
+              date: '2016-05-01',
+              name: '王小虎',
+              address: '上海市普陀区金沙江路 1519 弄'
+            }, {
+              date: '2016-05-03',
+              name: '王小虎',
+              address: '上海市普陀区金沙江路 1516 弄'
+            }],
+            variantinfo:[
+              {"Summary": {"Region": "chr1:1740-1741", "RefAllele": "C", "RefGenome": "B73", "VariantID": "ZMPV01aSNPC01P000001741", "AltAlleles": "T", "RefVersion": "v4.43", "VariantType": "SNP"}},
+              {"PiePlots": {"Genotype Rate": {"ZA02aVAR000001": {"Geno": 0.8427, "Miss": 0.1573}}, "Allele Freqency": {"ZA02aVAR000001": {"ALT-T": 0.0016, "REF-C": 0.9984}}}},
+              {"Information": null},
+              {"Annotation": [{"Exon": null, "Gene": null, "Pick": "1", "Allele": "T", "Codons": null, "Impact": "MODIFIER", "Intron": null, "Strand": null, "Symbol": null, "BioType": null, "Feature": null, "Distance": null, "Amino_acids": null, "Consequence": "intergenic_variant", "CDS_position": null, "Feature_type": null, "cDNA_position": null, "Protein_position": null}]}
+            ],
+            titles:['Summary','Infomation','Annotation','Pupulation Diversity'],
+            show_key:[],
+            show_value:[]
+          }
+      },
+      methods: {
+          handleClick(tab){
+              document.getElementById(this.titles[tab.index]).scrollIntoView({behavior:'smooth'})
+          }
+      },
+      created() {
+          
+      },
   }
-}
-</script>
-
-<style scoped>
-.result-container {
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-width: 90%;
-min-width: 900px;
-}
-</style>
+  </script>
+  
+  <style>
+  .page{
+      background-color: rgb(245,246,245);
+      padding: 2% 5% 0 5%;
+  }
+  .content_page{
+      display: flex;
+      justify-content: space-between;
+  }
+  .left{
+      width: 28%;
+  }
+  .right{
+      width: 70%;
+      background-color: white;
+  }
+  .navigation_bar{
+      text-align: left;
+      background-color:white;
+      width: 100%;
+      padding-top: 1%;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  .el-tabs{
+      display: flex;  /* 序列横向撑满 */
+      flex-direction: column;
+      
+  }
+  .fontClass{
+      display: flex; /* 让字体向左靠齐 */
+      font-size: 17px;
+  }
+  h3{
+      font-size: 30px;
+      padding-left: 1%;
+      border-left: 5px solid rgb(64,158,255);
+  }
+  h2{
+      
+      margin-left: 5%;
+      padding-left: 2%;
+      border-left: 5px solid rgb(64,158,255);
+  }
+  .clearfix:after {
+      display: table;
+      content: "";
+  }
+  .clearfix:after {
+      clear: both
+  }
+  .box-card{
+     margin-bottom: 3%;
+     font-size: 20px;
+  }
+  </style>

@@ -10,33 +10,23 @@
               <div class="reference-item select-item">
                 <span>Reference</span>
                 <el-form-item>
-                  <el-select v-model="formData.reference" placeholder="" @focus="focusSelect('reference')">
-                    <el-option
-                      v-for="(item,i) in options.reference"
-                      :key="i"
-                      :label="item"
-                      value="1"
-                      ></el-option>
+                  <el-select v-model="reference" placeholder="">
+                    <el-option label="reference" value="reference"></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select v-model="formData.version" placeholder="" >
-                    <el-option
-                      v-for="(item,i) in options.version"
-                      :key="i"
-                      :label="item"
-                      value="1"
-                      ></el-option>
+                  <el-select v-model="version" placeholder="">
+                    <el-option label="version" value="version"></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="population-item select-item">
                 <span>Population</span>
                 <el-form-item>
-                  <el-select v-model="formData.population" placeholder="">
+                  <el-select v-model="population" placeholder="">
                     <el-option label="population" value="population"></el-option>
                   </el-select>
                 </el-form-item>
@@ -44,7 +34,7 @@
               <div class="analysis-item select-item">
                 <span>Analysis</span>
                 <el-form-item>
-                  <el-select v-model="formData.analysis" placeholder="">
+                  <el-select v-model="analysis" placeholder="">
                     <el-option label="analysis" value="analysis"></el-option>
                 </el-select>
                 </el-form-item>
@@ -54,13 +44,15 @@
             <span>Region</span>
             <div class="region-select-form">
               <div class="form-radio">
+                <el-radio v-model="region" label="2">Genomic range</el-radio>
                 <el-radio v-model="region" label="1">Gene flanking</el-radio>
+                <el-radio v-model="region" label="3">QTLs</el-radio>
               </div>
               <div class="form-item">
                 <div class="chr">
                   <span>chr</span>
                   <el-form-item>
-                  <el-select v-model="formData.chr" placeholder="">
+                  <el-select v-model="chr" placeholder="">
                     <el-option label="chr" value="chr"></el-option>
                   </el-select>
                 </el-form-item>
@@ -68,14 +60,14 @@
                 <div class="start">
                   <span>start</span>
                   <el-form-item>
-                    <el-input v-model="formData.start"></el-input>
+                    <el-input v-model="start"></el-input>
                   </el-form-item>
                 </div>
                 <span class="start-to-end"></span>
                 <div class="end">
                   <span>end</span>
                   <el-form-item>
-                    <el-input v-model="formData.end"></el-input>
+                    <el-input v-model="end"></el-input>
                 </el-form-item>
                 </div>
               </div>
@@ -83,7 +75,7 @@
           </div>
         </el-form>
           <div class="submit-buttons">
-            <el-button @click="reset" type="primary" style="margin-right: 40px;"><i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset </el-button>
+            <el-button type="primary" style="margin-right: 40px;"><i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset </el-button>
             <el-button type="primary" icon="el-icon-check">Submit</el-button>
           </div>
         </div>
@@ -92,7 +84,6 @@
   </div>
 </template>
 <script>
-import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 import Title from '@/components/CommonComponents/Title.vue'
 export default {
@@ -101,63 +92,14 @@ components: { Title, SvgIcon },
     return {
       region: '1',
       viewerTitle: 'Geno viewer',
-      formData: {
-        reference: '',
-        version: '',
-        population: '',
-        analysis: '',
-        start: '',
-        end: '',
-        chr: '',
-      },
+      reference: '',
+      version: '',
+      population: '',
+      analysis: '',
       checkBox: [],
-      options: {
-        reference: [],
-        version: []
-      }
-    }
-  },
-  created() {
-    this.dropDownReference()
-    this.dropDownVersion()
-  },
-  methods: {
-    // 获取下拉框信息
-    async dropDownReference() {
-      const { data }= await dropDownReference()
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.reference = arr
-    },
-    async dropDownVersion() {
-      const { data }= await dropDownVersion()
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.version = arr
-    },
-    // 疯狂道歉
-    focusSelect(name) {
-      if(this.options[name].length === 0) {
-        this.$notify({
-          title: '已成功请求',
-          message: '正在拉取数据，请稍等',
-          type: 'success'
-        })
-      }
-    },
-
-    // 重置所有条件
-    reset() {
-      this.region= '1',
-      this.viewerTitle= 'Geno viewer',
-      this.reference= '',
-      this.version= '',
-      this.population= '',
-      this.analysis= '',
-      this.checkBox= [],
-      this.start= '',
-      this.end= '',
-      this.chr= ''
+      start: '',
+      end: '',
+      chr: ''
     }
   }
 }
@@ -175,7 +117,6 @@ left: 50%;
 transform: translateX(-50%);
 width: 90%;
 min-width: 900px;
-padding-top: 30px; 
 }
 .form-container {
 margin: 20px 0;

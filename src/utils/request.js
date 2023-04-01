@@ -17,7 +17,7 @@ const service = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
   baseURL: process.env.VUE_APP_BASE_API,
   // 超时
-  timeout: 10000000
+  timeout: 100000
 })
 
 // request拦截器
@@ -29,6 +29,7 @@ service.interceptors.request.use(config => {
   if (getToken() && !isToken) {
     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   }
+  
   // get请求映射params参数
   if (config.method === 'get' && config.params) {
     let url = config.url + '?' + tansParams(config.params);
@@ -125,9 +126,13 @@ export function download(url, params, filename, config) {
     responseType: 'blob',
     ...config
   }).then(async (data) => {
+    //调试
+    console.log(data)
+
     const isLogin = await blobValidate(data);
     if (isLogin) {
       const blob = new Blob([data])
+      console.log(blob)
       saveAs(blob, filename)
     } else {
       const resText = await data.text();

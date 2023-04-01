@@ -1,301 +1,146 @@
 <template>
-  <div class="geno-viewer-container">
-    <div class="geno-form">
-      <el-card>
-        <Title>
-          {{ viewerTitle }}
-        </Title>
-        <div class="tip-info" style="line-height: 26px;">Browse the genotype of certain germplasms.Simply select a analysis,and the select your interested germplasms and genomic regions to get the genotype information.</div>
-        <div class="form-container">
-          <el-form>
-            <div class="gene-select">
-              <div class="reference-item select-item">
-                <span>Reference</span>
-                <el-form-item>
-                  <el-select v-model="formData.reference" placeholder="" @focus="focusSelect('reference')">
-                    <el-option
-                      v-for="(item,i) in options.reference"
-                      :key="i"
-                      :label="item"
-                      value="1"
-                      ></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <div class="version-item select-item">
-                <span>Version</span>
-                <el-form-item>
-                  <el-select v-model="formData.version" placeholder="" >
-                    <el-option
-                      v-for="(item,i) in options.version"
-                      :key="i"
-                      :label="item"
-                      value="1"
-                      ></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <div class="population-item select-item">
-                <span>Population</span>
-                <el-form-item>
-                  <el-select v-model="formData.population" placeholder="">
-                    <el-option label="population" value="population"></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <div class="analysis-item select-item">
-                <span>Analysis</span>
-                <el-form-item>
-                  <el-select v-model="formData.analysis" placeholder="">
-                    <el-option label="analysis" value="analysis"></el-option>
-                </el-select>
-                </el-form-item>
-              </div>
+  <div class="page">
+    <div class="content_page">
+        <div class="left">
+            <div class="navigation_bar">
+                <h2>Catalog</h2>
+                <el-tabs tab-position="left" style="height: 220px;" @tab-click="handleClick">
+                <el-tab-pane v-for="title in titles" :key="title">
+                    <span slot="label" class="fontClass">{{title}}</span>
+                </el-tab-pane>
+            </el-tabs>
             </div>
-          <div class="germplasm-select">
-            <span>Germplasm</span>
-            <el-checkbox-group v-model="checkBox" class="germplasm-checkbox-group">
-              <el-collapse>
-                <el-collapse-item>
-                  <template slot="title">
-                    <el-checkbox label="TST(211/211)">
-                      TST
-                    </el-checkbox>
-                    <i class=" el-icon-arrow-down" style="margin-left: 8px;"></i>
-                  </template>
-                </el-collapse-item>
-              </el-collapse>
-            </el-checkbox-group>
-          </div>
-          <div class="region-select">
-            <span>Region</span>
-            <div class="region-select-form">
-              <div class="form-radio">
-                <el-radio v-model="region" label="1">Gene flanking</el-radio>
-              </div>
-              <div class="form-item">
-                <div class="chr">
-                  <span>chr</span>
-                  <el-form-item>
-                  <el-select v-model="formData.chr" placeholder="">
-                    <el-option label="chr" value="chr"></el-option>
-                  </el-select>
-                </el-form-item>
-                </div>
-                <div class="start">
-                  <span>start</span>
-                  <el-form-item>
-                    <el-input v-model="formData.start"></el-input>
-                  </el-form-item>
-                </div>
-                <span class="start-to-end"></span>
-                <div class="end">
-                  <span>end</span>
-                  <el-form-item>
-                    <el-input v-model="formData.end"></el-input>
-                </el-form-item>
-                </div>
-              </div>
+        </div> 
+        <div class="right">
+            <div class="info_box">
+                  <el-card class="box-card" v-for="(title) in titles" :key="title" :id="title">
+                    <div slot="header" class="clearfix">
+                        <h3>{{title}}</h3>
+                    </div>
+                    <el-table
+                    :data="tableData"
+                    style="width: 100%"
+                    :show-header="false"
+                    border>
+                    <el-table-column                        
+                        prop="date"
+                        label="key"
+                        width="250">
+                    </el-table-column>
+                    <!-- <el-table-column
+                        prop="name"
+                        label="姓名"
+                        width="180">
+                    </el-table-column> -->
+                    <el-table-column
+                        prop="address"
+                        label="value">
+                    </el-table-column>
+                  </el-table>
+                    </el-card>
             </div>
-          </div>
-        </el-form>
-          <div class="submit-buttons">
-            <el-button type="primary" style="margin-right: 40px;" @click="reset()"><i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset </el-button>
-            <el-button type="primary" icon="el-icon-check" @click="submitForm()">Submit</el-button>
-          </div>
         </div>
-      </el-card>
     </div>
   </div>
 </template>
-<script>
-import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
-import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import Title from '@/components/CommonComponents/Title.vue'
-export default {
-components: { Title, SvgIcon },
-  data() {
-    return {
-      region: '1',
-      viewerTitle: 'Geno viewer',
-      formData: {
-        reference: '',
-        version: '',
-        population: '',
-        analysis: '',
-        start: '',
-        end: '',
-        chr: '',
-      },
-      checkBox: [],
-      options: {
-        reference: [],
-        version: []
-      },
-    }
-  },
-  created() {
-    this.dropDownReference()
-    this.dropDownVersion()
-  },
-  methods:{
-    // 获取下拉框信息
-    async dropDownReference() {
-      const { data }= await dropDownReference()
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.reference = arr
 
+<script>
+export default {
+    name:'details',
+    data() {
+        return {
+            name:'details',
+          tableData: [{
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+          }, {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
+          }, {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }, {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
+          }],
+          variantinfo:[
+            {"Summary": {"Region": "chr1:1740-1741", "RefAllele": "C", "RefGenome": "B73", "VariantID": "ZMPV01aSNPC01P000001741", "AltAlleles": "T", "RefVersion": "v4.43", "VariantType": "SNP"}},
+            {"PiePlots": {"Genotype Rate": {"ZA02aVAR000001": {"Geno": 0.8427, "Miss": 0.1573}}, "Allele Freqency": {"ZA02aVAR000001": {"ALT-T": 0.0016, "REF-C": 0.9984}}}},
+            {"Information": null},
+            {"Annotation": [{"Exon": null, "Gene": null, "Pick": "1", "Allele": "T", "Codons": null, "Impact": "MODIFIER", "Intron": null, "Strand": null, "Symbol": null, "BioType": null, "Feature": null, "Distance": null, "Amino_acids": null, "Consequence": "intergenic_variant", "CDS_position": null, "Feature_type": null, "cDNA_position": null, "Protein_position": null}]}
+          ],
+          titles:['Summary','Infomation','Annotation','Pupulation Diversity'],
+          show_key:[],
+          show_value:[]
+        }
     },
-    async dropDownVersion() {
-      const { data }= await dropDownVersion()
-      console.log(data);
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.version = arr
+    methods: {
+        handleClick(tab){
+            document.getElementById(this.titles[tab.index]).scrollIntoView({behavior:'smooth'})
+        }
     },
-    submitForm() {
-    this.$emit('showResult', 1211)
+    created() {
+        
     },
-    // 疯狂道歉
-    focusSelect(name) {
-      if(this.options[name].length === 0) {
-        this.$notify({
-          title: '已成功请求',
-          message: '数据正在拉取中，请稍等',
-          type: 'success'
-        })
-      }
-    },
-  reset() {
-      this.region= '1',
-      this.viewerTitle= 'Geno viewer',
-      this.formData.reference= '',
-      this.formData.version= '',
-      this.formData.population= '',
-      this.formData.analysis= '',
-      this.formData.checkBox= [],
-      this.formData.start= '',
-      this.formData.end= '',
-      this.formData.chr= ''
-  }
-  }
 }
 </script>
 
-<style lang="scss" scoped>
-$mainColor: #09A620;
-$deepMainColor: #19692C;
-.geno-viewer-container {
-background-color: #F5F6F5;
+<style>
+.page{
+    background-color: rgb(245,246,245);
+    padding: 2% 5% 0 5%;
 }
-.geno-form {
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-width: 90%;
-min-width: 900px;
-padding-top: 30px;
-padding-bottom: 50px;
+.content_page{
+    display: flex;
+    justify-content: space-between;
 }
-.form-container {
-margin: 20px 0;
-background: #F1F8F8;
-padding: 20px;
+.left{
+    width: 28%;
 }
-.gene-select {
-display: flex;
-justify-content: space-between;
-padding-bottom: 20px;
-margin-bottom: 20px;
-border-bottom: 1px solid #E6ECEC;
-.select-item {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-right: 20px;
-  span {
-    margin-bottom: 10px;
-    padding-left: 5px; 
-  }
+.right{
+    width: 70%;
+    background-color: white;
 }
+.navigation_bar{
+    text-align: left;
+    background-color:white;
+    width: 100%;
+    padding-top: 1%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
-.germplasm-select {
-display: flex;
-padding-bottom: 20px;
-margin-bottom: 20px;
-border-bottom: 1px solid #E6ECEC;
-span {
-  margin-right: 20px;
+.el-tabs{
+    display: flex;  /* 序列横向撑满 */
+    flex-direction: column;
+    
 }
-.germplasm-checkbox-group {
-  width: 90%;
-  ::v-deep .el-collapse-item,.el-collapse-item__header,.el-collapse-item__wrap {
-    :hover {
-      background-color: #EBEBEB;
-    }
-  }
-  ::v-deep .el-collapse-item__content {
-    background-color: #fff!important;
-    div {
-      background-color: #fff!important;
-    }
-  }
-  ::v-deep .el-collapse-item__arrow{
-    display: none;
-  }
-  ::v-deep .el-checkbox__input {
-    margin-left: 20px;
-  }
-  ::v-deep .el-checkbox__label {
-    color: #595959;
-  }
+.fontClass{
+    display: flex; /* 让字体向左靠齐 */
+    font-size: 17px;
 }
+h3{
+    font-size: 30px;
+    padding-left: 1%;
+    border-left: 5px solid rgb(64,158,255);
 }
-.region-select {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #E6ECEC;
-  span {
-    margin-right: 20px;
-  }
-  .region-select-form {
-    width: 90%;
-    .form-item {
-      display: flex;
-      margin: 15px 0;
-      padding: 30px 20px;
-      background-color: #fff;
-      span {
-        line-height: 30px;
-      }
-      div {
-        margin-right: 20px;
-        display: flex;
-        line-height: 30px;
-      }
-    }
-    .start-to-end {
-      position: relative;
-      top: 16px;
-      width: 15px;
-      height: 2px;
-      background-color: #ccc;
-    }
-  }
+h2{
+    
+    margin-left: 5%;
+    padding-left: 2%;
+    border-left: 5px solid rgb(64,158,255);
 }
-::v-deep .el-select .el-input.is-focus .el-input__inner
- {
-  border-color: $mainColor; 
+.clearfix:after {
+    display: table;
+    content: "";
 }
-
-::v-deep .el-select-dropdown__item.selected,.el-select-dropdown__item.selected {
-  font-weight: normal;
+.clearfix:after {
+    clear: both
 }
-.submit-buttons {
-  display: flex;
-  justify-content: center;
+.box-card{
+   margin-bottom: 3%;
+   font-size: 20px;
 }
 </style>

@@ -5,7 +5,8 @@
         <Title>Result</Title>
         <div class="svg-container">
           <div>
-            <BbMap />
+            <div style="width:1250px;height:117px;overflow:auto;margin-top:30px; margin-bottom:-50px;">
+            </div>
         </div>
         </div>
       </el-card>
@@ -14,10 +15,9 @@
 </template>
 
 <script>
-import BbMap from './bbmap.vue';
 import Title from '@/components/CommonComponents/Title.vue'
 export default {
-  components: { Title, BbMap }
+  components: { Title }
 }
 </script>
 
