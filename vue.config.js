@@ -10,7 +10,6 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const name = process.env.VUE_APP_TITLE || '若依管理系统' // 网页标题
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
-const webpack = require('webpack')
 
 // vue.config.js 配置说明
 //官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
@@ -30,27 +29,37 @@ module.exports = {
   productionSourceMap: false,
   // webpack-dev-server 相关配置
   devServer: {
-    // host: '43.143.200.52',
+    // host: '0.0.0.0',
     port: port,
     open: true,
     proxy: {
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
-
-      // 'dev-api/zeamap/expression':{
-      //   target:'http://43.143.200.52:8800',
-      //   pathRewrite:{'^/dev-api/zeamap/expression':''}
-      // },
-      // 'dev-api/zeamap/xxx':{
-      //   target:'http://43.143.200.52:8900',
-      //   pathRewrite:{'^/dev-api/zeamap/expression':''}
-      // },
-      [process.env.VUE_APP_BASE_API]: {
+      "dev-api/variations": {
         target: `http://43.143.200.52:8800`,
-        changeOrigin: true,
-        pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
-        }
+        pathRewrite: { "^/dev-api/variations": '/variations' },
+        // changeOrigin:true
+      },
+      "dev-api/system":{
+        target:`http://43.143.200.52:8600`,
+        pathRewrite:{"^/dev-api/system":"/system"}
+      },
+      "dev-api":{
+        target:`http://43.143.200.52:8800`,
+        pathRewrite:{
+          "^/dev-api":""
+        },
+        Connection:"keep-alive",
+        changeOrigin:true
       }
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      // [process.env.VUE_APP_BASE_API]: {
+      //   // target: `http://localhost:8080`,
+      //   target: `http://43.143.200.52:8800`,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     ['^' + process.env.VUE_APP_BASE_API]: ''
+      //   }
+      // },
+
     },
     disableHostCheck: true
   },
@@ -65,8 +74,7 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src'),
-        'jquery': path.resolve(__dirname, '../ruoyi-ui/public/js/jquery.js'),
+        '@': resolve('src')
       }
     },
     plugins: [
@@ -77,16 +85,15 @@ module.exports = {
         filename: '[path].gz[query]',   // 压缩后的文件名
         algorithm: 'gzip',              // 使用gzip压缩
         minRatio: 0.8                   // 压缩率小于1才会压缩
-      }),
-      new webpack.ProvidePlugin({
-        $: path.resolve(__dirname, '../ruoyi-ui/public/js/jquery.js'),
-        jQuery: path.resolve(__dirname, '../ruoyi-ui/public/js/jquery.js')
       })
     ],
   },
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
+
+
+    config.resolve.alias.set('@', resolve('src'))
 
     // set svg-sprite-loader
     config.module
@@ -112,7 +119,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()
@@ -142,8 +149,8 @@ module.exports = {
             })
           config.optimization.runtimeChunk('single'),
           {
-             from: path.resolve(__dirname, './public/robots.txt'), //防爬虫文件
-             to: './' //到根目录下
+            from: path.resolve(__dirname, './public/robots.txt'), //防爬虫文件
+            to: './' //到根目录下
           }
         }
       )
