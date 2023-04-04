@@ -38,6 +38,8 @@ import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
 
+// 自己的UI组件
+import UI from '@/components/UnionStyle/index'
 // 定义API接口
 import API from "@/api"
 Vue.prototype.$API= API
@@ -61,10 +63,13 @@ Vue.component('Editor', Editor)
 Vue.component('FileUpload', FileUpload)
 Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
+Vue.component('UI',UI)
 
 Vue.use(directive)
 Vue.use(plugins)
 Vue.use(VueMeta)
+// 统一的样式组件
+Vue.use(UI)
 DictData.install()
 
 /**

@@ -45,7 +45,7 @@ module.exports = {
       //   pathRewrite:{'^/dev-api/zeamap/expression':''}
       // },
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://43.143.200.52:8900`,
+        target: `http://43.143.200.52:8800`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''

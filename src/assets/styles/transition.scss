@@ -15,7 +15,7 @@
 .fade-transform--move,
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-  transition: all .5s;
+  transition: all .3s;
 }
 
 .fade-transform-leave-active {
@@ -51,3 +51,5 @@
 .breadcrumb-leave-active {
   position: absolute;
 }
+
+
