@@ -5,6 +5,16 @@
         <i v-show="hide"  class="el-icon-s-unfold" style="font-size: 30px;color: #489E38;"  @click="changeShow"></i>
       </div>
         <div class="menu-list">
+          <div class="menu-item">
+            <div style="width: 90%;">
+              <el-input
+                style="width: 90%;margin-top: 10px;"
+                placeholder="Descirption"
+                v-model="descirption">
+                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+              </el-input>
+            </div>
+          </div>
           <div v-for="(name,index) in filterNames" class="menu-item">
             <div :index="String(index)"  style="width: 90%;">
               <!-- bfc -->
@@ -34,15 +44,14 @@
 </template>
 
 <script>
-import { getPhenomicsDropDown } from '@/api/phenomics/phenomics'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
 data() {
 return {
+    descirption: '',
     hide: false,
-    filterNames: ['Category','Type','Analysis','Name','Location','TraitDateLoc','Year'],
-    filterIcons: ['calendar-alt','Type-Tool','gene','build','locate1f','location-fill','year'],
+    filterNames: ['Omics', 'Analysis Id'],
   filters: {
     Category: '',
     Type: '',
@@ -72,15 +81,15 @@ changeShow() {
 },
 // 获取下拉框数据
 async getPhenomicsDropDown() {
-  const { data }= await getPhenomicsDropDown()
-  // 这块用解构赋值怎么写来着 忘了 回来改
-  this.options.Category = data.Category
-  this.options.Type = data.Type
-  this.options.Analysis = data.Analysis
-  this.options.Name = data.Name.slice(1)
-  this.options.Location = data.Location
-  this.options.TraitDateLoc = data.TraitDateLoc
-  this.options.Year = data.Year
+  // const { data }= await getPhenomicsDropDown()
+  // // 这块用解构赋值怎么写来着 忘了 回来改
+  // this.options.Category = data.Category
+  // this.options.Type = data.Type
+  // this.options.Analysis = data.Analysis
+  // this.options.Name = data.Name.slice(1)
+  // this.options.Location = data.Location
+  // this.options.TraitDateLoc = data.TraitDateLoc
+  // this.options.Year = data.Year
 },
 // 传信息
 checkPhenomics() {
@@ -107,7 +116,7 @@ clearPhenomics() {
 .menu-container {
   width: 20%;
   max-width:300px;
-  height: 700px;
+  height: 400px;
   border-right: 1px solid #DCDFE6;
   display: flex;
   flex-direction: column;
