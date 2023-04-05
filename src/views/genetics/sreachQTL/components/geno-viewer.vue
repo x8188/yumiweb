@@ -14,10 +14,15 @@
           <div class="gene-select">
             <div class="">
               <span>QTL Type</span>
-              <el-radio v-model="qtlType" label="association"
+              <el-radio
+                v-model="qtlType"
+                label="association"
+                @input="changeType"
                 >association</el-radio
               >
-              <el-radio v-model="qtlType" label="linkage">linkage</el-radio>
+              <el-radio v-model="qtlType" label="linkage" @input="changeType"
+                >linkage</el-radio
+              >
             </div>
           </div>
           <el-form>
@@ -78,7 +83,7 @@
                 ></el-option>
               </el-select>
             </div>
-            <div class="germplasm-select" v-show="qtlType=='linkage'">
+            <div class="germplasm-select" v-show="qtlType == 'linkage'">
               <span>Link Map</span>
               <el-select v-model="formData.LinkMap" placeholder="">
                 <el-option
@@ -193,7 +198,7 @@ export default {
         chr: "",
         QTLstart: "",
         QTLend: "",
-        LinkMap,
+        LinkMap: "",
       },
       checkBox: [],
       options: {
@@ -202,12 +207,14 @@ export default {
         TraitId: [],
         TraitCategory: [],
         chr: [],
-        LinkMap
+        LinkMap: [],
       },
+      exportLoading: false,
     };
   },
   created() {
     this.getdata();
+    this.sqldownload();
   },
   methods: {
     async getdata() {
@@ -235,7 +242,7 @@ export default {
           }));
         }
       } else {
-        let res1 = await this.$API.Qtl.reqselectaccession();
+        let res1 = await this.$API.Qtl.reqlinkageaccession();
         if (res1.code == 200) {
           this.options.reference = res1.data.map((x) => ({
             label: x,
@@ -243,16 +250,23 @@ export default {
           }));
         }
 
-        let res3 = await this.$API.Qtl.reqselecttraitcategory();
+        let res3 = await this.$API.Qtl.reqlinkagetraitcategory();
         if (res3.code == 200) {
           this.options.TraitCategory = res3.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqselecttraitid();
+        let res4 = await this.$API.Qtl.reqlinkagetraitid();
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        let res5 = await this.$API.Qtl.reqlinkagemap();
+        if (res5.code == 200) {
+          this.options.LinkMap = res5.data.map((x) => ({
             label: x,
             value: x,
           }));
@@ -271,6 +285,15 @@ export default {
           }));
         }
       } else {
+        let res2 = await this.$API.Qtl.reqlinkageversion(
+          this.formData.reference
+        );
+        if (res2.code == 200) {
+          this.options.version = res2.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
       }
     },
     async changeRegion() {
@@ -304,9 +327,82 @@ export default {
         if (res.code == 200) {
           console.log(res);
         }
-      }else{
-
+      } else {
       }
+    },
+    changeType() {
+      this.getdata();
+
+      this.formData = {
+        reference: undefined,
+        version: "",
+        population: "",
+        analysis: "",
+        start: "",
+        end: "",
+        chr: "",
+        QTLstart: "",
+        QTLend: "",
+        LinkMap: "",
+      };
+    },
+
+    sqldownload() {
+      // this.$confirm("是否确认导出qtl数据项?", "警告", {
+      //   confirmButtonText: "确定",
+      //   cancelButtonText: "取消",
+      //   type: "warning",
+      // })
+      //   .then(() => {
+      //     this.exportLoading = true;
+      //     let data = {
+      //       accession: "B73",
+      //       version: "4.43.0",
+      //       omics: "Phenomics",
+      //       xot_uid: "Agro2-Row_Kernel_Number_BLUP",
+      //       chr: "",
+      //       start: 100000000,
+      //       end: 200000000,
+      //       log_min: 0.01,
+      //       log_max: 999999999,
+      //     };
+      //     return this.$API.Qtl.reqqtldownload(data);
+      //   })
+      //   .then((response) => {
+      //     console.log(response)
+      //     // this.download(response.msg);
+      //     window.location.href = baseURL + "/common/download?fileName=" + encodeURI(response.msg) + "&delete=" + true;
+      //     this.exportLoading = false;
+      //   })
+      //   .catch(() => {});
+
+      this.$confirm("是否确认导出出qtl数据项?", "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.exportLoading = true;
+          let data = {
+            accession: "B73",
+            version: "4.43.0",
+            omics: "Phenomics",
+            xot_uid: "Agro2-Row_Kernel_Number_BLUP",
+            chr: "",
+            start: 100000000,
+            end: 200000000,
+            log_min: 0.01,
+            log_max: 999999999,
+          };
+          this.download(
+            "genetics/search_qtl/association_qtl/download",
+            {
+              ...data,
+            },
+            `student_${new Date().getTime()}.xlsx`
+          );
+        })
+        .catch(() => {});
     },
   },
 };

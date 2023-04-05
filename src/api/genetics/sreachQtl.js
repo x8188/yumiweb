@@ -18,6 +18,8 @@ export const reqselectchr= () =>
 export const reqassociation_qtl= (data) =>
   request({ url: `/genetics/search_qtl/association_qtl/selectassociation_qtl`, method: "post" ,data:data});
 
+export const reqqtldownload= (data) =>
+  request({ url: `/genetics/search_qtl/association_qtl/download`, method: "post" ,data:data});
 
 
 export const reqlinkageaccession= () =>
