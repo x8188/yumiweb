@@ -9,12 +9,12 @@
           <div :index="String(index)"  style="width: 90%;">
             <!-- bfc -->
             <span class="title" >{{ name }}</span>
-            <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select index="0" v-model="filters" placeholder="" style="width: 90%;margin-top: 10px;">
               <el-option
-              v-for="(item,i) in options[name]"
+              v-for="(item,i) in 1"
               :key="i"
-              :label="item"
-              :value="item"
+              label=""
+              value=""
               ></el-option>
             </el-select>
         </div>
@@ -24,7 +24,7 @@
           <div style="width: 90%;">
             <span class="title" >Region A</span>
             <div class="item-container range-container">
-              <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+              <el-select index="0" v-model="filters.RegionA.chr" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
               <el-option
               v-for="i in 1"
               :key="i"
@@ -33,9 +33,9 @@
               ></el-option>
             </el-select>
             <div class="range-length" style="display: flex;">
-              <el-input v-model="filters.Region.start" placeholder="start" style="width: 40%"></el-input>
+              <el-input v-model="filters.RegionA.start" placeholder="start" style="width: 40%"></el-input>
               <span style="margin: 5px 8px">—</span>
-              <el-input v-model="filters.Region.end" placeholder="end" style="width: 40%"></el-input>
+              <el-input v-model="filters.RegionA.end" placeholder="end" style="width: 40%"></el-input>
             </div>
             </div>
           </div> 
@@ -45,7 +45,7 @@
           <div style="width: 90%;">
             <span class="title" >Region B</span>
             <div class="item-container range-container">
-              <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+              <el-select index="0" v-model="filters.RegionB.chr" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
               <el-option
               v-for="i in 1"
               :key="i"
@@ -54,8 +54,8 @@
               ></el-option>
             </el-select>
             <div class="range-length" style="display: flex;">
-              <el-input v-model="filters.Region.start" placeholder="start" style="width: 40%"></el-input><span style="margin: 5px 8px">—</span>
-              <el-input v-model="filters.Region.end" placeholder="end" style="width: 40%"></el-input>
+              <el-input v-model="filters.RegionB.start" placeholder="start" style="width: 40%"></el-input><span style="margin: 5px 8px">—</span>
+              <el-input v-model="filters.RegionB.end" placeholder="end" style="width: 40%"></el-input>
             </div>
             </div>
         </div>
@@ -87,7 +87,12 @@ filters: {
   Reference: '',
   Version: '',
   Analysis: '',
-  Region: {
+  RegionA: {
+    chr: '',
+    start: '',
+    end: ''
+  },
+  RegionB: {
     chr: '',
     start: '',
     end: ''
