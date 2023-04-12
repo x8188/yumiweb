@@ -13,7 +13,7 @@
             </div>
             <div class="box_right">
               <div>
-                <el-link type="success" :underline="false" class="box_right_a" @click="handle(name)">{{item.name}}</el-link>
+                <el-link type="success" :underline="false" class="box_right_a" @click="handle(item.name)">{{item.name}}</el-link>
               </div>
               <div>
                 <p>
@@ -35,7 +35,6 @@
 
 <script>
 import {listPopulation} from "@/api/germplasm/populations";
-import {details} from "@/api/germplasm/details/details";
 
 export default {
   name: "populations",
@@ -55,8 +54,8 @@ export default {
         this.populations = res.rows
       })
     },
-    handle(name){
-        this.$router.push({name:'details',params:{name}});
+    handle(arg){
+        this.$router.push({name:'details',params:{arg}});
         details(name);
     }
   }
