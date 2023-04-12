@@ -26,7 +26,7 @@
                 style="width: 100%"
                 >
                 <el-table-column
-                  label="UID"
+                  label="Omics"
                   width="250px"
                 >
                   <template slot-scope="scope" >
@@ -38,44 +38,13 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="Category"
-                  prop="category"
+                  label="Analysis Id"
+                  prop="AnalysisId"
                 >
                 </el-table-column>
                 <el-table-column
-                  label="Type"
-                  prop="type"
-                  show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column
-                  label="Analysis"
-                  prop="analysis.name"
-                  show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column
-                  label="Name"
-                  prop="name"
-                  width="200px"
-                  show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column
-                  label="Location"
-                  prop="location"
-                  show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column
-                  label="TraitDateLoc"
-                  prop="traitDateLoc"
-                  show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column
-                  label="Year"
-                  prop="year"
-                  show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column
-                  label="Tissue"
-                  prop="tissue"
+                  label="Show description"
+                  prop="Show description"
                   show-overflow-tooltip>
                 </el-table-column>
               </el-table>
@@ -93,18 +62,17 @@
         </transition>
       
       <transition name="fade-transform" mode="out-in">
-        <PhenomicsInfo :show-info.sync="showInfo" :info-item="infoItem"/>
+        <AnalysisInfo :show-info.sync="showInfo" :info-item="infoItem"/>
       </transition>
     </div>
 </template>
 
 <script>
-import PhenomicsInfo from './components/phenomics-info.vue'
+import AnalysisInfo from './components/analysis-info.vue'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 import SideBar from './components/sidebar.vue'
-import { getPhenomics } from '@/api/phenomics/phenomics'
 export default {
-components: { SideBar, SvgIcon, PhenomicsInfo },
+components: { SideBar, SvgIcon, AnalysisInfo },
 data() {
   return {
     page: {
@@ -126,9 +94,7 @@ methods: {
   // 获取phenomics的信息
   async getPhenomics() {
     this.loading = true
-    const res = await getPhenomics(this.page)
-    this.tableData = res.rows
-    this.page.total = res.total
+    
     this.loading = false
 
   },
@@ -140,38 +106,18 @@ methods: {
   // 改变每页展示的信息条数
   changeResultsNums(newVal) {
     this.page.pageSize = newVal
-    this.getPhenomics()
   },
   // 修改所在的页数
   changePage(newVal) {
     this.page.pageNum = newVal
-    this.getPhenomics()
   },
   // 展示详情信息
   changeShowInfo({ row }) {
     this.showInfo = true
     this.infoItem = row
-  },
-  toggleSelection(rows) {
-    if (rows) {
-      rows.forEach(row => {
-        this.$refs.multipleTable.toggleRowSelection(row);
-      });
-    } else {
-      this.$refs.multipleTable.clearSelection();
-    }
   }
 },
 computed: {
-  bigFilterNames() {
-    let names = []
-    // const filterNames = this.filterNames
-    this.filterNames.forEach(item => {
-      const name = item.charAt(0).toUpperCase() + item.slice(1)
-      names.push(name)
-    })
-    return names
-  }
 }
 }
 </script>

@@ -1,9 +1,9 @@
 <template>
-  <div class="LD-viewer-container">
-    <div class="LD-form">
-      <el-card>
+  <ZeamapCard>
+      <template v-slot:header>
         <Title>LD viewer</Title>
-        <div class="tip-info" style="line-height: 26px;">Select the specified genomic regions to visualize the LD(Linkage Disequilibrium) R² between twp genetic variations.</div>
+      </template>
+        <p style="line-height: 26px;">Select the specified genomic regions to visualize the LD(Linkage Disequilibrium) R² between twp genetic variations.</p>
         <div class="form-container">
           <el-form>
             <div class="gene-select">
@@ -87,16 +87,13 @@
             <el-button type="primary" icon="el-icon-check">Submit</el-button>
           </div>
         </div>
-      </el-card>
-    </div>
-  </div>
+  </ZeamapCard>
 </template>
 <script>
 import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
-import Title from '@/components/CommonComponents/Title.vue'
 export default {
-components: { Title, SvgIcon },
+components: { SvgIcon },
   data() {
     return {
       region: '1',
@@ -166,17 +163,6 @@ components: { Title, SvgIcon },
 <style lang="scss" scoped>
 $mainColor: #09A620;
 $deepMainColor: #19692C;
-.LD-viewer-container {
-background-color: #F5F6F5;
-}
-.LD-form {
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-width: 90%;
-min-width: 900px;
-padding-top: 30px; 
-}
 .form-container {
 margin: 20px 0;
 background: #F1F8F8;
