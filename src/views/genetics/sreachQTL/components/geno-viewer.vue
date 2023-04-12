@@ -210,11 +210,12 @@ export default {
         LinkMap: [],
       },
       exportLoading: false,
+      tableShow:false
     };
   },
   created() {
     this.getdata();
-    this.sqldownload();
+    // this.sqldownload();
   },
   methods: {
     async getdata() {
@@ -311,21 +312,33 @@ export default {
 
     async getQtl() {
       if (this.qtlType == "association") {
+        // let data = {
+        //   accession: this.formData.reference,
+        //   version: this.formData.version,
+        //   omics: this.formData.TraitCategory,
+        //   xot_uid: this.formData.TraitId,
+        //   chr: this.formData.chr,
+        //   start: this.formData.start,
+        //   end: this.formData.end,
+        //   log_min: 0.01,
+        //   log_max: 100.88,
+        // };
         let data = {
-          accession: this.formData.reference,
-          version: this.formData.version,
-          omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId,
-          chr: this.formData.chr,
-          start: this.formData.start,
-          end: this.formData.end,
+          accession: "B73",
+          version: "4.43.0",
+          omics: "Phenomics",
+          xot_uid: "Agro2-Row_Kernel_Number_BLUP",
+          chr: "",
+          start: 100000000,
+          end: 200000000,
           log_min: 0.01,
-          log_max: 100.88,
+          log_max: 999999999,
         };
         let res = await this.$API.Qtl.reqassociation_qtl(data);
 
         if (res.code == 200) {
           console.log(res);
+          this.tableShow=true
         }
       } else {
       }
@@ -348,34 +361,6 @@ export default {
     },
 
     sqldownload() {
-      // this.$confirm("是否确认导出qtl数据项?", "警告", {
-      //   confirmButtonText: "确定",
-      //   cancelButtonText: "取消",
-      //   type: "warning",
-      // })
-      //   .then(() => {
-      //     this.exportLoading = true;
-      //     let data = {
-      //       accession: "B73",
-      //       version: "4.43.0",
-      //       omics: "Phenomics",
-      //       xot_uid: "Agro2-Row_Kernel_Number_BLUP",
-      //       chr: "",
-      //       start: 100000000,
-      //       end: 200000000,
-      //       log_min: 0.01,
-      //       log_max: 999999999,
-      //     };
-      //     return this.$API.Qtl.reqqtldownload(data);
-      //   })
-      //   .then((response) => {
-      //     console.log(response)
-      //     // this.download(response.msg);
-      //     window.location.href = baseURL + "/common/download?fileName=" + encodeURI(response.msg) + "&delete=" + true;
-      //     this.exportLoading = false;
-      //   })
-      //   .catch(() => {});
-
       this.$confirm("是否确认导出出qtl数据项?", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -399,7 +384,7 @@ export default {
             {
               ...data,
             },
-            `student_${new Date().getTime()}.xlsx`
+            `association_qtl_${new Date().getTime()}.xlsx`
           );
         })
         .catch(() => {});
