@@ -32,8 +32,7 @@
                 </el-table-column>
 
                 <el-table-column
-                  label="Omics"
-                  width="250px"
+                  label="REF/Version"
                 >
                   <template slot-scope="scope" >
                     <div class="" @click="changeShowInfo(scope)">
@@ -44,12 +43,47 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="Analysis Id"
+                  label="Analysis"
                   prop="AnalysisId"
                 >
                 </el-table-column>
                 <el-table-column
-                  label="Show description"
+                  label="ChrA"
+                  prop="Show description"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="StartA"
+                  prop="Show description"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="EndA"
+                  prop="Show description"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="ChrB"
+                  prop="Show description"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="StartB"
+                  prop="Show description"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="EndB"
+                  prop="Show description"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="Contact_Counts"
+                  prop="Show description"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  label="P-value"
                   prop="Show description"
                   show-overflow-tooltip>
                 </el-table-column>
