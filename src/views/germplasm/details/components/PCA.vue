@@ -29,14 +29,12 @@
 </template>
 
 <script>
-import Title from "@/components/CommonComponents/Title";
 import * as echarts from 'echarts';
 import {listPCA} from "@/api/germplasm/details/pca";
 
 export default {
   name: "PCA",
   components: {
-    Title,
   },
   inheritAttrs: false,
   data() {

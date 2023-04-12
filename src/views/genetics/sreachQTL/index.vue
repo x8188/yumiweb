@@ -4,7 +4,7 @@
       <GenoViewer v-show="!showResult" @showResult="showResultData" />
     </transition>
     <transition name="fade-trans" mode="out-in">
-      <ResultInfos v-show="showResult" @returnMultiExpression="returnMultiExpression"/>
+      <ResultInfos v-show="showResult" @returnMultiExpression="returnMultiExpression" :tableData="formInfo" :filterInfo="filterInfo"/>
     </transition>
   </div>
 </template>
@@ -17,13 +17,15 @@ export default {
   data() {
     return {
       showResult: false,
-      formInfo : ''
+      formInfo : [],
+      filterInfo:{}
     }
   },
   methods: {
-    showResultData(form) {
+    showResultData(form,filter) {
       this.showResult = true
       this.formInfo = form
+      this.filterInfo=filter
     },
     returnMultiExpression() {
       this.showResult = false

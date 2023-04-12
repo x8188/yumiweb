@@ -18,3 +18,9 @@ export function choose(params) {
 }
 
 // germplasm表的下载
+export function listdownload() {
+  return request({
+    url:'/zeamap/germplasm/download',
+    method: 'get',
+  })
+}

@@ -16,7 +16,7 @@
               </el-col>
               <el-col :span="7">
                 <el-form-item label="" prop="field102">
-                  <el-button type="primary" size="medium"> Download </el-button>
+                  <el-button type="primary" size="medium" @click="download"> Download </el-button>
                 </el-form-item>
               </el-col>
             </el-form>
@@ -53,15 +53,13 @@
 </template>
 
 <script>
-import Title from "@/components/CommonComponents/Title";
 import {choose} from "@/api/germplasm/details/germplasm";
 import {listGermplasm} from "@/api/germplasm/details/germplasm";
+import {listdownload} from '@/api/germplasm/details/germplasm'
 
 export default {
   name: "germplasm",
-  components: {
-    Title
-  },
+  components: {},
   props:[],
   data() {
     return {
@@ -89,20 +87,46 @@ export default {
         this.tableData=res.rows;
       })
     },
-    screening(){
+    /*screening(){
       choose(this.field107).then(res=>{
         this.tableData=res.rows;
       })
-    },
+    },*/
     submitForm() {
       this.$refs['elForm'].validate(valid => {
         if (!valid) return
+        else {
+          choose(this.field101).then(res=>{
+            this.tableData=res.rows;
+          })
+        }
         // TODO 提交表单
       })
     },
     resetForm() {
-      this.$refs['elForm'].resetFields()
+      this.$refs['elForm'].resetFields();
+      this.getTabbleData()
     },
+    download() {
+    this.listdownload.then(res=>{
+      const link = document.createElement('a')
+      let blob = new Blob([res.data], { type: 'application/octet-stream' })
+      link.style.display = 'none'
+      link.href = URL.createObjectURL(blob)
+      link.download = 'your_file_name'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      /*const ele = document.createElement('a');
+   ele.setAttribute('href', this.$options.filters['filterUrl'](url));
+     //this.$options.filters['filterUrl']是调用全局过滤器,filterUrl是你自己项目main.js里面定义的过滤器
+   ele.setAttribute('download',name);
+   ele.style.display = 'none';
+   document.body.appendChild(ele);
+   ele.click();
+   document.body.removeChild(ele);*/
+    })
+    }
   }
 }
 </script>
