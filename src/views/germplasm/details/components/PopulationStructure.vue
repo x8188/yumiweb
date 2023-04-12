@@ -7,12 +7,11 @@
 </template>
 
 <script>
-import Title from "@/components/CommonComponents/Title";
 import * as echarts from 'echarts';
 
 export default {
   name: "populationStructure",
-  components: {Title},
+  components: {},
   props: [],
   mounted() {
     this.getPillar();

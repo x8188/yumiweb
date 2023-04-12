@@ -14,12 +14,10 @@
 </template>
 
 <script>
-import Title from "@/components/CommonComponents/Title";
 
 export default {
   name: "catalog",
   components: {
-    Title,
   }
 }
 </script>
