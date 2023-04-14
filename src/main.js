@@ -38,6 +38,9 @@ import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
 
+// 引入百度地图
+import BaiduMap from 'vue-baidu-map'
+
 // 自己的UI组件
 import UI from '@/components/UnionStyle/index'
 // 定义API接口
@@ -65,6 +68,9 @@ Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
 Vue.component('UI',UI)
 
+Vue.use(BaiduMap, {
+  ak: 'YOUR_APP_KEY'    //这个地方是官方提供的ak密钥
+})
 Vue.use(directive)
 Vue.use(plugins)
 Vue.use(VueMeta)
