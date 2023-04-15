@@ -116,6 +116,7 @@ import { queryAll,downloadAll } from '@/api/epigenomics/chromatinInteraction/ind
 import AnalysisInfo from './components/analysis-info.vue'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 import SideBar from './components/sidebar.vue'
+import { blobValidate } from '@/utils/ruoyi';
 export default {
 components: { SideBar, SvgIcon, AnalysisInfo },
 data() {
@@ -178,13 +179,26 @@ methods: {
       endB:'99999999999'
     }
 
-    const data = await downloadAll(tempQuery)
-    console.log('11',this.$download);
-    console.log(data);
+    const data = await downloadAll(this.multipleSelection)
+    const isOk = await blobValidate(data)
+    if(isOk) {
+      this.$notify({
+          title: '成功',
+          message: '请求成功，正在下载',
+          type: 'success'
+      });
 
-    var binaryData = new Uint8Array([0x50, 0x4B, 0x03, 0x04, 0x0A]);
-    var blob = new Blob([binaryData], {type: "application/octet-stream"});
-    this.$download.saveAs(blob, "hello world.txt");
+      // const res2 = await blobValidate(res1)
+      const res1 = new Blob([data])
+      const fileName = 'chromatinInteraction_'+ new Date().getTime() + '.xlsx'
+  
+      this.$download.saveAs(res1, fileName)
+    } else {
+      this.$notify.error({
+          title: '错误',
+          message: '下载失败，请联系管理员'
+      });
+    }
   },
   // 多选
   handleSelectionChange(val) {

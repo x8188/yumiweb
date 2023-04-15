@@ -48,6 +48,7 @@ export function downloadAll(data) {
   return request({
     url: '/chromatin_interaction/download',
     method: 'post',
-    data
+    data,
+    responseType: 'blob'
   })
 }
