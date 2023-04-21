@@ -10,25 +10,40 @@
               <el-input
                 style="width: 90%;margin-top: 10px;"
                 placeholder="Descirption"
-                v-model="descirption">
+                v-model="filters.description">
                 <i slot="prefix" class="el-input__icon el-icon-search"></i>
               </el-input>
             </div>
           </div>
-          <div v-for="(name,index) in filterNames" class="menu-item">
-            <div :index="String(index)"  style="width: 90%;">
-              <!-- bfc -->
-              <span class="title" >{{ name }}</span>
-              <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;margin-top: 10px;">
-                <el-option
-                v-for="(item,i) in options[name]"
-                :key="i"
-                :label="item"
-                :value="item"
-                ></el-option>
-              </el-select>
-          </div>
-          </div>
+          <div class="menu-item">
+          <div  style="width: 90%;">
+            <!-- bfc -->
+            <span class="title" >Omics</span>
+            <el-select v-model="filters.omics" placeholder="" style="width: 90%;margin-top: 10px;">
+              <el-option
+              v-for="(item,i) in options.omics"
+              :key="i"
+              :label=item
+              :value=item
+              ></el-option>
+            </el-select>
+        </div>
+        </div>
+
+        <div class="menu-item">
+          <div  style="width: 90%;">
+            <!-- bfc -->
+            <span class="title" >Analysis Id</span>
+            <el-select index="0" v-model="filters.name" placeholder="" style="width: 90%;margin-top: 10px;">
+              <el-option
+              v-for="(item,i) in options.ids"
+              :key="i"
+              :label=item
+              :value=item
+              ></el-option>
+            </el-select>
+        </div>
+        </div>
         </div>
         <div  class="footer">
           <el-button size="small" @click="clearPhenomics" style="margin-right: 15px;">
@@ -44,6 +59,7 @@
 </template>
 
 <script>
+import { dropDownOmics,dropDownAnalysisId } from '@/api/analysis/index'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
@@ -53,22 +69,13 @@ return {
     hide: false,
     filterNames: ['Omics', 'Analysis Id'],
   filters: {
-    Category: '',
-    Type: '',
-    Analysis: '',
-    Name: '',
-    Location: '',
-    TraitDateLoc: '',
-    Year: ''
+    omics: '',
+    name: '',
+    description: ''
   },
   options: {
-    Category: '',
-    Type: '',
-    Analysis: '',
-    Name: '',
-    Location: '',
-    TraitDateLoc: '',
-    Year: ''
+   omics: [],
+   ids: []
   }
   }
 },
@@ -81,15 +88,10 @@ changeShow() {
 },
 // 获取下拉框数据
 async getPhenomicsDropDown() {
-  // const { data }= await getPhenomicsDropDown()
-  // // 这块用解构赋值怎么写来着 忘了 回来改
-  // this.options.Category = data.Category
-  // this.options.Type = data.Type
-  // this.options.Analysis = data.Analysis
-  // this.options.Name = data.Name.slice(1)
-  // this.options.Location = data.Location
-  // this.options.TraitDateLoc = data.TraitDateLoc
-  // this.options.Year = data.Year
+  const omics = await dropDownOmics()
+  this.options.omics = omics.data
+  const ids = await dropDownAnalysisId()
+  this.options.ids = ids.data
 },
 // 传信息
 checkPhenomics() {
@@ -98,13 +100,9 @@ checkPhenomics() {
 // 清空数据
 clearPhenomics() {
   this.filters = {
-    Category: '',
-    Type: '',
-    Analysis: '',
-    Name: '',
-    Location: '',
-    TraitDateLoc: '',
-    Year: ''
+    omics: '',
+    name: '',
+    description: ''
   }
   this.$emit('getFilterData', this.filters)
 },
