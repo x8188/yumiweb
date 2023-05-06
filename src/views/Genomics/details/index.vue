@@ -38,7 +38,7 @@
                       </div>
                       <el-table
                       style="width: 100%"
-                      :data="Genomicsinfo"
+                      :data="AnnotationInfo"
                       border >
                         <el-table-column
                         label="ID"
@@ -64,62 +64,6 @@
                         </el-table-column>
                       </el-table>
                     </el-card>
-                    <!-- <el-card class="box-card" >
-                      <div slot="header" class="clearfix">
-                          <h3>1111</h3>
-                      </div>
-                      <el-table
-                      style="width: 100%"
-                      :show-header="false"
-                      :data="Genomicsinfo"
-                      border>
-                        <el-table-column                        
-                            width="250"
-                            label="sb1"
-                            >
-                        </el-table-column>
-                      
-                        <el-table-column
-                            label="sb2"
-                            prop=""
-                            >
-                        </el-table-column>
-                    </el-table>
-                    </el-card>
-                    <el-card class="box-card" >
-                      <div slot="header" class="clearfix">
-                          <h3>1111</h3>
-                      </div>
-                      <el-table
-                      style="width: 100%"
-                      :show-header="false"
-                      border>
-                      <el-table-column                        
-                          width="250">
-                      </el-table-column>
-                     
-                      <el-table-column
-                          label="value">
-                      </el-table-column>
-                    </el-table>
-                    </el-card>
-                    <el-card class="box-card" >
-                      <div slot="header" class="clearfix">
-                          <h3>1111</h3>
-                      </div>
-                      <el-table
-                      style="width: 100%"
-                      :show-header="false"
-                      border>
-                      <el-table-column                        
-                          width="250">
-                      </el-table-column>
-                     
-                      <el-table-column
-                          label="value">
-                      </el-table-column>
-                    </el-table>
-                    </el-card> -->
               </div>
           </div>
       </div>
@@ -127,18 +71,13 @@
   </template>
   
   <script>
-// import { title } from 'process';
-
-import { Scope } from 'quill';
 
   export default {
       name:'details',
       data() {
           return {
               name:'details',
-            Genomicsinfo:[
-              
-            ],
+            Genomicsinfo:[],
             SummaryInfo:[],
             AnnotationInfo:[],
             RelationInfo:[],
@@ -157,70 +96,31 @@ import { Scope } from 'quill';
             console.log(this.$route.query.data);
             this.Genomicsinfo = this.$route.query.data;
             console.log(this.Genomicsinfo)
-            // Object.keys(this.Genomicsinfo[0]).forEach(item=>{
-            //   var x = item
-            // })
-            // console.log(Object.values(this.variantinfo[0]))
-            // this.tableData = Object.values(this.variantinfo)
-            // console.log(this.tableData)
-            // console.log(JSON.parse(Object.values(this.variantinfo[0])))
             this.editMsg();
           },
           editMsg(){
-            const SumInfo = this.Genomicsinfo[0];
-            //处理Summary数据
-            for(let i =0 ;i<6;i++){
-              let item = Object.keys(SumInfo)[i]
-              let obj = {
-
-              }
-              obj.key = item;
-              obj.value=SumInfo[item]
-            //   Reflect.deleteProperty(SumInfo,item)
-              this.SummaryInfo.push(obj)
+            let obj = {...this.Genomicsinfo}
+            console.log(obj)
+            delete obj.functionAnnotations
+            console.log(obj)
+            for(let i=0;i<7;i++){
+              let item = Object.keys(obj)[i]
+              let oo = {}
+              oo.key = item
+              oo.value = obj[item]
+              this.SummaryInfo.push(oo)
+              console.log(this.SummaryInfo)
             }
-            //处理Function Annotation数据
-            this.AnnotationInfo = SumInfo
-            // for(let i = 6;i<Object.keys(SumInfo).length;i++)
-            // {
-            //     let item = Object.keys(SumInfo)[i];
-            //     let obj = {}
-                
-                 
-            // }
-            // Object.keys(SumInfo).forEach(item=>{
-            //   console.log(item)
-            //   let obj = {
-
-            //   }
-            //   obj.key = item;
-            //   obj.value=SumInfo[item]
-            //   this.SummaryInfo.push(obj)
-            // })
-            console.log(this.SummaryInfo)
-            console.log(SumInfo)
-            // for(var item in this.variantinfo){
-            //     console.log(item)
-            //     const obj = Object.values(item)
-            //     const obj_keys = Object.keys(obj)
-            //     console.log(obj_keys)
-            // }
-            // this.variantinfo.forEach(item => {
-            //     console.log(item)
-            //     const obj = Object.values(item)
-            //     console.log(obj)
-            //     const obj_keys = Object.keys(obj)
-            //     console.log(obj_keys)
-            // });
-
+            let fucAnn = this.Genomicsinfo['functionAnnotations']
+            console.log(fucAnn)
+            this.AnnotationInfo = fucAnn
+            console.log(this.AnnotationInfo)
           }
       },
       created() {
-        // handleAccpet();
       },
       mounted(){
         this.$nextTick(this.handleAccpet())
-        
       }
   }
   </script>
