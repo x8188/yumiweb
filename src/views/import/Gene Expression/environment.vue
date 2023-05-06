@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import { listImport, getImport, delImport, addImport, updateImport } from "@/api/Import/Gene expression/environment.js";
+import { listImport, getImport, delImport, addImport, updateImport } from "@/api/import/Gene expression/environment.js";
 
 export default {
   name: "environment",

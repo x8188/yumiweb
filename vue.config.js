@@ -29,18 +29,20 @@ module.exports = {
   productionSourceMap: false,
   // webpack-dev-server 相关配置
   devServer: {
-    // host: '0.0.0.0',
+    host: 'localhost',
     port: port,
     open: true,
     proxy: {
       "dev-api/variations": {
         target: `http://43.143.200.52:8800`,
         pathRewrite: { "^/dev-api/variations": '/variations' },
-        // changeOrigin:true
+        changeOrigin:true
       },
       "dev-api/system":{
         target:`http://43.143.200.52:8600`,
-        pathRewrite:{"^/dev-api/system":"/system"}
+        pathRewrite:{"^/dev-api/system":"/system"},
+        changeOrigin:true
+
       },
       "dev-api":{
         target:`http://43.143.200.52:8800`,
