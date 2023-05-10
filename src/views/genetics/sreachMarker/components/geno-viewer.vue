@@ -94,7 +94,41 @@
                 ></el-option>
               </el-select>
             </div>
-            <div class="region-select">
+            <div class="region-select" v-show="qtlType == 'linkage'">
+              <span>LG</span>
+              <div class="region-select-form">
+                <div class="form-item">
+                  <div>
+                    <div class="chr">
+                      <el-form-item>
+                        <el-select v-model="formData.lg" placeholder="">
+                          <el-option
+                            v-for="(item, i) in options.lg"
+                            :key="i"
+                            :label="item.label"
+                            :value="item.value"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </div>
+                    <div class="start">
+                      <el-form-item>
+                        <el-input v-model="formData.cm_min"></el-input>
+                      </el-form-item>
+                      <span>cM</span>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <el-form-item>
+                        <el-input v-model="formData.cm_max"></el-input>
+                      </el-form-item>
+                      <span>cM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="region-select" v-show="qtlType == 'association'">
               <span>Region</span>
 
               <div class="region-select-form">
@@ -135,16 +169,84 @@
                 </div>
               </div>
             </div>
-            <div class="region-select">
+            <div class="region-select" v-show="qtlType == 'association'">
               <span>Variant Type</span>
 
               <div class="region-select-form">
-                <el-radio-group v-model="varType" @input="changeRegion">
-                  <el-radio :label="vartype.value" v-for="(vartype,index) in options.varop" :key="index">{{vartype.label}}</el-radio>
-                </el-radio-group>
+                <!-- <el-radio-group v-model="varType">
+                  <el-radio
+                    :label="vartype.value"
+                    v-for="(vartype, index) in options.varop"
+                    :key="index"
+                    >{{ vartype.label }}</el-radio
+                  >
+                </el-radio-group> -->
+                <el-checkbox-group v-model="formData.varType">
+                  <el-checkbox
+                    :label="vartype.value"
+                    v-for="(vartype, index) in options.varop"
+                    :key="index"
+                    >{{ vartype.label }}</el-checkbox
+                  >
+                </el-checkbox-group>
+                <div class="form-item" style="flex-direction: column">
+                  <div style="width: 100%">
+                    <div class="chr" style="width: 20%">
+                      <span>Leading -log10(P)</span>
+                    </div>
+                    <div class="start">
+                      <span>start</span>
+                      <el-form-item>
+                        <el-input v-model="formData.log_min"></el-input>
+                      </el-form-item>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <span>end</span>
+                      <el-form-item>
+                        <el-input v-model="formData.log_max"></el-input>
+                      </el-form-item>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="chr" style="width: 20%">
+                      <span>Effect Size</span>
+                    </div>
+                    <div class="start">
+                      <span>start</span>
+                      <el-form-item>
+                        <el-input v-model="formData.effect_min"></el-input>
+                      </el-form-item>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <span>end</span>
+                      <el-form-item>
+                        <el-input v-model="formData.effect_max"></el-input>
+                      </el-form-item>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="chr" style="width: 20%">
+                      <span>PIP</span>
+                    </div>
+                    <div class="start">
+                      <span>start</span>
+                      <el-form-item>
+                        <el-input v-model="formData.pip_min"></el-input>
+                      </el-form-item>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <span>end</span>
+                      <el-form-item>
+                        <el-input v-model="formData.pip_max"></el-input>
+                      </el-form-item>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
           </el-form>
           <div class="submit-buttons">
             <el-button
@@ -185,9 +287,17 @@ export default {
         start: "",
         end: "",
         chr: "",
-        QTLstart: "",
-        QTLend: "",
+        varType: [],
         LinkMap: "",
+        log_max: "",
+        log_min: "",
+        effect_max: "",
+        effect_min: "",
+        pip_min: "",
+        pip_max: "",
+        lg: "",
+        cm_min: "",
+        cm_max: "",
       },
       checkBox: [],
       options: {
@@ -197,9 +307,9 @@ export default {
         TraitCategory: [],
         chr: [],
         LinkMap: [],
-        varop:[],
+        varop: [],
       },
-      varType:'',
+      varType: "",
       exportLoading: false,
       tableShow: false,
     };
@@ -317,8 +427,13 @@ export default {
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
-          log_min: 0.01,
-          log_max: 100.88,
+          type: this.formData.varType.toString(),
+          log_min: this.formData.log_min,
+          log_max: this.formData.log_max,
+          effect_min: this.formData.effect_min,
+          effect_max: this.formData.effect_max,
+          pip_min: this.formData.pip_min,
+          pip_max: this.formData.pip_max,
         };
         // let data = {
         //   accession: "B73",
@@ -334,31 +449,27 @@ export default {
         let res = await this.$API.marker.reqassociation_qtl(data);
 
         if (res.code == 200) {
-          this.$emit("showResult", res.data,data);
+          this.$emit("showResult", res.data, data);
         }
       } else {
         let data = {
-          accession: "B73",
-          version: "4.43.0",
-          omics: "Phenomics",
-          xot_uid: "Agro2-Kernel_Weight_BLUP",
-          linkagemap: "",
-          chr: "",
-          start: 1,
-          end: 999999999,
-          lod_min: 0.01,
-          lod_max: 1000.88,
+          accession: this.formData.reference,
+          version: this.formData.version,
+          omics: this.formData.TraitCategory,
+          linkagemap: this.formData.LinkMap,
+          xot_uid: this.formData.TraitId,
+          lg: this.formData.lg,
+          cm_min: this.formData.cm_min,
+          cm_max: this.formData.cm_max,
         };
         let res = await this.$API.marker.reqlinkage(data);
 
         if (res.code == 200) {
-          this.$emit("showResult", res.data,data);
+          this.$emit("showResult", res.data, data);
         }
       }
     },
     changeType() {
-      this.getdata();
-
       this.formData = {
         reference: undefined,
         version: "",
@@ -371,6 +482,16 @@ export default {
         QTLend: "",
         LinkMap: "",
       };
+      this.options={
+        reference: [],
+        version: [],
+        TraitId: [],
+        TraitCategory: [],
+        chr: [],
+        LinkMap: [],
+        varop: [],
+      }
+      this.getdata();
     },
   },
 };
