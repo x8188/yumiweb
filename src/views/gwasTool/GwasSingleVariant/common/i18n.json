@@ -1,7 +1,0 @@
-{
-  "en": {
-    "message": "Browse all GWAS signals related to the given variant, scatters were colored by trait category. The whole genome position and detailed position of the given variant were indicated by the yellow and red vertical line in the chromesome track and the gene track, respectively.",
-    "noPhewas": "No information related to this variant."
-  },
-  "zh-hans": {}
-}

@@ -1,12 +1,13 @@
-import Api from 'src/api'
-import Loading from 'cngbdb-ui/lib/utils/loading'
-import MetaMixin from 'src/mixins/meta'
+// import Api from 'src/api'
+// import Loading from 'cngbdb-ui/lib/utils/loading'
+import MetaMixin from './meta'
 
 export default {
   name: 'GwasSingleVariant',
   data() {
     return {
-      isIE: this.$q.platform.is.ie,
+      // isIE: this.$q.platform.is.ie,
+      isIE:false,
       variant: '',
       variantOpts: [],
       genes: [],
@@ -19,6 +20,7 @@ export default {
   },
   meta() {
     const metaInfo = MetaMixin.meta.apply(this)
+    console.log("xx",MetaMixin)
     return Object.assign(
       {
         script: {
@@ -33,12 +35,12 @@ export default {
     )
   },
   computed: {
-    title() {
-      return this.$t('gwasSingleVariant') + '-' + this.$t('zeamap')
-    },
-    locale() {
-      return this.$root.$i18n.locale
-    },
+    // title() {
+    //   return this.$t('gwasSingleVariant') + '-' + this.$t('zeamap')
+    // },
+    // locale() {
+    //   return this.$root.$i18n.locale
+    // },
   },
   methods: {
     variantFilterFn(val, update) {
@@ -170,17 +172,17 @@ export default {
     // 由于meta中d3组件库加载总无法在locuszoom之前加载完成，故初始一个空的d3全局变量以防止locuszoom报错。
     window.d3 = {}
 
-    Api.getGwasSingleVariantOptions({
-      filters: JSON.stringify([{ field: 'vid', rule: 'contain', value: '', operator: 'and' }]),
-    }).then(response => {
-      this.variant = response.data[0]
-      // 此处延迟执行的原因同上，此方法中需要使用locuszoom组件库。
-      setTimeout(async () => {
-        await this.getVariantData(this.variant)
-        window['ChangeData'] = data => {
-          this.renderChangeData(data)
-        }
-      }, 800)
-    })
+    // Api.getGwasSingleVariantOptions({
+    //   filters: JSON.stringify([{ field: 'vid', rule: 'contain', value: '', operator: 'and' }]),
+    // }).then(response => {
+    //   this.variant = response.data[0]
+    //   // 此处延迟执行的原因同上，此方法中需要使用locuszoom组件库。
+    //   setTimeout(async () => {
+    //     await this.getVariantData(this.variant)
+    //     window['ChangeData'] = data => {
+    //       this.renderChangeData(data)
+    //     }
+    //   }, 800)
+    // })
   },
 }
