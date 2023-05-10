@@ -5,37 +5,68 @@
       <i v-show="hide"  class="el-icon-s-unfold" style="font-size: 30px;color: #489E38;"  @click="changeShow"></i>
     </div>
       <div class="menu-list">
-        <div v-for="(name,index) in filterNames" class="menu-item">
-          <div :index="String(index)"  style="width: 90%;">
+        <!-- Reference -->
+        <div class="menu-item">
+          <div  style="width: 90%;">
             <!-- bfc -->
-            <span class="title" >{{ name }}</span>
-            <el-select index="0" v-model="filters" placeholder="" style="width: 90%;margin-top: 10px;">
+            <span class="title" >Reference</span>
+            <el-select filterable index="0" v-model="filters.accession" placeholder="" style="width: 90%;margin-top: 10px;">
               <el-option
-              v-for="(item,i) in 1"
+              v-for="(item,i) in options.reference"
               :key="i"
-              label=""
-              value=""
+              :label=item
+              :value=item
+              ></el-option>
+            </el-select>
+        </div>
+        </div>
+        <!-- Version -->
+        <div class="menu-item">
+          <div  style="width: 90%;">
+            <!-- bfc -->
+            <span class="title" >Version</span>
+            <el-select filterable index="0" v-model="filters.version" placeholder="" style="width: 90%;margin-top: 10px;">
+              <el-option
+              v-for="(item,i) in options.version"
+              :key="i"
+              :label=item
+              :value=item
+              ></el-option>
+            </el-select>
+        </div>
+        </div>
+        <!-- Analysis -->
+        <div class="menu-item">
+          <div style="width: 90%;">
+            <!-- bfc -->
+            <span class="title" >Analysis</span>
+            <el-select filterable v-model="filters.description" placeholder="" style="width: 90%;margin-top: 10px;">
+              <el-option
+              v-for="(item,i) in options.analysis"
+              :key="i"
+              :label=item
+              :value=item
               ></el-option>
             </el-select>
         </div>
         </div>
         <div class="menu-item">
-          <!-- rangeB -->
+          <!-- rangeA -->
           <div style="width: 90%;">
             <span class="title" >Region A</span>
             <div class="item-container range-container">
-              <el-select index="0" v-model="filters.RegionA.chr" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+              <el-select filterable v-model="filters.chrA" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
               <el-option
-              v-for="i in 1"
+              v-for="(item,i) in options.chrA"
               :key="i"
-              label=""
-              value=""
+              :label=item
+              :value=item
               ></el-option>
             </el-select>
             <div class="range-length" style="display: flex;">
-              <el-input v-model="filters.RegionA.start" placeholder="start" style="width: 40%"></el-input>
+              <el-input v-model="filters.startA" placeholder="start" style="width: 40%"></el-input>
               <span style="margin: 5px 8px">—</span>
-              <el-input v-model="filters.RegionA.end" placeholder="end" style="width: 40%"></el-input>
+              <el-input v-model="filters.endA" placeholder="end" style="width: 40%"></el-input>
             </div>
             </div>
           </div> 
@@ -45,17 +76,17 @@
           <div style="width: 90%;">
             <span class="title" >Region B</span>
             <div class="item-container range-container">
-              <el-select index="0" v-model="filters.RegionB.chr" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
-              <el-option
-              v-for="i in 1"
+              <el-select filterable v-model="filters.chrB" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+                <el-option
+              v-for="(item,i) in options.chrB"
               :key="i"
-              label=""
-              value=""
+              :label=item
+              :value=item
               ></el-option>
             </el-select>
             <div class="range-length" style="display: flex;">
-              <el-input v-model="filters.RegionB.start" placeholder="start" style="width: 40%"></el-input><span style="margin: 5px 8px">—</span>
-              <el-input v-model="filters.RegionB.end" placeholder="end" style="width: 40%"></el-input>
+              <el-input v-model="filters.startB" placeholder="start" style="width: 40%"></el-input><span style="margin: 5px 8px">—</span>
+              <el-input v-model="filters.endB" placeholder="end" style="width: 40%"></el-input>
             </div>
             </div>
         </div>
@@ -63,11 +94,11 @@
          
       </div>
       <div  class="footer">
-        <el-button size="small" @click="clearPhenomics" style="margin-right: 15px;">
+        <el-button size="small" @click="clearData" style="margin-right: 15px;">
           <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
           <span style="color: #20AE35">清空</span>
         </el-button>
-        <el-button type="primary" size="small" @click="checkPhenomics">
+        <el-button type="primary" size="small" @click="checkData">
           查询
             <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
         </el-button>
@@ -76,60 +107,111 @@
 </template>
 
 <script>
+import { dropDownAnalysis, dropDownVersion, dropDownAccession, queryChrA, queryChrB} from '@/api/epigenomics/chromatinInteraction/index'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
+created() {
+  this.getDownAll()
+},
 data() {
 return {
   hide: false,
-  filterNames: ['Reference','Version','Analysis'],
-filters: {
-  Reference: '',
-  Version: '',
-  Analysis: '',
-  RegionA: {
-    chr: '',
-    start: '',
-    end: ''
+  filters: {
+    accession: '',
+    version: '',
+    description: '',
+    // chrA
+    chrA: '',
+    startA: '',
+    endA: '',
+    // chrB
+    chrB: '',
+    startB: '',
+    endB: ''
   },
-  RegionB: {
-    chr: '',
-    start: '',
-    end: ''
+  options: {
+    reference: '',
+    version: '',
+    analysis: '',
+    // chrA
+    chrA: '',
+    // chrB
+    chrB: '',
   }
-},
-options: {
-  Reference: '',
-  Version: '',
-  Analysis: '',
 }
-}
-},
-created() {
-
 },
 methods: {
 changeShow() {
 this.hide = !this.hide
 },
+// 获取下拉框数据
+async getDownAll() {
+    const version = await dropDownVersion()
+    const accession = await dropDownAccession()
+    const analysis = await dropDownAnalysis()
+    const chrA = await queryChrA()
+    const chrB = await queryChrB()
+
+    this.options.reference = accession.data
+    this.options.version = version.data
+    this.options.analysis = analysis.data
+    this.options.chrA = chrA.data
+    this.options.chrB = chrB.data
+  },
 
 // 传信息
-checkPhenomics() {
-this.$emit('getFilterData', this.filters)
+checkData() {
+  if(this.filters.accession === '') {
+    this.filters.accession = 'B73'
+  }
+  if(this.filters.version === '') {
+    this.filters.version = '4.43.0'
+  }
+  if(this.filters.startA === '') {
+    this.filters.startA = 0
+  }
+  if(this.filters.startB === '') {
+    this.filters.startB = 0
+  }
+  if(this.filters.endA === '') {
+    this.filters.endA = 9999999999999
+  }
+  if(this.filters.endB === '') {
+    this.filters.endB = 9999999999999
+  }
+  this.$emit('getFilterData', this.filters)
 },
 // 清空数据
-clearPhenomics() {
-this.filters = {
-  Category: '',
-  Type: '',
-  Analysis: '',
-  Name: '',
-  Location: '',
-  TraitDateLoc: '',
-  Year: ''
+clearData() {
+this.filters= {
+    accession: '',
+    version: '',
+    description: '',
+    // chrA
+    chrA: '',
+    startA: '',
+    endA: '',
+    // chrB
+    chrB: '',
+    startB: '',
+    endB: ''
+  }
+  const query = {
+    accession: 'B73',
+    version: '4.43.0',
+    description: '',
+    // chrA
+    chrA: '',
+    startA: '0',
+    endA: '9999999999999999',
+    // chrB
+    chrB: '',
+    startB: '0',
+    endB: '999999999999999'
+  }
+  this.$emit('getFilterData', query)
 }
-this.$emit('getFilterData', this.filters)
-},
 }
 }
 </script>
