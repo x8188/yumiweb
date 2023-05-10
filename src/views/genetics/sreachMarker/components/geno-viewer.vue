@@ -34,7 +34,6 @@
                     v-model="formData.reference"
                     placeholder=""
                     @change="getVersionOp"
-                    filterable
                   >
                     <el-option
                       v-for="(item, i) in options.reference"
@@ -75,7 +74,7 @@
             </div>
             <div class="germplasm-select">
               <span>Trait ID</span>
-              <el-select filterable v-model="formData.TraitId" placeholder="">
+              <el-select v-model="formData.TraitId" filterable placeholder="">
                 <el-option
                   v-for="(item, i) in options.TraitId"
                   :key="i"
@@ -86,7 +85,7 @@
             </div>
             <div class="germplasm-select" v-show="qtlType == 'linkage'">
               <span>Link Map</span>
-              <el-select v-model="formData.LinkMap" placeholder="">
+              <el-select v-model="formData.LinkMap" filterable placeholder="">
                 <el-option
                   v-for="(item, i) in options.LinkMap"
                   :key="i"
@@ -95,7 +94,41 @@
                 ></el-option>
               </el-select>
             </div>
-            <div class="region-select">
+            <div class="region-select" v-show="qtlType == 'linkage'">
+              <span>LG</span>
+              <div class="region-select-form">
+                <div class="form-item">
+                  <div>
+                    <div class="chr">
+                      <el-form-item>
+                        <el-select v-model="formData.lg" placeholder="">
+                          <el-option
+                            v-for="(item, i) in options.lg"
+                            :key="i"
+                            :label="item.label"
+                            :value="item.value"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </div>
+                    <div class="start">
+                      <el-form-item>
+                        <el-input v-model="formData.cm_min"></el-input>
+                      </el-form-item>
+                      <span>cM</span>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <el-form-item>
+                        <el-input v-model="formData.cm_max"></el-input>
+                      </el-form-item>
+                      <span>cM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="region-select" v-show="qtlType == 'association'">
               <span>Region</span>
 
               <div class="region-select-form">
@@ -136,23 +169,80 @@
                 </div>
               </div>
             </div>
+            <div class="region-select" v-show="qtlType == 'association'">
+              <span>Variant Type</span>
 
-            <div class="region-select">
-              <span>QTLs</span>
               <div class="region-select-form">
-                <div class="form-item">
-                  <div class="start">
-                    <span>Leading -log10(P)</span>
-                    <el-form-item>
-                      <el-input v-model="formData.QTLstart"></el-input>
-                    </el-form-item>
+                <!-- <el-radio-group v-model="varType">
+                  <el-radio
+                    :label="vartype.value"
+                    v-for="(vartype, index) in options.varop"
+                    :key="index"
+                    >{{ vartype.label }}</el-radio
+                  >
+                </el-radio-group> -->
+                <el-checkbox-group v-model="formData.varType">
+                  <el-checkbox
+                    :label="vartype.value"
+                    v-for="(vartype, index) in options.varop"
+                    :key="index"
+                    >{{ vartype.label }}</el-checkbox
+                  >
+                </el-checkbox-group>
+                <div class="form-item" style="flex-direction: column">
+                  <div style="width: 100%">
+                    <div class="chr" style="width: 20%">
+                      <span>Leading -log10(P)</span>
+                    </div>
+                    <div class="start">
+                      <span>start</span>
+                      <el-form-item>
+                        <el-input v-model="formData.log_min"></el-input>
+                      </el-form-item>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <span>end</span>
+                      <el-form-item>
+                        <el-input v-model="formData.log_max"></el-input>
+                      </el-form-item>
+                    </div>
                   </div>
-                  <span class="start-to-end"></span>
-                  <div class="end">
-                    <span></span>
-                    <el-form-item>
-                      <el-input v-model="formData.QTLend"></el-input>
-                    </el-form-item>
+                  <div>
+                    <div class="chr" style="width: 20%">
+                      <span>Effect Size</span>
+                    </div>
+                    <div class="start">
+                      <span>start</span>
+                      <el-form-item>
+                        <el-input v-model="formData.effect_min"></el-input>
+                      </el-form-item>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <span>end</span>
+                      <el-form-item>
+                        <el-input v-model="formData.effect_max"></el-input>
+                      </el-form-item>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="chr" style="width: 20%">
+                      <span>PIP</span>
+                    </div>
+                    <div class="start">
+                      <span>start</span>
+                      <el-form-item>
+                        <el-input v-model="formData.pip_min"></el-input>
+                      </el-form-item>
+                    </div>
+                    <span class="start-to-end"></span>
+                    <div class="end">
+                      <span>end</span>
+                      <el-form-item>
+                        <el-input v-model="formData.pip_max"></el-input>
+                      </el-form-item>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -188,7 +278,7 @@ export default {
       qtlType: "association",
 
       region: "all",
-      viewerTitle: "Sreach QTL",
+      viewerTitle: "Sreach Marker",
       formData: {
         reference: undefined,
         version: "",
@@ -197,9 +287,17 @@ export default {
         start: "",
         end: "",
         chr: "",
-        QTLstart: "",
-        QTLend: "",
+        varType: [],
         LinkMap: "",
+        log_max: "",
+        log_min: "",
+        effect_max: "",
+        effect_min: "",
+        pip_min: "",
+        pip_max: "",
+        lg: "",
+        cm_min: "",
+        cm_max: "",
       },
       checkBox: [],
       options: {
@@ -209,11 +307,11 @@ export default {
         TraitCategory: [],
         chr: [],
         LinkMap: [],
+        varop: [],
       },
+      varType: "",
       exportLoading: false,
       tableShow: false,
-
-      traitid: "null",
     };
   },
   created() {
@@ -222,7 +320,7 @@ export default {
   methods: {
     async getdata() {
       if (this.qtlType == "association") {
-        let res1 = await this.$API.Qtl.reqselectaccession();
+        let res1 = await this.$API.marker.reqselectaccession();
         if (res1.code == 200) {
           this.options.reference = res1.data.map((x) => ({
             label: x,
@@ -230,22 +328,29 @@ export default {
           }));
         }
 
-        let res3 = await this.$API.Qtl.reqselecttraitcategory();
+        let res3 = await this.$API.marker.reqselecttraitcategory();
         if (res3.code == 200) {
           this.options.TraitCategory = res3.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqselecttraitid(this.traitid);
+        let res4 = await this.$API.marker.reqselecttraitid();
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        let res5 = await this.$API.marker.reqselectVarType();
+        if (res5.code == 200) {
+          this.options.varop = res5.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
       } else {
-        let res1 = await this.$API.Qtl.reqlinkageaccession();
+        let res1 = await this.$API.marker.reqlinkageaccession();
         if (res1.code == 200) {
           this.options.reference = res1.data.map((x) => ({
             label: x,
@@ -253,21 +358,21 @@ export default {
           }));
         }
 
-        let res3 = await this.$API.Qtl.reqlinkagetraitcategory();
+        let res3 = await this.$API.marker.reqlinkagetraitcategory();
         if (res3.code == 200) {
           this.options.TraitCategory = res3.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqlinkagetraitid(this.traitid);
+        let res4 = await this.$API.marker.reqlinkagetraitid();
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        let res5 = await this.$API.Qtl.reqlinkagemap();
+        let res5 = await this.$API.marker.reqlinkagemap();
         if (res5.code == 200) {
           this.options.LinkMap = res5.data.map((x) => ({
             label: x,
@@ -278,7 +383,7 @@ export default {
     },
     async getVersionOp() {
       if (this.qtlType == "association") {
-        let res2 = await this.$API.Qtl.reqselectversion(
+        let res2 = await this.$API.marker.reqselectversion(
           this.formData.reference
         );
         if (res2.code == 200) {
@@ -288,7 +393,7 @@ export default {
           }));
         }
       } else {
-        let res2 = await this.$API.Qtl.reqlinkageversion(
+        let res2 = await this.$API.marker.reqlinkageversion(
           this.formData.reference
         );
         if (res2.code == 200) {
@@ -301,7 +406,7 @@ export default {
     },
     async changeRegion() {
       if (this.region == "range") {
-        let res = await this.$API.Qtl.reqselectchr();
+        let res = await this.$API.marker.reqselectchr();
 
         if (res.code == 200) {
           this.options.chr = res.data.map((x) => ({
@@ -322,8 +427,13 @@ export default {
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
-          log_min: 0.01,
-          log_max: 100.88,
+          type: this.formData.varType.toString(),
+          log_min: this.formData.log_min,
+          log_max: this.formData.log_max,
+          effect_min: this.formData.effect_min,
+          effect_max: this.formData.effect_max,
+          pip_min: this.formData.pip_min,
+          pip_max: this.formData.pip_max,
         };
         // let data = {
         //   accession: "B73",
@@ -336,7 +446,7 @@ export default {
         //   log_min: 0.01,
         //   log_max: 999999999,
         // };
-        let res = await this.$API.Qtl.reqassociation_qtl(data);
+        let res = await this.$API.marker.reqassociation_qtl(data);
 
         if (res.code == 200) {
           this.$emit("showResult", res.data, data);
@@ -346,27 +456,13 @@ export default {
           accession: this.formData.reference,
           version: this.formData.version,
           omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId,
           linkagemap: this.formData.LinkMap,
-          chr: this.formData.chr,
-          start: this.formData.start,
-          end: this.formData.end,
-          log_min: 0.01,
-          log_max: 100.88,
+          xot_uid: this.formData.TraitId,
+          lg: this.formData.lg,
+          cm_min: this.formData.cm_min,
+          cm_max: this.formData.cm_max,
         };
-        // let data = {
-        //   accession: "B73",
-        //   version: "4.43.0",
-        //   omics: "Phenomics",
-        //   xot_uid: "Agro2-Kernel_Weight_BLUP",
-        //   linkagemap: "",
-        //   chr: "",
-        //   start: 1,
-        //   end: 999999999,
-        //   lod_min: 0.01,
-        //   lod_max: 1000.88,
-        // };
-        let res = await this.$API.Qtl.reqlinkage(data);
+        let res = await this.$API.marker.reqlinkage(data);
 
         if (res.code == 200) {
           this.$emit("showResult", res.data, data);
@@ -374,8 +470,6 @@ export default {
       }
     },
     changeType() {
-      this.getdata();
-
       this.formData = {
         reference: undefined,
         version: "",
@@ -388,19 +482,17 @@ export default {
         QTLend: "",
         LinkMap: "",
       };
+      this.options={
+        reference: [],
+        version: [],
+        TraitId: [],
+        TraitCategory: [],
+        chr: [],
+        LinkMap: [],
+        varop: [],
+      }
+      this.getdata();
     },
-    // dataFilter(val) {
-    //     this.formData.reference = val;
-    //     if (val) { //val存在
-    //       this.options.reference = tem.filter((item) => {
-    //         if (!!~item.label.indexOf(val) || !!~item.label.toUpperCase().indexOf(val.toUpperCase())) {
-    //           return true
-    //         }
-    //       })
-    //     } else { //val为空时，还原数组
-    //       this.options = tem;
-    //     }
-    //   }
   },
 };
 </script>
