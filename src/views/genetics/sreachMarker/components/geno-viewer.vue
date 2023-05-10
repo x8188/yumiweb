@@ -34,7 +34,6 @@
                     v-model="formData.reference"
                     placeholder=""
                     @change="getVersionOp"
-                    filterable
                   >
                     <el-option
                       v-for="(item, i) in options.reference"
@@ -75,7 +74,7 @@
             </div>
             <div class="germplasm-select">
               <span>Trait ID</span>
-              <el-select filterable v-model="formData.TraitId" placeholder="">
+              <el-select v-model="formData.TraitId" filterable placeholder="">
                 <el-option
                   v-for="(item, i) in options.TraitId"
                   :key="i"
@@ -86,7 +85,7 @@
             </div>
             <div class="germplasm-select" v-show="qtlType == 'linkage'">
               <span>Link Map</span>
-              <el-select v-model="formData.LinkMap" placeholder="">
+              <el-select v-model="formData.LinkMap" filterable placeholder="">
                 <el-option
                   v-for="(item, i) in options.LinkMap"
                   :key="i"
@@ -136,27 +135,16 @@
                 </div>
               </div>
             </div>
-
             <div class="region-select">
-              <span>QTLs</span>
+              <span>Variant Type</span>
+
               <div class="region-select-form">
-                <div class="form-item">
-                  <div class="start">
-                    <span>Leading -log10(P)</span>
-                    <el-form-item>
-                      <el-input v-model="formData.QTLstart"></el-input>
-                    </el-form-item>
-                  </div>
-                  <span class="start-to-end"></span>
-                  <div class="end">
-                    <span></span>
-                    <el-form-item>
-                      <el-input v-model="formData.QTLend"></el-input>
-                    </el-form-item>
-                  </div>
-                </div>
+                <el-radio-group v-model="varType" @input="changeRegion">
+                  <el-radio :label="vartype.value" v-for="(vartype,index) in options.varop" :key="index">{{vartype.label}}</el-radio>
+                </el-radio-group>
               </div>
             </div>
+
           </el-form>
           <div class="submit-buttons">
             <el-button
@@ -188,7 +176,7 @@ export default {
       qtlType: "association",
 
       region: "all",
-      viewerTitle: "Sreach QTL",
+      viewerTitle: "Sreach Marker",
       formData: {
         reference: undefined,
         version: "",
@@ -209,11 +197,11 @@ export default {
         TraitCategory: [],
         chr: [],
         LinkMap: [],
+        varop:[],
       },
+      varType:'',
       exportLoading: false,
       tableShow: false,
-
-      traitid: "null",
     };
   },
   created() {
@@ -222,7 +210,7 @@ export default {
   methods: {
     async getdata() {
       if (this.qtlType == "association") {
-        let res1 = await this.$API.Qtl.reqselectaccession();
+        let res1 = await this.$API.marker.reqselectaccession();
         if (res1.code == 200) {
           this.options.reference = res1.data.map((x) => ({
             label: x,
@@ -230,22 +218,29 @@ export default {
           }));
         }
 
-        let res3 = await this.$API.Qtl.reqselecttraitcategory();
+        let res3 = await this.$API.marker.reqselecttraitcategory();
         if (res3.code == 200) {
           this.options.TraitCategory = res3.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqselecttraitid(this.traitid);
+        let res4 = await this.$API.marker.reqselecttraitid();
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        let res5 = await this.$API.marker.reqselectVarType();
+        if (res5.code == 200) {
+          this.options.varop = res5.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
       } else {
-        let res1 = await this.$API.Qtl.reqlinkageaccession();
+        let res1 = await this.$API.marker.reqlinkageaccession();
         if (res1.code == 200) {
           this.options.reference = res1.data.map((x) => ({
             label: x,
@@ -253,21 +248,21 @@ export default {
           }));
         }
 
-        let res3 = await this.$API.Qtl.reqlinkagetraitcategory();
+        let res3 = await this.$API.marker.reqlinkagetraitcategory();
         if (res3.code == 200) {
           this.options.TraitCategory = res3.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqlinkagetraitid(this.traitid);
+        let res4 = await this.$API.marker.reqlinkagetraitid();
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        let res5 = await this.$API.Qtl.reqlinkagemap();
+        let res5 = await this.$API.marker.reqlinkagemap();
         if (res5.code == 200) {
           this.options.LinkMap = res5.data.map((x) => ({
             label: x,
@@ -278,7 +273,7 @@ export default {
     },
     async getVersionOp() {
       if (this.qtlType == "association") {
-        let res2 = await this.$API.Qtl.reqselectversion(
+        let res2 = await this.$API.marker.reqselectversion(
           this.formData.reference
         );
         if (res2.code == 200) {
@@ -288,7 +283,7 @@ export default {
           }));
         }
       } else {
-        let res2 = await this.$API.Qtl.reqlinkageversion(
+        let res2 = await this.$API.marker.reqlinkageversion(
           this.formData.reference
         );
         if (res2.code == 200) {
@@ -301,7 +296,7 @@ export default {
     },
     async changeRegion() {
       if (this.region == "range") {
-        let res = await this.$API.Qtl.reqselectchr();
+        let res = await this.$API.marker.reqselectchr();
 
         if (res.code == 200) {
           this.options.chr = res.data.map((x) => ({
@@ -336,40 +331,28 @@ export default {
         //   log_min: 0.01,
         //   log_max: 999999999,
         // };
-        let res = await this.$API.Qtl.reqassociation_qtl(data);
+        let res = await this.$API.marker.reqassociation_qtl(data);
 
         if (res.code == 200) {
-          this.$emit("showResult", res.data, data);
+          this.$emit("showResult", res.data,data);
         }
       } else {
         let data = {
-          accession: this.formData.reference,
-          version: this.formData.version,
-          omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId,
-          linkagemap: this.formData.LinkMap,
-          chr: this.formData.chr,
-          start: this.formData.start,
-          end: this.formData.end,
-          log_min: 0.01,
-          log_max: 100.88,
+          accession: "B73",
+          version: "4.43.0",
+          omics: "Phenomics",
+          xot_uid: "Agro2-Kernel_Weight_BLUP",
+          linkagemap: "",
+          chr: "",
+          start: 1,
+          end: 999999999,
+          lod_min: 0.01,
+          lod_max: 1000.88,
         };
-        // let data = {
-        //   accession: "B73",
-        //   version: "4.43.0",
-        //   omics: "Phenomics",
-        //   xot_uid: "Agro2-Kernel_Weight_BLUP",
-        //   linkagemap: "",
-        //   chr: "",
-        //   start: 1,
-        //   end: 999999999,
-        //   lod_min: 0.01,
-        //   lod_max: 1000.88,
-        // };
-        let res = await this.$API.Qtl.reqlinkage(data);
+        let res = await this.$API.marker.reqlinkage(data);
 
         if (res.code == 200) {
-          this.$emit("showResult", res.data, data);
+          this.$emit("showResult", res.data,data);
         }
       }
     },
@@ -389,18 +372,6 @@ export default {
         LinkMap: "",
       };
     },
-    // dataFilter(val) {
-    //     this.formData.reference = val;
-    //     if (val) { //val存在
-    //       this.options.reference = tem.filter((item) => {
-    //         if (!!~item.label.indexOf(val) || !!~item.label.toUpperCase().indexOf(val.toUpperCase())) {
-    //           return true
-    //         }
-    //       })
-    //     } else { //val为空时，还原数组
-    //       this.options = tem;
-    //     }
-    //   }
   },
 };
 </script>

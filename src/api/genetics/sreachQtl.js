@@ -9,8 +9,8 @@ export const reqselectversion= (accession) =>
 export const reqselecttraitcategory= () =>
   request({ url: `/genetics/search_qtl/association_qtl/selecttraitcategory`, method: "get" });
 
-export const reqselecttraitid= () =>
-  request({ url: `/genetics/search_qtl/association_qtl/selecttraitid`, method: "get" });
+export const reqselecttraitid= (trait_id) =>
+  request({ url: `/genetics/search_qtl/association_qtl/selecttraitid`, method: "get",params:{trait_id} });
 
 export const reqselectchr= () =>
   request({ url: `/genetics/search_qtl/association_qtl/selectchr`, method: "get" });
@@ -31,8 +31,8 @@ export const reqlinkageversion= (accession) =>
 export const reqlinkagetraitcategory= () =>
   request({ url: `/genetics/search_qtl/linkage_qtl/selecttraitcategory`, method: "get" });
 
-export const reqlinkagetraitid= () =>
-  request({ url: `/genetics/search_qtl/linkage_qtl/selecttraitid`, method: "get" });
+export const reqlinkagetraitid= (trait_id) =>
+  request({ url: `/genetics/search_qtl/linkage_qtl/selecttraitid`, method: "get" ,params:{trait_id}});
 
 export const reqlinkagechr= () =>
   request({ url: `/genetics/search_qtl/linkage_qtl/selectchr`, method: "get" });
