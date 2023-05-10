@@ -11,7 +11,7 @@
               <div class="reference-item select-item">
                 <span>Reference</span>
                 <el-form-item>
-                  <el-select v-model="formData.reference" placeholder="" @focus="focusSelect('reference')">
+                  <el-select filterable v-model="formData.reference" placeholder="" @focus="focusSelect('reference')">
                     <el-option
                       v-for="(item,i) in options.reference"
                       :key="i"
@@ -24,7 +24,7 @@
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select v-model="formData.version" placeholder="" >
+                  <el-select filterable v-model="formData.version" placeholder="" >
                     <el-option
                       v-for="(item,i) in options.version"
                       :key="i"
@@ -37,7 +37,7 @@
               <div class="population-item select-item">
                 <span>Population</span>
                 <el-form-item>
-                  <el-select v-model="formData.population" placeholder="">
+                  <el-select filterable v-model="formData.population" placeholder="">
                     <el-option label="population" value="population"></el-option>
                   </el-select>
                 </el-form-item>
@@ -45,7 +45,7 @@
               <div class="analysis-item select-item">
                 <span>Analysis</span>
                 <el-form-item>
-                  <el-select v-model="formData.analysis" placeholder="">
+                  <el-select filterable v-model="formData.analysis" placeholder="">
                     <el-option label="analysis" value="analysis"></el-option>
                 </el-select>
                 </el-form-item>
@@ -76,7 +76,7 @@
                 <div class="chr">
                   <span>chr</span>
                   <el-form-item>
-                  <el-select v-model="formData.chr" placeholder="">
+                  <el-select filterable v-model="formData.chr" placeholder="">
                     <el-option label="chr" value="chr"></el-option>
                   </el-select>
                 </el-form-item>

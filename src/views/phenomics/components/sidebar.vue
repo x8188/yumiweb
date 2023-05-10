@@ -9,7 +9,7 @@
             <div :index="String(index)"  style="width: 90%;">
               <!-- bfc -->
               <span class="title" >{{ name }}</span>
-              <el-select index="0" v-model="filters[name]" placeholder="" style="width: 90%;margin-top: 10px;">
+              <el-select filterable index="0" v-model="filters[name]" placeholder="" style="width: 90%;margin-top: 10px;">
                 <el-option
                 v-for="(item,i) in options[name]"
                 :key="i"

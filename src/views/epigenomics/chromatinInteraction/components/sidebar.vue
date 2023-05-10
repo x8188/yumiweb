@@ -10,7 +10,7 @@
           <div  style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Reference</span>
-            <el-select index="0" v-model="filters.accession" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select filterable index="0" v-model="filters.accession" placeholder="" style="width: 90%;margin-top: 10px;">
               <el-option
               v-for="(item,i) in options.reference"
               :key="i"
@@ -25,7 +25,7 @@
           <div  style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Version</span>
-            <el-select index="0" v-model="filters.version" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select filterable index="0" v-model="filters.version" placeholder="" style="width: 90%;margin-top: 10px;">
               <el-option
               v-for="(item,i) in options.version"
               :key="i"
@@ -40,7 +40,7 @@
           <div style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Analysis</span>
-            <el-select v-model="filters.description" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select filterable v-model="filters.description" placeholder="" style="width: 90%;margin-top: 10px;">
               <el-option
               v-for="(item,i) in options.analysis"
               :key="i"
@@ -55,7 +55,7 @@
           <div style="width: 90%;">
             <span class="title" >Region A</span>
             <div class="item-container range-container">
-              <el-select  v-model="filters.chrA" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+              <el-select filterable v-model="filters.chrA" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
               <el-option
               v-for="(item,i) in options.chrA"
               :key="i"
@@ -76,7 +76,7 @@
           <div style="width: 90%;">
             <span class="title" >Region B</span>
             <div class="item-container range-container">
-              <el-select v-model="filters.chrB" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+              <el-select filterable v-model="filters.chrB" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
                 <el-option
               v-for="(item,i) in options.chrB"
               :key="i"

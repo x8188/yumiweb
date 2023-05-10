@@ -9,7 +9,7 @@
       <div class="table-title" style="display: flex;justify-content: space-between;">
         <div class="info-nums">
           <span>show</span> 
-          <el-select v-model="infoNums" placeholder="" style="width: 80px; margin: 0 8px;">
+          <el-select filterable v-model="infoNums" placeholder="" style="width: 80px; margin: 0 8px;">
             <el-option label="10" value="10"></el-option>
             <el-option label="20" value="20"></el-option>
             <el-option label="30" value="30"></el-option>

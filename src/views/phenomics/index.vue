@@ -7,7 +7,7 @@
               <div class="data-top">
                 <div class="info-nums">
                   <span>Show</span>
-                  <el-select @change="changeResultsNums" v-model="page.pageSize" style="width: 80px;margin: 0 10px;">
+                  <el-select filterable @change="changeResultsNums" v-model="page.pageSize" style="width: 80px;margin: 0 10px;">
                     <el-option label="10" :value="10"></el-option>
                     <el-option label="15" :value="15"></el-option>
                     <el-option label="20" :value="20"></el-option>
