@@ -756,14 +756,16 @@
     height: 100vh;
     border-right: 1px solid black;
     .el-form{
-      margin-top: 20px;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
+      align-items: center;
       .el-col{
         margin: 0 auto;
-        width: 300px;
+        // width: 300px;
+        width: 80%;
         // background-color: red;
-        margin-top: 1px;
+        // margin-top: 1px;
         #inner_input{
             display: flex;
             .el-input{
@@ -789,8 +791,8 @@
         }
       }
       #inner_item{
-          width: 200px;
-          height: 220px;
+          // width: 200px;
+          // height: 220px;
           // background-color: pink;
           border: 1px solid black;
           padding: 10px;
