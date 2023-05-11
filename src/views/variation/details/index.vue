@@ -63,7 +63,7 @@
                     </el-card>
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <h3>Information</h3>
+                            <h3>PiePlots</h3>
                         </div>
                         <div style="height: 400px;" id="echarts_place" ref="echarts">
                         </div>
@@ -78,9 +78,9 @@
 </template>
   
 <script>
-import * as echarts from 'echarts/lib/echarts';
+import * as echarts from 'echarts';
 export default {
-    name: 'details',
+    name: 'detail',
     data() {
         return {
             name: 'details',
@@ -109,7 +109,7 @@ export default {
             this.tableData = Object.values(this.variantinfo)
             console.log(this.tableData)
             this.editMsg()
-            
+            this.draw("echarts_place","Geno_place")
         },
         //数据处理函数
         editMsg(){
@@ -211,7 +211,6 @@ export default {
     mounted() {
         this.$nextTick(
             this.handleAccpet(echarts_place),
-            this.draw("echarts_place","Geno_place")
         )
         
     }
