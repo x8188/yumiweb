@@ -154,10 +154,10 @@
       ></right-toolbar>
     </el-row> -->
     <div class="tableDiv">
-      <div :class="{ fitershide:filterHide }" class="filterDiv">
+      <div :class="{ fitershide: filterHide }" class="filterDiv">
         <div @click="filterHide = !filterHide" class="fiterShow">
-        <i v-if="filterHide" class="el-icon-s-fold"></i>
-        <i v-else class="el-icon-s-unfold"></i>
+          <i v-if="filterHide" class="el-icon-s-fold"></i>
+          <i v-else class="el-icon-s-unfold"></i>
         </div>
         <div v-show="filterHide">
           <div>
@@ -177,6 +177,7 @@
                 placeholder="请选择Reference"
                 clearable
                 :style="{ width: '100%' }"
+                @change="getVersionOp"
               >
                 <el-option
                   v-for="(item, index) in referenceOptions"
@@ -193,6 +194,7 @@
                 placeholder="请选择Version"
                 clearable
                 :style="{ width: '100%' }"
+                :disabled="formData.reference == undefined"
               >
                 <el-option
                   v-for="(item, index) in versionOptions"
@@ -235,6 +237,38 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="TF Family" prop="tf">
+              <el-select
+                v-model="formData.tfFamily"
+                placeholder="请选择TF"
+                clearable
+                :style="{ width: '100%' }"
+              >
+                <el-option
+                  v-for="(item, index) in tfFamilyOptions"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="TF Name" prop="tf">
+              <el-select
+                v-model="formData.tfName"
+                placeholder="请选择TF"
+                clearable
+                :style="{ width: '100%' }"
+              >
+                <el-option
+                  v-for="(item, index) in tfNameOptions"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                ></el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item label="Target Gene ID" prop="geneId">
               <el-select
                 v-model="formData.geneId"
@@ -260,48 +294,49 @@
               ></el-input>
             </el-form-item>
           </el-form>
+          <el-button type="" @click="updata">筛选</el-button>
         </div>
       </div>
       <div class="tabelhide tableclass">
         <!-- v-loading="loading" -->
-        <el-table
-          
-          :data="tfbdList"
-          
-        >
+        <el-table :data="tfbdList">
           <el-table-column type="selection" width="55" align="center" />
-          <el-table-column label="编号" align="center" prop="tfbdId" />
-          <el-table-column label="基因名" align="center" prop="tfbdName" />
-          <el-table-column label="组群" align="center" prop="tfbdFamily" />
+          <el-table-column label="accession" align="center" prop="accession" />
+          <el-table-column label="version" align="center" prop="version" />
           <el-table-column
-            label="simplename"
+            label="analysis"
             align="center"
-            prop="tfbdSimplename"
+            prop="analysis_name"
           />
-          <el-table-column label="genev4" align="center" prop="tfbdGenev4" />
-          <el-table-column label="genev3" align="center" prop="tfbdGenev3" />
-          <el-table-column label="class" align="center" prop="tfbdClass" />
-          <el-table-column label="AtID" align="center" prop="tfbdAtid" />
+          <el-table-column label="info" align="center" prop="info_name" />
           <el-table-column
-            label="atsimplename"
+            label="info_simplename"
             align="center"
-            prop="tfbdAtsimplename"
+            prop="info_simplename"
           />
           <el-table-column
-            label="description"
+            label="info_family"
             align="center"
-            prop="tfbdDescription"
+            prop="info_family"
           />
           <el-table-column
-            label="phenotype"
+            label="target_gene"
             align="center"
-            prop="tfbdPhenotype"
+            prop="target_gene"
           />
+          <!-- <el-table-column
+            label="updateTime"
+            align="center"
+            prop="updateTime"
+          />
+          <el-table-column label="updateBy" align="center" prop="updateBy" />
           <el-table-column
-            label="analysisID"
+            label="createTime"
             align="center"
-            prop="tfbdAnalysisid"
+            prop="createTime"
           />
+          <el-table-column label="createBy" align="center" prop="createBy" /> -->
+          <el-table-column label="p_value" align="center" prop="p_value" />
           <el-table-column
             label="操作"
             align="center"
@@ -329,13 +364,12 @@
         </el-table>
       </div>
     </div>
-      <!-- @pagination="getList" -->
+    <!-- @pagination="getList" -->
     <pagination
       v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      
     />
 
     <!-- 添加或修改Transcriptomics对话框 -->
@@ -407,9 +441,11 @@ export default {
     return {
       formData: {
         reference: undefined,
-        version: "",
+        version: undefined,
         analysis: undefined,
         tf: undefined,
+        tfFamily: undefined,
+        tfName: undefined,
         geneId: undefined,
         maxPvalue: undefined,
       },
@@ -427,57 +463,14 @@ export default {
         ],
         maxPvalue: [],
       },
-      referenceOptions: [
-        {
-          label: "B73",
-          value: 1,
-        },
-        {
-          label: "XXXX",
-          value: 2,
-        },
-      ],
-      versionOptions: [
-        {
-          label: "4.43.0",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      analysisOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      tfOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
-      geneIdOptions: [
-        {
-          label: "选项一",
-          value: 1,
-        },
-        {
-          label: "选项二",
-          value: 2,
-        },
-      ],
+      referenceOptions: [],
+      versionOptions: [],
+      analysisOptions: [],
+      tfOptions: [],
+      geneIdOptions: [],
 
+      tfNameOptions: [],
+      tfFamilyOptions: [],
       // 筛选器是否隐藏
       filterHide: false,
       // 遮罩层
@@ -522,8 +515,109 @@ export default {
   },
   created() {
     // this.getList();
+    this.getFilterOp();
+    // let from = {
+    //   accession: "is_transitive",
+    //   version: "",
+    //   analysis_name: "",
+    //   info_name: "",
+    //   info_simplename: "",
+    //   info_family: "",
+    //   target_gene: "",
+    //   p_value: "",
+    // };
+    let file = new FormData();
+    file.append("accession", "");
+    file.append("version", "");
+    file.append("analysis_name", "");
+    file.append("info_name", "");
+    file.append("info_simplename", "");
+    file.append("info_family", "");
+    file.append("target_gene", "");
+    file.append("p_value", "");
+    this.getTaleData(file);
   },
   methods: {
+    async getFilterOp() {
+      let res1 = await this.$API.trans.reqSelectReference();
+      if (res1.code == 200) {
+        this.referenceOptions = res1.data.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+
+      let res3 = await this.$API.trans.reqSelectAnalysis();
+      if (res3.code == 200) {
+        this.analysisOptions = res3.data.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+      let res4 = await this.$API.trans.reqSelectTFID();
+      if (res4.code == 200) {
+        this.tfOptions = res4.data.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+      let res5 = await this.$API.trans.reqSelectTFGeneID();
+      if (res5.code == 200) {
+        let ref = res5.data.slice(0, 10);
+        this.geneIdOptions = ref.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+      let res6 = await this.$API.trans.reqSelectTFName();
+      if (res6.code == 200) {
+        this.tfNameOptions = res6.data.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+      let res7 = await this.$API.trans.reqSelectTFFamily();
+      if (res7.code == 200) {
+        this.tfFamilyOptions = res7.data.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+    },
+    async getVersionOp() {
+      // let file = new FormData();
+      // file.append('accession',this.formData.reference);
+      let res2 = await this.$API.trans.reqSelectVersion(
+        this.formData.reference
+      );
+      if (res2.code == 200) {
+        this.versionOptions = res2.data.map((x) => ({
+          label: x,
+          value: x,
+        }));
+      }
+    },
+
+    async getTaleData(from) {
+      let result = await this.$API.trans.reqSelectInfo(from);
+      if (result.code == 200) {
+        this.tfbdList = result.data;
+      }
+    },
+
+    updata() {
+      let file = new FormData();
+      file.append("accession",  this.formData.reference || "");
+      file.append("version", this.formData.version || "");
+      file.append("analysis_name", this.formData.analysis || "");
+      file.append("info_name",  this.formData.tf || "");
+      file.append("info_simplename", this.formData.tfName || "");
+      file.append("info_family",  this.formData.tfFamily || "");
+      file.append("target_gene", this.formData.geneId || "");
+      file.append("p_value", this.formData.maxPvalue || "");
+      
+      this.getTaleData(file);
+    },
     // /** 查询Transcriptomics列表 */
     // getList() {
     //   this.loading = true;
@@ -658,7 +752,7 @@ export default {
   min-width: 0;
   flex-grow: 1;
 }
-.filterDiv{
+.filterDiv {
   margin-right: 10px;
 }
 .fitershide {
@@ -667,17 +761,17 @@ export default {
   flex-shrink: 0;
 }
 
-.refFilter{
+.refFilter {
   font-size: 25px;
   font-weight: bold;
-  float:right;
+  float: right;
   margin-right: 10px;
   margin-top: -30px;
   cursor: pointer;
 }
-.fiterShow i{
+.fiterShow i {
   font-size: 30px;
-  color: #489E38;
+  color: #489e38;
   cursor: pointer;
   margin: 10px 10px 10px 5px;
   // margin: 10px;

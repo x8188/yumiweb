@@ -1,23 +1,17 @@
 <template>
-  <div class="result-views-container">
-    <div class="result-data">
-      <el-card>
-        <Title>Result</Title>
-        <div class="svg-container">
-          <div>
-            <div style="width:1250px;height:117px;overflow:auto;margin-top:30px; margin-bottom:-50px;">
-            </div>
-        </div>
-        </div>
-      </el-card>
-    </div>
-  </div>
+  <ZeamapCard>
+    <template v-slot:header>
+      <Title>Result</Title>
+    </template>
+    <BbMap />
+  </ZeamapCard>
 </template>
 
 <script>
-import Title from '@/components/CommonComponents/Title.vue'
+import ZeamapCard from '@/components/UnionStyle/zeamap-card.vue';
+import BbMap from './bbmap.vue';
 export default {
-  components: { Title }
+  components: { BbMap, ZeamapCard }
 }
 </script>
 

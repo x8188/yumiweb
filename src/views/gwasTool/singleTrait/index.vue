@@ -235,10 +235,10 @@ export default {
   },
 };
 </script>
-<!-- <style scoped src='../css/gwasviz_single_trait.css'></style>
+<style scoped src='../css/gwasviz_single_trait.css'></style>
 <style scoped src='../css/locuszoom.css'></style>
 <style scoped src='../css/skeleton.css'></style>
-<style scoped src='../css/zTreeStyle.css'></style> -->
+<style scoped src='../css/zTreeStyle.css'></style>
 
 <style scoped>
 /* @import url(../css/gwasviz_single_trait.css); */

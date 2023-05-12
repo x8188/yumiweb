@@ -3,7 +3,7 @@
         <div class="content_page">
             <div class="left">
                 <div class="navigation_bar">
-                    <h2>Catalog</h2>
+                    <Title>Catalog</Title>
                     <el-tabs tab-position="left" style="height: 220px;" @tab-click="handleClick">
                         <el-tab-pane v-for="(title, index) in variantinfo" :key="index">
                             <span slot="label" class="fontClass">{{ Object.keys(title)[0] }}</span>
@@ -15,7 +15,7 @@
                 <div class="info_box">
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <h3>Summary</h3>
+                            <Title>Summary</Title>
                         </div>
                         <el-table :data="SummaryInfo" style="width: 100%" :show-header="false" border>
                             <el-table-column label="key" width="250" prop="key"/>
@@ -24,7 +24,7 @@
                     </el-card>
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <h3>Information</h3>
+                            <Title>Information</Title>
                         </div>
                         <el-table :data="InformationInfo" style="width: 100%" :show-header="false" border>
                             <el-table-column label="key" width="250" prop="key">
@@ -38,7 +38,7 @@
                     </el-card>
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <h3>Annotation</h3>
+                            <Title>Annotation</Title>
                         </div>
                         <el-table :data="AnnotationInfo" style="width: 100%"  border>
                             <el-table-column label="Exon" prop="Exon"/>
@@ -63,7 +63,7 @@
                     </el-card>
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <h3>PiePlots</h3>
+                            <Title>PiePlots</Title>
                         </div>
                         <div style="height: 400px;" id="echarts_place" ref="echarts">
                         </div>

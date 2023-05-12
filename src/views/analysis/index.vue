@@ -7,7 +7,7 @@
               <div class="data-top">
                 <div class="info-nums">
                   <span>Show</span>
-                  <el-select @change="changeResultsNums" v-model="page.pageSize" style="width: 80px;margin: 0 10px;">
+                  <el-select filterable @change="changeResultsNums" v-model="page.pageSize" style="width: 80px;margin: 0 10px;">
                     <el-option label="10" :value="10"></el-option>
                     <el-option label="15" :value="15"></el-option>
                     <el-option label="20" :value="20"></el-option>
@@ -16,41 +16,32 @@
                   </el-select>
                   <span>results</span>
                 </div>
+
+                <div class="download-button">
+                  <el-button @click="downloadData()" type="primary" icon="el-icon-download" style="width: 100px;">下载</el-button>
+                </div>
               </div>
               <div class="data-table" style="margin-top: 30px;">
                 <el-table
                 v-loading="loading"
-                ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                @selection-change="handleSelectionChange"
                 style="width: 100%"
                 >
                 <el-table-column
-                  type="selection"
-                  width="55">
-                </el-table-column>
-
-                <el-table-column
                   label="Omics"
+                  prop="omics"
                   width="250px"
                 >
-                  <template slot-scope="scope" >
-                    <div class="" @click="changeShowInfo(scope)">
-                      <span class="origin-link-green" >
-                      {{ scope.row.xotUid }}
-                      </span>
-                    </div>
-                  </template>
                 </el-table-column>
                 <el-table-column
                   label="Analysis Id"
-                  prop="AnalysisId"
+                  prop="name"
                 >
                 </el-table-column>
                 <el-table-column
                   label="Show description"
-                  prop="Show description"
+                  prop="description"
                   show-overflow-tooltip>
                 </el-table-column>
               </el-table>
@@ -74,6 +65,7 @@
 </template>
 
 <script>
+import { queryAll,downloadAll} from '@/api/analysis/index'
 import AnalysisInfo from './components/analysis-info.vue'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 import SideBar from './components/sidebar.vue'
@@ -82,7 +74,6 @@ components: { SideBar, SvgIcon, AnalysisInfo },
 data() {
   return {
     // 多选
-    multipleSelection: [],
     page: {
       pageNum : 1,
       pageSize: 10,
@@ -90,46 +81,84 @@ data() {
     },
     loading: false,
     tableData: [],
-    multipleSelection: [],
     showInfo: false,
-    infoItem: {}
+    infoItem: {},
+    // 初次筛选
+    nullSelect : {
+      description: '',
+      name: '',
+      omics: '',
+      pageNum: '1',
+      pageSize: '10' 
+    },
+    fliterData: {}
   }
 },
 created() {
-  this.getPhenomics()
+  this.getPhenomics(this.nullSelect)
 },
 methods: { 
-  // 多选
-  handleSelectionChange(val) {
-    this.multipleSelection = val;
+  async downloadData() {
+    let names = []
+    const {total} = await queryAll(this.page)
+    let temp = JSON.parse(JSON.stringify(this.page))
+    console.log(temp);
+    temp.pageSize = total
+    const {rows} = await queryAll(temp)
+
+    rows.forEach(item => {
+      names.push(item.name)
+    })
+    const fileName = 'analysis_' + new Date().getTime() + '.xlsx'
+
+    try {
+      this.$notify.info({
+          title: '成功',
+          message: '请求成功，正在下载',
+      });
+      const data = await downloadAll('/tran/fator/analysis/download',names,fileName)
+      this.$notify({
+          title: '成功',
+          message: '下载成功',
+          type: 'success'
+      });
+    } catch (error) {
+      this.$notify.error({
+        title: '错误',
+        message: '下载失败，请联系管理员'
+      });
+    }
   },
   // 获取phenomics的信息
-  async getPhenomics() {
+  async getPhenomics(fliters) {
     this.loading = true
+    const {total,rows} = await queryAll(fliters)
+    this.page.total = total
+    this.tableData = rows
     
     this.loading = false
 
   },
     // 获取筛选数据
     getFilterData(filter) {
-    this.page = {...this.page, ...filter}
-    this.getPhenomics()
+      this.page = {...this.page, ...filter}
+      this.getPhenomics(this.page)
   },
   // 改变每页展示的信息条数
   changeResultsNums(newVal) {
     this.page.pageSize = newVal
+    this.getPhenomics(this.page)
   },
   // 修改所在的页数
   changePage(newVal) {
     this.page.pageNum = newVal
+    this.getPhenomics(this.page)
   },
   // 展示详情信息
   changeShowInfo({ row }) {
     this.showInfo = true
     this.infoItem = row
   }
-},
-computed: {
 }
 }
 </script>

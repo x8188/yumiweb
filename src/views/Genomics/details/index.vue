@@ -3,7 +3,7 @@
       <div class="content_page">
           <div class="left">
               <div class="navigation_bar">
-                  <h2>Catalog</h2>
+                  <Title>Catalog</Title>
                   <el-tabs tab-position="left" style="height: 220px;" @tab-click="handleClick">
                   <el-tab-pane v-for="(title,index) in titles" :key="index">
                       <span slot="label" class="fontClass">{{title}}</span>
@@ -15,7 +15,7 @@
               <div class="info_box">
                     <el-card class="box-card" >
                       <div slot="header" class="clearfix">
-                          <h3>Summary</h3>
+                          <Title>Summary</Title>
                       </div>
                       <el-table
                       style="width: 100%"
@@ -34,7 +34,7 @@
                     </el-card>
                     <el-card class="box-card"  >
                       <div slot="header" class="clearfix">
-                          <h3>Function Annotation</h3>
+                          <Title>Function Annotation</Title>
                       </div>
                       <el-table
                       style="width: 100%"
