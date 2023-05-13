@@ -75,7 +75,7 @@
             </div>
             <div class="germplasm-select">
               <span>Trait ID</span>
-              <el-select filterable v-model="formData.TraitId" placeholder="">
+              <el-select filterable v-model="formData.TraitId" placeholder="" @blur="TraitIdChange">
                 <el-option
                   v-for="(item, i) in options.TraitId"
                   :key="i"
@@ -137,7 +137,7 @@
               </div>
             </div>
 
-            <div class="region-select">
+            <div class="region-select" v-show="qtlType == 'association'">
               <span>QTLs</span>
               <div class="region-select-form">
                 <div class="form-item">
@@ -152,6 +152,26 @@
                     <span></span>
                     <el-form-item>
                       <el-input v-model="formData.QTLend"></el-input>
+                    </el-form-item>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="region-select" v-show="qtlType == 'linkage'">
+              <span>QTLs</span>
+              <div class="region-select-form">
+                <div class="form-item">
+                  <div class="start">
+                    <span>Lod</span>
+                    <el-form-item>
+                      <el-input v-model="formData.lodStart"></el-input>
+                    </el-form-item>
+                  </div>
+                  <span class="start-to-end"></span>
+                  <div class="end">
+                    <span></span>
+                    <el-form-item>
+                      <el-input v-model="formData.lodEnd"></el-input>
                     </el-form-item>
                   </div>
                 </div>
@@ -194,12 +214,16 @@ export default {
         version: "",
         population: "",
         analysis: "",
-        start: "",
-        end: "",
+        start: 1,
+        end: 999999999,
         chr: "",
-        QTLstart: "",
-        QTLend: "",
+        QTLstart:  0.01,
+        QTLend: 1000.88,
         LinkMap: "",
+        TraitCategory:"",
+        TraitId:"",
+        lodStart:0.01,
+        lodEnd:1000.88
       },
       checkBox: [],
       options: {
@@ -213,7 +237,7 @@ export default {
       exportLoading: false,
       tableShow: false,
 
-      traitid: "null",
+      traitid: null,
     };
   },
   created() {
@@ -299,6 +323,27 @@ export default {
         }
       }
     },
+    async TraitIdChange(){
+      if (this.qtlType == "association") {
+        let res4 = await this.$API.Qtl.reqselecttraitid(this.traitid);
+        if (res4.code == 200) {
+          this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        this.traitid=""
+      } else {
+        let res4 = await this.$API.Qtl.reqlinkagetraitid(this.traitid);
+        if (res4.code == 200) {
+          this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        this.traitid=""
+      }
+    },
     async changeRegion() {
       if (this.region == "range") {
         let res = await this.$API.Qtl.reqselectchr();
@@ -322,8 +367,8 @@ export default {
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
-          log_min: 0.01,
-          log_max: 100.88,
+          log_min: this.formData.QTLstart,
+          log_max: this.formData.QTLend,
         };
         // let data = {
         //   accession: "B73",
@@ -351,8 +396,8 @@ export default {
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
-          log_min: 0.01,
-          log_max: 100.88,
+          lod_min: this.formData.lodStart,
+          lod_max: this.formData.lodEnd,
         };
         // let data = {
         //   accession: "B73",
@@ -366,6 +411,7 @@ export default {
         //   lod_min: 0.01,
         //   lod_max: 1000.88,
         // };
+        console.log(data)
         let res = await this.$API.Qtl.reqlinkage(data);
 
         if (res.code == 200) {
@@ -381,12 +427,16 @@ export default {
         version: "",
         population: "",
         analysis: "",
-        start: "",
-        end: "",
+        start: 1,
+        end: 999999999,
         chr: "",
-        QTLstart: "",
-        QTLend: "",
+        QTLstart:  0.01,
+        QTLend: 1000.88,
         LinkMap: "",
+        TraitCategory:"",
+        TraitId:"",
+        lodStart:0.01,
+        lodEnd:1000.88
       };
     },
     // dataFilter(val) {
