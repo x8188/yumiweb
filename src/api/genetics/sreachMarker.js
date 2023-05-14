@@ -9,8 +9,8 @@ export const reqselectversion= (accession) =>
 export const reqselecttraitcategory= () =>
   request({ url: `/genetics/search_marker/association_marker/selecttraitcategory`, method: "get" });
 
-export const reqselecttraitid= () =>
-  request({ url: `/genetics/search_marker/association_marker/selecttraitid`, method: "get" });
+export const reqselecttraitid= (trait_id) =>
+  request({ url: `/genetics/search_marker/association_marker/selecttraitid`, method: "get" ,params:{trait_id}});
 
 export const reqselectchr= () =>
   request({ url: `/genetics/search_marker/association_marker/selectchr`, method: "get" });
@@ -31,8 +31,8 @@ export const reqlinkageversion= (accession) =>
 export const reqlinkagetraitcategory= () =>
   request({ url: `/genetics/search_marker/linkage_marker/selecttraitcategory`, method: "get" });
 
-export const reqlinkagetraitid= () =>
-  request({ url: `/genetics/search_marker/linkage_marker/selecttraitid`, method: "get" });
+export const reqlinkagetraitid= (trait_id) =>
+  request({ url: `/genetics/search_marker/linkage_marker/selecttraitid`, method: "get" ,params:{trait_id}});
 
 export const reqlinkagelg= () =>
   request({ url: `/genetics/search_marker/linkage_marker/selectlg`, method: "get" });

@@ -74,7 +74,13 @@
             </div>
             <div class="germplasm-select">
               <span>Trait ID</span>
-              <el-select v-model="formData.TraitId" filterable placeholder="">
+              <el-select
+                v-model="formData.TraitId"
+                filterable
+                remote
+                :remote-method="remoteMethod"
+                @blur="TraitIdBlur"
+              >
                 <el-option
                   v-for="(item, i) in options.TraitId"
                   :key="i"
@@ -284,20 +290,21 @@ export default {
         version: "",
         population: "",
         analysis: "",
-        start: "",
-        end: "",
+        start: 1,
+        end: 10000000,
         chr: "",
         varType: [],
         LinkMap: "",
-        log_max: "",
-        log_min: "",
-        effect_max: "",
-        effect_min: "",
-        pip_min: "",
-        pip_max: "",
+        log_max: 7,
+        log_min: 2,
+        effect_max: 2,
+        effect_min: -1,
+        pip_min: 0,
+        pip_max: 1,
         lg: "",
-        cm_min: "",
-        cm_max: "",
+        cm_min: 0.01,
+        cm_max: 100.88,
+        TraitId:"null"
       },
       checkBox: [],
       options: {
@@ -335,7 +342,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.marker.reqselecttraitid();
+        let res4 = await this.$API.marker.reqselecttraitid(this.formData.TraitId);
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -365,7 +372,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.marker.reqlinkagetraitid();
+        let res4 = await this.$API.marker.reqlinkagetraitid(this.formData.TraitId);
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -416,14 +423,63 @@ export default {
         }
       }
     },
-
+    async TraitIdBlur() {
+      if (this.qtlType == "association") {
+        let res4 = await this.$API.marker.reqselecttraitid("null");
+        if (res4.code == 200) {
+          this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        // this.formData.TraitId="null"
+      } else {
+        let res4 = await this.$API.marker.reqlinkagetraitid("null");
+        if (res4.code == 200) {
+          this.options.TraitId = res4.data.map((x) => ({
+            label: x,
+            value: x,
+          }));
+        }
+        // this.formData.TraitId="null"
+      }
+    },
+    async remoteMethod(query) {
+      if (query !== "") {
+        if (this.qtlType == "association") {
+          let res4 = await this.$API.marker.reqselecttraitid(
+            query
+          );
+          if (res4.code == 200) {
+            this.options.TraitId = res4.data.map((x) => ({
+              label: x,
+              value: x,
+            }));
+          }
+          // this.formData.TraitId="null"
+        } else {
+          let res4 = await this.$API.marker.reqlinkagetraitid(
+            query
+          );
+          if (res4.code == 200) {
+            this.options.TraitId = res4.data.map((x) => ({
+              label: x,
+              value: x,
+            }));
+          }
+          // this.formData.TraitId="null"
+        }
+      } else {
+        this.options.TraitId = [];
+      }
+    },
     async getQtl() {
       if (this.qtlType == "association") {
         let data = {
           accession: this.formData.reference,
           version: this.formData.version,
           omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId,
+          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
@@ -435,17 +491,6 @@ export default {
           pip_min: this.formData.pip_min,
           pip_max: this.formData.pip_max,
         };
-        // let data = {
-        //   accession: "B73",
-        //   version: "4.43.0",
-        //   omics: "Phenomics",
-        //   xot_uid: "Agro2-Row_Kernel_Number_BLUP",
-        //   chr: "",
-        //   start: 100000000,
-        //   end: 200000000,
-        //   log_min: 0.01,
-        //   log_max: 999999999,
-        // };
         let res = await this.$API.marker.reqassociation_qtl(data);
 
         if (res.code == 200) {
@@ -457,7 +502,7 @@ export default {
           version: this.formData.version,
           omics: this.formData.TraitCategory,
           linkagemap: this.formData.LinkMap,
-          xot_uid: this.formData.TraitId,
+          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
           lg: this.formData.lg,
           cm_min: this.formData.cm_min,
           cm_max: this.formData.cm_max,
@@ -475,14 +520,23 @@ export default {
         version: "",
         population: "",
         analysis: "",
-        start: "",
-        end: "",
+        start: 1,
+        end: 10000000,
         chr: "",
-        QTLstart: "",
-        QTLend: "",
+        varType: [],
         LinkMap: "",
+        log_max: 7,
+        log_min: 2,
+        effect_max: 2,
+        effect_min: -1,
+        pip_min: 0,
+        pip_max: 1,
+        lg: "",
+        cm_min: 0.01,
+        cm_max: 100.88,
+        TraitId:"null"
       };
-      this.options={
+      this.options = {
         reference: [],
         version: [],
         TraitId: [],
@@ -490,9 +544,32 @@ export default {
         chr: [],
         LinkMap: [],
         varop: [],
-      }
+      };
       this.getdata();
     },
+    reset(){
+      this.formData = {
+        reference: undefined,
+        version: "",
+        population: "",
+        analysis: "",
+        start: 1,
+        end: 10000000,
+        chr: "",
+        varType: [],
+        LinkMap: "",
+        log_max: 7,
+        log_min: 2,
+        effect_max: 2,
+        effect_min: -1,
+        pip_min: 0,
+        pip_max: 1,
+        lg: "",
+        cm_min: 0.01,
+        cm_max: 100.88,
+        TraitId:"null"
+      };
+    }
   },
 };
 </script>
