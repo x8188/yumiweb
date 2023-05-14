@@ -19,21 +19,7 @@ export default {
   methods: {
     getPillar() {
       let Pillar = echarts.init(document.getElementById('master'));
-      let pillarData = [
-       /* ['Group','Sample','K1','K2','K3'],
-        ['TST','D047',0.6289,0,0.3711],
-        ['TST','DSB',0.6436,0,0.3564],
-        ['TST','CML171',0.9911,0,0.0089],
-        ['TST','CML172',0.986,0,0.014],
-        ['TST','D047',0.6289,0,0.3711],
-        ['TST','DSB',0.6436,0,0.3564],
-        ['TST','CML171',0.9911,0,0.0089],
-        ['TST','CML172',0.986,0,0.014],
-        ['TST','D047',0.6289,0,0.3711],
-        ['TST','DSB',0.6436,0,0.3564],
-        ['TST','CML171',0.9911,0,0.0089],
-        ['TST','CML172',0.986,0,0.014]*/
-      ];
+      let pillarData = [];
       let bbb = function (arg){
 
       };

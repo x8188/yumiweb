@@ -78,20 +78,20 @@ export default {
   computed: {},
   watch: {},
   created() {
-    this.getTabbleData();
+    this.getTableData();
   },
   mounted() {},
   methods: {
-    getTabbleData(){
+    getTableData(){
       listGermplasm().then(res=>{
         this.tableData=res.rows;
       })
     },
-    /*screening(){
+    screening(){
       choose(this.field107).then(res=>{
         this.tableData=res.rows;
       })
-    },*/
+    },
     submitForm() {
       this.$refs['elForm'].validate(valid => {
         if (!valid) return

@@ -1,6 +1,62 @@
-<template>
+npm<template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="组织高亮值" prop="expressionValue">
+        <el-input
+          v-model="queryParams.expressionValue"
+          placeholder="请输入组织高亮值"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="expressionUnit">
+        <el-input
+          v-model="queryParams.expressionUnit"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="与dbxref的version关联" prop="analysisId">
+        <el-input
+          v-model="queryParams.analysisId"
+          placeholder="请输入与dbxref的version关联"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="环境表的id" prop="environmentId">
+        <el-input
+          v-model="queryParams.environmentId"
+          placeholder="请输入环境表的id"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="基因ID feature 表的uniquename" prop="featureId">
+        <el-input
+          v-model="queryParams.featureId"
+          placeholder="请输入基因ID feature 表的uniquename"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="Gene IDs 多个" prop="germplasmId">
+        <el-input
+          v-model="queryParams.germplasmId"
+          placeholder="请输入Gene IDs 多个"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="组织表的id " prop="tissueId">
+        <el-input
+          v-model="queryParams.tissueId"
+          placeholder="请输入组织表的id "
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -15,7 +71,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:ImportInfo:add']"
+          v-hasPermi="['zeamap:expression:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -26,7 +82,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:ImportInfo:edit']"
+          v-hasPermi="['zeamap:expression:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +93,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:ImportInfo:remove']"
+          v-hasPermi="['zeamap:expression:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -47,7 +103,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:ImportInfo:export']"
+          v-hasPermi="['zeamap:expression:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,14 +119,18 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="ImportInfoList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="expressionList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="variantinfoId" />
-      <el-table-column label="${comment}" align="center" prop="vid" />
-      <el-table-column label="${comment}" align="center" prop="annotation" />
-      <el-table-column label="${comment}" align="center" prop="information" />
-      <el-table-column label="${comment}" align="center" prop="pieplots" />
-      <el-table-column label="${comment}" align="center" prop="summary" />
+      <el-table-column label="主键" align="center" prop="expressionId" />
+      <el-table-column label="组织高亮值" align="center" prop="expressionValue" />
+      <el-table-column label="${comment}" align="center" prop="expressionUnit" />
+      <el-table-column label="与dbxref的version关联" align="center" prop="analysisId" />
+      <el-table-column label="环境表的id" align="center" prop="environmentId" />
+      <el-table-column label="基因ID feature 表的uniquename" align="center" prop="featureId" />
+      <el-table-column label="Gene IDs 多个" align="center" prop="germplasmId" />
+      <el-table-column label="组织表的id " align="center" prop="tissueId" />
+      <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -78,14 +138,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:edit']"
+            v-hasPermi="['zeamap:expression:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:remove']"
+            v-hasPermi="['zeamap:expression:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -99,23 +159,32 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改ImportInfo对话框 -->
+    <!-- 添加或修改基因表达量查询对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="vid">
-          <el-input v-model="form.vid" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="组织高亮值" prop="expressionValue">
+          <el-input v-model="form.expressionValue" placeholder="请输入组织高亮值" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="annotation">
-          <el-input v-model="form.annotation" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="expressionUnit">
+          <el-input v-model="form.expressionUnit" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="information">
-          <el-input v-model="form.information" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="与dbxref的version关联" prop="analysisId">
+          <el-input v-model="form.analysisId" placeholder="请输入与dbxref的version关联" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="pieplots">
-          <el-input v-model="form.pieplots" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="环境表的id" prop="environmentId">
+          <el-input v-model="form.environmentId" placeholder="请输入环境表的id" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="summary">
-          <el-input v-model="form.summary" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="基因ID feature 表的uniquename" prop="featureId">
+          <el-input v-model="form.featureId" placeholder="请输入基因ID feature 表的uniquename" />
+        </el-form-item>
+        <el-form-item label="Gene IDs 多个" prop="germplasmId">
+          <el-input v-model="form.germplasmId" placeholder="请输入Gene IDs 多个" />
+        </el-form-item>
+        <el-form-item label="组织表的id " prop="tissueId">
+          <el-input v-model="form.tissueId" placeholder="请输入组织表的id " />
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -157,14 +226,14 @@
 </template>
 
 <script>
-import { listImportInfo, getImportInfo, delImportInfo, addImportInfo, updateImportInfo } from "@/api/import/Variant/variant_info";
+import { listExpression, getExpression, delExpression, addExpression, updateExpression } from "@/api/import/GeneExpression/expression";
 import { getToken } from "@/utils/auth";
 
 
 
 
 export default {
-  name: "variant_info",
+  name: "expression",
   data() {
     return {
       // 遮罩层
@@ -179,8 +248,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // ImportInfo表格数据
-      ImportInfoList: [],
+      // 基因表达量查询表格数据
+      expressionList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -189,11 +258,14 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        vid: null,
-        annotation: null,
-        information: null,
-        pieplots: null,
-        summary: null
+        expressionValue: null,
+        expressionUnit: null,
+        analysisId: null,
+        environmentId: null,
+        featureId: null,
+        germplasmId: null,
+        tissueId: null,
+        status: null,
       },
       upload: {
         // 是否显示弹出层（用户导入）
@@ -220,11 +292,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询ImportInfo列表 */
+    /** 查询基因表达量查询列表 */
     getList() {
       this.loading = true;
-      listImportInfo(this.queryParams).then(response => {
-        this.ImportInfoList = response.rows;
+      listExpression(this.queryParams).then(response => {
+        this.expressionList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -237,12 +309,20 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        variantinfoId: null,
-        vid: null,
-        annotation: null,
-        information: null,
-        pieplots: null,
-        summary: null
+        expressionId: null,
+        expressionValue: null,
+        expressionUnit: null,
+        analysisId: null,
+        environmentId: null,
+        featureId: null,
+        germplasmId: null,
+        tissueId: null,
+        status: "0",
+        createBy: null,
+        createTime: null,
+        updateBy: null,
+        updateTime: null,
+        remark: null
       };
       this.resetForm("form");
     },
@@ -258,7 +338,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.variantinfoId)
+      this.ids = selection.map(item => item.expressionId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -266,30 +346,30 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加ImportInfo";
+      this.title = "添加基因表达量查询";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const variantinfoId = row.variantinfoId || this.ids
-      getImportInfo(variantinfoId).then(response => {
+      const expressionId = row.expressionId || this.ids
+      getExpression(expressionId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改ImportInfo";
+        this.title = "修改基因表达量查询";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.variantinfoId != null) {
-            updateImportInfo(this.form).then(response => {
+          if (this.form.expressionId != null) {
+            updateExpression(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addImportInfo(this.form).then(response => {
+            addExpression(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -300,9 +380,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const variantinfoIds = row.variantinfoId || this.ids;
-      this.$modal.confirm('是否确认删除ImportInfo编号为"' + variantinfoIds + '"的数据项？').then(function() {
-        return delImportInfo(variantinfoIds);
+      const expressionIds = row.expressionId || this.ids;
+      this.$modal.confirm('是否确认删除基因表达量查询编号为"' + expressionIds + '"的数据项？').then(function() {
+        return delExpression(expressionIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -310,9 +390,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/ImportInfo/export', {
+      this.download('zeamap/expression/export', {
         ...this.queryParams
-      }, `ImportInfo_${new Date().getTime()}.xlsx`)
+      }, `expression_${new Date().getTime()}.xlsx`)
     },
     /** 导入按钮操作 */
     handleImport() {
@@ -332,7 +412,8 @@ export default {
     handleFileSuccess(response, file, fileList) {
       this.upload.open = false;
       this.upload.isUploading = false;
-      this.$refs.upload.clearFiles();this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
+      this.$refs.upload.clearFiles();
+      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
       this.getList();
     },
 // 提交上传文件

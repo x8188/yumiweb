@@ -1,6 +1,54 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="${comment}" prop="tissueClass">
+        <el-input
+          v-model="queryParams.tissueClass"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="tissueStage">
+        <el-input
+          v-model="queryParams.tissueStage"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="tissuePosition">
+        <el-input
+          v-model="queryParams.tissuePosition"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="tissueDesc">
+        <el-input
+          v-model="queryParams.tissueDesc"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="zmap_tissue_expression 上显示的具体名称" prop="tissueSvgclass">
+        <el-input
+          v-model="queryParams.tissueSvgclass"
+          placeholder="请输入zmap_tissue_expression 上显示的具体名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="tissueName">
+        <el-input
+          v-model="queryParams.tissueName"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -15,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:ImportInfo:add']"
+          v-hasPermi="['zeamap:ImportTissue:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -26,7 +74,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:ImportInfo:edit']"
+          v-hasPermi="['zeamap:ImportTissue:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +85,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:ImportInfo:remove']"
+          v-hasPermi="['zeamap:ImportTissue:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -47,7 +95,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:ImportInfo:export']"
+          v-hasPermi="['zeamap:ImportTissue:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,14 +111,17 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="ImportInfoList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="ImportTissueList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="variantinfoId" />
-      <el-table-column label="${comment}" align="center" prop="vid" />
-      <el-table-column label="${comment}" align="center" prop="annotation" />
-      <el-table-column label="${comment}" align="center" prop="information" />
-      <el-table-column label="${comment}" align="center" prop="pieplots" />
-      <el-table-column label="${comment}" align="center" prop="summary" />
+      <el-table-column label="${comment}" align="center" prop="tissueId" />
+      <el-table-column label="${comment}" align="center" prop="tissueClass" />
+      <el-table-column label="${comment}" align="center" prop="tissueStage" />
+      <el-table-column label="${comment}" align="center" prop="tissuePosition" />
+      <el-table-column label="${comment}" align="center" prop="tissueDesc" />
+      <el-table-column label="zmap_tissue_expression 上显示的具体名称" align="center" prop="tissueSvgclass" />
+      <el-table-column label="${comment}" align="center" prop="tissueName" />
+      <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -78,14 +129,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:edit']"
+            v-hasPermi="['zeamap:ImportTissue:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:remove']"
+            v-hasPermi="['zeamap:ImportTissue:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -99,23 +150,29 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改ImportInfo对话框 -->
+    <!-- 添加或修改组织对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="vid">
-          <el-input v-model="form.vid" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="tissueClass">
+          <el-input v-model="form.tissueClass" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="annotation">
-          <el-input v-model="form.annotation" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="tissueStage">
+          <el-input v-model="form.tissueStage" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="information">
-          <el-input v-model="form.information" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="tissuePosition">
+          <el-input v-model="form.tissuePosition" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="pieplots">
-          <el-input v-model="form.pieplots" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="tissueDesc">
+          <el-input v-model="form.tissueDesc" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="summary">
-          <el-input v-model="form.summary" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="zmap_tissue_expression 上显示的具体名称" prop="tissueSvgclass">
+          <el-input v-model="form.tissueSvgclass" placeholder="请输入zmap_tissue_expression 上显示的具体名称" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="tissueName">
+          <el-input v-model="form.tissueName" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -157,14 +214,13 @@
 </template>
 
 <script>
-import { listImportInfo, getImportInfo, delImportInfo, addImportInfo, updateImportInfo } from "@/api/import/Variant/variant_info";
+import { listImportTissue, getImportTissue, delImportTissue, addImportTissue, updateImportTissue } from "@/api/import/GeneExpression/tissue";
 import { getToken } from "@/utils/auth";
 
 
 
-
 export default {
-  name: "variant_info",
+  name: "tissue",
   data() {
     return {
       // 遮罩层
@@ -179,8 +235,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // ImportInfo表格数据
-      ImportInfoList: [],
+      // 组织表格数据
+      ImportTissueList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -189,11 +245,13 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        vid: null,
-        annotation: null,
-        information: null,
-        pieplots: null,
-        summary: null
+        tissueClass: null,
+        tissueStage: null,
+        tissuePosition: null,
+        tissueDesc: null,
+        tissueSvgclass: null,
+        tissueName: null,
+        status: null,
       },
       upload: {
         // 是否显示弹出层（用户导入）
@@ -220,11 +278,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询ImportInfo列表 */
+    /** 查询组织列表 */
     getList() {
       this.loading = true;
-      listImportInfo(this.queryParams).then(response => {
-        this.ImportInfoList = response.rows;
+      listImportTissue(this.queryParams).then(response => {
+        this.ImportTissueList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -237,12 +295,19 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        variantinfoId: null,
-        vid: null,
-        annotation: null,
-        information: null,
-        pieplots: null,
-        summary: null
+        tissueId: null,
+        tissueClass: null,
+        tissueStage: null,
+        tissuePosition: null,
+        tissueDesc: null,
+        tissueSvgclass: null,
+        tissueName: null,
+        status: "0",
+        createBy: null,
+        createTime: null,
+        updateBy: null,
+        updateTime: null,
+        remark: null
       };
       this.resetForm("form");
     },
@@ -258,7 +323,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.variantinfoId)
+      this.ids = selection.map(item => item.tissueId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -266,30 +331,30 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加ImportInfo";
+      this.title = "添加组织";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const variantinfoId = row.variantinfoId || this.ids
-      getImportInfo(variantinfoId).then(response => {
+      const tissueId = row.tissueId || this.ids
+      getImportTissue(tissueId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改ImportInfo";
+        this.title = "修改组织";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.variantinfoId != null) {
-            updateImportInfo(this.form).then(response => {
+          if (this.form.tissueId != null) {
+            updateImportTissue(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addImportInfo(this.form).then(response => {
+            addImportTissue(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -300,9 +365,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const variantinfoIds = row.variantinfoId || this.ids;
-      this.$modal.confirm('是否确认删除ImportInfo编号为"' + variantinfoIds + '"的数据项？').then(function() {
-        return delImportInfo(variantinfoIds);
+      const tissueIds = row.tissueId || this.ids;
+      this.$modal.confirm('是否确认删除组织编号为"' + tissueIds + '"的数据项？').then(function() {
+        return delImportTissue(tissueIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -310,9 +375,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/ImportInfo/export', {
+      this.download('zeamap/ImportTissue/export', {
         ...this.queryParams
-      }, `ImportInfo_${new Date().getTime()}.xlsx`)
+      }, `ImportTissue_${new Date().getTime()}.xlsx`)
     },
     /** 导入按钮操作 */
     handleImport() {
@@ -332,7 +397,8 @@ export default {
     handleFileSuccess(response, file, fileList) {
       this.upload.open = false;
       this.upload.isUploading = false;
-      this.$refs.upload.clearFiles();this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
+      this.$refs.upload.clearFiles();
+      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
       this.getList();
     },
 // 提交上传文件

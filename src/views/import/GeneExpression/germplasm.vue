@@ -1,6 +1,94 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="${comment}" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="genus">
+        <el-input
+          v-model="queryParams.genus"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="species">
+        <el-input
+          v-model="queryParams.species"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="commonName">
+        <el-input
+          v-model="queryParams.commonName"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="comment">
+        <el-input
+          v-model="queryParams.comment"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="groupId">
+        <el-input
+          v-model="queryParams.groupId"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="populationId">
+        <el-input
+          v-model="queryParams.populationId"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="latitude">
+        <el-input
+          v-model="queryParams.latitude"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="longtitude">
+        <el-input
+          v-model="queryParams.longtitude"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="ngbId">
+        <el-input
+          v-model="queryParams.ngbId"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="origin">
+        <el-input
+          v-model="queryParams.origin"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -15,7 +103,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:ImportInfo:add']"
+          v-hasPermi="['zeamap:germplasm:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -26,7 +114,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:ImportInfo:edit']"
+          v-hasPermi="['zeamap:germplasm:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +125,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:ImportInfo:remove']"
+          v-hasPermi="['zeamap:germplasm:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -47,7 +135,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:ImportInfo:export']"
+          v-hasPermi="['zeamap:germplasm:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,14 +151,20 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="ImportInfoList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="germplasmList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="variantinfoId" />
-      <el-table-column label="${comment}" align="center" prop="vid" />
-      <el-table-column label="${comment}" align="center" prop="annotation" />
-      <el-table-column label="${comment}" align="center" prop="information" />
-      <el-table-column label="${comment}" align="center" prop="pieplots" />
-      <el-table-column label="${comment}" align="center" prop="summary" />
+      <el-table-column label="${comment}" align="center" prop="germplasmId" />
+      <el-table-column label="${comment}" align="center" prop="name" />
+      <el-table-column label="${comment}" align="center" prop="genus" />
+      <el-table-column label="${comment}" align="center" prop="species" />
+      <el-table-column label="${comment}" align="center" prop="commonName" />
+      <el-table-column label="${comment}" align="center" prop="comment" />
+      <el-table-column label="${comment}" align="center" prop="groupId" />
+      <el-table-column label="${comment}" align="center" prop="populationId" />
+      <el-table-column label="${comment}" align="center" prop="latitude" />
+      <el-table-column label="${comment}" align="center" prop="longtitude" />
+      <el-table-column label="${comment}" align="center" prop="ngbId" />
+      <el-table-column label="${comment}" align="center" prop="origin" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -78,14 +172,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:edit']"
+            v-hasPermi="['zeamap:germplasm:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:remove']"
+            v-hasPermi="['zeamap:germplasm:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -99,23 +193,41 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改ImportInfo对话框 -->
+    <!-- 添加或修改产品详情对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="vid">
-          <el-input v-model="form.vid" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="name">
+          <el-input v-model="form.name" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="annotation">
-          <el-input v-model="form.annotation" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="genus">
+          <el-input v-model="form.genus" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="information">
-          <el-input v-model="form.information" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="species">
+          <el-input v-model="form.species" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="pieplots">
-          <el-input v-model="form.pieplots" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="commonName">
+          <el-input v-model="form.commonName" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="summary">
-          <el-input v-model="form.summary" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="${comment}" prop="comment">
+          <el-input v-model="form.comment" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="groupId">
+          <el-input v-model="form.groupId" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="populationId">
+          <el-input v-model="form.populationId" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="latitude">
+          <el-input v-model="form.latitude" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="longtitude">
+          <el-input v-model="form.longtitude" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="ngbId">
+          <el-input v-model="form.ngbId" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="origin">
+          <el-input v-model="form.origin" placeholder="请输入${comment}" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -157,14 +269,13 @@
 </template>
 
 <script>
-import { listImportInfo, getImportInfo, delImportInfo, addImportInfo, updateImportInfo } from "@/api/import/Variant/variant_info";
+import { listGermplasm, getGermplasm, delGermplasm, addGermplasm, updateGermplasm } from "@/api/import/GeneExpression/germplasm";
 import { getToken } from "@/utils/auth";
 
 
 
-
 export default {
-  name: "variant_info",
+  name: "germplasm",
   data() {
     return {
       // 遮罩层
@@ -179,8 +290,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // ImportInfo表格数据
-      ImportInfoList: [],
+      // 产品详情表格数据
+      germplasmList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -189,11 +300,17 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        vid: null,
-        annotation: null,
-        information: null,
-        pieplots: null,
-        summary: null
+        name: null,
+        genus: null,
+        species: null,
+        commonName: null,
+        comment: null,
+        groupId: null,
+        populationId: null,
+        latitude: null,
+        longtitude: null,
+        ngbId: null,
+        origin: null
       },
       upload: {
         // 是否显示弹出层（用户导入）
@@ -220,11 +337,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询ImportInfo列表 */
+    /** 查询产品详情列表 */
     getList() {
       this.loading = true;
-      listImportInfo(this.queryParams).then(response => {
-        this.ImportInfoList = response.rows;
+      listGermplasm(this.queryParams).then(response => {
+        this.germplasmList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -237,12 +354,18 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        variantinfoId: null,
-        vid: null,
-        annotation: null,
-        information: null,
-        pieplots: null,
-        summary: null
+        germplasmId: null,
+        name: null,
+        genus: null,
+        species: null,
+        commonName: null,
+        comment: null,
+        groupId: null,
+        populationId: null,
+        latitude: null,
+        longtitude: null,
+        ngbId: null,
+        origin: null
       };
       this.resetForm("form");
     },
@@ -258,7 +381,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.variantinfoId)
+      this.ids = selection.map(item => item.germplasmId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -266,30 +389,30 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加ImportInfo";
+      this.title = "添加产品详情";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const variantinfoId = row.variantinfoId || this.ids
-      getImportInfo(variantinfoId).then(response => {
+      const germplasmId = row.germplasmId || this.ids
+      getGermplasm(germplasmId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改ImportInfo";
+        this.title = "修改产品详情";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.variantinfoId != null) {
-            updateImportInfo(this.form).then(response => {
+          if (this.form.germplasmId != null) {
+            updateGermplasm(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addImportInfo(this.form).then(response => {
+            addGermplasm(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -300,9 +423,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const variantinfoIds = row.variantinfoId || this.ids;
-      this.$modal.confirm('是否确认删除ImportInfo编号为"' + variantinfoIds + '"的数据项？').then(function() {
-        return delImportInfo(variantinfoIds);
+      const germplasmIds = row.germplasmId || this.ids;
+      this.$modal.confirm('是否确认删除产品详情编号为"' + germplasmIds + '"的数据项？').then(function() {
+        return delGermplasm(germplasmIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -310,9 +433,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/ImportInfo/export', {
+      this.download('zeamap/germplasm/export', {
         ...this.queryParams
-      }, `ImportInfo_${new Date().getTime()}.xlsx`)
+      }, `germplasm_${new Date().getTime()}.xlsx`)
     },
     /** 导入按钮操作 */
     handleImport() {
@@ -332,13 +455,15 @@ export default {
     handleFileSuccess(response, file, fileList) {
       this.upload.open = false;
       this.upload.isUploading = false;
-      this.$refs.upload.clearFiles();this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
+      this.$refs.upload.clearFiles();
+      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
       this.getList();
     },
 // 提交上传文件
     submitFileForm() {
       this.$refs.upload.submit();
     }
+
   }
 };
 </script>

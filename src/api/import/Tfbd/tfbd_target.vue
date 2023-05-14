@@ -1,25 +1,25 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="${comment}" prop="targetGene">
         <el-input
-          v-model="queryParams.name"
+          v-model="queryParams.targetGene"
           placeholder="请输入${comment}"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="description">
+      <el-form-item label="${comment}" prop="pValue">
         <el-input
-          v-model="queryParams.description"
+          v-model="queryParams.pValue"
           placeholder="请输入${comment}"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="populationId">
+      <el-form-item label="${comment}" prop="tfbdNameId">
         <el-input
-          v-model="queryParams.populationId"
+          v-model="queryParams.tfbdNameId"
           placeholder="请输入${comment}"
           clearable
           @keyup.enter.native="handleQuery"
@@ -39,7 +39,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:subgroup:add']"
+          v-hasPermi="['zeamap:target:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -50,7 +50,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:subgroup:edit']"
+          v-hasPermi="['zeamap:target:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -61,7 +61,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:subgroup:remove']"
+          v-hasPermi="['zeamap:target:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,18 +71,28 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:subgroup:export']"
+          v-hasPermi="['zeamap:target:export']"
         >导出</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="info"
+          plain
+          icon="el-icon-upload2"
+          size="mini"
+          @click="handleImport"
+          v-hasPermi="['collegeManage:studentBase:import']"
+        >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="subgroupList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="targetList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="subgroupId" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="description" />
-      <el-table-column label="${comment}" align="center" prop="populationId" />
+      <el-table-column label="${comment}" align="center" prop="tfbdTargetId" />
+      <el-table-column label="${comment}" align="center" prop="targetGene" />
+      <el-table-column label="${comment}" align="center" prop="pValue" />
+      <el-table-column label="${comment}" align="center" prop="tfbdNameId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -90,14 +100,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:subgroup:edit']"
+            v-hasPermi="['zeamap:target:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:subgroup:remove']"
+            v-hasPermi="['zeamap:target:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -114,14 +124,14 @@
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="${comment}" prop="targetGene">
+          <el-input v-model="form.targetGene" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="description">
-          <el-input v-model="form.description" placeholder="请输入${comment}" />
+        <el-form-item label="${comment}" prop="pValue">
+          <el-input v-model="form.pValue" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="populationId">
-          <el-input v-model="form.populationId" placeholder="请输入${comment}" />
+        <el-form-item label="${comment}" prop="tfbdNameId">
+          <el-input v-model="form.tfbdNameId" placeholder="请输入${comment}" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -129,14 +139,48 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 用户导入对话框 -->
+    <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
+      <el-upload
+        ref="upload"
+        :limit="1"
+        accept=".xlsx, .xls"
+        :headers="upload.headers"
+        :action="upload.url + '?updateSupport=' + upload.updateSupport"
+        :disabled="upload.isUploading"
+        :on-progress="handleFileUploadProgress"
+        :on-success="handleFileSuccess"
+        :auto-upload="false"
+        drag
+      >
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__tip text-center" slot="tip">
+          <div class="el-upload__tip" slot="tip">
+            <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的用户数据
+          </div>
+          <span>仅允许导入xls、xlsx格式文件。</span>
+          <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" @click="importTemplate">下载模板</el-link>
+        </div>
+      </el-upload>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFileForm">确 定</el-button>
+        <el-button @click="upload.open = false">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listSubgroup, getSubgroup, delSubgroup, addSubgroup, updateSubgroup } from "@/api/import/Gene expression/subgroup";
+import { listTarget, getTarget, delTarget, addTarget, updateTarget } from "@/api/import/Tfbd/tfbd_target";
+import { getToken } from "@/utils/auth";
+
+
+
 
 export default {
-  name: "subgroup",
+  name: "tfbd_target",
   data() {
     return {
       // 遮罩层
@@ -152,7 +196,7 @@ export default {
       // 总条数
       total: 0,
       // Import表格数据
-      subgroupList: [],
+      targetList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -161,9 +205,23 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        description: null,
-        populationId: null
+        targetGene: null,
+        pValue: null,
+        tfbdNameId: null
+      },
+      upload: {
+        // 是否显示弹出层（用户导入）
+        open: false,
+        // 弹出层标题（用户导入）
+        title: "",
+        // 是否禁用上传
+        isUploading: false,
+        // 是否更新已经存在的用户数据
+        updateSupport: 0,
+        // 设置上传的请求头部
+        headers: { Authorization: "Bearer " + getToken() },
+        // 上传的地址
+        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
       },
       // 表单参数
       form: {},
@@ -179,8 +237,8 @@ export default {
     /** 查询Import列表 */
     getList() {
       this.loading = true;
-      listSubgroup(this.queryParams).then(response => {
-        this.subgroupList = response.rows;
+      listTarget(this.queryParams).then(response => {
+        this.targetList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -193,10 +251,10 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        subgroupId: null,
-        name: null,
-        description: null,
-        populationId: null
+        tfbdTargetId: null,
+        targetGene: null,
+        pValue: null,
+        tfbdNameId: null
       };
       this.resetForm("form");
     },
@@ -212,7 +270,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.subgroupId)
+      this.ids = selection.map(item => item.tfbdTargetId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -225,8 +283,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const subgroupId = row.subgroupId || this.ids
-      getSubgroup(subgroupId).then(response => {
+      const tfbdTargetId = row.tfbdTargetId || this.ids
+      getTarget(tfbdTargetId).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改Import";
@@ -236,14 +294,14 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.subgroupId != null) {
-            updateSubgroup(this.form).then(response => {
+          if (this.form.tfbdTargetId != null) {
+            updateTarget(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addSubgroup(this.form).then(response => {
+            addTarget(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -254,9 +312,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const subgroupIds = row.subgroupId || this.ids;
-      this.$modal.confirm('是否确认删除Import编号为"' + subgroupIds + '"的数据项？').then(function() {
-        return delSubgroup(subgroupIds);
+      const tfbdTargetIds = row.tfbdTargetId || this.ids;
+      this.$modal.confirm('是否确认删除Import编号为"' + tfbdTargetIds + '"的数据项？').then(function() {
+        return delTarget(tfbdTargetIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -264,9 +322,35 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/subgroup/export', {
+      this.download('zeamap/target/export', {
         ...this.queryParams
-      }, `subgroup_${new Date().getTime()}.xlsx`)
+      }, `target_${new Date().getTime()}.xlsx`)
+    },
+    /** 导入按钮操作 */
+    handleImport() {
+      this.upload.title = "导入"; // todo
+      this.upload.open = true;
+    },
+    /** 下载模板操作 */
+    importTemplate() {
+      this.download('collegeManage/studentBase/importTemplate', {
+      }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
+    },
+// 文件上传中处理
+    handleFileUploadProgress(event, file, fileList) {
+      this.upload.isUploading = true;
+    },
+// 文件上传成功处理
+    handleFileSuccess(response, file, fileList) {
+      this.upload.open = false;
+      this.upload.isUploading = false;
+      this.$refs.upload.clearFiles();
+      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
+      this.getList();
+    },
+// 提交上传文件
+    submitFileForm() {
+      this.$refs.upload.submit();
     }
   }
 };
