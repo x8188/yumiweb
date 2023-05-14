@@ -7,7 +7,7 @@
       </div>
       <div class="container" v-for="item in populations" :key="item.name">
         <div class="box">
-          <a @click="handle(name)">
+          <a @click="handle(item.name)">
             <div class="box_left">
               <img>
             </div>
@@ -35,6 +35,7 @@
 
 <script>
 import {listPopulation} from "@/api/germplasm/populations";
+import {details} from "@/api/germplasm/details/details";
 
 export default {
   name: "populations",
@@ -55,8 +56,8 @@ export default {
       })
     },
     handle(arg){
-        this.$router.push({name:'details',params:{arg}});
-        details(name);
+        this.$router.push({path:'/germplasm/details',query:{arg}});
+        details(arg);
     }
   }
 }
