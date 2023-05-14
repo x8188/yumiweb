@@ -75,7 +75,13 @@
             </div>
             <div class="germplasm-select">
               <span>Trait ID</span>
-              <el-select filterable v-model="formData.TraitId" placeholder="" @blur="TraitIdChange">
+              <el-select
+                v-model="formData.TraitId"
+                filterable
+                remote
+                :remote-method="remoteMethod"
+                @blur="TraitIdBlur"
+              >
                 <el-option
                   v-for="(item, i) in options.TraitId"
                   :key="i"
@@ -182,7 +188,7 @@
             <el-button
               type="primary"
               style="margin-right: 40px"
-              @click="reset()"
+              @click="reset"
               ><i
                 ><SvgIcon
                   icon-class="refresh-left"
@@ -217,13 +223,13 @@ export default {
         start: 1,
         end: 999999999,
         chr: "",
-        QTLstart:  0.01,
+        QTLstart: 0.01,
         QTLend: 1000.88,
         LinkMap: "",
-        TraitCategory:"",
-        TraitId:"",
-        lodStart:0.01,
-        lodEnd:1000.88
+        TraitCategory: "",
+        TraitId: "null",
+        lodStart: 0.01,
+        lodEnd: 1000.88,
       },
       checkBox: [],
       options: {
@@ -237,7 +243,7 @@ export default {
       exportLoading: false,
       tableShow: false,
 
-      traitid: null,
+      // traitid: "null",
     };
   },
   created() {
@@ -261,7 +267,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqselecttraitid(this.traitid);
+        let res4 = await this.$API.Qtl.reqselecttraitid(this.formData.TraitId);
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -284,7 +290,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqlinkagetraitid(this.traitid);
+        let res4 = await this.$API.Qtl.reqlinkagetraitid(this.formData.TraitId);
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -323,25 +329,54 @@ export default {
         }
       }
     },
-    async TraitIdChange(){
+    async TraitIdBlur() {
       if (this.qtlType == "association") {
-        let res4 = await this.$API.Qtl.reqselecttraitid(this.traitid);
+        let res4 = await this.$API.Qtl.reqselecttraitid("null");
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        this.traitid=""
+        // this.formData.TraitId="null"
       } else {
-        let res4 = await this.$API.Qtl.reqlinkagetraitid(this.traitid);
+        let res4 = await this.$API.Qtl.reqlinkagetraitid("null");
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
             value: x,
           }));
         }
-        this.traitid=""
+        // this.formData.TraitId="null"
+      }
+    },
+    async remoteMethod(query) {
+      if (query !== "") {
+        if (this.qtlType == "association") {
+          let res4 = await this.$API.Qtl.reqselecttraitid(
+            query
+          );
+          if (res4.code == 200) {
+            this.options.TraitId = res4.data.map((x) => ({
+              label: x,
+              value: x,
+            }));
+          }
+          // this.formData.TraitId="null"
+        } else {
+          let res4 = await this.$API.Qtl.reqlinkagetraitid(
+            query
+          );
+          if (res4.code == 200) {
+            this.options.TraitId = res4.data.map((x) => ({
+              label: x,
+              value: x,
+            }));
+          }
+          // this.formData.TraitId="null"
+        }
+      } else {
+        this.options.TraitId = [];
       }
     },
     async changeRegion() {
@@ -363,7 +398,7 @@ export default {
           accession: this.formData.reference,
           version: this.formData.version,
           omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId,
+          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
@@ -391,7 +426,7 @@ export default {
           accession: this.formData.reference,
           version: this.formData.version,
           omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId,
+          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
           linkagemap: this.formData.LinkMap,
           chr: this.formData.chr,
           start: this.formData.start,
@@ -411,7 +446,7 @@ export default {
         //   lod_min: 0.01,
         //   lod_max: 1000.88,
         // };
-        console.log(data)
+        console.log(data);
         let res = await this.$API.Qtl.reqlinkage(data);
 
         if (res.code == 200) {
@@ -430,15 +465,33 @@ export default {
         start: 1,
         end: 999999999,
         chr: "",
-        QTLstart:  0.01,
+        QTLstart: 0.01,
         QTLend: 1000.88,
         LinkMap: "",
-        TraitCategory:"",
-        TraitId:"",
-        lodStart:0.01,
-        lodEnd:1000.88
+        TraitCategory: "",
+        TraitId: "null",
+        lodStart: 0.01,
+        lodEnd: 1000.88,
       };
     },
+    reset(){
+      this.formData = {
+        reference: undefined,
+        version: "",
+        population: "",
+        analysis: "",
+        start: 1,
+        end: 999999999,
+        chr: "",
+        QTLstart: 0.01,
+        QTLend: 1000.88,
+        LinkMap: "",
+        TraitCategory: "",
+        TraitId: "null",
+        lodStart: 0.01,
+        lodEnd: 1000.88,
+      };
+    }
     // dataFilter(val) {
     //     this.formData.reference = val;
     //     if (val) { //val存在
