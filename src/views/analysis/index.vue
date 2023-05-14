@@ -57,20 +57,15 @@
             </div>
           </div>
         </transition>
-      
-      <transition name="fade-transform" mode="out-in">
-        <AnalysisInfo :show-info.sync="showInfo" :info-item="infoItem"/>
-      </transition>
     </div>
 </template>
 
 <script>
 import { queryAll,downloadAll} from '@/api/analysis/index'
-import AnalysisInfo from './components/analysis-info.vue'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 import SideBar from './components/sidebar.vue'
 export default {
-components: { SideBar, SvgIcon, AnalysisInfo },
+components: { SideBar, SvgIcon},
 data() {
   return {
     // 多选

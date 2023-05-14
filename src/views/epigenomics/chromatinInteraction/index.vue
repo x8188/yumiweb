@@ -104,21 +104,16 @@
             </div>
           </div>
         </transition>
-      
-      <transition name="fade-transform" mode="out-in">
-        <AnalysisInfo :show-info.sync="showInfo" :info-item="infoItem"/>
-      </transition>
     </div>
 </template>
 
 <script>
 import { queryAll,downloadAll } from '@/api/epigenomics/chromatinInteraction/index'
-import AnalysisInfo from './components/analysis-info.vue'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 import SideBar from './components/sidebar.vue'
 import { blobValidate } from '@/utils/ruoyi';
 export default {
-components: { SideBar, SvgIcon, AnalysisInfo },
+components: { SideBar, SvgIcon },
 data() {
   return {
     page: {
@@ -220,7 +215,9 @@ methods: {
   async getFilterData(filter) {
     this.page.pageNum = 1
     const query = {...filter,...this.page.pageSize}
-    const data = await this.getData(query)
+    this.page = {...this.page,...query}
+    console.log('@@@@@@',this.page)
+    const data = await this.getData(this.page)
   },
   // 改变每页展示的信息条数
   changeResultsNums(newVal) {
