@@ -36,10 +36,11 @@ export function queryChrB() {
 }
 
 // 大查询
-export function queryAll(params) {
+export function queryAll(data) {
   return request({
-    url: '/chromatin_interaction/selectchromatin_interaction',
-    params
+    method:'post',
+    url: `/chromatin_interaction/selectchromatin_interaction?pageNum=${data.pageNum}&pageSize=${data.pageSize}`,
+    data
   })
 }
 

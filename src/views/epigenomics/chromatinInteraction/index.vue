@@ -133,8 +133,8 @@ data() {
       endB: '999999999999999'
     },
     queryNull:{
-      pageNum : 1,
-      pageSize: 10,
+      // pageNum : 1,
+      // pageSize: 10,
       accession: 'B73',
       version: '4.43.0',
       description: '',
