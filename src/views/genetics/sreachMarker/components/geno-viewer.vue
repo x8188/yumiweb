@@ -265,7 +265,7 @@
                   style="margin-right: 5px" /></i
               >Reset
             </el-button>
-            <el-button type="primary" icon="el-icon-check" @click="getQtl()"
+            <el-button type="primary" icon="el-icon-check" @click="firstGet()"
               >Submit</el-button
             >
           </div>
@@ -279,6 +279,7 @@ import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 // import Title from "@/components/CommonComponents/Title.vue";
 export default {
   components: { SvgIcon },
+  props: ["page"],
   data() {
     return {
       qtlType: "association",
@@ -304,7 +305,7 @@ export default {
         lg: "",
         cm_min: 0.01,
         cm_max: 100.88,
-        TraitId:"null"
+        TraitId: "null",
       },
       checkBox: [],
       options: {
@@ -342,7 +343,9 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.marker.reqselecttraitid(this.formData.TraitId);
+        let res4 = await this.$API.marker.reqselecttraitid(
+          this.formData.TraitId
+        );
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -372,7 +375,9 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.marker.reqlinkagetraitid(this.formData.TraitId);
+        let res4 = await this.$API.marker.reqlinkagetraitid(
+          this.formData.TraitId
+        );
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -447,9 +452,7 @@ export default {
     async remoteMethod(query) {
       if (query !== "") {
         if (this.qtlType == "association") {
-          let res4 = await this.$API.marker.reqselecttraitid(
-            query
-          );
+          let res4 = await this.$API.marker.reqselecttraitid(query);
           if (res4.code == 200) {
             this.options.TraitId = res4.data.map((x) => ({
               label: x,
@@ -458,9 +461,7 @@ export default {
           }
           // this.formData.TraitId="null"
         } else {
-          let res4 = await this.$API.marker.reqlinkagetraitid(
-            query
-          );
+          let res4 = await this.$API.marker.reqlinkagetraitid(query);
           if (res4.code == 200) {
             this.options.TraitId = res4.data.map((x) => ({
               label: x,
@@ -473,13 +474,17 @@ export default {
         this.options.TraitId = [];
       }
     },
+    firstGet() {
+      this.page.pageNum = 1;
+      this.getQtl();
+    },
     async getQtl() {
       if (this.qtlType == "association") {
         let data = {
           accession: this.formData.reference,
           version: this.formData.version,
           omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
+          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
@@ -491,9 +496,14 @@ export default {
           pip_min: this.formData.pip_min,
           pip_max: this.formData.pip_max,
         };
-        let res = await this.$API.marker.reqassociation_qtl(data);
+        let pageParams = {
+          pageNum: this.page.pageNum,
+          pageSize: this.page.pageSize,
+        };
+        let res = await this.$API.marker.reqassociation_qtl(data,pageParams);
 
         if (res.code == 200) {
+          this.page.total = res.total;
           this.$emit("showResult", res.data, data);
         }
       } else {
@@ -502,14 +512,19 @@ export default {
           version: this.formData.version,
           omics: this.formData.TraitCategory,
           linkagemap: this.formData.LinkMap,
-          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
+          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
           lg: this.formData.lg,
           cm_min: this.formData.cm_min,
           cm_max: this.formData.cm_max,
         };
-        let res = await this.$API.marker.reqlinkage(data);
+        let pageParams = {
+          pageNum: this.page.pageNum,
+          pageSize: this.page.pageSize,
+        };
+        let res = await this.$API.marker.reqlinkage(data,pageParams);
 
         if (res.code == 200) {
+          this.page.total = res.total;
           this.$emit("showResult", res.data, data);
         }
       }
@@ -534,7 +549,7 @@ export default {
         lg: "",
         cm_min: 0.01,
         cm_max: 100.88,
-        TraitId:"null"
+        TraitId: "null",
       };
       this.options = {
         reference: [],
@@ -547,7 +562,7 @@ export default {
       };
       this.getdata();
     },
-    reset(){
+    reset() {
       this.formData = {
         reference: undefined,
         version: "",
@@ -567,9 +582,14 @@ export default {
         lg: "",
         cm_min: 0.01,
         cm_max: 100.88,
-        TraitId:"null"
+        TraitId: "null",
       };
-    }
+    },
+  },
+  mounted() {
+    this.$bus.$on("changeMarkerPage", () => {
+      this.getQtl();
+    });
   },
 };
 </script>

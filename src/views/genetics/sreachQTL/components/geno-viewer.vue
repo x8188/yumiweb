@@ -185,17 +185,14 @@
             </div>
           </el-form>
           <div class="submit-buttons">
-            <el-button
-              type="primary"
-              style="margin-right: 40px"
-              @click="reset"
+            <el-button type="primary" style="margin-right: 40px" @click="reset"
               ><i
                 ><SvgIcon
                   icon-class="refresh-left"
                   style="margin-right: 5px" /></i
               >Reset
             </el-button>
-            <el-button type="primary" icon="el-icon-check" @click="getQtl()"
+            <el-button type="primary" icon="el-icon-check" @click="firstGet()"
               >Submit</el-button
             >
           </div>
@@ -209,6 +206,7 @@ import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 // import Title from "@/components/CommonComponents/Title.vue";
 export default {
   components: { SvgIcon },
+  props: ["page"],
   data() {
     return {
       qtlType: "association",
@@ -220,11 +218,11 @@ export default {
         version: "",
         population: "",
         analysis: "",
-        start: 1,
-        end: 999999999,
+        start: 100000000,
+        end: 200000000,
         chr: "",
         QTLstart: 0.01,
-        QTLend: 1000.88,
+        QTLend: 999999999,
         LinkMap: "",
         TraitCategory: "",
         TraitId: "null",
@@ -353,9 +351,7 @@ export default {
     async remoteMethod(query) {
       if (query !== "") {
         if (this.qtlType == "association") {
-          let res4 = await this.$API.Qtl.reqselecttraitid(
-            query
-          );
+          let res4 = await this.$API.Qtl.reqselecttraitid(query);
           if (res4.code == 200) {
             this.options.TraitId = res4.data.map((x) => ({
               label: x,
@@ -364,9 +360,7 @@ export default {
           }
           // this.formData.TraitId="null"
         } else {
-          let res4 = await this.$API.Qtl.reqlinkagetraitid(
-            query
-          );
+          let res4 = await this.$API.Qtl.reqlinkagetraitid(query);
           if (res4.code == 200) {
             this.options.TraitId = res4.data.map((x) => ({
               label: x,
@@ -391,42 +385,39 @@ export default {
         }
       }
     },
-
+    firstGet() {
+      this.page.pageNum = 1;
+      this.getQtl();
+    },
     async getQtl() {
       if (this.qtlType == "association") {
         let data = {
           accession: this.formData.reference,
           version: this.formData.version,
           omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
+          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
           chr: this.formData.chr,
           start: this.formData.start,
           end: this.formData.end,
           log_min: this.formData.QTLstart,
           log_max: this.formData.QTLend,
         };
-        // let data = {
-        //   accession: "B73",
-        //   version: "4.43.0",
-        //   omics: "Phenomics",
-        //   xot_uid: "Agro2-Row_Kernel_Number_BLUP",
-        //   chr: "",
-        //   start: 100000000,
-        //   end: 200000000,
-        //   log_min: 0.01,
-        //   log_max: 999999999,
-        // };
-        let res = await this.$API.Qtl.reqassociation_qtl(data);
+        let pageParams = {
+          pageNum: this.page.pageNum,
+          pageSize: this.page.pageSize,
+        };
+        let res = await this.$API.Qtl.reqassociation_qtl(data, pageParams);
 
         if (res.code == 200) {
-          this.$emit("showResult", res.data, data);
+          this.page.total = res.total;
+          this.$emit("showResult", res.rows, data);
         }
       } else {
         let data = {
           accession: this.formData.reference,
           version: this.formData.version,
           omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId=="null"?"": this.formData.TraitId,
+          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
           linkagemap: this.formData.LinkMap,
           chr: this.formData.chr,
           start: this.formData.start,
@@ -434,23 +425,15 @@ export default {
           lod_min: this.formData.lodStart,
           lod_max: this.formData.lodEnd,
         };
-        // let data = {
-        //   accession: "B73",
-        //   version: "4.43.0",
-        //   omics: "Phenomics",
-        //   xot_uid: "Agro2-Kernel_Weight_BLUP",
-        //   linkagemap: "",
-        //   chr: "",
-        //   start: 1,
-        //   end: 999999999,
-        //   lod_min: 0.01,
-        //   lod_max: 1000.88,
-        // };
-        console.log(data);
-        let res = await this.$API.Qtl.reqlinkage(data);
+        let pageParams = {
+          pageNum: this.page.pageNum,
+          pageSize: this.page.pageSize,
+        };
+        let res = await this.$API.Qtl.reqlinkage(data,pageParams);
 
         if (res.code == 200) {
-          this.$emit("showResult", res.data, data);
+          this.page.total = res.total;
+          this.$emit("showResult", res.rows, data);
         }
       }
     },
@@ -462,11 +445,11 @@ export default {
         version: "",
         population: "",
         analysis: "",
-        start: 1,
-        end: 999999999,
+        start: 100000000,
+        end: 200000000,
         chr: "",
         QTLstart: 0.01,
-        QTLend: 1000.88,
+        QTLend: 999999999,
         LinkMap: "",
         TraitCategory: "",
         TraitId: "null",
@@ -474,7 +457,7 @@ export default {
         lodEnd: 1000.88,
       };
     },
-    reset(){
+    reset() {
       this.formData = {
         reference: undefined,
         version: "",
@@ -491,7 +474,7 @@ export default {
         lodStart: 0.01,
         lodEnd: 1000.88,
       };
-    }
+    },
     // dataFilter(val) {
     //     this.formData.reference = val;
     //     if (val) { //val存在
@@ -504,6 +487,11 @@ export default {
     //       this.options = tem;
     //     }
     //   }
+  },
+  mounted() {
+    this.$bus.$on("changeQtlPage", () => {
+      this.getQtl();
+    });
   },
 };
 </script>
