@@ -298,6 +298,33 @@
         </div>
       </div>
       <div class="tabelhide tableclass">
+        <div class="data-top">
+          <div class="info-nums">
+            <span>Show</span>
+            <el-select
+              filterable
+              @change="changeResultsNums"
+              v-model="page.pageSize"
+              style="width: 80px; margin: 0 10px"
+            >
+              <el-option label="10" :value="10"></el-option>
+              <el-option label="15" :value="15"></el-option>
+              <el-option label="20" :value="20"></el-option>
+              <el-option label="25" :value="25"></el-option>
+              <el-option label="50" :value="50"></el-option>
+            </el-select>
+            <span>results</span>
+          </div>
+          <div class="download-button">
+            <el-button
+              @click="downloadData()"
+              type="primary"
+              icon="el-icon-download"
+              style="width: 100px"
+              >下载</el-button
+            >
+          </div>
+        </div>
         <!-- v-loading="loading" -->
         <el-table :data="tfbdList">
           <el-table-column type="selection" width="55" align="center" />
@@ -365,11 +392,15 @@
       </div>
     </div>
     <!-- @pagination="getList" -->
-    <pagination
+    <el-pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      :page-size="page.pageSize"
+      :current-page="page.pageNum"
+      @current-change="nowPage"
+      layout="prev, pager, next"
+      background
+      style="margin-top: 25px; margin-bottom: 50px; float: right"
     />
 
     <!-- 添加或修改Transcriptomics对话框 -->
@@ -511,31 +542,33 @@ export default {
       form: {},
       // 表单校验
       rules: {},
+      page: {
+        pageNum: 1,
+        pageSize: 10,
+      },
     };
   },
-  created() {
+  async created() {
     // this.getList();
-    this.getFilterOp();
-    // let from = {
-    //   accession: "is_transitive",
-    //   version: "",
-    //   analysis_name: "",
-    //   info_name: "",
-    //   info_simplename: "",
-    //   info_family: "",
-    //   target_gene: "",
-    //   p_value: "",
-    // };
-    let file = new FormData();
-    file.append("accession", "");
-    file.append("version", "");
-    file.append("analysis_name", "");
-    file.append("info_name", "");
-    file.append("info_simplename", "");
-    file.append("info_family", "");
-    file.append("target_gene", "");
-    file.append("p_value", "");
-    this.getTaleData(file);
+    await this.getFilterOp();
+    this.formData.reference = this.referenceOptions[0].value;
+    await this.getVersionOp();
+    this.formData.version = this.versionOptions[0].value;
+    let data = {
+      accession: this.formData.reference,
+      version: this.formData.version,
+      analysis_name: null,
+      info_name: null,
+      info_simplename: null,
+      info_family: null,
+      target_gene: null,
+      p_value: null,
+    };
+    let pageParams = {
+      pageNum: 1,
+      pageSize: 10,
+    };
+    this.getTaleData(data, pageParams);
   },
   methods: {
     async getFilterOp() {
@@ -598,26 +631,49 @@ export default {
       }
     },
 
-    async getTaleData(from) {
-      let result = await this.$API.trans.reqSelectInfo(from);
+    async getTaleData(data, pageParams) {
+      let result = await this.$API.trans.reqSelectInfo(data, pageParams);
       if (result.code == 200) {
-        this.tfbdList = result.data;
+        this.tfbdList = result.rows;
+        this.total = result.total;
       }
     },
 
     updata() {
-      let file = new FormData();
-      file.append("accession",  this.formData.reference || "");
-      file.append("version", this.formData.version || "");
-      file.append("analysis_name", this.formData.analysis || "");
-      file.append("info_name",  this.formData.tf || "");
-      file.append("info_simplename", this.formData.tfName || "");
-      file.append("info_family",  this.formData.tfFamily || "");
-      file.append("target_gene", this.formData.geneId || "");
-      file.append("p_value", this.formData.maxPvalue || "");
-      
-      this.getTaleData(file);
+      // let file = new FormData();
+      // file.append("accession",  this.formData.reference || "");
+      // file.append("version", this.formData.version || "");
+      // file.append("analysis_name", this.formData.analysis || "");
+      // file.append("info_name",  this.formData.tf || "");
+      // file.append("info_simplename", this.formData.tfName || "");
+      // file.append("info_family",  this.formData.tfFamily || "");
+      // file.append("target_gene", this.formData.geneId || "");
+      // file.append("p_value", this.formData.maxPvalue || "");
+
+      let data = {
+        accession: this.formData.reference,
+        version: this.formData.version,
+        analysis_name: this.formData.analysis,
+        info_name: this.formData.tf,
+        info_simplename: this.formData.tfName,
+        info_family: this.formData.tfFamily,
+        target_gene: this.formData.geneId,
+        p_value: this.formData.maxPvalue,
+      };
+      let pageParams = {
+        pageNum: this.page.pageNum,
+        pageSize: this.page.pageSize,
+      };
+      this.getTaleData(data, pageParams);
     },
+    nowPage(newVal) {
+      this.page.pageNum = newVal;
+      this.updata();
+    },
+    changeResultsNums(newVal){
+      this.page.pageSize = newVal;
+      this.updata();
+    }
     // /** 查询Transcriptomics列表 */
     // getList() {
     //   this.loading = true;
@@ -785,4 +841,9 @@ export default {
 //     width: 200px !important;
 //   }
 // }
+.data-top {
+display: flex;
+justify-content: space-between;
+margin-bottom: 10px ;
+}
 </style>
