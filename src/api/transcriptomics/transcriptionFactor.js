@@ -30,12 +30,12 @@ export const reqSelectTFFamily = () =>
 export const reqSelectTFGeneID = () =>
   request({ url: `/tran/fator/info/selectTFGeneID`, method: "get" });
 
-export const reqSelectInfo = (data,pageParams) =>
+export const reqSelectInfo = (data, pageParams) =>
   request({
     url: `/tran/fator/info/selectInfo`,
     method: "post",
     data: data,
-    params:pageParams,
+    params: pageParams,
     // headers: {
     //   // "Content-Type": "multipart/form-data; boundary=--------------------------738612952322689331490464",
     //   "Content-Type": "multipart/form-data;",
@@ -43,4 +43,4 @@ export const reqSelectInfo = (data,pageParams) =>
   });
 
 export const reqDownload = (data) =>
-  request({ url: `/tran/fator/info/download`, method: "get", data: data });
+  request({ url: `/tran/fator/info/download`, method: "post", data: data, responseType: 'blob' });

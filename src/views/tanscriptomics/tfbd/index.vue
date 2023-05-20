@@ -326,7 +326,7 @@
           </div>
         </div>
         <!-- v-loading="loading" -->
-        <el-table :data="tfbdList">
+        <el-table :data="tfbdList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="accession" align="center" prop="accession" />
           <el-table-column label="version" align="center" prop="version" />
@@ -465,7 +465,7 @@
 //   addTfbd,
 //   updateTfbd,
 // } from "@/api/zeamap/tfbd";
-
+import { blobValidate } from "@/utils/ruoyi";
 export default {
   name: "Tfbd",
   data() {
@@ -546,6 +546,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
       },
+      multipleSelection:[]
     };
   },
   async created() {
@@ -571,6 +572,45 @@ export default {
     this.getTaleData(data, pageParams);
   },
   methods: {
+    // 下载
+    async downloadData() {
+      console.log(this.multipleSelection);
+      // const tempQuery = {
+      //   accession: "B73",
+      //   version: "4.43.0",
+      //   analysis: "ZhangXY-leaf_K4me3-HiChIP",
+      //   chrA: "chr1",
+      //   startA: "1",
+      //   endA: "9999999999",
+      //   chrB: "chr1",
+      //   startB: "1",
+      //   endB: "99999999999",
+      // };
+      const data = await this.$API.trans.reqDownload(this.multipleSelection);
+      const isOk = await blobValidate(data);
+      if (isOk) {
+        this.$notify({
+          title: "成功",
+          message: "请求成功，正在下载",
+          type: "success",
+        });
+
+        // const res2 = await blobValidate(res1)
+        const res1 = new Blob([data]);
+        const fileName =
+          "transcriptomics_" + new Date().getTime() + ".xlsx";
+
+        this.$download.saveAs(res1, fileName);
+      } else {
+        this.$notify.error({
+          title: "错误",
+          message: "下载失败，请联系管理员",
+        });
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
     async getFilterOp() {
       let res1 = await this.$API.trans.reqSelectReference();
       if (res1.code == 200) {
@@ -670,10 +710,10 @@ export default {
       this.page.pageNum = newVal;
       this.updata();
     },
-    changeResultsNums(newVal){
+    changeResultsNums(newVal) {
       this.page.pageSize = newVal;
       this.updata();
-    }
+    },
     // /** 查询Transcriptomics列表 */
     // getList() {
     //   this.loading = true;
@@ -842,8 +882,8 @@ export default {
 //   }
 // }
 .data-top {
-display: flex;
-justify-content: space-between;
-margin-bottom: 10px ;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 </style>
