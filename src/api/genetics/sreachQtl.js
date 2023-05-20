@@ -15,11 +15,11 @@ export const reqselecttraitid= (trait_id) =>
 export const reqselectchr= () =>
   request({ url: `/genetics/search_qtl/association_qtl/selectchr`, method: "get" });
 
-export const reqassociation_qtl= (data) =>
-  request({ url: `/genetics/search_qtl/association_qtl/selectassociation_qtl`, method: "post" ,data:data});
+export const reqassociation_qtl= (data,pageParams) =>
+  request({ url: `/genetics/search_qtl/association_qtl/selectassociation_qtl`, method: "post" ,data:data,params:pageParams});
 
-export const reqqtldownload= (data) =>
-  request({ url: `/genetics/search_qtl/association_qtl/download`, method: "post" ,data:data});
+// export const reqqtldownload= (data) =>
+//   request({ url: `/genetics/search_qtl/association_qtl/download`, method: "post" ,data:data});
 
 
 export const reqlinkageaccession= () =>
@@ -40,6 +40,6 @@ export const reqlinkagechr= () =>
 export const reqlinkagemap= () =>
   request({ url: `/genetics/search_qtl/linkage_qtl/selectlinkagemap`, method: "get" });
 
-export const reqlinkage= (data) =>
-  request({ url: `/genetics/search_qtl/linkage_qtl/selectlinkage_qtl`, method: "post" ,data:data});
+export const reqlinkage= (data,pageParams) =>
+  request({ url: `/genetics/search_qtl/linkage_qtl/selectlinkage_qtl`, method: "post" ,data:data,params:pageParams});
 

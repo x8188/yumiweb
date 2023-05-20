@@ -18,8 +18,8 @@ export const reqselectchr= () =>
 export const reqselectVarType= () =>
   request({ url: `/genetics/search_marker/association_marker/selecttype`, method: "get" });
 
-export const reqassociation_qtl= (data) =>
-  request({ url: `/genetics/search_marker/association_marker/selectassociation_marker`, method: "post" ,data:data});
+export const reqassociation_qtl= (data,pageParams) =>
+  request({ url: `/genetics/search_marker/association_marker/selectassociation_marker`, method: "post" ,data:data,params:pageParams});
 
 
 export const reqlinkageaccession= () =>
@@ -40,5 +40,5 @@ export const reqlinkagelg= () =>
 export const reqlinkagemap= () =>
   request({ url: `/genetics/search_marker/linkage_marker/selectlinkagemap`, method: "get" });
 
-export const reqlinkage= (data) =>
-  request({ url: `/genetics/search_marker/linkage_marker/selectlinkage_marker`, method: "post" ,data:data});
+export const reqlinkage= (data,pageParams) =>
+  request({ url: `/genetics/search_marker/linkage_marker/selectlinkage_marker`, method: "post" ,data:data,params:pageParams});

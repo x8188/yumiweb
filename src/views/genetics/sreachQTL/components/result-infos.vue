@@ -15,14 +15,16 @@
         <div class="info-nums">
           <span>show</span>
           <el-select
-            v-model="infoNums"
-            placeholder=""
-            style="width: 80px; margin: 0 8px"
+            filterable
+            @change="changeResultsNums"
+            v-model="page.pageSize"
+            style="width: 80px; margin: 0 10px"
           >
-            <el-option label="10" value="10"></el-option>
-            <el-option label="20" value="20"></el-option>
-            <el-option label="30" value="30"></el-option>
-            <el-option label="50" value="50"></el-option>
+            <el-option label="10" :value="10"></el-option>
+            <el-option label="15" :value="15"></el-option>
+            <el-option label="20" :value="20"></el-option>
+            <el-option label="25" :value="25"></el-option>
+            <el-option label="50" :value="50"></el-option>
           </el-select>
           <span>results</span>
         </div>
@@ -49,6 +51,16 @@
           <el-table-column label="omics" align="center" prop="omics" />
           <el-table-column label="xot_uid" align="center" prop="xot_uid" />
         </el-table>
+        <el-pagination
+          background
+          :page-size="page.pageSize"
+          :current-page="page.pageNum"
+          @current-change="nowPage"
+          layout="prev, pager, next"
+          :total="page.total"
+          style="margin-top: 25px; margin-bottom: 50px; float: right"
+        >
+        </el-pagination>
       </div>
     </el-card>
   </div>
@@ -67,6 +79,10 @@ export default {
       type: Object,
       default: {},
     },
+    page:{
+      type: Object,
+      default: {},
+    }
   },
   data() {
     return {
@@ -85,27 +101,39 @@ export default {
       })
         .then(() => {
           this.exportLoading = true;
-          let data = this.filterInfo
-          if(!data.hasOwnProperty('linkagemap')){
+          let data = this.filterInfo;
+          if (!data.hasOwnProperty("linkagemap")) {
             this.download(
-            "genetics/search_qtl/association_qtl/download",
-            {
-              ...data,
-            },
-            `association_qtl_${new Date().getTime()}.xlsx`
+              "genetics/search_qtl/association_qtl/download",
+              {
+                ...data,
+              },
+              `association_qtl_${new Date().getTime()}.xlsx`
             );
-          }else{
+          } else {
             this.download(
-            "/genetics/search_qtl/linkage_qtl/download",
-            {
-              ...data,
-            },
-            `linkage_qtl_${new Date().getTime()}.xlsx`
+              "/genetics/search_qtl/linkage_qtl/download",
+              {
+                ...data,
+              },
+              `linkage_qtl_${new Date().getTime()}.xlsx`
             );
           }
-
         })
         .catch(() => {});
+    },
+    // changePage() {
+    //   this.$emit("changePage", this.page);
+    // },
+    nowPage(newVal) {
+      this.page.pageNum = newVal;
+      // this.changePage();
+      this.$bus.$emit("changeQtlPage")
+    },
+    changeResultsNums(newVal) {
+      this.page.pageSize = newVal;
+      this.$bus.$emit("changeQtlPage")
+      // this.changePage();
     },
   },
 };
