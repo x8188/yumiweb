@@ -99,13 +99,13 @@
         </el-form>
           <div class="submit-buttons">
             <el-button @click="reset" type="primary" style="margin-right: 40px;"><i><SvgIcon icon-class="refresh-left" style="margin-right: 5px;"/></i>Reset </el-button>
-            <el-button type="primary" icon="el-icon-check">Submit</el-button>
+            <el-button type="primary" icon="el-icon-check" @click="submitAll">Submit</el-button>
           </div>
         </div>
   </ZeamapCard>
 </template>
 <script>
-import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr} from '@/api/gemo-viewer/geno-viewer'
+import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr,selectAll} from '@/api/gemo-viewer/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
@@ -115,20 +115,21 @@ components: { SvgIcon },
       region: '1',
       viewerTitle: 'Geno viewer',
       formData: {
-        accession: "",
-        version: "",
-        alias: "",
-        description: "",
-        start: '',
-        end: '',
-        chorm: '',
+        accession: "B73",
+        version: "4.43.0",
+        alias: "AMP",
+        description: "Genome assembly and annotation of Zea mays subsp. mays cultivar B73 Version 4",
+        start: '1',
+        end: '2000',
+        chorm: 'jjj',
       },
       checkBox: [],
       options: {
         accession: [],
         version: [],
         alias: [],
-        description: []
+        description: [],
+        chorm: []
       }
     }
   },
@@ -170,6 +171,7 @@ components: { SvgIcon },
     async dropDownChr() {
       const { data }= await dropDownChr(this.formData)
       this.options.chorm = data
+      console.log(data);
     },
     checkAnalysis() {
       const { accession, version, alias } = this.formData;
@@ -186,6 +188,11 @@ components: { SvgIcon },
       } else {
         this.$message.error('请先选择前边四项')
       }
+    },
+    async submitAll() {
+      const res = await selectAll(this.formData)
+      this.$store.commit('ldViewer/setResult', res)
+      console.log(this.$store.getters.ldViewer)
     },
     // 重置所有条件
     reset() {

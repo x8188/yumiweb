@@ -15,5 +15,6 @@ const getters = {
   topbarRouters:state => state.permission.topbarRouters,
   defaultRoutes:state => state.permission.defaultRoutes,
   sidebarRouters:state => state.permission.sidebarRouters,
+  ldViewer: state => state.ldViewer.result
 }
 export default getters
