@@ -10,12 +10,12 @@
               <div class="reference-item select-item">
                 <span>Reference</span>
                 <el-form-item>
-                  <el-select filterable="" v-model="formData.reference" placeholder="" @focus="focusSelect('reference')">
+                  <el-select filterable="" v-model="formData.accession" placeholder="" >
                     <el-option
-                      v-for="(item,i) in options.reference"
+                      v-for="(item,i) in options.accession"
                       :key="i"
                       :label="item"
-                      value="1"
+                      :value="item"
                       ></el-option>
                   </el-select>
                 </el-form-item>
@@ -23,12 +23,12 @@
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select filterable="" v-model="formData.version" placeholder="" >
+                  <el-select filterable v-model="formData.version" placeholder="" @focus="checkVersionIsNull" >
                     <el-option
                       v-for="(item,i) in options.version"
                       :key="i"
                       :label="item"
-                      value="1"
+                      :value="item"
                       ></el-option>
                   </el-select>
                 </el-form-item>
@@ -36,16 +36,26 @@
               <div class="population-item select-item">
                 <span>Population</span>
                 <el-form-item>
-                  <el-select v-model="formData.population" placeholder="">
-                    <el-option label="population" value="population"></el-option>
+                  <el-select filterable v-model="formData.alias" placeholder="">
+                    <el-option
+                      v-for="(item,i) in options.alias"
+                      :key="i"
+                      :label="item"
+                      :value="item"
+                      ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="analysis-item select-item">
                 <span>Analysis</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.analysis" placeholder="">
-                    <el-option label="analysis" value="analysis"></el-option>
+                  <el-select filterable v-model="formData.description" placeholder="" @focus="checkAnalysis()">
+                    <el-option
+                      v-for="(item,i) in options.description"
+                      :key="i"
+                      :label="item"
+                      :value="item"
+                      ></el-option>
                 </el-select>
                 </el-form-item>
               </div>
@@ -60,8 +70,13 @@
                 <div class="chr">
                   <span>chr</span>
                   <el-form-item>
-                  <el-select filterable="" v-model="formData.chr" placeholder="">
-                    <el-option label="chr" value="chr"></el-option>
+                  <el-select filterable v-model="formData.chorm" placeholder="" @focus="checkChr()">
+                    <el-option
+                      v-for="(item,i) in options.chorm"
+                      :key="i"
+                      :label="item"
+                      :value="item"
+                      ></el-option>
                   </el-select>
                 </el-form-item>
                 </div>
@@ -90,59 +105,88 @@
   </ZeamapCard>
 </template>
 <script>
-import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
+import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr} from '@/api/gemo-viewer/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
   data() {
     return {
+      isFirst: true,
       region: '1',
       viewerTitle: 'Geno viewer',
       formData: {
-        reference: '',
-        version: '',
-        population: '',
-        analysis: '',
+        accession: "",
+        version: "",
+        alias: "",
+        description: "",
         start: '',
         end: '',
-        chr: '',
+        chorm: '',
       },
       checkBox: [],
       options: {
-        reference: [],
-        version: []
+        accession: [],
+        version: [],
+        alias: [],
+        description: []
       }
+    }
+  },
+  watch: {
+    'formData.accession'(newValue, oldValue) {
+      // 处理 accession 属性变化的逻辑
+      console.log('accession 变化了:', newValue);
+      this.dropDownVersion({accession: newValue})
     }
   },
   created() {
     this.dropDownReference()
-    this.dropDownVersion()
+    this.dropDownPopulation()
   },
   methods: {
+    // version是否为空
+    checkVersionIsNull() {
+      if(this.formData.accession==='') {
+        this.$message.error('请先选择Reference')
+      }
+    },
     // 获取下拉框信息
     async dropDownReference() {
       const { data }= await dropDownReference()
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.reference = arr
+      this.options.accession = data
     },
-    async dropDownVersion() {
-      const { data }= await dropDownVersion()
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.version = arr
+    async dropDownVersion(params) {
+      const { data }= await dropDownVersion(params)
+      this.options.version = data
     },
-    // 疯狂道歉
-    focusSelect(name) {
-      if(this.options[name].length === 0) {
-        this.$notify({
-          title: '已成功请求',
-          message: '正在拉取数据，请稍等',
-          type: 'success'
-        })
+    async dropDownPopulation() {
+      const { data }= await dropDownPopulation()
+      this.options.alias = data
+    },
+    async dropDownAnalysis() {
+      const { data }= await dropDownAnalysis(this.formData)
+      this.options.description = data
+    },
+    async dropDownChr() {
+      const { data }= await dropDownChr(this.formData)
+      this.options.chorm = data
+    },
+    checkAnalysis() {
+      const { accession, version, alias } = this.formData;
+      if(accession !== '' && version !== '' && alias !== '') {
+        this.dropDownAnalysis()
+      } else {
+        this.$message.error('请先选择前边三项')
       }
     },
-
+    checkChr() {
+      const { accession, version, alias,description } = this.formData;
+      if(accession !== '' && version !== '' && alias !== '' && description!=="") {
+        this.dropDownChr()
+      } else {
+        this.$message.error('请先选择前边四项')
+      }
+    },
     // 重置所有条件
     reset() {
       this.region= '1',
