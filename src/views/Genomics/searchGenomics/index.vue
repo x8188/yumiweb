@@ -4,7 +4,7 @@
       <el-form ref="elForm" :model="formData" :rules="rules" size="medium">
         <el-col id="col-one">
           <span @click="filter_page()" id="span-second">Filter</span>
-          <span>Reset</span>
+          <span @click="resetForm">Reset</span>
         </el-col>
         <el-col :span="6">
           <el-form-item label="Germplasm">
@@ -59,29 +59,26 @@
     <div class="buttom_box">
       <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
       <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
-        @selection-change="handleSelectionChange" height="400px">
+        @selection-change="handleSelectionChange" height="400px" v-loading="loading" element-loading-text="拼命加载中....">
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID()">
         </el-table-column>
 
-        <el-table-column label="Variant ID" show-overflow-tooltip>
+        <el-table-column label="Name" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick($event)">{{ scope.row.VID }}</span>
+            <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick($event)">{{ scope.row.featureId
+            }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="Type" width="140">
+        <el-table-column prop="description" label="Description" width="180">
         </el-table-column>
-        <el-table-column prop="chr" label="Chr" width="140">
+        <el-table-column prop="chromosome" label="CHROM" width="180">
         </el-table-column>
-        <el-table-column prop="posi" label="Posi" width="140">
+        <el-table-column prop="start" label="Start" width="180">
         </el-table-column>
-        <el-table-column prop="maf" label="MAF" width="140">
+        <el-table-column prop="end" label="End" width="180">
         </el-table-column>
-        <el-table-column prop="genorate" label="GenoRate" width="140">
-        </el-table-column>
-        <el-table-column prop="consequence" label="Consequence" width="140">
-        </el-table-column>
-        <el-table-column prop="impacts" label="Impacts" width="140">
+        <el-table-column prop="strand" label="Strand" width="180">
         </el-table-column>
       </el-table>
       <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
@@ -107,330 +104,15 @@ export default {
   props: [],
   data() {
     return {
+      loading: false,
       total: 1,
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
-        postCode: null,
-        postName: null,
-        postSort: null,
-        status: null,
+        pageSize: 8,
       },
       multipleSelection: [],
       Download_Vid: [],
-      tableData: [
-        {
-          VID: '5849316',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1741',
-          maf: '0.0016',
-          genorate: '0.8427',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        }, ,
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        },
-        {
-          VID: '6202405',
-          type: 'SNP',
-          chr: 'chr1',
-          posi: '1742',
-          maf: '0',
-          genorate: '0.8065',
-          consequence: 'intergenic_variant',
-          impacts: 'MODIFIER'
-        }
-      ],
-      accession: "B73",
+      tableData: [],
       multipleSelection: [],
       formData: {
         accession: undefined,
@@ -459,24 +141,23 @@ export default {
     }
   },
   computed: {},
-  // watch: {
-  //   formData:{
-  //     handler(Old,New){
-  //       console.log(Old)
-  //       console.log(New)
-  //       this.accession = New.field101
+  watch: {
+    "formData.accession": function (New, Old) {
+      if (New == null || New == "") {
+        this.versionOptions = ["Please choose Reference first!"]
+      }
+      else {
+        getSelectVersion(New).then(res => {
+          console.log(res)
+          this.VersionOptions = res.rows
+          console.log(this.VersionOptions)
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    }
+  },
 
-  //       getSelectVersion(this.accession).then(res=>{
-  //         console.log(res)
-  //         this.field102Options = res
-  //       })
-
-  //       console.log(this.field101Options[New.field101])
-  //     },
-  //     deep:true
-  //   }
-  // },
-  
   mounted() { this.$nextTick(this.Request_beforeMounted()) },
   methods: {
     //跳转到详情页面
@@ -484,31 +165,29 @@ export default {
       console.log(event.target.innerHTML);  //接下来向后端传递这个参数实现页面跳转
       //跳转时 用路由传递参数，将数据正确展示到详情页面 未做
       const featureId = event.target.innerHTML
-      toDetailPage(featureId).then(res=>{
+      toDetailPage(featureId).then(res => {
         console.log(res)
-         let data = res;
+        let data = res;
         this.$router.push({
-          path:'/web/Genomics/Genomics/details',
-          query:{data}
+          path: '/web/Genomics/Genomics/details',
+          query: { data }
         })
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err)
       })
     },
     /** 查询岗位信息列表 */
     getList() {
       this.loading = true;
-      listPost(this.queryParams).then(response => {
-        this.postList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+      Search(this.formData, this.queryParams).then(res => {
+        console.log(res)
+      })
     },
     handleSelectionChange(val) {
       console.log(val)
       this.Download_Vid = []
       val.forEach(item => {
-        this.Download_Vid.push(item.VID)
+        this.Download_Vid.push(item.featureId)
       });
       console.log(this.Download_Vid)
     },
@@ -525,35 +204,39 @@ export default {
     handleExport() {
       const feature_id = this.Download_Vid
       const formData = new FormData()
-      formData.append("featureId", feature_id)
-      Download(formData).then(res=>{
-          console.log(res)
-          const isLogin =  blobValidate(res);
-          if (isLogin) {
-            const blob = new Blob([res])
-            console.log(blob)
-            saveAs(blob, `Importfeature_${new Date().getTime()}.xlsx`)
-          } else {
-            const resText =  data.text();
-            const rspObj = JSON.parse(resText);
-            const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
-            Message.error(errMsg);
-          }
-        }).catch(err=>{
-          console.log(err)
-        })
+      formData.append("feature_id", feature_id)
+      Download(feature_id).then(res => {
+        console.log(res)
+        const isLogin = blobValidate(res);
+        if (isLogin) {
+          const blob = new Blob([res])
+          console.log(blob)
+          saveAs(blob, `Importfeature_${new Date().getTime()}.xlsx`)
+        } else {
+          const resText = data.text();
+          const rspObj = JSON.parse(resText);
+          const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
+          Message.error(errMsg);
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     },
     // 筛选页面
     filter_page() {
-      Search(this.formData).then(res => {
+      this.loading = true
+      Search(this.formData, this.queryParams).then(res => {
         console.log(res)
+        this.tableData = res.rows
+        console.log(this.tableData)
+        this.loading = false
       }).catch(err => {
         console.log(err)
       })
     },
     //页面加载前请求
     Request_beforeMounted() {
-
+      // this.loading = true
       getSelectGermplasm().then(res => {
         console.log(res)
         this.GermplasmOptions = res.rows
@@ -566,85 +249,96 @@ export default {
       }).catch(err => {
         console.log("Chr出现： " + err)
       })
-      getSelectVersion(this.accession).then(res => {
-        console.log(res)
-        this.VersionOptions = res.rows
-        console.log(this.VersionOptions)
-      }).catch(err => {
-        console.log(err)
+      Search(this.formData, this.queryParams).then(res => {
+        this.tableData = res.rows
+        // this.loading = false
       })
     }
   }
 }
 </script>
 <style lang="scss">
- .filter_page {
-   padding-right: 20px;
-   padding-left: 20px;
-   display: flex;
- }
- .filter_box {
-   width: 20%;
-   height: 100vh;
-   border-right: 1px solid black;
-   .el-form {
-     margin-top: 20px;
-     display: flex;
-     flex-direction: column;
-     .el-col {
-       margin: 0 auto;
-       width: 300px;
-       margin-top: 1px;
-       #inner_input {
-         display: flex;
-         .el-input {
-           flex: 1;
-           margin: 4px;
-         }
-       }
-     }
-     #col-one {
-       display: flex;
-       padding-left: 6px;
-       padding-right: 6px;
-       span {
-         flex: 1;
-         text-align: center;
-       }
-       #span-second {
-         color: #409EFF;
-         cursor: pointer;
-       }
-     }
-     #inner_item {
-       width: 200px;
-       height: 220px;
-       border: 1px solid black;
-       padding: 10px;
-       margin-top: 8px;
-       .el-form-item {
-         line-height: 60px;
-       }
-     }
-   }
- }
+.filter_page {
+  padding-right: 20px;
+  padding-left: 20px;
+  display: flex;
+}
 
- .buttom_box {
-   flex: 1;
-   overflow: hidden;
-   overflow: hidden;
-   border: 0px solid;
-   .el-button {
-     float: right;
-     margin-bottom: 20px;
-     line-height: 20px;
-     margin-top: 10px;
-   }
-   .el-table {
-     margin-left: 15px;
-   }
-   .pagination-container {
-     margin-left: 15px;
-   }
- }
+.filter_box {
+  width: 20%;
+  height: 100vh;
+  border-right: 1px solid black;
+
+  .el-form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .el-col {
+      margin: 0 auto;
+      //  width: 300px;
+      width: 80%;
+
+      #inner_input {
+        display: flex;
+
+        .el-input {
+          flex: 1;
+          margin: 4px;
+        }
+      }
+    }
+
+    #col-one {
+      display: flex;
+      padding-left: 6px;
+      padding-right: 6px;
+
+      span {
+        flex: 1;
+        text-align: center;
+      }
+
+      #span-second {
+        color: #409EFF;
+        cursor: pointer;
+      }
+    }
+
+    #inner_item {
+      //  width: 200px;
+      //  height: 220px;
+      border: 1px solid black;
+      padding: 10px;
+      margin-top: 8px;
+
+      .el-form-item {
+        line-height: 60px;
+      }
+    }
+  }
+}
+
+.buttom_box {
+  flex: 1;
+  overflow: hidden;
+  overflow: hidden;
+  border: 0px solid;
+
+  .el-button {
+    float: right;
+    margin-bottom: 20px;
+    line-height: 20px;
+    margin-top: 10px;
+  }
+
+  .el-table {
+    margin-left: 15px;
+  }
+
+  .pagination-container {
+    margin-left: 15px;
+  }
+}
 </style>
