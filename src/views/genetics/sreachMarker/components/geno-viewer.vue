@@ -504,7 +504,7 @@ export default {
 
         if (res.code == 200) {
           this.page.total = res.total;
-          this.$emit("showResult", res.data, data);
+          this.$emit("showResult", res.rows, data);
         }
       } else {
         let data = {
@@ -525,7 +525,7 @@ export default {
 
         if (res.code == 200) {
           this.page.total = res.total;
-          this.$emit("showResult", res.data, data);
+          this.$emit("showResult", res.rows, data);
         }
       }
     },

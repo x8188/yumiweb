@@ -21,6 +21,9 @@ export const reqselectVarType= () =>
 export const reqassociation_qtl= (data,pageParams) =>
   request({ url: `/genetics/search_marker/association_marker/selectassociation_marker`, method: "post" ,data:data,params:pageParams});
 
+export const reqqtldownload= (data) =>
+  request({ url: `/genetics/search_marker/association_marker/download`, method: "post", data: data, responseType: 'blob'});
+
 
 export const reqlinkageaccession= () =>
   request({ url: `/genetics/search_marker/linkage_marker/selectaccession`, method: "get" });
@@ -42,3 +45,6 @@ export const reqlinkagemap= () =>
 
 export const reqlinkage= (data,pageParams) =>
   request({ url: `/genetics/search_marker/linkage_marker/selectlinkage_marker`, method: "post" ,data:data,params:pageParams});
+
+export const reqlinkagedownload= (data) =>
+  request({ url: `/genetics//search_marker/linkage_marker/download`, method: "post", data: data, responseType: 'blob'});

@@ -28,7 +28,7 @@
           </el-select>
           <span>results</span>
         </div>
-        <button style="padding: 5px" @click="Qtldownload">
+        <button style="padding: 5px" @click="downloadData">
           <SvgIcon icon-class="download02" color="858585" />
           <span style="margin-left: 8px; color: #929292"
             >Download the results</span
@@ -40,7 +40,9 @@
           border
           style="width: 100%; margin-top: 30px"
           :data="tableData"
+          @selection-change="handleSelectionChange"
         >
+          <el-table-column type="selection" width="55" align="center" />
           <el-table-column
             label="QTL ID"
             align="center"
@@ -68,6 +70,8 @@
 <script>
 import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 import { download } from "@/utils/request";
+import { blobValidate } from "@/utils/ruoyi";
+
 export default {
   components: { SvgIcon },
   props: {
@@ -79,48 +83,99 @@ export default {
       type: Object,
       default: {},
     },
-    page:{
+    page: {
       type: Object,
       default: {},
-    }
+    },
   },
   data() {
     return {
       infoNums: 10,
+      multipleSelection: [],
     };
   },
   methods: {
     returnMultiExpression() {
       this.$emit("returnMultiExpression");
     },
-    Qtldownload() {
-      this.$confirm("是否确认导出出qtl数据项?", "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          this.exportLoading = true;
-          let data = this.filterInfo;
-          if (!data.hasOwnProperty("linkagemap")) {
-            this.download(
-              "genetics/search_qtl/association_qtl/download",
-              {
-                ...data,
-              },
-              `association_qtl_${new Date().getTime()}.xlsx`
-            );
-          } else {
-            this.download(
-              "/genetics/search_qtl/linkage_qtl/download",
-              {
-                ...data,
-              },
-              `linkage_qtl_${new Date().getTime()}.xlsx`
-            );
-          }
-        })
-        .catch(() => {});
+    // Qtldownload() {
+    //   this.$confirm("是否确认导出出qtl数据项?", "警告", {
+    //     confirmButtonText: "确定",
+    //     cancelButtonText: "取消",
+    //     type: "warning",
+    //   })
+    //     .then(() => {
+    //       this.exportLoading = true;
+    //       let data = this.filterInfo;
+    //       if (!data.hasOwnProperty("linkagemap")) {
+    //         this.download(
+    //           "genetics/search_qtl/association_qtl/download",
+    //           {
+    //             ...data,
+    //           },
+    //           `association_qtl_${new Date().getTime()}.xlsx`
+    //         );
+    //       } else {
+    //         this.download(
+    //           "/genetics/search_qtl/linkage_qtl/download",
+    //           {
+    //             ...data,
+    //           },
+    //           `linkage_qtl_${new Date().getTime()}.xlsx`
+    //         );
+    //       }
+    //     })
+    //     .catch(() => {});
+    // },
+    async downloadData() {
+      console.log(this.multipleSelection);
+
+      if (!this.filterInfo.hasOwnProperty("linkagemap")) {
+        const data = await this.$API.Qtl.reqqtldownload(this.multipleSelection);
+        const isOk = await blobValidate(data);
+        if (isOk) {
+          this.$notify({
+            title: "成功",
+            message: "请求成功，正在下载",
+            type: "success",
+          });
+
+          // const res2 = await blobValidate(res1)
+          const res1 = new Blob([data]);
+          const fileName = "association_qtl_" + new Date().getTime() + ".xlsx";
+
+          this.$download.saveAs(res1, fileName);
+        } else {
+          this.$notify.error({
+            title: "错误",
+            message: "下载失败，请联系管理员",
+          });
+        }
+      } else {
+        const data = await this.$API.Qtl.reqlinkagedownload(this.multipleSelection);
+        const isOk = await blobValidate(data);
+        if (isOk) {
+          this.$notify({
+            title: "成功",
+            message: "请求成功，正在下载",
+            type: "success",
+          });
+
+          // const res2 = await blobValidate(res1)
+          const res1 = new Blob([data]);
+          const fileName = "linkage_qtl_" + new Date().getTime() + ".xlsx";
+
+          this.$download.saveAs(res1, fileName);
+        } else {
+          this.$notify.error({
+            title: "错误",
+            message: "下载失败，请联系管理员",
+          });
+        }
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     },
     // changePage() {
     //   this.$emit("changePage", this.page);
@@ -128,11 +183,11 @@ export default {
     nowPage(newVal) {
       this.page.pageNum = newVal;
       // this.changePage();
-      this.$bus.$emit("changeQtlPage")
+      this.$bus.$emit("changeQtlPage");
     },
     changeResultsNums(newVal) {
       this.page.pageSize = newVal;
-      this.$bus.$emit("changeQtlPage")
+      this.$bus.$emit("changeQtlPage");
       // this.changePage();
     },
   },

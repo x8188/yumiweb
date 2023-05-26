@@ -18,8 +18,8 @@ export const reqselectchr= () =>
 export const reqassociation_qtl= (data,pageParams) =>
   request({ url: `/genetics/search_qtl/association_qtl/selectassociation_qtl`, method: "post" ,data:data,params:pageParams});
 
-// export const reqqtldownload= (data) =>
-//   request({ url: `/genetics/search_qtl/association_qtl/download`, method: "post" ,data:data});
+export const reqqtldownload= (data) =>
+  request({ url: `/genetics/search_qtl/association_qtl/download`, method: "post", data: data, responseType: 'blob'});
 
 
 export const reqlinkageaccession= () =>
@@ -43,3 +43,5 @@ export const reqlinkagemap= () =>
 export const reqlinkage= (data,pageParams) =>
   request({ url: `/genetics/search_qtl/linkage_qtl/selectlinkage_qtl`, method: "post" ,data:data,params:pageParams});
 
+export const reqlinkagedownload= (data) =>
+  request({ url: `/genetics//search_qtl/linkage_qtl/download`, method: "post", data: data, responseType: 'blob'});
