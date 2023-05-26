@@ -136,7 +136,6 @@ components: { SvgIcon },
   watch: {
     'formData.accession'(newValue, oldValue) {
       // 处理 accession 属性变化的逻辑
-      console.log('accession 变化了:', newValue);
       this.dropDownVersion({accession: newValue})
     }
   },
@@ -190,22 +189,19 @@ components: { SvgIcon },
       }
     },
     async submitAll() {
-      const res = await selectAll(this.formData)
-      this.$store.commit('ldViewer/setResult', res)
-      console.log(this.$store.getters.ldViewer)
+      const {data} = await selectAll(this.formData)
+      this.$store.commit('ldViewer/setResult', data)
     },
     // 重置所有条件
     reset() {
-      this.region= '1',
-      this.viewerTitle= 'Geno viewer',
-      this.reference= '',
-      this.version= '',
-      this.population= '',
-      this.analysis= '',
-      this.checkBox= [],
-      this.start= '',
-      this.end= '',
-      this.chr= ''
+      this.formData.accession = ''
+      this.formData.version = ''
+      this.formData.alias = ''
+      this.formData.description = ''
+      this.formData.start = ''
+      this.formData.end = ''
+      this.formData.chorm = ''
+      this.$store.commit('ldViewer/setResult', [])
     }
   }
 }
