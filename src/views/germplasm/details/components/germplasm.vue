@@ -9,41 +9,50 @@
           <el-row :gutter="15">
             <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="70px">
               <el-col :span="17">
-                <el-form-item label="Name" prop="field101">
-                  <el-input v-model="formData.field107" placeholder="请输入Name" clearable
-                            suffix-icon='el-icon-caret-bottom' :style="{width: '40%'}"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="7">
-                <el-form-item label="" prop="field102">
-                  <el-button type="primary" size="medium" @click="download"> Download </el-button>
-                </el-form-item>
+                <el-select
+                  v-model="value"
+                  multiple
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="请输入Name"
+                  :remote-method="remoteMethod"
+                  :loading="loading"
+                  @change="Screening(value)"
+                >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
               </el-col>
             </el-form>
           </el-row>
       </div>
-      <div>
+      <div class="table">
         <el-table
           :data="tableData"
           border
           style="width: 100%">
           <el-table-column
-            prop="Name"
+            prop="name"
             label="Name"
             width="90">
           </el-table-column>
           <el-table-column
-            prop="NGBID"
+            prop="ngbId"
             label="NGB ID"
             width="150">
           </el-table-column>
           <el-table-column
-            prop="Origin"
+            prop="origin"
             label="Origin"
             width="90">
           </el-table-column>
           <el-table-column
-            prop="Description"
+            prop="comment"
             label="Description">
           </el-table-column>
         </el-table>
@@ -55,16 +64,20 @@
 <script>
 import {choose} from "@/api/germplasm/details/germplasm";
 import {listGermplasm} from "@/api/germplasm/details/germplasm";
-import {listdownload} from '@/api/germplasm/details/germplasm'
 
 export default {
   name: "germplasm",
-  components: {},
+  components: {
+  },
   props:[],
   data() {
     return {
+      options: [],
+      value: [],
+      list: [],
+      loading: false,
+      states: [],
       tableData: [
-
       ],
       formData: {
         field107: undefined,
@@ -75,58 +88,57 @@ export default {
       },
     }
   },
-  computed: {},
   watch: {},
   created() {
-    this.getTableData();
+    this.getTabbleData();
   },
-  mounted() {},
+  mounted() {
+  },
+  computed: {
+    listSet() {
+      return this.states.map(item => {
+        return {value: `${item}`, label: `${item}`};
+      });
+    },
+  },
   methods: {
-    getTableData(){
+    Screening(data) {
+      if (data !== ''){
+        choose(data).then(res=>{
+          console.log(data)
+          this.tableData=res.rows;
+          console.log(res.rows)
+        })
+      } else {
+        console.log(data)
+        this.getTabbleData()
+        console.log(this.tableData)
+      }
+    },
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.options = this.listSet.filter(item => {
+            return item.label.toLowerCase()
+              .indexOf(query.toLowerCase()) > -1;
+          });
+        }, 200);
+      } else {
+        this.options = [];
+      }
+    },
+    getTabbleData(){
       listGermplasm().then(res=>{
         this.tableData=res.rows;
+        console.log(res);
+        this.states = res.rows.map(function (item) {
+          return item.name
+        })
+        console.log(this.states)
       })
     },
-    screening(){
-      choose(this.field107).then(res=>{
-        this.tableData=res.rows;
-      })
-    },
-    submitForm() {
-      this.$refs['elForm'].validate(valid => {
-        if (!valid) return
-        else {
-          choose(this.field101).then(res=>{
-            this.tableData=res.rows;
-          })
-        }
-        // TODO 提交表单
-      })
-    },
-    resetForm() {
-      this.$refs['elForm'].resetFields();
-      this.getTabbleData()
-    },
-    download() {
-    this.listdownload.then(res=>{
-      const link = document.createElement('a')
-      let blob = new Blob([res.data], { type: 'application/octet-stream' })
-      link.style.display = 'none'
-      link.href = URL.createObjectURL(blob)
-      link.download = 'your_file_name'
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      /*const ele = document.createElement('a');
-   ele.setAttribute('href', this.$options.filters['filterUrl'](url));
-     //this.$options.filters['filterUrl']是调用全局过滤器,filterUrl是你自己项目main.js里面定义的过滤器
-   ele.setAttribute('download',name);
-   ele.style.display = 'none';
-   document.body.appendChild(ele);
-   ele.click();
-   document.body.removeChild(ele);*/
-    })
-    }
   }
 }
 </script>
@@ -139,6 +151,9 @@ export default {
 }
 .germplasm_content p{
   padding: 10px 0;
+}
+.table{
+  padding-top: 30px;
 }
 </style>
 
