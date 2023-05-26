@@ -2,7 +2,7 @@
  <div class="">
     <div id="ldCanvas" style="position: relative; top: 50px; left: 80px;height: 900px;" @mousemove="mouseInit">
         <canvas ref='nameCanvas' @mousemove="mousemoveNames" id="geneNames" width="620" height="500" style="position: absolute; top: 0px; left: 0px;"></canvas>
-        <canvas ref="geneCanvas" class="geneCanvas" id="geneCanvas" width="620" height="600" style="position: absolute; top: 420px; left: 0px;" ></canvas>
+        <canvas @mousemove="mousemoveCanvas"  ref="geneCanvas" class="geneCanvas" id="geneCanvas" width="620" height="600" style="position: absolute; top: 420px; left: 0px;" ></canvas>
         <div class="color-side-bar" style="position: absolute;left: 0;top: 50%;">
             <img src="@/assets/images/color-sidebar.png" alt="">
         </div>
@@ -37,28 +37,14 @@ export default {
     this.$store.watch(
       (state) => state.ldViewer.result, // 监听的值，可以是state中的任意一个属性
       (newCount, oldCount) => {
-        
         function findN(x) {
-          let lower = 1;
-          let upper = Math.ceil(Math.sqrt(2 * x)); // 设置上界为 x 的平方根向上取整
-
-          while (lower <= upper) {
-            let mid = Math.ceil((lower + upper) / 2); // 取中间值向上取整
-            let result = (mid * (mid - 1)) / 2;
-
-            if (result === x) {
-              return mid; // 找到确切的解，返回n值
-            } else if (result < x) {
-              lower = mid + 1; // 结果偏小，调整下界
-            } else {
-              upper = mid - 1; // 结果偏大，调整上界
-            }
-          }
-
-          return upper; // 返回向上取整的结果
+          let n = Math.floor(Math.sqrt(2 * x + 0.25) - 0.5); // 向下取整
+          return n;
         }
 
-        this.firstLineNum = findN(newCount)
+        this.firstLineNum = findN(newCount.length);
+        if (newCount.length === 0) this.firstLineNum = 42;
+        this.redraw();
       }
     );
   },
@@ -67,6 +53,15 @@ export default {
     this.initNames();
   },
   methods: {
+    redraw() {
+      // 清空现有数据
+      this.diamonds = [];
+      this.lines = [];
+
+      // 重新绘制
+      this.initCanvas();
+      this.initNames();
+    },
     initColor() {
       const deep1 = "#000";
       const deep2 = "#262626";
@@ -86,6 +81,8 @@ export default {
     initCanvas() {
       let canvas = document.querySelector("#geneCanvas");
       let ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       ctx.lineWidth = 2;
       let beginX = 10;
       let beginY = 10;
@@ -131,7 +128,6 @@ export default {
         beginY = 10 + halfWidth * (i + 1) + 1 * i;
       }
       ctx.fill();
-      canvas.addEventListener("mousemove", this.mousemoveCanvas);
     },
     mouseInit(e) {
       this.screen.screenX = e.clientX - 360;
@@ -139,19 +135,19 @@ export default {
     },
     mousemoveCanvas(event) {
       let rect = this.$refs.geneCanvas.getBoundingClientRect();
-      let x = event.clientX - rect.left;
-      let y = event.clientY - rect.top;
+      let x = event.clientX - rect.left + 5;
+      let y = event.clientY - rect.top + 10;
 
       for (let i = 0; i < this.diamonds.length; i++) {
         let diamond = this.diamonds[i];
 
         if (
-          x > diamond.x - 2 &&
-          x < diamond.x + diamond.width + 2 &&
-          y > diamond.y - 5 &&
-          y < diamond.y + diamond.height + 2
+          x > diamond.x &&
+          x < diamond.x + diamond.width &&
+          y > diamond.y &&
+          y < diamond.y + diamond.height
         ) {
-          this.diamondInfo = `x: ${diamond.nameX}   y: ${diamond.nameY}`;
+          this.diamondInfo = `x: ${diamond.nameX}  y:${diamond.nameY}`;
           break;
         }
       }
@@ -160,11 +156,14 @@ export default {
     initNames() {
       let canvas = document.querySelector("#geneNames");
       let ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.lineWidth = 2;
+
       let firstLineNum = this.firstLineNum;
 
       let nameStart = 15;
       let nameWidth = 14.3;
+      
 
       for (let i = 0; i < firstLineNum; i++) {
         this.lines.push({
