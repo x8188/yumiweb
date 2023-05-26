@@ -153,10 +153,10 @@ export default {
   props: [],
   data() {
     return {
-      total: 1,
+      total: 0,
       queryParams: {
-        pageNum: 2,
-        pageSize: 3,
+        pageNum: 1,
+        pageSize: 10,
       },
       multipleSelection: [],
       Download_Vid: [],
@@ -238,11 +238,11 @@ export default {
     getList() {
       this.loading = true;
       Search(this.formData, this.queryParams).then(res => {
+        this.total = res.total
         this.tableData = res.rows
       })
     },
     handleSelectionChange(val) {
-      console.log(val)
       this.Download_Vid = []
       val.forEach(item => {
         this.Download_Vid.push(item.vid)
@@ -286,8 +286,8 @@ export default {
       // this.formData.maf_min = parseFloat(this.formData.maf_min)
       // this.formData.maf_max = parseFloat(this.formData.maf_max)
       Search(this.formData, this.queryParams).then(res => {
-        console.log(res)
         this.tableData = res.rows
+        this.total = res.total
       }).catch(err => {
         console.log(err)
       })
