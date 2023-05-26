@@ -554,7 +554,7 @@ export default {
     await this.getFilterOp();
     this.formData.reference = this.referenceOptions[0].value;
     await this.getVersionOp();
-    this.formData.version = this.versionOptions[0].value;
+    
     let data = {
       accession: this.formData.reference,
       version: this.formData.version,
@@ -668,6 +668,7 @@ export default {
           label: x,
           value: x,
         }));
+        this.formData.version = this.versionOptions[0].value;
       }
     },
 
