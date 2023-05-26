@@ -105,10 +105,10 @@ export default {
   data() {
     return {
       loading: false,
-      total: 1,
+      total: 0,
       queryParams: {
         pageNum: 1,
-        pageSize: 8,
+        pageSize: 10,
       },
       multipleSelection: [],
       Download_Vid: [],
@@ -181,6 +181,9 @@ export default {
       this.loading = true;
       Search(this.formData, this.queryParams).then(res => {
         console.log(res)
+        this.tableData = res.rows
+        this.total = res.total
+        this.loading = false
       })
     },
     handleSelectionChange(val) {
@@ -228,6 +231,7 @@ export default {
       Search(this.formData, this.queryParams).then(res => {
         console.log(res)
         this.tableData = res.rows
+        this.total = res.total
         console.log(this.tableData)
         this.loading = false
       }).catch(err => {
@@ -236,7 +240,7 @@ export default {
     },
     //页面加载前请求
     Request_beforeMounted() {
-      // this.loading = true
+      this.loading = true
       getSelectGermplasm().then(res => {
         console.log(res)
         this.GermplasmOptions = res.rows
@@ -251,7 +255,8 @@ export default {
       })
       Search(this.formData, this.queryParams).then(res => {
         this.tableData = res.rows
-        // this.loading = false
+        this.total = res.total
+        this.loading = false
       })
     }
   }

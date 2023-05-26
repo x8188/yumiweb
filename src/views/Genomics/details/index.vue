@@ -15,7 +15,7 @@
                 <div class="info_box">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <Title>Summary</Title>
+                            <Title id="Summary">Summary</Title>
                         </div>
                         <el-table style="width: 100%" :show-header="false" :data="SummaryInfo" border>
                             <el-table-column prop="key" width="250px">
@@ -26,7 +26,7 @@
                     </el-card>
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
-                            <Title>Function Annotation</Title>
+                            <Title id="Function Annotation">Function Annotation</Title>
                         </div>
                         <el-table style="width: 100%" :data="AnnotationInfo" border>
                             <el-table-column label="ID" prop="id" width="180">

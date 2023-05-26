@@ -15,7 +15,7 @@
                 <div class="info_box">
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <Title>Summary</Title>
+                            <Title id="Summary">Summary</Title>
                         </div>
                         <el-table :data="SummaryInfo" style="width: 100%" :show-header="false" border>
                             <el-table-column label="key" width="250" prop="key"/>
@@ -24,7 +24,7 @@
                     </el-card>
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <Title>Information</Title>
+                            <Title id="Information">Information</Title>
                         </div>
                         <el-table :data="InformationInfo" style="width: 100%" :show-header="false" border>
                             <el-table-column label="key" width="250" prop="key">
@@ -38,7 +38,7 @@
                     </el-card>
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <Title>Annotation</Title>
+                            <Title id="Annotation">Annotation</Title>
                         </div>
                         <el-table :data="AnnotationInfo" style="width: 100%"  border>
                             <el-table-column label="Exon" prop="Exon"/>
@@ -63,7 +63,7 @@
                     </el-card>
                     <el-card class="box-card" >
                         <div slot="header" class="clearfix">
-                            <Title>PiePlots</Title>
+                            <Title id="PiePlots">PiePlots</Title>
                         </div>
                         <div style="height: 400px;" id="echarts_place" ref="echarts">
                         </div>
@@ -89,7 +89,7 @@ export default {
             SummaryInfo:[],
             InformationInfo:[],
             AnnotationInfo:[],
-            titles: ['Summary', 'Infomation', 'Annotation', 'Pupulation Diversity'],
+            titles: ['Summary', 'Information', 'Annotation', 'PiePlots'],
             show_key: [],
             show_value: [],
             charts1:"",
@@ -100,6 +100,7 @@ export default {
     },
     methods: {
         handleClick(tab) {
+            console.log(tab)
             document.getElementById(this.titles[tab.index]).scrollIntoView({ behavior: 'smooth' })
         },
         handleAccpet() {

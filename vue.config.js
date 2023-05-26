@@ -50,7 +50,7 @@ module.exports = {
         changeOrigin:true
       },
       "dev-api/system":{
-        target:`http://43.143.200.52:8600`,
+        target:`http://43.143.200.52:8800`,
         pathRewrite:{"^/dev-api/system":"/system"},
         changeOrigin:true
 
