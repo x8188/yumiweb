@@ -1,66 +1,66 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="chr">
+      <el-form-item label="chr" prop="chr">
         <el-input
           v-model="queryParams.chr"
-          placeholder="请输入${comment}"
+          placeholder="请输入chr"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="start">
+      <el-form-item label="start" prop="start">
         <el-input
           v-model="queryParams.start"
-          placeholder="请输入${comment}"
+          placeholder="请输入start"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="end">
+      <el-form-item label="end" prop="end">
         <el-input
           v-model="queryParams.end"
-          placeholder="请输入${comment}"
+          placeholder="请输入end"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="qtlUid">
+      <el-form-item label="qtlUid"" prop="qtlUid">
         <el-input
           v-model="queryParams.qtlUid"
-          placeholder="请输入${comment}"
+          placeholder="请输入qtlUid""
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="linkagemap">
+      <el-form-item label="linkagemap" prop="linkagemap">
         <el-input
           v-model="queryParams.linkagemap"
-          placeholder="请输入${comment}"
+          placeholder="请输入linkagemap"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="lod">
+      <el-form-item label="lod" prop="lod">
         <el-input
           v-model="queryParams.lod"
-          placeholder="请输入${comment}"
+          placeholder="请输入lod"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="dbxrefId">
+      <el-form-item label="dbxrefId" prop="dbxrefId">
         <el-input
           v-model="queryParams.dbxrefId"
-          placeholder="请输入${comment}"
+          placeholder="请输入dbxrefId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="traitId">
+      <el-form-item label="traitId" prop="traitId">
         <el-input
           v-model="queryParams.traitId"
-          placeholder="请输入${comment}"
+          placeholder="请输入traitId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -121,7 +121,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportLqtl:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -129,15 +129,15 @@
 
     <el-table v-loading="loading" :data="ImportLqtlList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="linkageQtlId" />
-      <el-table-column label="${comment}" align="center" prop="chr" />
-      <el-table-column label="${comment}" align="center" prop="start" />
-      <el-table-column label="${comment}" align="center" prop="end" />
-      <el-table-column label="${comment}" align="center" prop="qtlUid" />
-      <el-table-column label="${comment}" align="center" prop="linkagemap" />
-      <el-table-column label="${comment}" align="center" prop="lod" />
-      <el-table-column label="${comment}" align="center" prop="dbxrefId" />
-      <el-table-column label="${comment}" align="center" prop="traitId" />
+      <el-table-column label="linkageQtlId" align="center" prop="linkageQtlId" />
+      <el-table-column label="chr" align="center" prop="chr" />
+      <el-table-column label="start" align="center" prop="start" />
+      <el-table-column label="end" align="center" prop="end" />
+      <el-table-column label="qtlUid" align="center" prop="qtlUid" />
+      <el-table-column label="linkagemap" align="center" prop="linkagemap" />
+      <el-table-column label="lod" align="center" prop="lod" />
+      <el-table-column label="dbxrefId" align="center" prop="dbxrefId" />
+      <el-table-column label="traitId" align="center" prop="traitId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -169,29 +169,29 @@
     <!-- 添加或修改ImportLqtl对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="chr">
-          <el-input v-model="form.chr" placeholder="请输入${comment}" />
+        <el-form-item label="chr" prop="chr">
+          <el-input v-model="form.chr" placeholder="请输入chr" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="start">
-          <el-input v-model="form.start" placeholder="请输入${comment}" />
+        <el-form-item label="start" prop="start">
+          <el-input v-model="form.start" placeholder="请输入start" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="end">
-          <el-input v-model="form.end" placeholder="请输入${comment}" />
+        <el-form-item label="end" prop="end">
+          <el-input v-model="form.end" placeholder="请输入end" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="qtlUid">
-          <el-input v-model="form.qtlUid" placeholder="请输入${comment}" />
+        <el-form-item label="qtlUid" prop="qtlUid">
+          <el-input v-model="form.qtlUid" placeholder="请输入qtlUid" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="linkagemap">
-          <el-input v-model="form.linkagemap" placeholder="请输入${comment}" />
+        <el-form-item label="linkagemap" prop="linkagemap">
+          <el-input v-model="form.linkagemap" placeholder="请输入linkagemap" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="lod">
-          <el-input v-model="form.lod" placeholder="请输入${comment}" />
+        <el-form-item label="lod" prop="lod">
+          <el-input v-model="form.lod" placeholder="请输入lod" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="dbxrefId">
-          <el-input v-model="form.dbxrefId" placeholder="请输入${comment}" />
+        <el-form-item label="dbxrefId" prop="dbxrefId">
+          <el-input v-model="form.dbxrefId" placeholder="请输入dbxrefId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="traitId">
-          <el-input v-model="form.traitId" placeholder="请输入${comment}" />
+        <el-form-item label="traitId" prop="traitId">
+          <el-input v-model="form.traitId" placeholder="请输入traitId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -287,7 +287,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importLinkageQtlData" // todo
       },
       // 表单参数
       form: {},
@@ -404,7 +404,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importLinkageQtlTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

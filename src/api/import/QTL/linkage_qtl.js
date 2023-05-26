@@ -20,7 +20,7 @@ export function getImportLqtl(linkageQtlId) {
 // 新增ImportLqtl
 export function addImportLqtl(data) {
   return request({
-    url: '/zeamap/ImportLqtl',
+    url: '/zeamap/ImportLqtl/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addImportLqtl(data) {
 // 修改ImportLqtl
 export function updateImportLqtl(data) {
   return request({
-    url: '/zeamap/ImportLqtl',
+    url: '/zeamap/ImportLqtl/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportLqtl(data) {
 // 删除ImportLqtl
 export function delImportLqtl(linkageQtlId) {
   return request({
-    url: '/zeamap/ImportLqtl/' + linkageQtlId,
+    url: '/zeamap/ImportLqtl/remove/' + linkageQtlId,
     method: 'delete'
   })
 }

@@ -20,7 +20,7 @@ export function getImportInfo(variantinfoId) {
 // 新增ImportInfo
 export function addImportInfo(data) {
   return request({
-    url: '/zeamap/ImportInfo',
+    url: '/zeamap/ImportInfo/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addImportInfo(data) {
 // 修改ImportInfo
 export function updateImportInfo(data) {
   return request({
-    url: '/zeamap/ImportInfo',
+    url: '/zeamap/ImportInfo/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportInfo(data) {
 // 删除ImportInfo
 export function delImportInfo(variantinfoId) {
   return request({
-    url: '/zeamap/ImportInfo/' + variantinfoId,
+    url: '/zeamap/ImportInfo/remove/' + variantinfoId,
     method: 'delete'
   })
 }

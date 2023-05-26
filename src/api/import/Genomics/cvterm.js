@@ -20,7 +20,7 @@ export function getCvterm(cvtermId) {
 // 新增ImportCvterm
 export function addCvterm(data) {
   return request({
-    url: '/zeamap/cvterm',
+    url: '/zeamap/cvterm/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addCvterm(data) {
 // 修改ImportCvterm
 export function updateCvterm(data) {
   return request({
-    url: '/zeamap/cvterm',
+    url: '/zeamap/cvterm/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateCvterm(data) {
 // 删除ImportCvterm
 export function delCvterm(cvtermId) {
   return request({
-    url: '/zeamap/cvterm/' + cvtermId,
+    url: '/zeamap/cvterm/remove/' + cvtermId,
     method: 'delete'
   })
 }

@@ -1,66 +1,66 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="omics">
+      <el-form-item label="omics" prop="omics">
         <el-input
           v-model="queryParams.omics"
-          placeholder="请输入${comment}"
+          placeholder="请输入omics"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="category">
+      <el-form-item label="category" prop="category">
         <el-input
           v-model="queryParams.category"
-          placeholder="请输入${comment}"
+          placeholder="请输入category"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="name" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入name"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="xotUid">
+      <el-form-item label="xotUid" prop="xotUid">
         <el-input
           v-model="queryParams.xotUid"
-          placeholder="请输入${comment}"
+          placeholder="请输入xotUid"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="analysisId">
+      <el-form-item label="analysisId" prop="analysisId">
         <el-input
           v-model="queryParams.analysisId"
-          placeholder="请输入${comment}"
+          placeholder="请输入analysisId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="crossrefid">
+      <el-form-item label="crossrefid" prop="crossrefid">
         <el-input
           v-model="queryParams.crossrefid"
-          placeholder="请输入${comment}"
+          placeholder="请输入crossrefid"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="crossreflink">
+      <el-form-item label="crossreflink" prop="crossreflink">
         <el-input
           v-model="queryParams.crossreflink"
-          placeholder="请输入${comment}"
+          placeholder="请输入crossreflink"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="description">
+      <el-form-item label="description" prop="description">
         <el-input
           v-model="queryParams.description"
-          placeholder="请输入${comment}"
+          placeholder="请输入description"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -121,7 +121,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportXot:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -129,18 +129,18 @@
 
     <el-table v-loading="loading" :data="ImportXotList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="xotId" />
-      <el-table-column label="${comment}" align="center" prop="omics" />
-      <el-table-column label="${comment}" align="center" prop="category" />
-      <el-table-column label="${comment}" align="center" prop="type" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="xotUid" />
-      <el-table-column label="${comment}" align="center" prop="analysisId" />
-      <el-table-column label="${comment}" align="center" prop="crossrefid" />
-      <el-table-column label="${comment}" align="center" prop="crossreflink" />
-      <el-table-column label="${comment}" align="center" prop="description" />
-      <el-table-column label="${comment}" align="center" prop="mesuredetail" />
-      <el-table-column label="${comment}" align="center" prop="traitdetail" />
+      <el-table-column label="xotId" align="center" prop="xotId" />
+      <el-table-column label="omics" align="center" prop="omics" />
+      <el-table-column label="category" align="center" prop="category" />
+      <el-table-column label="type" align="center" prop="type" />
+      <el-table-column label="name" align="center" prop="name" />
+      <el-table-column label="xotUid" align="center" prop="xotUid" />
+      <el-table-column label="analysisId" align="center" prop="analysisId" />
+      <el-table-column label="crossrefid" align="center" prop="crossrefid" />
+      <el-table-column label="crossreflink" align="center" prop="crossreflink" />
+      <el-table-column label="description" align="center" prop="description" />
+      <el-table-column label="mesuredetail" align="center" prop="mesuredetail" />
+      <el-table-column label="traitdetail align="center" prop="traitdetail" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -172,34 +172,34 @@
     <!-- 添加或修改1对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="omics">
-          <el-input v-model="form.omics" placeholder="请输入${comment}" />
+        <el-form-item label="omics" prop="omics">
+          <el-input v-model="form.omics" placeholder="请输入omics" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="category">
-          <el-input v-model="form.category" placeholder="请输入${comment}" />
+        <el-form-item label="category" prop="category">
+          <el-input v-model="form.category" placeholder="请输入category" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="name" prop="name">
+          <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="xotUid">
-          <el-input v-model="form.xotUid" placeholder="请输入${comment}" />
+        <el-form-item label="xotUid" prop="xotUid">
+          <el-input v-model="form.xotUid" placeholder="请输入xotUid}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="analysisId">
-          <el-input v-model="form.analysisId" placeholder="请输入${comment}" />
+        <el-form-item label="analysisId" prop="analysisId">
+          <el-input v-model="form.analysisId" placeholder="请输入analysisId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="crossrefid">
-          <el-input v-model="form.crossrefid" placeholder="请输入${comment}" />
+        <el-form-item label="crossrefid" prop="crossrefid">
+          <el-input v-model="form.crossrefid" placeholder="请输入crossrefid" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="crossreflink">
-          <el-input v-model="form.crossreflink" placeholder="请输入${comment}" />
+        <el-form-item label="crossreflink" prop="crossreflink">
+          <el-input v-model="form.crossreflink" placeholder="请输入crossreflink" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="description">
-          <el-input v-model="form.description" placeholder="请输入${comment}" />
+        <el-form-item label="description" prop="description">
+          <el-input v-model="form.description" placeholder="请输入description" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="mesuredetail">
+        <el-form-item label="mesuredetail" prop="mesuredetail">
           <el-input v-model="form.mesuredetail" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="traitdetail">
+        <el-form-item label="traitdetail" prop="traitdetail">
           <el-input v-model="form.traitdetail" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
@@ -298,7 +298,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importXotData" // todo
       },
       // 表单参数
       form: {},
@@ -418,7 +418,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importXotTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

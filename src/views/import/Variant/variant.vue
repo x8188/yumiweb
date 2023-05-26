@@ -1,74 +1,74 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="variantId">
+      <el-form-item label="variantId" prop="variantId">
         <el-input
           v-model="queryParams.variantId"
-          placeholder="请输入${comment}"
+          placeholder="请输入variantId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="vid">
+      <el-form-item label="vid" prop="vid">
         <el-input
           v-model="queryParams.vid"
-          placeholder="请输入${comment}"
+          placeholder="请输入vid"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="chr">
+      <el-form-item label="chr" prop="chr">
         <el-input
           v-model="queryParams.chr"
-          placeholder="请输入${comment}"
+          placeholder="请输入chr"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="posi">
+      <el-form-item label="posi" prop="posi">
         <el-input
           v-model="queryParams.posi"
-          placeholder="请输入${comment}"
+          placeholder="请输入posi"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="genorate">
+      <el-form-item label="genorate" prop="genorate">
         <el-input
           v-model="queryParams.genorate"
-          placeholder="请输入${comment}"
+          placeholder="请输入genorate"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="maf">
+      <el-form-item label="maf" prop="maf">
         <el-input
           v-model="queryParams.maf"
-          placeholder="请输入${comment}"
+          placeholder="请输入maf"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="consequences">
+      <el-form-item label="consequences" prop="consequences">
         <el-input
           v-model="queryParams.consequences"
-          placeholder="请输入${comment}"
+          placeholder="请输入consequences"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="impacts">
+      <el-form-item label="impacts" prop="impacts">
         <el-input
           v-model="queryParams.impacts"
-          placeholder="请输入${comment}"
+          placeholder="请输入impacts"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="analysisId">
+      <el-form-item label="analysisId" prop="analysisId">
         <el-input
           v-model="queryParams.analysisId"
-          placeholder="请输入${comment}"
+          placeholder="请输入analysisId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -129,7 +129,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportVariant:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -137,16 +137,16 @@
 
     <el-table v-loading="loading" :data="ImportVariantList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="variantId" />
-      <el-table-column label="${comment}" align="center" prop="vid" />
-      <el-table-column label="${comment}" align="center" prop="type" />
-      <el-table-column label="${comment}" align="center" prop="chr" />
-      <el-table-column label="${comment}" align="center" prop="posi" />
-      <el-table-column label="${comment}" align="center" prop="genorate" />
-      <el-table-column label="${comment}" align="center" prop="maf" />
-      <el-table-column label="${comment}" align="center" prop="consequences" />
-      <el-table-column label="${comment}" align="center" prop="impacts" />
-      <el-table-column label="${comment}" align="center" prop="analysisId" />
+      <el-table-column label="variantId" align="center" prop="variantId" />
+      <el-table-column label="vid" align="center" prop="vid" />
+      <el-table-column label="type" align="center" prop="type" />
+      <el-table-column label="chr" align="center" prop="chr" />
+      <el-table-column label="posi" align="center" prop="posi" />
+      <el-table-column label="genorate" align="center" prop="genorate" />
+      <el-table-column label="maf" align="center" prop="maf" />
+      <el-table-column label="consequences" align="center" prop="consequences" />
+      <el-table-column label="impacts" align="center" prop="impacts" />
+      <el-table-column label="analysisId" align="center" prop="analysisId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -178,32 +178,32 @@
     <!-- 添加或修改ImportVariant对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="variantId">
-          <el-input v-model="form.variantId" placeholder="请输入${comment}" />
+        <el-form-item label="variantId" prop="variantId">
+          <el-input v-model="form.variantId" placeholder="请输入variantId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="vid">
-          <el-input v-model="form.vid" placeholder="请输入${comment}" />
+        <el-form-item label="vid" prop="vid">
+          <el-input v-model="form.vid" placeholder="请输入vid" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="chr">
-          <el-input v-model="form.chr" placeholder="请输入${comment}" />
+        <el-form-item label="chr" prop="chr">
+          <el-input v-model="form.chr" placeholder="请输入chr" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="posi">
-          <el-input v-model="form.posi" placeholder="请输入${comment}" />
+        <el-form-item label="posi" prop="posi">
+          <el-input v-model="form.posi" placeholder="请输入posi" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="genorate">
-          <el-input v-model="form.genorate" placeholder="请输入${comment}" />
+        <el-form-item label="genorate" prop="genorate">
+          <el-input v-model="form.genorate" placeholder="请输入genorate" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="maf">
-          <el-input v-model="form.maf" placeholder="请输入${comment}" />
+        <el-form-item label="maf" prop="maf">
+          <el-input v-model="form.maf" placeholder="请输入maf" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="consequences">
-          <el-input v-model="form.consequences" placeholder="请输入${comment}" />
+        <el-form-item label="consequences" prop="consequences">
+          <el-input v-model="form.consequences" placeholder="请输入consequences" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="impacts">
-          <el-input v-model="form.impacts" placeholder="请输入${comment}" />
+        <el-form-item label="impacts" prop="impacts">
+          <el-input v-model="form.impacts" placeholder="请输入impacts" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="analysisId">
-          <el-input v-model="form.analysisId" placeholder="请输入${comment}" />
+        <el-form-item label="analysisId" prop="analysisId">
+          <el-input v-model="form.analysisId" placeholder="请输入analysisId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -300,7 +300,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importVariantData" // todo
       },
       // 表单参数
       form: {},
@@ -418,7 +418,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importVariantTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

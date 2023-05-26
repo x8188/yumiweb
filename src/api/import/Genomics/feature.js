@@ -20,7 +20,7 @@ export function getImportfeature(featureId) {
 // 新增Importfeature
 export function addImportfeature(data) {
   return request({
-    url: '/zeamap/Importfeature',
+    url: '/zeamap/Importfeature/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addImportfeature(data) {
 // 修改Importfeature
 export function updateImportfeature(data) {
   return request({
-    url: '/zeamap/Importfeature',
+    url: '/zeamap/Importfeature/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportfeature(data) {
 // 删除Importfeature
 export function delImportfeature(featureId) {
   return request({
-    url: '/zeamap/Importfeature/' + featureId,
+    url: '/zeamap/Importfeature/remove/' + featureId,
     method: 'delete'
   })
 }

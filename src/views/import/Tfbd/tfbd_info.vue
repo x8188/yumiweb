@@ -1,74 +1,74 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="name" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入name"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="family">
+      <el-form-item label="family" prop="family">
         <el-input
           v-model="queryParams.family"
-          placeholder="请输入${comment}"
+          placeholder="请输入family"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="simplename">
+      <el-form-item label="simplename" prop="simplename">
         <el-input
           v-model="queryParams.simplename"
-          placeholder="请输入${comment}"
+          placeholder="请输入simplename"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="genev4">
+      <el-form-item label="genev4" prop="genev4">
         <el-input
           v-model="queryParams.genev4"
-          placeholder="请输入${comment}"
+          placeholder="请输入genev4"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="genev3">
+      <el-form-item label="genev3" prop="genev3">
         <el-input
           v-model="queryParams.genev3"
-          placeholder="请输入${comment}"
+          placeholder="请输入genev3"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="tfClass">
+      <el-form-item label="tfClass" prop="tfClass">
         <el-input
           v-model="queryParams.tfClass"
-          placeholder="请输入${comment}"
+          placeholder="请输入tfClass"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="atid">
+      <el-form-item label="atid" prop="atid">
         <el-input
           v-model="queryParams.atid"
-          placeholder="请输入${comment}"
+          placeholder="请输入atid"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="atsimplename">
+      <el-form-item label="atsimplename" prop="atsimplename">
         <el-input
           v-model="queryParams.atsimplename"
-          placeholder="请输入${comment}"
+          placeholder="请输入atsimplename"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="analysisId">
+      <el-form-item label="analysisId" prop="analysisId">
         <el-input
           v-model="queryParams.analysisId"
-          placeholder="请输入${comment}"
+          placeholder="请输入analysisId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -87,7 +87,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:info:add']"
+          v-hasPermi="['zeamap:ImportTfdbinfo:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -98,7 +98,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:info:edit']"
+          v-hasPermi="['zeamap:ImportTfdbinfo:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -109,7 +109,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:info:remove']"
+          v-hasPermi="['zeamap:ImportTfdbinfo:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -119,7 +119,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:info:export']"
+          v-hasPermi="['zeamap:ImportTfdbinfo:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -129,7 +129,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportTfdbinfo:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -137,20 +137,20 @@
 
     <el-table v-loading="loading" :data="infoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="tfbdId" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="family" />
-      <el-table-column label="${comment}" align="center" prop="simplename" />
-      <el-table-column label="${comment}" align="center" prop="genev4" />
-      <el-table-column label="${comment}" align="center" prop="genev3" />
-      <el-table-column label="${comment}" align="center" prop="tfClass" />
-      <el-table-column label="${comment}" align="center" prop="enrichGo" />
-      <el-table-column label="${comment}" align="center" prop="enrichMp" />
-      <el-table-column label="${comment}" align="center" prop="atid" />
-      <el-table-column label="${comment}" align="center" prop="atsimplename" />
-      <el-table-column label="${comment}" align="center" prop="description" />
-      <el-table-column label="${comment}" align="center" prop="phenotype" />
-      <el-table-column label="${comment}" align="center" prop="analysisId" />
+      <el-table-column label="tfbdId" align="center" prop="tfbdId" />
+      <el-table-column label="name" align="center" prop="name" />
+      <el-table-column label="family" align="center" prop="family" />
+      <el-table-column label="simplename" align="center" prop="simplename" />
+      <el-table-column label="genev4" align="center" prop="genev4" />
+      <el-table-column label="genev3" align="center" prop="genev3" />
+      <el-table-column label="tfClass" align="center" prop="tfClass" />
+      <el-table-column label="enrichGo" align="center" prop="enrichGo" />
+      <el-table-column label="enrichMp" align="center" prop="enrichMp" />
+      <el-table-column label="atid" align="center" prop="atid" />
+      <el-table-column label="atsimplename" align="center" prop="atsimplename" />
+      <el-table-column label="description" align="center" prop="description" />
+      <el-table-column label="phenotype" align="center" prop="phenotype" />
+      <el-table-column label="analysisId" align="center" prop="analysisId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -158,14 +158,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:info:edit']"
+            v-hasPermi="['zeamap:ImportTfdbinfo:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:info:remove']"
+            v-hasPermi="['zeamap:ImportTfdbinfo:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -182,41 +182,41 @@
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="name" prop="name">
+          <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="family">
-          <el-input v-model="form.family" placeholder="请输入${comment}" />
+        <el-form-item label="family" prop="family">
+          <el-input v-model="form.family" placeholder="请输入family" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="simplename">
-          <el-input v-model="form.simplename" placeholder="请输入${comment}" />
+        <el-form-item label="simplename" prop="simplename">
+          <el-input v-model="form.simplename" placeholder="请输入simplename" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="genev4">
-          <el-input v-model="form.genev4" placeholder="请输入${comment}" />
+        <el-form-item label="genev4" prop="genev4">
+          <el-input v-model="form.genev4" placeholder="请输入genev4" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="genev3">
-          <el-input v-model="form.genev3" placeholder="请输入${comment}" />
+        <el-form-item label="genev3" prop="genev3">
+          <el-input v-model="form.genev3" placeholder="请输入genev3" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="tfClass">
-          <el-input v-model="form.tfClass" placeholder="请输入${comment}" />
+        <el-form-item label="tfClass" prop="tfClass">
+          <el-input v-model="form.tfClass" placeholder="请输入tfClass" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="enrichGo">
+        <el-form-item label="enrichGo" prop="enrichGo">
           <el-input v-model="form.enrichGo" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="enrichMp">
+        <el-form-item label="enrichMp" prop="enrichMp">
           <el-input v-model="form.enrichMp" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="atid">
-          <el-input v-model="form.atid" placeholder="请输入${comment}" />
+        <el-form-item label="atid" prop="atid">
+          <el-input v-model="form.atid" placeholder="请输入atid" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="atsimplename">
-          <el-input v-model="form.atsimplename" placeholder="请输入${comment}" />
+        <el-form-item label="atsimplename" prop="atsimplename">
+          <el-input v-model="form.atsimplename" placeholder="请输入atsimplename" />
         </el-form-item>
         <el-form-item label="${comment}" prop="description">
           <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="analysisId">
-          <el-input v-model="form.analysisId" placeholder="请输入${comment}" />
+        <el-form-item label="analysisId" prop="analysisId">
+          <el-input v-model="form.analysisId" placeholder="请输入analysisId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -316,7 +316,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/import1TfbdInfoData" // todo
       },
       // 表单参数
       form: {},
@@ -427,7 +427,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/info/export', {
+      this.download('zeamap/ImportTfbdinfo/export', {
         ...this.queryParams
       }, `info_${new Date().getTime()}.xlsx`)
     },
@@ -438,7 +438,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importTfbdInfoTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

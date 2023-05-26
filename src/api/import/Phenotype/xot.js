@@ -20,7 +20,7 @@ export function getImportXot(xotId) {
 // 新增1
 export function addImportXot(data) {
   return request({
-    url: '/zeamap/ImportXot',
+    url: '/zeamap/ImportXot/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addImportXot(data) {
 // 修改1
 export function updateImportXot(data) {
   return request({
-    url: '/zeamap/ImportXot',
+    url: '/zeamap/ImportXot/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportXot(data) {
 // 删除1
 export function delImportXot(xotId) {
   return request({
-    url: '/zeamap/ImportXot/' + xotId,
+    url: '/zeamap/ImportXot/remove/' + xotId,
     method: 'delete'
   })
 }

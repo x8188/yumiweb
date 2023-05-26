@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="targetGene">
+      <el-form-item label="targetGene" prop="targetGene">
         <el-input
           v-model="queryParams.targetGene"
-          placeholder="请输入${comment}"
+          placeholder="请输入targetGene"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="pValue">
+      <el-form-item label="pValue" prop="pValue">
         <el-input
           v-model="queryParams.pValue"
-          placeholder="请输入${comment}"
+          placeholder="请输入pValue}"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="tfbdNameId">
+      <el-form-item label="tfbdNameId" prop="tfbdNameId">
         <el-input
           v-model="queryParams.tfbdNameId"
-          placeholder="请输入${comment}"
+          placeholder="请输入tfbdNameId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -39,7 +39,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:target:add']"
+          v-hasPermi="['zeamap:Tfdbtarget:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -50,7 +50,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:target:edit']"
+          v-hasPermi="['zeamap:Tfdbtarget:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -61,7 +61,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:target:remove']"
+          v-hasPermi="['zeamap:Tfdbtarget:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,7 +71,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:target:export']"
+          v-hasPermi="['zeamap:Tfdbtarget:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -81,7 +81,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:Tfdbtarget:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -89,10 +89,10 @@
 
     <el-table v-loading="loading" :data="targetList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="tfbdTargetId" />
-      <el-table-column label="${comment}" align="center" prop="targetGene" />
-      <el-table-column label="${comment}" align="center" prop="pValue" />
-      <el-table-column label="${comment}" align="center" prop="tfbdNameId" />
+      <el-table-column label="tfbdTargetId" align="center" prop="tfbdTargetId" />
+      <el-table-column label="targetGene" align="center" prop="targetGene" />
+      <el-table-column label="pValue" align="center" prop="pValue" />
+      <el-table-column label="tfbdNameId" align="center" prop="tfbdNameId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -100,14 +100,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:target:edit']"
+            v-hasPermi="['zeamap:Tfdbtarget:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:target:remove']"
+            v-hasPermi="['zeamap:Tfdbtarget:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -124,14 +124,14 @@
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="targetGene">
-          <el-input v-model="form.targetGene" placeholder="请输入${comment}" />
+        <el-form-item label="targetGene" prop="targetGene">
+          <el-input v-model="form.targetGene" placeholder="请输入targetGene" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="pValue">
-          <el-input v-model="form.pValue" placeholder="请输入${comment}" />
+        <el-form-item label="pValue"" prop="pValue">
+          <el-input v-model="form.pValue" placeholder="请输入pValue" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="tfbdNameId">
-          <el-input v-model="form.tfbdNameId" placeholder="请输入${comment}" />
+        <el-form-item label="tfbdNameId" prop="tfbdNameId">
+          <el-input v-model="form.tfbdNameId" placeholder="请输入tfbdNameId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -221,7 +221,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importTfbdTargetData" // todo
       },
       // 表单参数
       form: {},
@@ -333,7 +333,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importTfbdTargetTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

@@ -1,42 +1,42 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="linkageGroup">
+      <el-form-item label="linkageGroup" prop="linkageGroup">
         <el-input
           v-model="queryParams.linkageGroup"
-          placeholder="请输入${comment}"
+          placeholder="请输入linkageGroup"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="linkageCm">
+      <el-form-item label="linkageCm" prop="linkageCm">
         <el-input
           v-model="queryParams.linkageCm"
-          placeholder="请输入${comment}"
+          placeholder="请输入linkageCm"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="dbxrefId">
+      <el-form-item label="dbxrefId" prop="dbxrefId">
         <el-input
           v-model="queryParams.dbxrefId"
-          placeholder="请输入${comment}"
+          placeholder="请输入dbxrefId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="qtlId">
+      <el-form-item label="qtlId" prop="qtlId">
         <el-input
           v-model="queryParams.qtlId"
-          placeholder="请输入${comment}"
+          placeholder="请输入qtlId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="variantId">
+      <el-form-item label="variantId" prop="variantId">
         <el-input
           v-model="queryParams.variantId"
-          placeholder="请输入${comment}"
+          placeholder="请输入variantId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -97,7 +97,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:Importmarker:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -105,12 +105,12 @@
 
     <el-table v-loading="loading" :data="ImportmarkerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="linkageMarkerId" />
-      <el-table-column label="${comment}" align="center" prop="linkageGroup" />
-      <el-table-column label="${comment}" align="center" prop="linkageCm" />
-      <el-table-column label="${comment}" align="center" prop="dbxrefId" />
-      <el-table-column label="${comment}" align="center" prop="qtlId" />
-      <el-table-column label="${comment}" align="center" prop="variantId" />
+      <el-table-column label="linkageMarkerId" align="center" prop="linkageMarkerId" />
+      <el-table-column label="linkageGroup" align="center" prop="linkageGroup" />
+      <el-table-column label="linkageCm" align="center" prop="linkageCm" />
+      <el-table-column label="dbxrefId" align="center" prop="dbxrefId" />
+      <el-table-column label="qtlId" align="center" prop="qtlId" />
+      <el-table-column label="variantId" align="center" prop="variantId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -142,20 +142,20 @@
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="linkageGroup">
-          <el-input v-model="form.linkageGroup" placeholder="请输入${comment}" />
+        <el-form-item label="linkageGroup" prop="linkageGroup">
+          <el-input v-model="form.linkageGroup" placeholder="请输入linkageGroup" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="linkageCm">
-          <el-input v-model="form.linkageCm" placeholder="请输入${comment}" />
+        <el-form-item label="linkageCm" prop="linkageCm">
+          <el-input v-model="form.linkageCm" placeholder="请输入linkageCm" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="dbxrefId">
-          <el-input v-model="form.dbxrefId" placeholder="请输入${comment}" />
+        <el-form-item label="dbxrefId" prop="dbxrefId">
+          <el-input v-model="form.dbxrefId" placeholder="请输入dbxrefId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="qtlId">
-          <el-input v-model="form.qtlId" placeholder="请输入${comment}" />
+        <el-form-item label="qtlId" prop="qtlId">
+          <el-input v-model="form.qtlId" placeholder="请输入qtlId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="variantId">
-          <el-input v-model="form.variantId" placeholder="请输入${comment}" />
+        <el-form-item label="variantId}" prop="variantId">
+          <el-input v-model="form.variantId" placeholder="请输入variantId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -246,7 +246,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importLinkageMarkerData" // todo
       },
       // 表单参数
       form: {},
@@ -360,7 +360,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importLinkageMarkerTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

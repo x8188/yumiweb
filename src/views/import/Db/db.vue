@@ -1,42 +1,42 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="dbId">
+      <el-form-item label="dbId" prop="dbId">
         <el-input
           v-model="queryParams.dbId"
-          placeholder="请输入${comment}"
+          placeholder="请输入dbId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="name" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入name"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="description">
+      <el-form-item label="description" prop="description">
         <el-input
           v-model="queryParams.description"
-          placeholder="请输入${comment}"
+          placeholder="请输入description"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="urlprefix">
+      <el-form-item label="urlprefix" prop="urlprefix">
         <el-input
           v-model="queryParams.urlprefix"
-          placeholder="请输入${comment}"
+          placeholder="请输入urlprefix"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="url">
+      <el-form-item label="url" prop="url">
         <el-input
           v-model="queryParams.url"
-          placeholder="请输入${comment}"
+          placeholder="请输入url"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -55,7 +55,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:db:add']"
+          v-hasPermi="['zeamap:Db:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -66,7 +66,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:db:edit']"
+          v-hasPermi="['zeamap:Db:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -77,7 +77,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:db:remove']"
+          v-hasPermi="['zeamap:Db:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -87,7 +87,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:db:export']"
+          v-hasPermi="['zeamap:Db:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -97,7 +97,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['zeamap:db:import']"
+          v-hasPermi="['zeamap:Db:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -105,11 +105,11 @@
 
     <el-table v-loading="loading" :data="dbList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="dbId" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="description" />
-      <el-table-column label="${comment}" align="center" prop="urlprefix" />
-      <el-table-column label="${comment}" align="center" prop="url" />
+      <el-table-column label="dbId" align="center" prop="dbId" />
+      <el-table-column label="name" align="center" prop="name" />
+      <el-table-column label="description" align="center" prop="description" />
+      <el-table-column label="urlprefix" align="center" prop="urlprefix" />
+      <el-table-column label="url" align="center" prop="url" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -117,14 +117,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:db:edit']"
+            v-hasPermi="['zeamap:Db:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:db:remove']"
+            v-hasPermi="['zeamap:Db:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -141,20 +141,20 @@
     <!-- 添加或修改db对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="dbId">
-          <el-input v-model="form.dbId" placeholder="请输入${comment}" />
+        <el-form-item label="dbId" prop="dbId">
+          <el-input v-model="form.dbId" placeholder="请输入dbId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="name" prop="name">
+          <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="description">
-          <el-input v-model="form.description" placeholder="请输入${comment}" />
+        <el-form-item label="description" prop="description">
+          <el-input v-model="form.description" placeholder="请输入description" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="urlprefix">
-          <el-input v-model="form.urlprefix" placeholder="请输入${comment}" />
+        <el-form-item label="$urlprefix" prop="urlprefix">
+          <el-input v-model="form.urlprefix" placeholder="请输入urlprefix" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="url">
-          <el-input v-model="form.url" placeholder="请输入${comment}" />
+        <el-form-item label="$url" prop="url">
+          <el-input v-model="form.url" placeholder="请输入url" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -243,7 +243,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/zeamap/Import/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/Import/importDbData" // todo
       },
       // 表单参数
       form: {},
@@ -345,7 +345,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/db/export', {
+      this.download('zeamap/Db/export', {
         ...this.queryParams
       }, `db_${new Date().getTime()}.xlsx`)
     },
@@ -356,7 +356,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importDbTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

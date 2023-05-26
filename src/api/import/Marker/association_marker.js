@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询Import列表
 export function listImportMarker(query) {
   return request({
-    url: '/zeamap/ImportMarker/list',
+    url: '/zeamap/ImportAssociationMarker/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listImportMarker(query) {
 // 查询Import详细
 export function getImportMarker(associationMarkerId) {
   return request({
-    url: '/zeamap/ImportMarker/' + associationMarkerId,
+    url: '/zeamap/ImportAssociationMarker/' + associationMarkerId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getImportMarker(associationMarkerId) {
 // 新增Import
 export function addImportMarker(data) {
   return request({
-    url: '/zeamap/ImportMarker',
+    url: '/zeamap/ImportAssociatonMarker/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addImportMarker(data) {
 // 修改Import
 export function updateImportMarker(data) {
   return request({
-    url: '/zeamap/ImportMarker',
+    url: '/zeamap/ImportAssociationMarker/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportMarker(data) {
 // 删除Import
 export function delImportMarker(associationMarkerId) {
   return request({
-    url: '/zeamap/ImportMarker/' + associationMarkerId,
+    url: '/zeamap/ImportAssociatonMarker/remove/' + associationMarkerId,
     method: 'delete'
   })
 }

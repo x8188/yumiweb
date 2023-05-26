@@ -1,34 +1,34 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="name" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入name"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="environmentClass">
+      <el-form-item label="environmentClass" prop="environmentClass">
         <el-input
           v-model="queryParams.environmentClass"
-          placeholder="请输入${comment}"
+          placeholder="请输入environmentClass"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="environmentCondition">
+      <el-form-item label="environmentCondition" prop="environmentCondition">
         <el-input
           v-model="queryParams.environmentCondition"
-          placeholder="请输入${comment}"
+          placeholder="请输入environmentCondition"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="environmentDesc">
+      <el-form-item label="environmentDesc" prop="environmentDesc">
         <el-input
           v-model="queryParams.environmentDesc"
-          placeholder="请输入${comment}"
+          placeholder="请输入environmentDesc"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -89,7 +89,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:Import:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -97,11 +97,11 @@
 
     <el-table v-loading="loading" :data="ImportList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="environmentId" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="environmentClass" />
-      <el-table-column label="${comment}" align="center" prop="environmentCondition" />
-      <el-table-column label="${comment}" align="center" prop="environmentDesc" />
+      <el-table-column label="environmentId" align="center" prop="environmentId" />
+      <el-table-column label="name" align="center" prop="name" />
+      <el-table-column label="environmentClass" align="center" prop="environmentClass" />
+      <el-table-column label="environmentCondition" align="center" prop="environmentCondition" />
+      <el-table-column label="environmentDesc" align="center" prop="environmentDesc" />
       <el-table-column label="状态" align="center" prop="status" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -135,17 +135,17 @@
     <!-- 添加或修改ImportEnvironment对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="name" prop="name">
+          <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="environmentClass">
-          <el-input v-model="form.environmentClass" placeholder="请输入${comment}" />
+        <el-form-item label="environmentClass" prop="environmentClass">
+          <el-input v-model="form.environmentClass" placeholder="请输入environmentClass" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="environmentCondition">
-          <el-input v-model="form.environmentCondition" placeholder="请输入${comment}" />
+        <el-form-item label="environmentCondition" prop="environmentCondition">
+          <el-input v-model="form.environmentCondition" placeholder="请输入environmentCondition" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="environmentDesc">
-          <el-input v-model="form.environmentDesc" placeholder="请输入${comment}" />
+        <el-form-item label="environmentDesc" prop="environmentDesc">
+          <el-input v-model="form.environmentDesc" placeholder="请输入environmentDesc" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
@@ -239,7 +239,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importEnvironmentData" // todo
       },
       // 表单参数
       form: {},
@@ -358,7 +358,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importEnvironmentTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

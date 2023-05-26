@@ -73,7 +73,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:Importfeature:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -81,12 +81,12 @@
 
     <el-table v-loading="loading" :data="ImportfeatureList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="featureId" />
+      <el-table-column label="featureId" align="center" prop="featureId" />
       <el-table-column label="expression表关联的id" align="center" prop="uniquename" />
-      <el-table-column label="${comment}" align="center" prop="residues" />
-      <el-table-column label="${comment}" align="center" prop="seqlen" />
-      <el-table-column label="${comment}" align="center" prop="dbxrefId" />
-      <el-table-column label="${comment}" align="center" prop="typeId" />
+      <el-table-column label="residues" align="center" prop="residues" />
+      <el-table-column label="seqlen" align="center" prop="seqlen" />
+      <el-table-column label="dbxrefId" align="center" prop="dbxrefId" />
+      <el-table-column label="typeId" align="center" prop="typeId" />
       <el-table-column label="Single expression viewer 的基因ID，查询字段" align="center" prop="commonname" />
       <el-table-column label="状态" align="center" prop="status" />
       <el-table-column label="备注" align="center" prop="remark" />
@@ -124,17 +124,17 @@
         <el-form-item label="expression表关联的id" prop="uniquename">
           <el-input v-model="form.uniquename" placeholder="请输入expression表关联的id" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="residues">
-          <el-input v-model="form.residues" placeholder="请输入${comment}" />
+        <el-form-item label="residues" prop="residues">
+          <el-input v-model="form.residues" placeholder="residues" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="seqlen">
-          <el-input v-model="form.seqlen" placeholder="请输入${comment}" />
+        <el-form-item label="seqlen" prop="seqlen">
+          <el-input v-model="form.seqlen" placeholder="请输入seqlen" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="dbxrefId">
-          <el-input v-model="form.dbxrefId" placeholder="请输入${comment}" />
+        <el-form-item label="dbxrefId" prop="dbxrefId">
+          <el-input v-model="form.dbxrefId" placeholder="请输入dbxrefId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入${comment}" />
+        <el-form-item label="typeId" prop="typeId">
+          <el-input v-model="form.typeId" placeholder="请输入typeId" />
         </el-form-item>
         <el-form-item label="Single expression viewer 的基因ID，查询字段" prop="commonname">
           <el-input v-model="form.commonname" placeholder="请输入Single expression viewer 的基因ID，查询字段" />
@@ -228,7 +228,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importFeatureData" // todo
       },
       // 表单参数
       form: {},
@@ -352,7 +352,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importFeatureTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理
