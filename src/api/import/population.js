@@ -20,7 +20,7 @@ export function getPopulation(populationId) {
 // 新增产品
 export function addPopulation(data) {
   return request({
-    url: '/zeamap/population',
+    url: '/zeamap/population/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addPopulation(data) {
 // 修改产品
 export function updatePopulation(data) {
   return request({
-    url: '/zeamap/population',
+    url: '/zeamap/population/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updatePopulation(data) {
 // 删除产品
 export function delPopulation(populationId) {
   return request({
-    url: '/zeamap/population/' + populationId,
+    url: '/zeamap/population/remove/' + populationId,
     method: 'delete'
   })
 }

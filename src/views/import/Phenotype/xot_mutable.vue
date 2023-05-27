@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="mutableId">
+      <el-form-item label="mutableId" prop="mutableId">
         <el-input
           v-model="queryParams.mutableId"
-          placeholder="请输入${comment}"
+          placeholder="请输入mutableId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="xotId">
+      <el-form-item label="xotId" prop="xotId">
         <el-input
           v-model="queryParams.xotId"
-          placeholder="请输入${comment}"
+          placeholder="请输入xotId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -73,7 +73,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportXot_mutable:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -81,9 +81,9 @@
 
     <el-table v-loading="loading" :data="ImportXot_mutableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="xotMutableId" />
-      <el-table-column label="${comment}" align="center" prop="mutableId" />
-      <el-table-column label="${comment}" align="center" prop="xotId" />
+      <el-table-column label="xotMutableId" align="center" prop="xotMutableId" />
+      <el-table-column label="mutableId" align="center" prop="mutableId" />
+      <el-table-column label="xotId" align="center" prop="xotId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -115,11 +115,11 @@
     <!-- 添加或修改ImportXot_mutable对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="mutableId">
-          <el-input v-model="form.mutableId" placeholder="请输入${comment}" />
+        <el-form-item label="mutableId" prop="mutableId">
+          <el-input v-model="form.mutableId" placeholder="请输入mutableId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="xotId">
-          <el-input v-model="form.xotId" placeholder="请输入${comment}" />
+        <el-form-item label="xotId" prop="xotId">
+          <el-input v-model="form.xotId" placeholder="请输入xotId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -208,7 +208,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importXotMutableData" // todo
       },
       // 表单参数
       form: {},
@@ -319,7 +319,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importXotMutableTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

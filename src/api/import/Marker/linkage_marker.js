@@ -20,7 +20,7 @@ export function getImportmarker(linkageMarkerId) {
 // 新增Import
 export function addImportmarker(data) {
   return request({
-    url: '/zeamap/Importmarker',
+    url: '/zeamap/Importmarker/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addImportmarker(data) {
 // 修改Import
 export function updateImportmarker(data) {
   return request({
-    url: '/zeamap/Importmarker',
+    url: '/zeamap/Importmarker/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportmarker(data) {
 // 删除Import
 export function delImportmarker(linkageMarkerId) {
   return request({
-    url: '/zeamap/Importmarker/' + linkageMarkerId,
+    url: '/zeamap/Importmarker/remove/' + linkageMarkerId,
     method: 'delete'
   })
 }

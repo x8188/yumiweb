@@ -15,7 +15,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:ImportInfo:add']"
+          v-hasPermi="['zeamap:ImportVariantInfo:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -26,7 +26,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:ImportInfo:edit']"
+          v-hasPermi="['zeamap:ImportVariantInfo:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +37,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:ImportInfo:remove']"
+          v-hasPermi="['zeamap:ImportVariantInfo:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -47,7 +47,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:ImportInfo:export']"
+          v-hasPermi="['zeamap:ImportVariantInfo:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -57,7 +57,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportVariantInfo:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -65,12 +65,12 @@
 
     <el-table v-loading="loading" :data="ImportInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="variantinfoId" />
-      <el-table-column label="${comment}" align="center" prop="vid" />
-      <el-table-column label="${comment}" align="center" prop="annotation" />
-      <el-table-column label="${comment}" align="center" prop="information" />
-      <el-table-column label="${comment}" align="center" prop="pieplots" />
-      <el-table-column label="${comment}" align="center" prop="summary" />
+      <el-table-column label="variantinfoId" align="center" prop="variantinfoId" />
+      <el-table-column label="vid" align="center" prop="vid" />
+      <el-table-column label="annotation" align="center" prop="annotation" />
+      <el-table-column label="information" align="center" prop="information" />
+      <el-table-column label="pieplots" align="center" prop="pieplots" />
+      <el-table-column label="summary" align="center" prop="summary" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -78,14 +78,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:edit']"
+            v-hasPermi="['zeamap:ImportVariantInfo:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:ImportInfo:remove']"
+            v-hasPermi="['zeamap:ImportVariantInfo:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -102,19 +102,19 @@
     <!-- 添加或修改ImportInfo对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="vid">
+        <el-form-item label="vid" prop="vid">
           <el-input v-model="form.vid" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="annotation">
+        <el-form-item label="annotation" prop="annotation">
           <el-input v-model="form.annotation" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="information">
+        <el-form-item label="information" prop="information">
           <el-input v-model="form.information" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="pieplots">
+        <el-form-item label="pieplots" prop="pieplots">
           <el-input v-model="form.pieplots" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="summary">
+        <el-form-item label="summary" prop="summary">
           <el-input v-model="form.summary" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
@@ -207,7 +207,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importVariantInfoData" // todo
       },
       // 表单参数
       form: {},
@@ -321,7 +321,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importVariantInfoTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

@@ -12,7 +12,7 @@ export function listFeatureloc(query) {
 // 查询ImportFeatureloc详细
 export function getFeatureloc(featurelocId) {
   return request({
-    url: '/zeamap/featureloc/' + featurelocId,
+    url: '/zeamap/ImportFeatureloc/' + featurelocId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getFeatureloc(featurelocId) {
 // 新增ImportFeatureloc
 export function addFeatureloc(data) {
   return request({
-    url: '/zeamap/featureloc',
+    url: '/zeamap/ImportFeatureloc/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addFeatureloc(data) {
 // 修改ImportFeatureloc
 export function updateFeatureloc(data) {
   return request({
-    url: '/zeamap/featureloc',
+    url: '/zeamap/ImportFeatureloc/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateFeatureloc(data) {
 // 删除ImportFeatureloc
 export function delFeatureloc(featurelocId) {
   return request({
-    url: '/zeamap/featureloc/' + featurelocId,
+    url: '/zeamap/ImportFeatureloc/remove/' + featurelocId,
     method: 'delete'
   })
 }

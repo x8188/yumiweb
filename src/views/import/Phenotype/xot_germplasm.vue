@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="value">
+      <el-form-item label="value" prop="value">
         <el-input
           v-model="queryParams.value"
-          placeholder="请输入${comment}"
+          placeholder="请输入value"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="germplasmId">
+      <el-form-item label="germplasmId" prop="germplasmId">
         <el-input
           v-model="queryParams.germplasmId"
-          placeholder="请输入${comment}"
+          placeholder="请输入germplasmId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="xotId">
+      <el-form-item label="xotId" prop="xotId">
         <el-input
           v-model="queryParams.xotId"
-          placeholder="请输入${comment}"
+          placeholder="请输入xotId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -81,7 +81,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:importxotgermplasm:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -89,11 +89,11 @@
 
     <el-table v-loading="loading" :data="importxotgermplasmList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="xotGermplasmId" />
-      <el-table-column label="${comment}" align="center" prop="type" />
-      <el-table-column label="${comment}" align="center" prop="value" />
-      <el-table-column label="${comment}" align="center" prop="germplasmId" />
-      <el-table-column label="${comment}" align="center" prop="xotId" />
+      <el-table-column label="xotGermplasmId" align="center" prop="xotGermplasmId" />
+      <el-table-column label="type" align="center" prop="type" />
+      <el-table-column label="value" align="center" prop="value" />
+      <el-table-column label="germplasmId" align="center" prop="germplasmId" />
+      <el-table-column label="xotId" align="center" prop="xotId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -125,14 +125,14 @@
     <!-- 添加或修改import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="value">
-          <el-input v-model="form.value" placeholder="请输入${comment}" />
+        <el-form-item label="value" prop="value">
+          <el-input v-model="form.value" placeholder="请输入value}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="germplasmId">
-          <el-input v-model="form.germplasmId" placeholder="请输入${comment}" />
+        <el-form-item label="germplasmId" prop="germplasmId">
+          <el-input v-model="form.germplasmId" placeholder="请输入germplasmId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="xotId">
-          <el-input v-model="form.xotId" placeholder="请输入${comment}" />
+        <el-form-item label="xotId" prop="xotId">
+          <el-input v-model="form.xotId" placeholder="请输入xotId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -223,7 +223,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importXotGermplasmData" // todo
       },
       // 表单参数
       form: {},
@@ -336,7 +336,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('/zeamap/import/importXotGermplasmTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

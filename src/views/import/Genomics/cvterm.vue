@@ -1,50 +1,50 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="cvtermId">
+      <el-form-item label="cvtermId" prop="cvtermId">
         <el-input
           v-model="queryParams.cvtermId"
-          placeholder="请输入${comment}"
+          placeholder="请输入cvtermId}"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="name" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入name"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="definition">
+      <el-form-item label="definition" prop="definition">
         <el-input
           v-model="queryParams.definition"
-          placeholder="请输入${comment}"
+          placeholder="请输入definition"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="isObsolete">
+      <el-form-item label="isObsolete" prop="isObsolete">
         <el-input
           v-model="queryParams.isObsolete"
-          placeholder="请输入${comment}"
+          placeholder="请输入isObsolete"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="cvId">
+      <el-form-item label="cvId" prop="cvId">
         <el-input
           v-model="queryParams.cvId"
-          placeholder="请输入${comment}"
+          placeholder="请输入cvId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="dbxrefId">
+      <el-form-item label="dbxrefId" prop="dbxrefId">
         <el-input
           v-model="queryParams.dbxrefId"
-          placeholder="请输入${comment}"
+          placeholder="请输入dbxrefId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -105,7 +105,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:cvterm:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -113,13 +113,13 @@
 
     <el-table v-loading="loading" :data="cvtermList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="cvtermId" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="definition" />
-      <el-table-column label="${comment}" align="center" prop="isObsolete" />
-      <el-table-column label="${comment}" align="center" prop="isRelationshiptype" />
-      <el-table-column label="${comment}" align="center" prop="cvId" />
-      <el-table-column label="${comment}" align="center" prop="dbxrefId" />
+      <el-table-column label="cvtermId" align="center" prop="cvtermId" />
+      <el-table-column label="name" align="center" prop="name" />
+      <el-table-column label="definition" align="center" prop="definition" />
+      <el-table-column label="isObsolete" align="center" prop="isObsolete" />
+      <el-table-column label="isRelationshiptype" align="center" prop="isRelationshiptype" />
+      <el-table-column label="cvId" align="center" prop="cvId" />
+      <el-table-column label="dbxrefId" align="center" prop="dbxrefId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -151,23 +151,23 @@
     <!-- 添加或修改ImportCvterm对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="cvtermId">
-          <el-input v-model="form.cvtermId" placeholder="请输入${comment}" />
+        <el-form-item label="cvtermId" prop="cvtermId">
+          <el-input v-model="form.cvtermId" placeholder="请输入cvtermId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="name" prop="name">
+          <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="definition">
-          <el-input v-model="form.definition" placeholder="请输入${comment}" />
+        <el-form-item label="definition" prop="definition">
+          <el-input v-model="form.definition" placeholder="请输入definition" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="isObsolete">
-          <el-input v-model="form.isObsolete" placeholder="请输入${comment}" />
+        <el-form-item label="isObsolete" prop="isObsolete">
+          <el-input v-model="form.isObsolete" placeholder="请输入isObsolete" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="cvId">
-          <el-input v-model="form.cvId" placeholder="请输入${comment}" />
+        <el-form-item label="cvId" prop="cvId">
+          <el-input v-model="form.cvId" placeholder="请输入cvId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="dbxrefId">
-          <el-input v-model="form.dbxrefId" placeholder="请输入${comment}" />
+        <el-form-item label="dbxrefId" prop="dbxrefId">
+          <el-input v-model="form.dbxrefId" placeholder="请输入dbxrefId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -260,7 +260,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importCvtermData" // todo
       },
       // 表单参数
       form: {},
@@ -375,7 +375,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importCvtermTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

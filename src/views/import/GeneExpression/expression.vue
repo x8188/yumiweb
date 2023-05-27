@@ -9,10 +9,10 @@ npm<template>
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="expressionUnit">
+      <el-form-item label="expressionUnit" prop="expressionUnit">
         <el-input
           v-model="queryParams.expressionUnit"
-          placeholder="请输入${comment}"
+          placeholder="请输入expressionUnit"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -113,7 +113,7 @@ npm<template>
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:expression:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -123,7 +123,7 @@ npm<template>
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="expressionId" />
       <el-table-column label="组织高亮值" align="center" prop="expressionValue" />
-      <el-table-column label="${comment}" align="center" prop="expressionUnit" />
+      <el-table-column label="expressionUnit" align="center" prop="expressionUnit" />
       <el-table-column label="与dbxref的version关联" align="center" prop="analysisId" />
       <el-table-column label="环境表的id" align="center" prop="environmentId" />
       <el-table-column label="基因ID feature 表的uniquename" align="center" prop="featureId" />
@@ -165,8 +165,8 @@ npm<template>
         <el-form-item label="组织高亮值" prop="expressionValue">
           <el-input v-model="form.expressionValue" placeholder="请输入组织高亮值" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="expressionUnit">
-          <el-input v-model="form.expressionUnit" placeholder="请输入${comment}" />
+        <el-form-item label="expressionUnit" prop="expressionUnit">
+          <el-input v-model="form.expressionUnit" placeholder="请输入expressionUnit" />
         </el-form-item>
         <el-form-item label="与dbxref的version关联" prop="analysisId">
           <el-input v-model="form.analysisId" placeholder="请输入与dbxref的version关联" />
@@ -279,7 +279,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importExpressionData" // todo
       },
       // 表单参数
       form: {},
@@ -401,7 +401,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importExpressionTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="mutableClass">
+      <el-form-item label="mutableClass" prop="mutableClass">
         <el-input
           v-model="queryParams.mutableClass"
-          placeholder="请输入${comment}"
+          placeholder="请输入mutableClass"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="mutableCondition">
+      <el-form-item label="mutableCondition" prop="mutableCondition">
         <el-input
           v-model="queryParams.mutableCondition"
-          placeholder="请输入${comment}"
+          placeholder="请输入mutableCondition"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="mutableDesc">
+      <el-form-item label="mutableDesc" prop="mutableDesc">
         <el-input
           v-model="queryParams.mutableDesc"
-          placeholder="请输入${comment}"
+          placeholder="请输入mutableDesc"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -81,7 +81,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportMutable:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -89,10 +89,10 @@
 
     <el-table v-loading="loading" :data="ImportMutableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="mutableId" />
-      <el-table-column label="${comment}" align="center" prop="mutableClass" />
-      <el-table-column label="${comment}" align="center" prop="mutableCondition" />
-      <el-table-column label="${comment}" align="center" prop="mutableDesc" />
+      <el-table-column label="mutableId" align="center" prop="mutableId" />
+      <el-table-column label="mutableClass" align="center" prop="mutableClass" />
+      <el-table-column label="mutableCondition" align="center" prop="mutableCondition" />
+      <el-table-column label="mutableDesc" align="center" prop="mutableDesc" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -124,14 +124,14 @@
     <!-- 添加或修改ImportMutable对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="mutableClass">
-          <el-input v-model="form.mutableClass" placeholder="请输入${comment}" />
+        <el-form-item label="mutableClass" prop="mutableClass">
+          <el-input v-model="form.mutableClass" placeholder="请输入mutableClass" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="mutableCondition">
-          <el-input v-model="form.mutableCondition" placeholder="请输入${comment}" />
+        <el-form-item label="mutableCondition" prop="mutableCondition">
+          <el-input v-model="form.mutableCondition" placeholder="请输入mutableCondition" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="mutableDesc">
-          <el-input v-model="form.mutableDesc" placeholder="请输入${comment}" />
+        <el-form-item label="mutableDesc" prop="mutableDesc">
+          <el-input v-model="form.mutableDesc" placeholder="请输入mutableDesc" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -221,7 +221,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importMutableData" // todo
       },
       // 表单参数
       form: {},
@@ -333,7 +333,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importMutableTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

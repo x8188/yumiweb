@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询db列表
 export function listDb(query) {
   return request({
-    url: '/zeamap/db/list',
+    url: '/zeamap/ImportDb/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listDb(query) {
 // 查询db详细
 export function getDb(dbId) {
   return request({
-    url: '/zeamap/db/' + dbId,
+    url: '/zeamap/ImportDb/' + dbId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getDb(dbId) {
 // 新增db
 export function addDb(data) {
   return request({
-    url: '/zeamap/db',
+    url: '/zeamap/ImportDb/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addDb(data) {
 // 修改db
 export function updateDb(data) {
   return request({
-    url: '/zeamap/db',
+    url: '/zeamap/ImportDb/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateDb(data) {
 // 删除db
 export function delDb(dbId) {
   return request({
-    url: '/zeamap/db/' + dbId,
+    url: '/zeamap/ImportDb/remove/' + dbId,
     method: 'delete'
   })
 }

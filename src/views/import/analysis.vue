@@ -1,66 +1,66 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="name">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="85px">
+      <el-form-item label="name" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入name"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="description">
+      <el-form-item label="description" prop="description">
         <el-input
           v-model="queryParams.description"
-          placeholder="请输入${comment}"
+          placeholder="请输入description"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="dbxrefId">
+      <el-form-item label="dbrefId" prop="dbxrefId">
         <el-input
           v-model="queryParams.dbxrefId"
-          placeholder="请输入${comment}"
+          placeholder="dbxrefId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="populationId">
+      <el-form-item label="populationId" prop="populationId">
         <el-input
           v-model="queryParams.populationId"
-          placeholder="请输入${comment}"
+          placeholder="请输入populationId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="detailed">
+      <el-form-item label="detailed" prop="detailed">
         <el-input
           v-model="queryParams.detailed"
-          placeholder="请输入${comment}"
+          placeholder="请输入detailed"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="methods">
+      <el-form-item label="methods" prop="methods">
         <el-input
           v-model="queryParams.methods"
-          placeholder="请输入${comment}"
+          placeholder="请输入methods"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="omics">
+      <el-form-item label="omics" prop="omics">
         <el-input
           v-model="queryParams.omics"
-          placeholder="请输入${comment}"
+          placeholder="请输入omics"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="reference">
+      <el-form-item label="reference" prop="reference">
         <el-input
           v-model="queryParams.reference"
-          placeholder="请输入${comment}"
+          placeholder="请输入reference"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -79,7 +79,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:Analysis:add']"
+          v-hasPermi="['zeamap:ImportAnalysis:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -90,7 +90,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:Analysis:edit']"
+          v-hasPermi="['zeamap:ImportAnalysis:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -101,7 +101,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:Analysis:remove']"
+          v-hasPermi="['zeamap:ImportAnalysis:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -111,7 +111,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:Analysis:export']"
+          v-hasPermi="['zeamap:ImportAnalysis:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -121,7 +121,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['zeamap:Analysis:import']"
+          v-hasPermi="['zeamap:ImportAnalysis:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -129,15 +129,15 @@
 
     <el-table v-loading="loading" :data="AnalysisList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="analysisId" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="description" />
-      <el-table-column label="${comment}" align="center" prop="dbxrefId" />
-      <el-table-column label="${comment}" align="center" prop="populationId" />
-      <el-table-column label="${comment}" align="center" prop="detailed" />
-      <el-table-column label="${comment}" align="center" prop="methods" />
-      <el-table-column label="${comment}" align="center" prop="omics" />
-      <el-table-column label="${comment}" align="center" prop="reference" />
+      <el-table-column label="analysisId" align="center" prop="analysisId" />
+      <el-table-column label="name" align="center" prop="name" />
+      <el-table-column label="description" align="center" prop="description" />
+      <el-table-column label="dbxrefId" align="center" prop="dbxrefId" />
+      <el-table-column label="populationId" align="center" prop="populationId" />
+      <el-table-column label="detailed" align="center" prop="detailed" />
+      <el-table-column label="methods" align="center" prop="methods" />
+      <el-table-column label="omics" align="center" prop="omics" />
+      <el-table-column label="reference" align="center" prop="reference" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -145,14 +145,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:Analysis:edit']"
+            v-hasPermi="['zeamap:ImportAnalysis:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:Analysis:remove']"
+            v-hasPermi="['zeamap:ImportAnalysis:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -169,29 +169,29 @@
     <!-- 添加或修改Analysis对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="name" prop="name">
+          <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="description">
-          <el-input v-model="form.description" placeholder="请输入${comment}" />
+        <el-form-item label="description" prop="description">
+          <el-input v-model="form.description" placeholder="请输入description" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="dbxrefId">
-          <el-input v-model="form.dbxrefId" placeholder="请输入${comment}" />
+        <el-form-item label="dbxrefId" prop="dbxrefId">
+          <el-input v-model="form.dbxrefId" placeholder="请输入dbxrefId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="populationId">
-          <el-input v-model="form.populationId" placeholder="请输入${comment}" />
+        <el-form-item label="populationId" prop="populationId">
+          <el-input v-model="form.populationId" placeholder="请输入populationId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="detailed">
-          <el-input v-model="form.detailed" placeholder="请输入${comment}" />
+        <el-form-item label="detailed" prop="detailed">
+          <el-input v-model="form.detailed" placeholder="请输入detailed" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="methods">
-          <el-input v-model="form.methods" placeholder="请输入${comment}" />
+        <el-form-item label="methods" prop="methods">
+          <el-input v-model="form.methods" placeholder="请输入methods" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="omics">
-          <el-input v-model="form.omics" placeholder="请输入${comment}" />
+        <el-form-item label="omics" prop="omics">
+          <el-input v-model="form.omics" placeholder="请输入omics" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="reference">
-          <el-input v-model="form.reference" placeholder="请输入${comment}" />
+        <el-form-item label="reference" prop="reference">
+          <el-input v-model="form.reference" placeholder="请输入reference" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -284,7 +284,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importAnalysisData" // todo
       },
       // 表单参数
       form: {},
@@ -390,7 +390,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/Analysis/export', {
+      this.download('zeamap/ImportAnalysis/export', {
         ...this.queryParams
       }, `Analysis_${new Date().getTime()}.xlsx`)
     },
@@ -401,8 +401,8 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
-      }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
+      this.download('/zeamap/import/importAnalysisTemplate', {
+      }, `template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理
     handleFileUploadProgress(event, file, fileList) {
@@ -420,7 +420,6 @@ export default {
     submitFileForm() {
       this.$refs.upload.submit();
     }
-
   }
 };
 </script>

@@ -55,9 +55,11 @@ export default {
         this.populations = res.rows
       })
     },
-    handle(arg){
-        this.$router.push({path:'/germplasm/details',query:{arg}});
-        details(arg);
+    handle(name){
+        this.$router.push({path:'/web/germplasm/germplasm/details',query:{name}});
+        details(name).then(res =>{
+          console.log(res)
+        });
     }
   }
 }

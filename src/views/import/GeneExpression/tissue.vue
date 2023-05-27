@@ -1,34 +1,34 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="tissueClass">
+      <el-form-item label="tissueClass" prop="tissueClass">
         <el-input
           v-model="queryParams.tissueClass"
-          placeholder="请输入${comment}"
+          placeholder="请输入tissueClass"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="tissueStage">
+      <el-form-item label="tissueStage" prop="tissueStage">
         <el-input
           v-model="queryParams.tissueStage"
-          placeholder="请输入${comment}"
+          placeholder="请输入tissueStage"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="tissuePosition">
+      <el-form-item label="tissuePosition" prop="tissuePosition">
         <el-input
           v-model="queryParams.tissuePosition"
-          placeholder="请输入${comment}"
+          placeholder="请输入tissuePosition"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="tissueDesc">
+      <el-form-item label="tissueDesc" prop="tissueDesc">
         <el-input
           v-model="queryParams.tissueDesc"
-          placeholder="请输入${comment}"
+          placeholder="请输入tissueDesc"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -41,10 +41,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="tissueName">
+      <el-form-item label="tissueName" prop="tissueName">
         <el-input
           v-model="queryParams.tissueName"
-          placeholder="请输入${comment}"
+          placeholder="请输入tissueName"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -105,7 +105,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zaemap:ImportTissue:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -113,13 +113,13 @@
 
     <el-table v-loading="loading" :data="ImportTissueList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="tissueId" />
-      <el-table-column label="${comment}" align="center" prop="tissueClass" />
-      <el-table-column label="${comment}" align="center" prop="tissueStage" />
-      <el-table-column label="${comment}" align="center" prop="tissuePosition" />
-      <el-table-column label="${comment}" align="center" prop="tissueDesc" />
+      <el-table-column label="tissueId" align="center" prop="tissueId" />
+      <el-table-column label="tissueClass" align="center" prop="tissueClass" />
+      <el-table-column label="tissueStage" align="center" prop="tissueStage" />
+      <el-table-column label="tissuePosition" align="center" prop="tissuePosition" />
+      <el-table-column label="tissueDesc" align="center" prop="tissueDesc" />
       <el-table-column label="zmap_tissue_expression 上显示的具体名称" align="center" prop="tissueSvgclass" />
-      <el-table-column label="${comment}" align="center" prop="tissueName" />
+      <el-table-column label="tissueName" align="center" prop="tissueName" />
       <el-table-column label="状态" align="center" prop="status" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -153,23 +153,23 @@
     <!-- 添加或修改组织对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="tissueClass">
-          <el-input v-model="form.tissueClass" placeholder="请输入${comment}" />
+        <el-form-item label="tissueClass" prop="tissueClass">
+          <el-input v-model="form.tissueClass" placeholder="请输入tissueClass" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="tissueStage">
-          <el-input v-model="form.tissueStage" placeholder="请输入${comment}" />
+        <el-form-item label="tissueStage" prop="tissueStage">
+          <el-input v-model="form.tissueStage" placeholder="请输入tissueStage" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="tissuePosition">
-          <el-input v-model="form.tissuePosition" placeholder="请输入${comment}" />
+        <el-form-item label="tissuePosition" prop="tissuePosition">
+          <el-input v-model="form.tissuePosition" placeholder="请输入tissuePosition" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="tissueDesc">
-          <el-input v-model="form.tissueDesc" placeholder="请输入${comment}" />
+        <el-form-item label="tissueDesc" prop="tissueDesc">
+          <el-input v-model="form.tissueDesc" placeholder="请输入tissueDesc" />
         </el-form-item>
         <el-form-item label="zmap_tissue_expression 上显示的具体名称" prop="tissueSvgclass">
           <el-input v-model="form.tissueSvgclass" placeholder="请输入zmap_tissue_expression 上显示的具体名称" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="tissueName">
-          <el-input v-model="form.tissueName" placeholder="请输入${comment}" />
+        <el-form-item label="tissueName" prop="tissueName">
+          <el-input v-model="form.tissueName" placeholder="请输入tissueName" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
@@ -265,7 +265,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importTissueData" // todo
       },
       // 表单参数
       form: {},
@@ -386,7 +386,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importTissueTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

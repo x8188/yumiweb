@@ -1,50 +1,50 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="featurelocId">
+      <el-form-item label="featurelocId" prop="featurelocId">
         <el-input
           v-model="queryParams.featurelocId"
-          placeholder="请输入${comment}"
+          placeholder="请输入featurelocId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="fmin">
+      <el-form-item label="fmin" prop="fmin">
         <el-input
           v-model="queryParams.fmin"
-          placeholder="请输入${comment}"
+          placeholder="请输入fmin"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="fmax">
+      <el-form-item label="fmax" prop="fmax">
         <el-input
           v-model="queryParams.fmax"
-          placeholder="请输入${comment}"
+          placeholder="请输入fmax"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="strand">
+      <el-form-item label="strand" prop="strand">
         <el-input
           v-model="queryParams.strand"
-          placeholder="请输入${comment}"
+          placeholder="请输入strand"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="featureId">
+      <el-form-item label="featureId" prop="featureId">
         <el-input
           v-model="queryParams.featureId"
-          placeholder="请输入${comment}"
+          placeholder="请输入featureId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="srcfeatureId">
+      <el-form-item label="srcfeatureId" prop="srcfeatureId">
         <el-input
           v-model="queryParams.srcfeatureId"
-          placeholder="请输入${comment}"
+          placeholder="请输入srcfeatureId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -63,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:featureloc:add']"
+          v-hasPermi="['zeamap:ImportFeatureloc:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -74,7 +74,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:featureloc:edit']"
+          v-hasPermi="['zeamap:ImportFeatureloc:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -85,7 +85,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:featureloc:remove']"
+          v-hasPermi="['zeamap:ImportFeatureloc:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,7 +95,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:featureloc:export']"
+          v-hasPermi="['zeamap:ImportFeatureloc:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -105,7 +105,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportFeatureloc:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -113,12 +113,12 @@
 
     <el-table v-loading="loading" :data="featurelocList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="featurelocId" />
-      <el-table-column label="${comment}" align="center" prop="fmin" />
-      <el-table-column label="${comment}" align="center" prop="fmax" />
-      <el-table-column label="${comment}" align="center" prop="strand" />
-      <el-table-column label="${comment}" align="center" prop="featureId" />
-      <el-table-column label="${comment}" align="center" prop="srcfeatureId" />
+      <el-table-column label="featurelocId" align="center" prop="featurelocId" />
+      <el-table-column label="fmin" align="center" prop="fmin" />
+      <el-table-column label="fmax" align="center" prop="fmax" />
+      <el-table-column label="strand" align="center" prop="strand" />
+      <el-table-column label="featureId" align="center" prop="featureId" />
+      <el-table-column label="srcfeatureId" align="center" prop="srcfeatureId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -126,14 +126,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:featureloc:edit']"
+            v-hasPermi="['zeamap:ImportFeatureloc:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:featureloc:remove']"
+            v-hasPermi="['zeamap:ImportFeatureloc:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -150,23 +150,23 @@
     <!-- 添加或修改ImportFeatureloc对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="featurelocId">
-          <el-input v-model="form.featurelocId" placeholder="请输入${comment}" />
+        <el-form-item label="featurelocId" prop="featurelocId">
+          <el-input v-model="form.featurelocId" placeholder="请输入featurelocId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="fmin">
-          <el-input v-model="form.fmin" placeholder="请输入${comment}" />
+        <el-form-item label="fmin" prop="fmin">
+          <el-input v-model="form.fmin" placeholder="请输入fmin" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="fmax">
-          <el-input v-model="form.fmax" placeholder="请输入${comment}" />
+        <el-form-item label="fmax" prop="fmax">
+          <el-input v-model="form.fmax" placeholder="请输入fmax" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="strand">
-          <el-input v-model="form.strand" placeholder="请输入${comment}" />
+        <el-form-item label="strand" prop="strand">
+          <el-input v-model="form.strand" placeholder="请输入strand" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="featureId">
-          <el-input v-model="form.featureId" placeholder="请输入${comment}" />
+        <el-form-item label="featureId" prop="featureId">
+          <el-input v-model="form.featureId" placeholder="请输入featureId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="srcfeatureId">
-          <el-input v-model="form.srcfeatureId" placeholder="请输入${comment}" />
+        <el-form-item label="srcfeatureId" prop="srcfeatureId">
+          <el-input v-model="form.srcfeatureId" placeholder="请输入srcfeatureId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -258,7 +258,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importFeaturelocData" // todo
       },
       // 表单参数
       form: {},
@@ -361,7 +361,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/featureloc/export', {
+      this.download('zeamap/ImportFeatureloc/export', {
         ...this.queryParams
       }, `featureloc_${new Date().getTime()}.xlsx`)
     },
@@ -372,7 +372,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importFeaturelocTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

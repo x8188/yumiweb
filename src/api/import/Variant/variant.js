@@ -20,7 +20,7 @@ export function getImportVariant(variantId) {
 // 新增ImportVariant
 export function addImportVariant(data) {
   return request({
-    url: '/zeamap/ImportVariant',
+    url: '/zeamap/ImportVariant/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addImportVariant(data) {
 // 修改ImportVariant
 export function updateImportVariant(data) {
   return request({
-    url: '/zeamap/ImportVariant',
+    url: '/zeamap/ImportVariant/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportVariant(data) {
 // 删除ImportVariant
 export function delImportVariant(variantId) {
   return request({
-    url: '/zeamap/ImportVariant/' + variantId,
+    url: '/zeamap/ImportVariant/remove/' + variantId,
     method: 'delete'
   })
 }

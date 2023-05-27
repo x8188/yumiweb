@@ -9,26 +9,26 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="version">
+      <el-form-item label="version" prop="version">
         <el-input
           v-model="queryParams.version"
-          placeholder="请输入${comment}"
+          placeholder="请输入version"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="description">
+      <el-form-item label="description" prop="description">
         <el-input
           v-model="queryParams.description"
-          placeholder="请输入${comment}"
+          placeholder="请输入description"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="dbId">
+      <el-form-item label="dbId" prop="dbId">
         <el-input
           v-model="queryParams.dbId"
-          placeholder="请输入${comment}"
+          placeholder="请输入dbId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -47,7 +47,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:Dbxref:add']"
+          v-hasPermi="['zeamap:ImportDbxref:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -58,7 +58,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:Dbxref:edit']"
+          v-hasPermi="['zeamap:ImportDbxref:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -69,7 +69,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:Dbxref:remove']"
+          v-hasPermi="['zeamap:ImportDbxref:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -79,7 +79,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:Dbxref:export']"
+          v-hasPermi="['zeamap:ImportDbxref:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -89,7 +89,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportDbrexf:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -97,11 +97,11 @@
 
     <el-table v-loading="loading" :data="DbxrefList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="dbxrefId" />
+      <el-table-column label="dbxrefId" align="center" prop="dbxrefId" />
       <el-table-column label="Reference" align="center" prop="accession" />
-      <el-table-column label="${comment}" align="center" prop="version" />
-      <el-table-column label="${comment}" align="center" prop="description" />
-      <el-table-column label="${comment}" align="center" prop="dbId" />
+      <el-table-column label="version" align="center" prop="version" />
+      <el-table-column label="description" align="center" prop="description" />
+      <el-table-column label="dbId" align="center" prop="dbId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -109,14 +109,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:Dbxref:edit']"
+            v-hasPermi="['zeamap:ImportDbxref:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:Dbxref:remove']"
+            v-hasPermi="['zeamap:ImportDbxref:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -136,14 +136,14 @@
         <el-form-item label="Reference" prop="accession">
           <el-input v-model="form.accession" placeholder="请输入Reference" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="version">
-          <el-input v-model="form.version" placeholder="请输入${comment}" />
+        <el-form-item label="version" prop="version">
+          <el-input v-model="form.version" placeholder="请输入version" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="description">
-          <el-input v-model="form.description" placeholder="请输入${comment}" />
+        <el-form-item label="description" prop="description">
+          <el-input v-model="form.description" placeholder="请输入description" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="dbId">
-          <el-input v-model="form.dbId" placeholder="请输入${comment}" />
+        <el-form-item label="dbId" prop="dbId">
+          <el-input v-model="form.dbId" placeholder="请输入dbId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -232,7 +232,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importDbxrefData" // todo
       },
       // 表单参数
       form: {},
@@ -334,7 +334,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/Dbxref/export', {
+      this.download('zeamap/ImportDbxref/export', {
         ...this.queryParams
       }, `Dbxref_${new Date().getTime()}.xlsx`)
     },
@@ -345,7 +345,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importDbxrefTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

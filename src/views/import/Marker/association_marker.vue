@@ -1,50 +1,50 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="log">
+      <el-form-item label="log" prop="log">
         <el-input
           v-model="queryParams.log"
-          placeholder="请输入${comment}"
+          placeholder="请输入log"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="effectSize">
+      <el-form-item label="effectSize" prop="effectSize">
         <el-input
           v-model="queryParams.effectSize"
-          placeholder="请输入${comment}"
+          placeholder="请输入effectSize"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="pip">
+      <el-form-item label="pip" prop="pip">
         <el-input
           v-model="queryParams.pip"
-          placeholder="请输入${comment}"
+          placeholder="请输入pip}"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="dbxrefId">
+      <el-form-item label="dbxrefId" prop="dbxrefId">
         <el-input
           v-model="queryParams.dbxrefId"
-          placeholder="请输入${comment}"
+          placeholder="请输入dbxrefId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="qtlId">
+      <el-form-item label="qtlId" prop="qtlId">
         <el-input
           v-model="queryParams.qtlId"
-          placeholder="请输入${comment}"
+          placeholder="请输入qtlId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="variantId">
+      <el-form-item label="variantId" prop="variantId">
         <el-input
           v-model="queryParams.variantId"
-          placeholder="请输入${comment}"
+          placeholder="请输入variantId"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -63,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:ImportMarker:add']"
+          v-hasPermi="['zeamap:ImportAssociationMarker:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -74,7 +74,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:ImportMarker:edit']"
+          v-hasPermi="['zeamap:ImportAssociationMarker:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -85,7 +85,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:ImportMarker:remove']"
+          v-hasPermi="['zeamap:ImportAssociationMarker:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,7 +95,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:ImportMarker:export']"
+          v-hasPermi="['zeamap:ImportAssociationMarker:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -105,7 +105,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:ImportAssociationMarker:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -113,13 +113,13 @@
 
     <el-table v-loading="loading" :data="ImportMarkerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="associationMarkerId" />
-      <el-table-column label="${comment}" align="center" prop="log" />
-      <el-table-column label="${comment}" align="center" prop="effectSize" />
-      <el-table-column label="${comment}" align="center" prop="pip" />
-      <el-table-column label="${comment}" align="center" prop="dbxrefId" />
-      <el-table-column label="${comment}" align="center" prop="qtlId" />
-      <el-table-column label="${comment}" align="center" prop="variantId" />
+      <el-table-column label="associationMarkerId" align="center" prop="associationMarkerId" />
+      <el-table-column label="log" align="center" prop="log" />
+      <el-table-column label="effectSize" align="center" prop="effectSize" />
+      <el-table-column label="pip" align="center" prop="pip" />
+      <el-table-column label="dbxrefId" align="center" prop="dbxrefId" />
+      <el-table-column label="qtlId" align="center" prop="qtlId" />
+      <el-table-column label="variantId" align="center" prop="variantId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -127,14 +127,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:ImportMarker:edit']"
+            v-hasPermi="['zeamap:ImportAssociationMarker:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:ImportMarker:remove']"
+            v-hasPermi="['zeamap:ImportAssociationMarker:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -151,23 +151,23 @@
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="log">
-          <el-input v-model="form.log" placeholder="请输入${comment}" />
+        <el-form-item label="log" prop="log">
+          <el-input v-model="form.log" placeholder="请输入log" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="effectSize">
-          <el-input v-model="form.effectSize" placeholder="请输入${comment}" />
+        <el-form-item label="effectSize" prop="effectSize">
+          <el-input v-model="form.effectSize" placeholder="请输入effectSize" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="pip">
-          <el-input v-model="form.pip" placeholder="请输入${comment}" />
+        <el-form-item label="pip" prop="pip">
+          <el-input v-model="form.pip" placeholder="请输入pip" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="dbxrefId">
-          <el-input v-model="form.dbxrefId" placeholder="请输入${comment}" />
+        <el-form-item label="dbxrefId" prop="dbxrefId">
+          <el-input v-model="form.dbxrefId" placeholder="请输入dbxrefId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="qtlId">
-          <el-input v-model="form.qtlId" placeholder="请输入${comment}" />
+        <el-form-item label="qtlId" prop="qtlId">
+          <el-input v-model="form.qtlId" placeholder="请输入qtlId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="variantId">
-          <el-input v-model="form.variantId" placeholder="请输入${comment}" />
+        <el-form-item label="variantId" prop="variantId">
+          <el-input v-model="form.variantId" placeholder="请输入variantId" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -259,7 +259,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importAssociationMarkerData" // todo
       },
       // 表单参数
       form: {},
@@ -363,7 +363,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/ImportMarker/export', {
+      this.download('zeamap/ImportAssociationMarker/export', {
         ...this.queryParams
       }, `ImportMarker_${new Date().getTime()}.xlsx`)
     },
@@ -374,7 +374,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importAssociationMarkerTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理

@@ -7,7 +7,7 @@
         <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
           <el-col :span="6">
             <el-form-item label="PCA" prop="field101">
-              <el-select v-model="formData.field101" :style="{width: '100%'}">
+              <el-select v-model="formData.field101" :style="{width: '100%'}" @change="pcaChange(formData)">
                 <el-option v-for="(item, index) in field101Options" :key="index" :label="item.label"
                            :value="item.value" :disabled="item.disabled"></el-option>
               </el-select>
@@ -15,7 +15,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label-width="1px" label="" prop="field102">
-              <el-select v-model="formData.field102" :style="{width: '60%'}">
+              <el-select v-model="formData.field102" :style="{width: '60%'}" @change="pcaChange">
                 <el-option v-for="(item, index) in field102Options" :key="index" :label="item.label"
                            :value="item.value" :disabled="item.disabled"></el-option>
               </el-select>
@@ -34,8 +34,6 @@ import {listPCA} from "@/api/germplasm/details/pca";
 
 export default {
   name: "PCA",
-  components: {
-  },
   inheritAttrs: false,
   data() {
     return {
@@ -67,81 +65,119 @@ export default {
         "label": "PC3",
         "value": 3
       }],
-      pcalist:[
-
-      ],
+      pcalist:[],
     }
   },
   mounted() {
-   this.getMyCharts();
-  },
-  created() {
+   //this.getMyCharts();
     this.getPCA()
   },
+  created() {
+    //this.getPCA()
+  },
   methods: {
+    pcaChange(data){
+      this.getPCA();
+    },
     getPCA() {
-      listPCA().then(res=>{
-        this.pcalist=res.data;
-        console.log(res.data)
+      listPCA().then(res=> {
+        if (this.formData.field101 == 1 && this.formData.field102 == 2) {
+          this.pcalist = res.rows.map(function (item) {
+            return [
+              item.pc1,
+              item.pc2,
+              item.sample,
+              item.pop
+            ]
+          });
+        } else if (this.formData.field101 == 1 && this.formData.field102 == 3) {
+          this.pcalist = res.rows.map(function (item) {
+            return [
+              item.pc1,
+              item.pc3,
+              item.sample,
+              item.pop
+            ]
+          });
+        } else if (this.formData.field101 == 2 && this.formData.field102 == 1) {
+          this.pcalist = res.rows.map(function (item) {
+            return [
+              item.pc2,
+              item.pc1,
+              item.sample,
+              item.pop
+            ]
+          });
+        } else if (this.formData.field101 == 2 && this.formData.field102 == 3) {
+          this.pcalist = res.rows.map(function (item) {
+            return [
+              item.pc2,
+              item.pc3,
+              item.sample,
+              item.pop
+            ]
+          });
+        } else if (this.formData.field101 == 3 && this.formData.field102 == 2) {
+          this.pcalist = res.rows.map(function (item) {
+            return [
+              item.pc3,
+              item.pc2,
+              item.sample,
+              item.pop
+            ]
+          });
+        } else {
+          this.pcalist = res.rows.map(function (item) {
+            return [
+              item.pc3,
+              item.pc1,
+              item.sample,
+              item.pop
+            ]
+          });
+        }
+        console.log(this.pcalist);
+        res.rows=this.pcalist;
+        this.getMyCharts(res.rows);
       })
     },
-    submitForm() {
-      this.$refs['elForm'].validate(valid => {
-        if (!valid) return
-        // TODO 提交表单
-      })
-    },
-    getMyCharts(){
+    getMyCharts (data){
       let myChart = echarts.init(document.getElementById('main'));
+      console.log(data);
       // 指定图表的配置项和数据
       let option = {
-        /*dataset: {
-          source: [
-            ['sample','PC1','PC2','PC3','POP'],
-            ['CIMBL32',-0.057,-0.0153,-0.153,'TST'],
-            ['CIMBL89',-0.0421,-0.0041,-0.0468,'TST'],
-            ['CIMBL7',-0.0526,-0.0031,-0.0475,'TST'],
-            ['CIMBL45X',0.014,-0.0183,0.015,'Mixed'],
-            ['ZHENG58',0.0523,-0.0193,0.0046,'NSS'],
-            ['CML415',-0.0326,0.0063,0.0018, 'TST'],
-            ['CIMBL46',-0.0529,0.0071,0.005,'TST'],
-            ['CIMBL70',-0.0639,0.0038,0.0468,'TST'],
-            ['CIMBL124',-0.066,0.0081,0.0708,'TST'],
-            ['CIMBL68',-0.0601,0.0025,0.0313,'TST'],
-            ['CIMBL77',-0.0383,-0.0098,-0.0688,'TST'],
-            ['CML324',-0.0164,0.0111,0.0354, 'TST']
-          ]
-        },*/
+        legend: {
+          show: 'true',
+        },
         xAxis: {
+          type: "value",
+          data: function (params){
+            let x = params.data[0];
+            return x;
+          }
         },
         yAxis: {
+          type: "value",
+          data: function (params){
+            let x = params.data[1];
+            return x;
+          }
         },
         tooltip: {// 提示框组件。// trigger:'item' 默认的鼠标移动到色块上触发
           trigger: 'item',
           formatter:function (args) {
-            let message = 'Pop info:'+args.data[4]+'-DSB';
+            let message = 'Pop info:'+args.data[3] +'-DSB';
             return message
           }
         },
         series: [
           {
             symbolSize: 10,
-            encode: {
-              x: function (formdata){
-                if(formdata.field101==1){return 'PC1'}
-                else if(formdata.field101==2){return 'PC2'}
-                else {return 'PC3'}
-              },
-              y: function (formdata){
-              if(formdata.field102==1){return 'PC1'}
-              else if(formdata.field102==2){return 'PC2'}
-              else {return 'PC3'}
-              },
-            },
+            data: data,
             type: 'scatter',
             itemStyle: {
               color: function (arg) {
-                let itemPOP = arg.data[4];
+                let itemPOP = arg.data[3];
                 if (itemPOP == 'TST') {
                   return '#e6a6e1'
                 } else if (itemPOP == 'Mixed') {

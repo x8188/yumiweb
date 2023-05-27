@@ -8,88 +8,107 @@
 
 <script>
 import * as echarts from 'echarts';
+import {listStructure} from "@/api/germplasm/details/populationstructure";
 
 export default {
   name: "populationStructure",
-  components: {},
   props: [],
+  data() {
+    return{
+      structureList:[],
+      k1:[],
+      k2:[],
+      k3:[],
+      group:[],
+      sample:[],
+    }
+  },
   mounted() {
-    this.getPillar();
+    this.getStructure()
   },
   methods: {
-    getPillar() {
+    getStructure() {
+      listStructure().then(res=>{
+        console.log(res.rows)
+        /*this.k1=res.rows.map(function(item){
+          return item.k1
+        })
+        this.k2=res.rows.map(function(item){
+          return item.k1
+        })
+        this.k3=res.rows.map(function(item){
+          return item.k3
+        })
+        this.sample=res.rows.map(function(item){
+          return item.sample
+        })
+        this.group=res.rows.map(function(item){
+          return item.group
+        })*/
+        this.structureList=res.rows.map(function(item){
+          return [item.k1,item.k2,item.k3,item.group,item.sample]
+        })
+        res.rows=this.structureList;
+        this.getPillar(res.rows)
+      })
+    },
+    getPillar(data) {
       let Pillar = echarts.init(document.getElementById('master'));
-      let pillarData = [];
-      let bbb = function (arg){
-
-      };
-      let ccc = pillarData[2];
-      let ddd = pillarData[3];
-      let eee = pillarData[4];
-
         // 指定图表的配置项和数据
         let option2 = {
-          color: ['rgb(143,29,19)', 'rgb(4,87,117)', 'rgb(217,18,160)'],
-          /*dataset: {
-          source: [
-            ['Group','Sample','K1','K2','K3'],
-            ['TST','D047',0.6289,0,0.3711],
-            ['TST','DSB',0.6436,0,0.3564],
-            ['TST','CML171',0.9911,0,0.0089],
-            ['TST','CML172',0.986,0,0.014],
-            ['TST','D047',0.6289,0,0.3711],
-            ['TST','DSB',0.6436,0,0.3564],
-            ['TST','CML171',0.9911,0,0.0089],
-            ['TST','CML172',0.986,0,0.014],
-            ['TST','D047',0.6289,0,0.3711],
-            ['TST','DSB',0.6436,0,0.3564],
-            ['TST','CML171',0.9911,0,0.0089],
-            ['TST','CML172',0.986,0,0.014]
-          ]
-        },*/
+          legend: {
+            show: 'true',
+
+          },
+          color: ['#f89985', '#d48265', '#365475'],
+          tooltip: {// 提示框组件。
+            trigger: 'axis',
+            axisPointer: {
+              show: 'true'
+            }
+          },
           xAxis: {
             type: 'category',
-            data: bbb
+            data: data.map(item=>{
+              return item[4]
+            })
           },
           yAxis: {
             type: 'value'
           },
           series: [
             {
-              name: 'K1',
+              name: 'TST',
               type: 'bar',
-              stack: 'total',
-              label: {
-                show: true
-              },
+              stack: 'Ad',
               emphasis: {
                 focus: 'series'
               },
-              data: ccc
+              data: data.map(item=>{
+                return item[0]
+              })
             },
             {
-              name: 'K2',
+              name: 'SS',
               type: 'bar',
-              stack: 'total',
-              label: {
-                show: true
-              },
+              stack: 'Ad',
               emphasis: {
                 focus: 'series'
               },
-              data: ddd
+              data: data.map(item=>{
+                return item[1]
+              })
             },
             {
-              name: 'K3',
+              name: 'NSS',
               type: 'bar',
-              stack: 'total',
-              label: {
-                show: true
-              },
+              stack: 'Ad',
               emphasis: {
                 focus: 'series'
               },
-              data: eee
+              data: data.map(item=>{
+                return item[2]
+              })
             }
           ]
         };

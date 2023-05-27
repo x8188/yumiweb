@@ -17,8 +17,6 @@
 
 export default {
   name: "catalog",
-  components: {
-  }
 }
 </script>
 

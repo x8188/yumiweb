@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询Analysis列表
 export function listAnalysis(query) {
   return request({
-    url: '/zeamap/Analysis/list',
+    url: '/zeamap/ImportAnalysis/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listAnalysis(query) {
 // 查询Analysis详细
 export function getAnalysis(analysisId) {
   return request({
-    url: '/zeamap/Analysis/' + analysisId,
+    url: '/zeamap/ImportAnalysis/' + analysisId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getAnalysis(analysisId) {
 // 新增Analysis
 export function addAnalysis(data) {
   return request({
-    url: '/zeamap/Analysis',
+    url: '/zeamap/ImportAnalysis/add',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addAnalysis(data) {
 // 修改Analysis
 export function updateAnalysis(data) {
   return request({
-    url: '/zeamap/Analysis',
+    url: '/zeamap/ImportAnalysis/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateAnalysis(data) {
 // 删除Analysis
 export function delAnalysis(analysisId) {
   return request({
-    url: '/zeamap/Analysis/' + analysisId,
+    url: '/zeamap/ImportAnalysis/remove/' + analysisId,
     method: 'delete'
   })
 }

@@ -1,90 +1,90 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="name" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入name"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="genus">
+      <el-form-item label="genus" prop="genus">
         <el-input
           v-model="queryParams.genus"
-          placeholder="请输入${comment}"
+          placeholder="请输入genus"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="species">
+      <el-form-item label="species" prop="species">
         <el-input
           v-model="queryParams.species"
-          placeholder="请输入${comment}"
+          placeholder="请输入species"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="commonName">
+      <el-form-item label="commonName" prop="commonName">
         <el-input
           v-model="queryParams.commonName"
-          placeholder="请输入${comment}"
+          placeholder="请输入commonName"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="comment">
+      <el-form-item label="comment" prop="comment">
         <el-input
           v-model="queryParams.comment"
-          placeholder="请输入${comment}"
+          placeholder="请输入comment"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="groupId">
+      <el-form-item label="groupId" prop="groupId">
         <el-input
           v-model="queryParams.groupId"
-          placeholder="请输入${comment}"
+          placeholder="请输入groupId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="populationId">
+      <el-form-item label="populationId" prop="populationId">
         <el-input
           v-model="queryParams.populationId"
-          placeholder="请输入${comment}"
+          placeholder="请输入populationId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="latitude">
+      <el-form-item label="latitude" prop="latitude">
         <el-input
           v-model="queryParams.latitude"
-          placeholder="请输入${comment}"
+          placeholder="请输入latitude"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="longtitude">
+      <el-form-item label="longtitude" prop="longtitude">
         <el-input
           v-model="queryParams.longtitude"
-          placeholder="请输入${comment}"
+          placeholder="请输入longtitude"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="ngbId">
+      <el-form-item label="ngbId" prop="ngbId">
         <el-input
           v-model="queryParams.ngbId"
-          placeholder="请输入${comment}"
+          placeholder="请输入ngbId"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="origin">
+      <el-form-item label="origin" prop="origin">
         <el-input
           v-model="queryParams.origin"
-          placeholder="请输入${comment}"
+          placeholder="请输入origin"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -145,7 +145,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['collegeManage:studentBase:import']"
+          v-hasPermi="['zeamap:germplasm:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -153,18 +153,18 @@
 
     <el-table v-loading="loading" :data="germplasmList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="germplasmId" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="genus" />
-      <el-table-column label="${comment}" align="center" prop="species" />
-      <el-table-column label="${comment}" align="center" prop="commonName" />
-      <el-table-column label="${comment}" align="center" prop="comment" />
-      <el-table-column label="${comment}" align="center" prop="groupId" />
-      <el-table-column label="${comment}" align="center" prop="populationId" />
-      <el-table-column label="${comment}" align="center" prop="latitude" />
-      <el-table-column label="${comment}" align="center" prop="longtitude" />
-      <el-table-column label="${comment}" align="center" prop="ngbId" />
-      <el-table-column label="${comment}" align="center" prop="origin" />
+      <el-table-column label="germplasmId" align="center" prop="germplasmId" />
+      <el-table-column label="name" align="center" prop="name" />
+      <el-table-column label="genus" align="center" prop="genus" />
+      <el-table-column label="species" align="center" prop="species" />
+      <el-table-column label="commonName" align="center" prop="commonName" />
+      <el-table-column label="comment" align="center" prop="comment" />
+      <el-table-column label="groupId" align="center" prop="groupId" />
+      <el-table-column label="populationId" align="center" prop="populationId" />
+      <el-table-column label="latitude" align="center" prop="latitude" />
+      <el-table-column label="longtitude" align="center" prop="longtitude" />
+      <el-table-column label="ngbId" align="center" prop="ngbId" />
+      <el-table-column label="origin" align="center" prop="origin" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -196,38 +196,38 @@
     <!-- 添加或修改产品详情对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="name" prop="name">
+          <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="genus">
-          <el-input v-model="form.genus" placeholder="请输入${comment}" />
+        <el-form-item label="genus" prop="genus">
+          <el-input v-model="form.genus" placeholder="请输入genus" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="species">
-          <el-input v-model="form.species" placeholder="请输入${comment}" />
+        <el-form-item label="species" prop="species">
+          <el-input v-model="form.species" placeholder="请输入species}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="commonName">
-          <el-input v-model="form.commonName" placeholder="请输入${comment}" />
+        <el-form-item label="commonName" prop="commonName">
+          <el-input v-model="form.commonName" placeholder="请输入commonName" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="comment">
-          <el-input v-model="form.comment" placeholder="请输入${comment}" />
+        <el-form-item label="comment" prop="comment">
+          <el-input v-model="form.comment" placeholder="请输入comment" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="groupId">
-          <el-input v-model="form.groupId" placeholder="请输入${comment}" />
+        <el-form-item label="groupId" prop="groupId">
+          <el-input v-model="form.groupId" placeholder="请输入groupId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="populationId">
-          <el-input v-model="form.populationId" placeholder="请输入${comment}" />
+        <el-form-item label="populationId" prop="populationId">
+          <el-input v-model="form.populationId" placeholder="请输入populationId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="latitude">
-          <el-input v-model="form.latitude" placeholder="请输入${comment}" />
+        <el-form-item label="latitude" prop="latitude">
+          <el-input v-model="form.latitude" placeholder="请输入latitude" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="longtitude">
-          <el-input v-model="form.longtitude" placeholder="请输入${comment}" />
+        <el-form-item label="longtitude" prop="longtitude">
+          <el-input v-model="form.longtitude" placeholder="请输入longtitude" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="ngbId">
-          <el-input v-model="form.ngbId" placeholder="请输入${comment}" />
+        <el-form-item label="ngbId" prop="ngbId">
+          <el-input v-model="form.ngbId" placeholder="请输入ngbId" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="origin">
-          <el-input v-model="form.origin" placeholder="请输入${comment}" />
+        <el-form-item label="origin" prop="origin">
+          <el-input v-model="form.origin" placeholder="请输入origin" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -324,7 +324,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/collegeManage/studentBase/importData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importGermplasmData" // todo
       },
       // 表单参数
       form: {},
@@ -444,7 +444,7 @@ export default {
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('collegeManage/studentBase/importTemplate', {
+      this.download('zeamap/import/importGermplasmTemplate', {
       }, `stu_base_template_${new Date().getTime()}.xlsx`)  // todo
     },
 // 文件上传中处理
