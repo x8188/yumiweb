@@ -41,6 +41,7 @@
           style="width: 100%; margin-top: 30px"
           :data="tableData"
           @selection-change="handleSelectionChange"
+          v-loading="tableloading"
         >
         <el-table-column type="selection" width="55" align="center" />
           <el-table-column
@@ -86,6 +87,10 @@ export default {
     page:{
       type: Object,
       default: {},
+    },
+    tableloading:{
+      type: Boolean,
+      default: false,
     }
   },
   data() {

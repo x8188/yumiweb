@@ -1,7 +1,7 @@
 <template>
   <div class="geno-viewer-container">
     <div class="geno-form">
-      <el-card>
+      <el-card v-loading="loading">
         <Title>
           {{ viewerTitle }}
         </Title>
@@ -34,6 +34,8 @@
                     v-model="formData.reference"
                     placeholder=""
                     @change="getVersionOp"
+                    clearable
+                    filterable
                   >
                     <el-option
                       v-for="(item, i) in options.reference"
@@ -50,6 +52,8 @@
                   <el-select
                     v-model="formData.version"
                     :disabled="formData.reference == undefined"
+                    clearable
+                    filterable
                   >
                     <el-option
                       v-for="(item, i) in options.version"
@@ -63,7 +67,12 @@
             </div>
             <div class="germplasm-select">
               <span>Trait Category</span>
-              <el-select v-model="formData.TraitCategory" placeholder="">
+              <el-select
+                v-model="formData.TraitCategory"
+                placeholder=""
+                clearable
+                filterable
+              >
                 <el-option
                   v-for="(item, i) in options.TraitCategory"
                   :key="i"
@@ -80,6 +89,7 @@
                 remote
                 :remote-method="remoteMethod"
                 @blur="TraitIdBlur"
+                clearable
               >
                 <el-option
                   v-for="(item, i) in options.TraitId"
@@ -91,7 +101,7 @@
             </div>
             <div class="germplasm-select" v-show="qtlType == 'linkage'">
               <span>Link Map</span>
-              <el-select v-model="formData.LinkMap" filterable placeholder="">
+              <el-select v-model="formData.LinkMap" filterable placeholder="" clearable>
                 <el-option
                   v-for="(item, i) in options.LinkMap"
                   :key="i"
@@ -107,7 +117,7 @@
                   <div>
                     <div class="chr">
                       <el-form-item>
-                        <el-select v-model="formData.lg" placeholder="">
+                        <el-select v-model="formData.lg" placeholder="" clearable filterable>
                           <el-option
                             v-for="(item, i) in options.lg"
                             :key="i"
@@ -148,7 +158,7 @@
                     <div class="chr">
                       <span>chr</span>
                       <el-form-item>
-                        <el-select v-model="formData.chr" placeholder="">
+                        <el-select v-model="formData.chr" placeholder="" filterable clearable>
                           <el-option
                             v-for="(item, i) in options.chr"
                             :key="i"
@@ -279,7 +289,7 @@ import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 // import Title from "@/components/CommonComponents/Title.vue";
 export default {
   components: { SvgIcon },
-  props: ["page"],
+  props: ["page","loading"],
   data() {
     return {
       qtlType: "association",
@@ -479,6 +489,8 @@ export default {
       this.getQtl();
     },
     async getQtl() {
+      this.$emit("loadingUpdata",true);
+
       if (this.qtlType == "association") {
         let data = {
           accession: this.formData.reference,
@@ -500,7 +512,7 @@ export default {
           pageNum: this.page.pageNum,
           pageSize: this.page.pageSize,
         };
-        let res = await this.$API.marker.reqassociation_qtl(data,pageParams);
+        let res = await this.$API.marker.reqassociation_qtl(data, pageParams);
 
         if (res.code == 200) {
           this.page.total = res.total;
@@ -521,13 +533,15 @@ export default {
           pageNum: this.page.pageNum,
           pageSize: this.page.pageSize,
         };
-        let res = await this.$API.marker.reqlinkage(data,pageParams);
+        let res = await this.$API.marker.reqlinkage(data, pageParams);
 
         if (res.code == 200) {
           this.page.total = res.total;
           this.$emit("showResult", res.rows, data);
         }
       }
+      this.$emit("loadingUpdata",false);
+
     },
     changeType() {
       this.formData = {

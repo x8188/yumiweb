@@ -1,7 +1,14 @@
 <template>
   <div class="geno-viewer-container">
     <transition name="fade-trans" mode="out-in">
-      <GenoViewer v-show="!showResult" @showResult="showResultData" :page="page"/>
+      <GenoViewer
+        v-show="!showResult"
+        @showResult="showResultData"
+        :page="page"
+        :loading="loading"
+        :tableloading="tableloading"
+        @loadingUpdata="loadingUpdata"
+      />
     </transition>
     <transition name="fade-trans" mode="out-in">
       <ResultInfos
@@ -11,6 +18,7 @@
         :filterInfo="filterInfo"
         @changePage="changePage"
         :page="page"
+        :tableloading="tableloading"
       />
     </transition>
   </div>
@@ -31,6 +39,8 @@ export default {
         pageSize: 10,
         total: 0,
       },
+      loading: false,
+      tableloading: false,
     };
   },
   methods: {
@@ -42,9 +52,13 @@ export default {
     returnMultiExpression() {
       this.showResult = false;
     },
-    changePage(page){
-      this.page=page
-    }
+    changePage(page) {
+      this.page = page;
+    },
+    loadingUpdata(status) {
+      this.loading = status;
+      this.tableloading = status;
+    },
   },
 };
 </script>

@@ -41,6 +41,7 @@
           style="width: 100%; margin-top: 30px"
           :data="tableData"
           @selection-change="handleSelectionChange"
+          v-loading="tableloading"
         >
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column
@@ -87,6 +88,10 @@ export default {
       type: Object,
       default: {},
     },
+    tableloading:{
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -180,15 +185,13 @@ export default {
     // changePage() {
     //   this.$emit("changePage", this.page);
     // },
-    nowPage(newVal) {
+    async nowPage(newVal) {
       this.page.pageNum = newVal;
-      // this.changePage();
-      this.$bus.$emit("changeQtlPage");
+      await this.$bus.$emit("changeQtlPage");
     },
-    changeResultsNums(newVal) {
+    async changeResultsNums(newVal) {
       this.page.pageSize = newVal;
-      this.$bus.$emit("changeQtlPage");
-      // this.changePage();
+      await this.$bus.$emit("changeQtlPage");
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="geno-viewer-container">
     <div class="geno-form">
-      <el-card>
+      <el-card  v-loading="loading">
         <Title>
           {{ viewerTitle }}
         </Title>
@@ -35,6 +35,7 @@
                     placeholder=""
                     @change="getVersionOp"
                     filterable
+                    clearable
                   >
                     <el-option
                       v-for="(item, i) in options.reference"
@@ -51,6 +52,8 @@
                   <el-select
                     v-model="formData.version"
                     :disabled="formData.reference == undefined"
+                    clearable
+                    filterable
                   >
                     <el-option
                       v-for="(item, i) in options.version"
@@ -64,7 +67,12 @@
             </div>
             <div class="germplasm-select">
               <span>Trait Category</span>
-              <el-select v-model="formData.TraitCategory" placeholder="">
+              <el-select
+                v-model="formData.TraitCategory"
+                placeholder=""
+                clearable
+                filterable
+              >
                 <el-option
                   v-for="(item, i) in options.TraitCategory"
                   :key="i"
@@ -81,6 +89,7 @@
                 remote
                 :remote-method="remoteMethod"
                 @blur="TraitIdBlur"
+                clearable
               >
                 <el-option
                   v-for="(item, i) in options.TraitId"
@@ -92,7 +101,12 @@
             </div>
             <div class="germplasm-select" v-show="qtlType == 'linkage'">
               <span>Link Map</span>
-              <el-select v-model="formData.LinkMap" placeholder="">
+              <el-select
+                v-model="formData.LinkMap"
+                placeholder=""
+                clearable
+                filterable
+              >
                 <el-option
                   v-for="(item, i) in options.LinkMap"
                   :key="i"
@@ -115,7 +129,12 @@
                     <div class="chr">
                       <span>chr</span>
                       <el-form-item>
-                        <el-select v-model="formData.chr" placeholder="">
+                        <el-select
+                          v-model="formData.chr"
+                          placeholder=""
+                          clearable
+                          filterable
+                        >
                           <el-option
                             v-for="(item, i) in options.chr"
                             :key="i"
@@ -206,7 +225,7 @@ import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 // import Title from "@/components/CommonComponents/Title.vue";
 export default {
   components: { SvgIcon },
-  props: ["page"],
+  props: ["page","loading"],
   data() {
     return {
       qtlType: "association",
@@ -240,7 +259,6 @@ export default {
       },
       exportLoading: false,
       tableShow: false,
-
       // traitid: "null",
     };
   },
@@ -390,6 +408,7 @@ export default {
       this.getQtl();
     },
     async getQtl() {
+      this.$emit("loadingUpdata",true);
       if (this.qtlType == "association") {
         let data = {
           accession: this.formData.reference,
@@ -429,13 +448,14 @@ export default {
           pageNum: this.page.pageNum,
           pageSize: this.page.pageSize,
         };
-        let res = await this.$API.Qtl.reqlinkage(data,pageParams);
+        let res = await this.$API.Qtl.reqlinkage(data, pageParams);
 
         if (res.code == 200) {
           this.page.total = res.total;
           this.$emit("showResult", res.rows, data);
         }
       }
+      this.$emit("loadingUpdata",false);
     },
     changeType() {
       this.getdata();
