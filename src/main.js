@@ -97,6 +97,9 @@ Vue.use(Element, {
 
 Vue.config.productionTip = false
 
+import Meta from "vue-meta";
+Vue.use(Meta);
+
 new Vue({
   el: '#app',
   router,
