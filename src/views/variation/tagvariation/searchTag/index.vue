@@ -39,15 +39,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="Variant Class" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择Variant Class" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in typeOptions" :key="index" :value="item"
-                :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Region" prop="chr">
+          <el-form-item label="Chr" prop="chr">
             <el-select v-model="formData.chr" placeholder="请选择Region" clearable :style="{ width: '100%' }">
               <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
                 :disabled="item.disabled"></el-option>
@@ -55,37 +47,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <span style="color:#606266;font-size: 14px;font-weight: 700;">Posi</span>
           <div id="inner_input">
-            <el-input placeholder="请输入最小值" v-model="formData.posi_min"></el-input>
+            <el-input placeholder="start" v-model="formData.start"></el-input>
             <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-            <el-input placeholder="请输入最大值" v-model="formData.posi_max"></el-input>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <span style="color:#606266;font-size: 14px;font-weight: 700;">Annotation</span>
-          <div id="inner_item">
-            <el-form-item label="Consequance" prop="consequences">
-              <el-select v-model="formData.consequences" placeholder="请选择Consqquance" clearable
-                :style="{ width: '100%' }">
-                <el-option v-for="(item, index) in consequenceOptions" :key="index" :value="item"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="Impacts" prop="impacts">
-              <el-select v-model="formData.impacts" placeholder="请选择Region" clearable :style="{ width: '100%' }">
-                <el-option v-for="(item, index) in impactsOptions" :key="index" :value="item"></el-option>
-              </el-select>
-
-            </el-form-item>
-          </div>
-
-        </el-col>
-        <el-col :span="6">
-          <span style="color:#606266;font-size: 14px;font-weight: 700;">MAF</span>
-          <div id="inner_input">
-            <el-input placeholder="请输入最小值" v-model="formData.maf_min"></el-input>
-            <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-            <el-input placeholder="请输入最大值" v-model="formData.maf_max"></el-input>
+            <el-input placeholder="end" v-model="formData.end"></el-input>
           </div>
         </el-col>
       </el-form>
@@ -94,7 +59,7 @@
 
     <div class="buttom_box">
       <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
+      <el-table ref="multipleTable" :data="tableData" @cell-click="cellClick" tooltip-effect="dark" border=""
         @selection-change="handleSelectionChange" height="400px">
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID($event)">
@@ -105,19 +70,17 @@
             <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick($event)">{{ scope.row.vid }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="Type" width="140">
-        </el-table-column>
         <el-table-column prop="chr" label="Chr" width="140">
         </el-table-column>
-        <el-table-column prop="posi" label="Posi" width="140">
+        <el-table-column prop="start" label="Start" width="140">
         </el-table-column>
-        <el-table-column prop="maf" label="MAF" width="140">
+        <el-table-column prop="end" label="End" width="140">
         </el-table-column>
-        <el-table-column prop="genorate" label="GenoRate" width="140">
+        <el-table-column prop="ntag" label="NTag" width="140">
         </el-table-column>
-        <el-table-column prop="consequences" label="Consequence" width="140">
+        <el-table-column prop="kbspan" label="Span(kb)" width="140">
         </el-table-column>
-        <el-table-column prop="impacts" label="Impacts" width="140">
+        <el-table-column prop="tags" label="Tags" width="140" ref="tag" :formatter="stateFormat">
         </el-table-column>
       </el-table>
       <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
@@ -138,14 +101,12 @@ import {
   getSelectVariantClass,
   getSelectVersion,
 } from "@/api/variations/getSelectOptions";
-import { Search } from "@/api/variations/search";
+import { searchTagVariant } from "@/api/tagvariation/tagvariant";
 import { toDetailPage } from "@/api/variations/toDetail";
 import { Download } from "@/api/variations/Download"
 import service, { download } from '@/utils/request'
 import { tansParams, blobValidate, resetForm } from "@/utils/ruoyi";
 import { saveAs } from 'file-saver'
-import { list } from "@/api/monitor/logininfor";
-import json from "highlight.js/lib/languages/json";
 
 
 export default {
@@ -165,17 +126,12 @@ export default {
       multipleSelection: [],
       formData: {
         accession: "",
-        version: "",
-        alias: "",
+        version:"",
         description: "",
-        type: "",
+        population:"",
         chr: "",
-        consequences: "",
-        impacts: "",
-        maf_min: "",
-        maf_max: "",
-        posi_min: "",
-        posi_max: ""
+        start:"",
+        end:""
       },
       rules: {
         accession: [],
@@ -200,7 +156,9 @@ export default {
       list: [],
       queryList: {
         ids: ""
-      }
+      },
+      contentLength:25,
+      isShow:1
     }
   },
   computed: {},
@@ -218,10 +176,11 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(this.Request_beforeMounted())
+    this.$nextTick(this.handleIsShow())
   },
   created(){
-    Search(this.formData, this.queryParams).then(res => {
+    this.Request_beforeMounted()
+    searchTagVariant(this.formData, this.queryParams).then(res => {
         this.total = res.total
         this.tableData = res.rows
       })
@@ -243,7 +202,7 @@ export default {
     /** 查询岗位信息列表 */
     getList() {
       this.loading = true;
-      Search(this.formData, this.queryParams).then(res => {
+      searchTagVariant(this.formData, this.queryParams).then(res => {
         this.total = res.total
         this.tableData = res.rows
       })
@@ -278,7 +237,6 @@ export default {
           Message.error(errMsg);
         }
       }).catch(err => {
-        // this.Message
       })
     },
     handleReset() {
@@ -286,12 +244,36 @@ export default {
         this.formData[item] = ""
       })
     },
+    handleIsShow(){
+      const tag = this.$refs.tag
+      console.log(tag[0])
+    },
+    stateFormat(row,column,cellValue,index){
+      console.log(row)
+      console.log(column)
+      console.log(index)
+      console.log(cellValue.slice(-1,-4).style)
+      console.log(row.flag)
+        if(row.tags){
+          if (!cellValue) return '';
+          if (cellValue.length > this.contentLength) {   // 超过contentLength长度的内容隐藏
+            return cellValue.slice(0, this.contentLength) + '...';
+            // return ()=>{
+            //   cellValue.slice(0,this.contentLength)+"..."
+            //   cons
+            // }
+          }
+          return cellValue;
+        }else{
+          return cellValue;
+        }
+
+    },
     // 筛选页面
     filter_page() {
       console.log(this.formData)
-      // this.formData.maf_min = parseFloat(this.formData.maf_min)
-      // this.formData.maf_max = parseFloat(this.formData.maf_max)
-      Search(this.formData, this.queryParams).then(res => {
+      searchTagVariant(this.formData, this.queryParams).then(res => {
+        console.log(res)
         this.tableData = res.rows
         this.total = res.total
       }).catch(err => {
@@ -336,6 +318,9 @@ export default {
       }).catch(err => {
         console.log("VariantClass出现： " + err)
       })
+    },
+    cellClick(row,column,cell,event){
+      console.log(row,column,cell,event)
     }
   }
 }
@@ -360,22 +345,14 @@ export default {
 
      .el-col {
        margin: 0 auto;
-       // width: 300px;
        width: 80%;
-
-       // background-color: red;
-       // margin-top: 1px;
        #inner_input {
          display: flex;
 
          .el-input {
            flex: 1;
-           margin: 4px;
+          //  margin: 4px;
          }
-
-         // .el-input:first-child{
-         // margin-left: 5px;
-         // }
        }
      }
 
@@ -396,15 +373,10 @@ export default {
      }
 
      #inner_item {
-       // width: 200px;
-       // height: 220px;
-       // background-color: pink;
        border: 1px solid black;
        padding: 10px;
        margin-top: 8px;
-
        .el-form-item {
-         // margin-top: 5px;
          line-height: 60px;
        }
      }
