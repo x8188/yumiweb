@@ -118,17 +118,17 @@ data() {
 return {
   hide: false,
   filters: {
-    accession: '',
-    version: '',
+    accession: 'B73',
+    version: '4.43.0',
     description: '',
     // chrA
     chrA: '',
-    startA: '',
-    endA: '',
+    startA: '0',
+    endA: '9999999999',
     // chrB
     chrB: '',
-    startB: '',
-    endB: ''
+    startB: '0',
+    endB: '9999999999'
   },
   options: {
     reference: '',
@@ -185,19 +185,6 @@ checkData() {
 // 清空数据
 clearData() {
 this.filters= {
-    accession: '',
-    version: '',
-    description: '',
-    // chrA
-    chrA: '',
-    startA: '',
-    endA: '',
-    // chrB
-    chrB: '',
-    startB: '',
-    endB: ''
-  }
-  const query = {
     accession: 'B73',
     version: '4.43.0',
     description: '',
@@ -208,9 +195,9 @@ this.filters= {
     // chrB
     chrB: '',
     startB: '0',
-    endB: '999999999999999'
+    endB: '9999999999999999'
   }
-  this.$emit('getFilterData', query)
+  this.$emit('getFilterData', this.filters)
 }
 }
 }
