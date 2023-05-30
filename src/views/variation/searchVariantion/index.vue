@@ -1,95 +1,102 @@
 <template>
   <div class="filter_page">
-    <el-row :gutter="12" class="filter_box">
-      <el-form ref="elForm" :model="formData" :rules="rules" size="medium">
-        <el-col id="col-one">
-          <span @click="filter_page()" id="span-second">Filter</span>
-          <span @click="resetForm">Reset</span>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Reference" prop="accession">
-            <el-select v-model="formData.accession" placeholder="请选择Reference" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in accessionOptions" :key="index" :value="item"
-                :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Version" prop="version">
-            <el-select v-model="formData.version" placeholder="请选择Version" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in versionOptions" :key="index" :value="item"
-                :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Population" prop="alias">
-            <el-select v-model="formData.alias" placeholder="请选择Population" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in aliasOptions" :key="index" :value="item"
-                :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Analysis" prop="description">
-            <el-select v-model="formData.description" placeholder="请选择Analysis" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in descriptionOptions" :key="index" :value="item"
-                :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Variant Class" prop="type">
-            <el-select v-model="formData.type" placeholder="请选择Variant Class" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in typeOptions" :key="index" :value="item"
-                :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Region" prop="chr">
-            <el-select v-model="formData.chr" placeholder="请选择Region" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
-                :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <span style="color:#606266;font-size: 14px;font-weight: 700;">Posi</span>
-          <div id="inner_input">
-            <el-input placeholder="请输入最小值" v-model="formData.posi_min"></el-input>
-            <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-            <el-input placeholder="请输入最大值" v-model="formData.posi_max"></el-input>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <span style="color:#606266;font-size: 14px;font-weight: 700;">Annotation</span>
-          <div id="inner_item">
-            <el-form-item label="Consequance" prop="consequences">
-              <el-select v-model="formData.consequences" placeholder="请选择Consqquance" clearable
-                :style="{ width: '100%' }">
-                <el-option v-for="(item, index) in consequenceOptions" :key="index" :value="item"></el-option>
+    <div :class="{ fitershide: filterHide }" class="left-box">
+      <div @click="filterHide = !filterHide" class="fiterShow">
+          <i v-if="filterHide" class="el-icon-s-fold"></i>
+          <i v-else class="el-icon-s-unfold"></i>
+        </div>
+      <el-row :gutter="12" class="filter_box" >
+        <el-form v-show="filterHide" ref="elForm" :model="formData" :rules="rules" size="medium">
+          <el-col id="col-one">
+            <span @click="filter_page()" id="span-second">Filter</span>
+            <span @click="resetForm">Reset</span>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Reference" prop="accession">
+              <el-select v-model="formData.accession" placeholder="请选择Reference" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in accessionOptions" :key="index" :value="item"
+                  :disabled="item.disabled"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="Impacts" prop="impacts">
-              <el-select v-model="formData.impacts" placeholder="请选择Region" clearable :style="{ width: '100%' }">
-                <el-option v-for="(item, index) in impactsOptions" :key="index" :value="item"></el-option>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Version" prop="version">
+              <el-select v-model="formData.version" placeholder="请选择Version" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in versionOptions" :key="index" :value="item"
+                  :disabled="item.disabled"></el-option>
               </el-select>
-
             </el-form-item>
-          </div>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Population" prop="alias">
+              <el-select v-model="formData.alias" placeholder="请选择Population" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in aliasOptions" :key="index" :value="item"
+                  :disabled="item.disabled"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Analysis" prop="description">
+              <el-select v-model="formData.description" placeholder="请选择Analysis" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in descriptionOptions" :key="index" :value="item"
+                  :disabled="item.disabled"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Variant Class" prop="type">
+              <el-select v-model="formData.type" placeholder="请选择Variant Class" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in typeOptions" :key="index" :value="item"
+                  :disabled="item.disabled"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Region" prop="chr">
+              <el-select v-model="formData.chr" placeholder="请选择Region" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
+                  :disabled="item.disabled"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <span style="color:#606266;font-size: 14px;font-weight: 700;">Posi</span>
+            <div id="inner_input">
+              <el-input placeholder="请输入最小值" v-model="formData.posi_min"></el-input>
+              <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
+              <el-input placeholder="请输入最大值" v-model="formData.posi_max"></el-input>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <span style="color:#606266;font-size: 14px;font-weight: 700;">Annotation</span>
+            <div id="inner_item">
+              <el-form-item label="Consequance" prop="consequences">
+                <el-select v-model="formData.consequences" placeholder="请选择Consqquance" clearable
+                  :style="{ width: '100%' }">
+                  <el-option v-for="(item, index) in consequenceOptions" :key="index" :value="item"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="Impacts" prop="impacts">
+                <el-select v-model="formData.impacts" placeholder="请选择Region" clearable :style="{ width: '100%' }">
+                  <el-option v-for="(item, index) in impactsOptions" :key="index" :value="item"></el-option>
+                </el-select>
 
-        </el-col>
-        <el-col :span="6">
-          <span style="color:#606266;font-size: 14px;font-weight: 700;">MAF</span>
-          <div id="inner_input">
-            <el-input placeholder="请输入最小值" v-model="formData.maf_min"></el-input>
-            <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-            <el-input placeholder="请输入最大值" v-model="formData.maf_max"></el-input>
-          </div>
-        </el-col>
-      </el-form>
-    </el-row>
+              </el-form-item>
+            </div>
+
+          </el-col>
+          <el-col :span="6">
+            <span style="color:#606266;font-size: 14px;font-weight: 700;">MAF</span>
+            <div id="inner_input">
+              <el-input placeholder="请输入最小值" v-model="formData.maf_min"></el-input>
+              <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
+              <el-input placeholder="请输入最大值" v-model="formData.maf_max"></el-input>
+            </div>
+          </el-col>
+        </el-form>
+      </el-row>
+    </div>
+
 
 
     <div class="buttom_box">
@@ -198,6 +205,7 @@ export default {
       field104Options: [],
       field107Options: [],
       list: [],
+      filterHide: true,
       queryList: {
         ids: ""
       }
@@ -212,6 +220,7 @@ export default {
       else {
         getSelectVersion(New).then(res => {
           this.versionOptions = res.data
+          this.formData.version = this.versionOptions[0]
         })
       }
 
@@ -220,11 +229,25 @@ export default {
   mounted() {
     this.$nextTick(this.Request_beforeMounted())
   },
-  created(){
-    Search(this.formData, this.queryParams).then(res => {
-        this.total = res.total
-        this.tableData = res.rows
-      })
+  created() {
+    let formm = {
+        accession: "B73",
+        version: "4.43.0",
+        alias: "AMP",
+        description: "",
+        type: "DEL",
+        chr: "chr1",
+        consequences: "intergenic_variant",
+        impacts: "MODIFIER",
+        maf_min: "0",
+        maf_max: "0.9",
+        posi_min: "50000",
+        posi_max: "800000000"
+      }
+    Search(formm, this.queryParams).then(res => {
+      this.total = res.total
+      this.tableData = res.rows
+    })
   },
   methods: {
     //跳转到详情页面
@@ -278,7 +301,6 @@ export default {
           Message.error(errMsg);
         }
       }).catch(err => {
-        // this.Message
       })
     },
     handleReset() {
@@ -289,8 +311,6 @@ export default {
     // 筛选页面
     filter_page() {
       console.log(this.formData)
-      // this.formData.maf_min = parseFloat(this.formData.maf_min)
-      // this.formData.maf_max = parseFloat(this.formData.maf_max)
       Search(this.formData, this.queryParams).then(res => {
         this.tableData = res.rows
         this.total = res.total
@@ -303,6 +323,9 @@ export default {
     Request_beforeMounted() {
       getSelectReference().then(res => {
         this.accessionOptions = res.data
+        console.log(res)
+        this.formData.accession = this.accessionOptions[0]
+
       }).catch(err => {
         console.log("Reference出现： " + err)
       })
@@ -344,15 +367,18 @@ export default {
    padding-right: 20px;
    padding-left: 20px;
    display: flex;
-
  }
-
- .filter_box {
-   width: 20%;
-   height: 100vh;
-   border-right: 1px solid black;
+.left-box{
+  // widow;
+  // background-color: pink;
+  .filter_box {
+  //  width: 20%;
+  //  height: 100vh;
+  //  border-right: 1px solid black;
 
    .el-form {
+      width: 300px;
+
      margin-top: 10px;
      display: flex;
      flex-direction: column;
@@ -360,11 +386,8 @@ export default {
 
      .el-col {
        margin: 0 auto;
-       // width: 300px;
        width: 80%;
 
-       // background-color: red;
-       // margin-top: 1px;
        #inner_input {
          display: flex;
 
@@ -372,10 +395,6 @@ export default {
            flex: 1;
            margin: 4px;
          }
-
-         // .el-input:first-child{
-         // margin-left: 5px;
-         // }
        }
      }
 
@@ -396,20 +415,28 @@ export default {
      }
 
      #inner_item {
-       // width: 200px;
-       // height: 220px;
-       // background-color: pink;
        border: 1px solid black;
        padding: 10px;
        margin-top: 8px;
 
        .el-form-item {
-         // margin-top: 5px;
          line-height: 60px;
        }
      }
 
    }
+ }
+}
+ .filterDiv {
+   margin-right: 10px;
+ }
+
+ .fiterShow i {
+   font-size: 30px;
+   color: #489e38;
+   cursor: pointer;
+   margin: 10px 10px 10px 5px;
+   // margin: 10px;
  }
 
  .buttom_box {
@@ -432,6 +459,5 @@ export default {
    .pagination-container {
      margin-left: 15px;
    }
- }
-</style>
+ }</style>
   

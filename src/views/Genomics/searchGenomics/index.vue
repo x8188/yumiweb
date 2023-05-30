@@ -1,7 +1,12 @@
 <template>
   <div class="filter_page">
+    <div :class="{ fitershide: filterHide }" class="left-box">
+    <div @click="filterHide = !filterHide" class="fiterShow">
+          <i v-if="filterHide" class="el-icon-s-fold"></i>
+          <i v-else class="el-icon-s-unfold"></i>
+    </div>
     <el-row :gutter="12" class="filter_box">
-      <el-form ref="elForm" :model="formData" :rules="rules" size="medium">
+      <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium">
         <el-col id="col-one">
           <span @click="filter_page()" id="span-second">Filter</span>
           <span @click="resetForm">Reset</span>
@@ -56,6 +61,7 @@
         </el-col>
       </el-form>
     </el-row>
+    </div>
     <div class="buttom_box">
       <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
       <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
@@ -137,6 +143,7 @@ export default {
       GermplasmOptions: [],
       VersionOptions: [],
       ChrOptions: [],
+      filterHide:true,
       TypeOptions: [],
     }
   },
@@ -150,6 +157,7 @@ export default {
         getSelectVersion(New).then(res => {
           console.log(res)
           this.VersionOptions = res.rows
+          this.formData.version = this.VersionOptions[1]
           console.log(this.VersionOptions)
         }).catch(err => {
           console.log(err)
@@ -244,6 +252,7 @@ export default {
       getSelectGermplasm().then(res => {
         console.log(res)
         this.GermplasmOptions = res.rows
+        this.formData.accession = this.GermplasmOptions[0]
       }).catch(err => {
         console.log("Germplasm出现： " + err)
       })
@@ -268,13 +277,15 @@ export default {
   padding-left: 20px;
   display: flex;
 }
+.left-box{
 
 .filter_box {
-  width: 20%;
-  height: 100vh;
-  border-right: 1px solid black;
+  // width: 20%;
+  // height: 100vh;
+  // border-right: 1px solid black;
 
   .el-form {
+    width: 300px;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
@@ -324,7 +335,19 @@ export default {
     }
   }
 }
+}
 
+.filterDiv {
+   margin-right: 10px;
+ }
+
+ .fiterShow i {
+   font-size: 30px;
+   color: #489e38;
+   cursor: pointer;
+   margin: 10px 10px 10px 5px;
+   // margin: 10px;
+ }
 .buttom_box {
   flex: 1;
   overflow: hidden;
