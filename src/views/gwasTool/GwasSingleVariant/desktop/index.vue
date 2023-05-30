@@ -1,10 +1,10 @@
 <template>
   <div id="GwasSingleVariantPage">
-    <div class="q-mt-lg" style="margin-bottom: 100px;">
-      <div >
-        <p>{{ 'message' }}</p>
+    <div class="q-mt-lg" style="margin-bottom: 100px">
+      <div>
+        <p>{{ "message" }}</p>
         <div class="row select-line-height search-filter">
-          <p class="q-mr-sm q-mb-sm">{{ 'search'}}</p>
+          <p class="q-mr-sm q-mb-sm">{{ "search" }}</p>
           <el-select
             v-model="variant"
             bg-color="white"
@@ -18,22 +18,24 @@
             :options="variantOpts"
             options-dense
             outlined
-            style="width: 320px;"
+            style="width: 320px"
             use-input
             @filter="variantFilterFn"
             @input="selectVariant"
           >
-            <template #no-option>
-              <q-item>
-                <q-item-section class="text-grey">{{ 'noResults'}}</q-item-section>
-              </q-item>
-            </template>
+            <el-option
+              v-for="(item, index) in variantOpts"
+              :key="index"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
           </el-select>
         </div>
       </div>
       <div class="q-mt-md">
-        <div v-if="isIE" class="text-negative">{{ 'toGoogle' }}</div>
-        <div v-if="isNoResult" class="text-bold">{{ 'noPhewas' }}</div>
+        <div v-if="isIE" class="text-negative">{{ "toGoogle" }}</div>
+        <div v-if="isNoResult" class="text-bold">{{ "noPhewas" }}</div>
         <div id="plot" />
       </div>
     </div>

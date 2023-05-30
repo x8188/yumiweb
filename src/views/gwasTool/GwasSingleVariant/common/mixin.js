@@ -14453,6 +14453,7 @@ export default {
       "ZMPV01aSNPC01P129843957",
       "ZMPV01aSNPC01P129843142"
     ]
+    this.variantOpts = temdata
     this.variant = temdata[0]
     // 此处延迟执行的原因同上，此方法中需要使用locuszoom组件库。
     setTimeout(async () => {
