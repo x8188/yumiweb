@@ -47,12 +47,18 @@
           <el-table-column
             label="QTL ID"
             align="center"
-            prop="associationQtlId"
+            :prop="filterInfo.hasOwnProperty('linkagemap')?'linkageMarkerId':'associationMarkerId'"
           />
           <el-table-column label="REF" align="center" prop="accession" />
           <el-table-column label="Version" align="center" prop="version" />
-          <el-table-column label="omics" align="center" prop="omics" />
-          <el-table-column label="xot_uid" align="center" prop="xot_uid" />
+          <el-table-column label="Trait Category" align="center" prop="omics" />
+          <el-table-column label="Trait ID" align="center" prop="xot_uid" />
+          <el-table-column label="Variant Type" align="center" prop="type" />
+          <el-table-column label="Variant ID" align="center" prop="vid" width="300"/>
+          <el-table-column v-if="!filterInfo.hasOwnProperty('linkagemap')" label="Leading -log10(P)" align="center" prop="log" />
+          <el-table-column v-if="!filterInfo.hasOwnProperty('linkagemap')" label="Effect Size" align="center" prop="effectiveSize"/>
+          <el-table-column v-if="!filterInfo.hasOwnProperty('linkagemap')" label="PIP" align="center" prop="pip"/>
+          <el-table-column v-if="filterInfo.hasOwnProperty('linkagemap')" label="Linkage Map" align="center" prop="linkageMap" />
         </el-table>
         <el-pagination
           background

@@ -1,7 +1,7 @@
 <template>
   <div class="geno-viewer-container">
     <div class="geno-form">
-      <el-card  v-loading="loading">
+      <el-card v-loading="loading">
         <Title>
           {{ viewerTitle }}
         </Title>
@@ -12,24 +12,26 @@
 
         <div class="form-container">
           <div class="gene-select">
-            <div class="">
-              <span>QTL Type</span>
-              <el-radio
-                v-model="qtlType"
-                label="association"
-                @input="changeType"
-                >association</el-radio
-              >
-              <el-radio v-model="qtlType" label="linkage" @input="changeType"
-                >linkage</el-radio
-              >
+            <span>QTL Type</span>
+            <div class="oneMarginLeft">
+              <div>
+                <el-radio
+                  v-model="qtlType"
+                  label="association"
+                  @input="changeType"
+                  >Association Mapping</el-radio
+                >
+                <el-radio v-model="qtlType" label="linkage" @input="changeType"
+                  >Linkage Mapping</el-radio
+                >
+              </div>
             </div>
           </div>
           <el-form>
             <div class="gene-select">
               <div class="reference-item select-item">
                 <span>Reference</span>
-                <el-form-item>
+                <el-form-item class="oneMarginLeft" style="margin-top: 12px">
                   <el-select
                     v-model="formData.reference"
                     placeholder=""
@@ -48,7 +50,13 @@
               </div>
               <div class="version-item select-item">
                 <span>Version</span>
-                <el-form-item>
+                <el-form-item
+                  style="
+                    position: absolute;
+                    margin-left: 100px;
+                    margin-top: 12px;
+                  "
+                >
                   <el-select
                     v-model="formData.version"
                     :disabled="formData.reference == undefined"
@@ -67,53 +75,59 @@
             </div>
             <div class="germplasm-select">
               <span>Trait Category</span>
-              <el-select
-                v-model="formData.TraitCategory"
-                placeholder=""
-                clearable
-                filterable
-              >
-                <el-option
-                  v-for="(item, i) in options.TraitCategory"
-                  :key="i"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
+              <div class="oneMarginLeft">
+                <el-select
+                  v-model="formData.TraitCategory"
+                  placeholder=""
+                  clearable
+                  filterable
+                >
+                  <el-option
+                    v-for="(item, i) in options.TraitCategory"
+                    :key="i"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </div>
             </div>
             <div class="germplasm-select">
               <span>Trait ID</span>
-              <el-select
-                v-model="formData.TraitId"
-                filterable
-                remote
-                :remote-method="remoteMethod"
-                @blur="TraitIdBlur"
-                clearable
-              >
-                <el-option
-                  v-for="(item, i) in options.TraitId"
-                  :key="i"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
+              <div class="oneMarginLeft">
+                <el-select
+                  v-model="formData.TraitId"
+                  filterable
+                  remote
+                  :remote-method="remoteMethod"
+                  @blur="TraitIdBlur"
+                  clearable
+                >
+                  <el-option
+                    v-for="(item, i) in options.TraitId"
+                    :key="i"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </div>
             </div>
             <div class="germplasm-select" v-show="qtlType == 'linkage'">
               <span>Link Map</span>
-              <el-select
-                v-model="formData.LinkMap"
-                placeholder=""
-                clearable
-                filterable
-              >
-                <el-option
-                  v-for="(item, i) in options.LinkMap"
-                  :key="i"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
+              <div class="oneMarginLeft">
+                <el-select
+                  v-model="formData.LinkMap"
+                  placeholder=""
+                  clearable
+                  filterable
+                >
+                  <el-option
+                    v-for="(item, i) in options.LinkMap"
+                    :key="i"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </div>
             </div>
             <div class="region-select">
               <span>Region</span>
@@ -225,7 +239,7 @@ import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 // import Title from "@/components/CommonComponents/Title.vue";
 export default {
   components: { SvgIcon },
-  props: ["page","loading"],
+  props: ["page", "loading"],
   data() {
     return {
       qtlType: "association",
@@ -262,11 +276,14 @@ export default {
       // traitid: "null",
     };
   },
-  created() {
-    this.getdata();
+  async created() {
+    await this.getdata();
+    this.formData.reference = this.options.reference[0].value;
+    await this.getVersionOp();
   },
   methods: {
     async getdata() {
+      this.$emit("loadingUpdata", true);
       if (this.qtlType == "association") {
         let res1 = await this.$API.Qtl.reqselectaccession();
         if (res1.code == 200) {
@@ -321,6 +338,7 @@ export default {
           }));
         }
       }
+      this.$emit("loadingUpdata", false);
     },
     async getVersionOp() {
       if (this.qtlType == "association") {
@@ -344,6 +362,7 @@ export default {
           }));
         }
       }
+      this.formData.version = this.options.version[0].value;
     },
     async TraitIdBlur() {
       if (this.qtlType == "association") {
@@ -408,7 +427,7 @@ export default {
       this.getQtl();
     },
     async getQtl() {
-      this.$emit("loadingUpdata",true);
+      this.$emit("loadingUpdata", true);
       if (this.qtlType == "association") {
         let data = {
           accession: this.formData.reference,
@@ -455,9 +474,9 @@ export default {
           this.$emit("showResult", res.rows, data);
         }
       }
-      this.$emit("loadingUpdata",false);
+      this.$emit("loadingUpdata", false);
     },
-    changeType() {
+    async changeType() {
       this.getdata();
 
       this.formData = {
@@ -476,8 +495,11 @@ export default {
         lodStart: 0.01,
         lodEnd: 1000.88,
       };
+      await this.getdata();
+      this.formData.reference = this.options.reference[0].value;
+      await this.getVersionOp();
     },
-    reset() {
+    async reset() {
       this.formData = {
         reference: undefined,
         version: "",
@@ -494,6 +516,9 @@ export default {
         lodStart: 0.01,
         lodEnd: 1000.88,
       };
+      await this.getdata();
+      this.formData.reference = this.options.reference[0].value;
+      await this.getVersionOp();
     },
     // dataFilter(val) {
     //     this.formData.reference = val;
@@ -535,28 +560,31 @@ $deepMainColor: #19692c;
   margin: 20px 0;
   background: #f1f8f8;
   padding: 20px;
+  padding-top: 0px;
 }
 .gene-select {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  // padding-bottom: 10px;
+  // margin-bottom: 20px;
+  line-height: 60px;
   border-bottom: 1px solid #e6ecec;
   .select-item {
     display: flex;
     // flex-direction: column;
     flex-grow: 1;
-    margin-right: 20px;
-    span {
-      margin-top: 10px;
-      padding-right: 10px;
-    }
+    // margin-right: 20px;
+    // span {
+    //   margin-top: 10px;
+    //   padding-right: 10px;
+    // }
   }
 }
 .germplasm-select {
   display: flex;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  // padding-bottom: 20px;
+  // margin-bottom: 20px;
+  line-height: 60px;
   border-bottom: 1px solid #e6ecec;
   span {
     margin-right: 20px;
@@ -590,8 +618,10 @@ $deepMainColor: #19692c;
 .region-select {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  // padding-bottom: 20px;
+  // margin-bottom: 20px;
+  padding-top: 20px;
+  min-height: 60px;
   border-bottom: 1px solid #e6ecec;
   span {
     margin-right: 20px;
@@ -632,5 +662,10 @@ $deepMainColor: #19692c;
 .submit-buttons {
   display: flex;
   justify-content: center;
+}
+.oneMarginLeft {
+  display: inline;
+  position: absolute;
+  left: 200px;
 }
 </style>

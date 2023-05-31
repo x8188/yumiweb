@@ -47,12 +47,15 @@
           <el-table-column
             label="QTL ID"
             align="center"
-            prop="associationQtlId"
+            :prop="filterInfo.hasOwnProperty('linkagemap')?'linkageQtlId':'associationQtlId'"
           />
           <el-table-column label="REF" align="center" prop="accession" />
           <el-table-column label="Version" align="center" prop="version" />
-          <el-table-column label="omics" align="center" prop="omics" />
-          <el-table-column label="xot_uid" align="center" prop="xot_uid" />
+          <el-table-column label="Trait Category" align="center" prop="omics" />
+          <el-table-column label="Trait ID" align="center" prop="xot_uid" />
+          <el-table-column v-if="!filterInfo.hasOwnProperty('linkagemap')" label="Leading -log10(P)" align="center" prop="log" />
+          <el-table-column v-if="filterInfo.hasOwnProperty('linkagemap')" label="LOD" align="center" prop="lod" />
+          <el-table-column v-if="filterInfo.hasOwnProperty('linkagemap')" label="Linkage Map" align="center" prop="linkagemap" />
         </el-table>
         <el-pagination
           background
