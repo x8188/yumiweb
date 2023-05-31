@@ -8,9 +8,10 @@ export function dropDownAnalysis() {
 }
 
 // 下拉框选择version
-export function dropDownVersion() {
+export function dropDownVersion(params) {
   return request({
-    url: '/chromatin_interaction/selectversion?accession=B73',
+    url: '/chromatin_interaction/selectversion',
+    params
   })
 }
 

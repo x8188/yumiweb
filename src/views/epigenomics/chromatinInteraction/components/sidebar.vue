@@ -10,7 +10,7 @@
           <div  style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Reference</span>
-            <el-select filterable index="0" v-model="filters.accession" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select filterable index="0" v-model="filters.accession" placeholder="" style="width: 90%;margin-top: 10px;" @change="changeVersion" >
               <el-option
               v-for="(item,i) in options.reference"
               :key="i"
@@ -114,6 +114,14 @@ components: { SvgIcon },
 created() {
   this.getDownAll()
 },
+watch: {
+  // async 'filters.accession'(newVal, oldVal) {
+  //   // 在accession属性发生变化时执行的逻辑
+  //   // console.log('accession 发生了变化', newVal, oldVal);
+  //   await this.changeVersion(newVal)
+  //   // this.$set(this.filters, 'version', this.options.version[0]);
+  // }
+},
 data() {
 return {
   hide: false,
@@ -131,9 +139,9 @@ return {
     endB: '9999999999'
   },
   options: {
-    reference: '',
-    version: '',
-    analysis: '',
+    reference: [],
+    version: [],
+    analysis: [],
     // chrA
     chrA: '',
     // chrB
@@ -142,24 +150,27 @@ return {
 }
 },
 methods: {
-changeShow() {
-this.hide = !this.hide
+  changeShow() {
+  this.hide = !this.hide
 },
 // 获取下拉框数据
 async getDownAll() {
-    const version = await dropDownVersion()
     const accession = await dropDownAccession()
     const analysis = await dropDownAnalysis()
     const chrA = await queryChrA()
     const chrB = await queryChrB()
 
     this.options.reference = accession.data
-    this.options.version = version.data
     this.options.analysis = analysis.data
     this.options.chrA = chrA.data
     this.options.chrB = chrB.data
   },
-
+async changeVersion(newVal) {
+  this.filters.accession = newVal
+  const version = await dropDownVersion({'accession': this.filters.accession})
+  this.options.version = version.data
+  this.filters.version = this.options.version[0]
+},
 // 传信息
 checkData() {
   if(this.filters.accession === '') {
