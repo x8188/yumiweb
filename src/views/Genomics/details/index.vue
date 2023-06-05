@@ -33,10 +33,18 @@
                             </el-table-column>
                             <el-table-column label="Ontology" prop="ontology">
                             </el-table-column>
-
-                            <el-table-column label="Sequences" prop="sequences">
-                            </el-table-column>
                             <el-table-column label="Term" prop="term">
+                            </el-table-column>
+                            <el-table-column label="Ontology" prop="ontology">
+                            </el-table-column>
+                        </el-table>
+                    </el-card>
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <Title id="Sequence">Sequence</Title>
+                        </div>
+                        <el-table style="width: 100%" :data="SeqInfo" border>
+                            <el-table-column label="Sequence" prop="sequence">
                             </el-table-column>
                         </el-table>
                     </el-card>
@@ -53,12 +61,12 @@ export default {
     data() {
         return {
             name: 'details',
-            Genomicsinfo: [],
+            Genomicsinfo: null, 
             SummaryInfo: [],
             AnnotationInfo: [],
             RelationInfo: [],
             SeqInfo: [],
-            titles: ['Summary', 'Function annotation'],
+            titles: ['Summary', 'Function annotation',"Sequence"],
             show_key: [],
             show_value: [],
 
@@ -79,7 +87,13 @@ export default {
             console.log(obj)
             delete obj.functionAnnotations
             console.log(obj)
-            for (let i = 0; i < 7; i++) {
+            let seqobj = {
+                "sequence":obj.sequences
+            }
+            this.SeqInfo.push(seqobj)
+            console.log(this.SeqInfo)
+            // this.SeqInfo = obj
+            for (let i = 0; i < 6; i++) {
                 let item = Object.keys(obj)[i]
                 let oo = {}
                 oo.key = item
@@ -91,6 +105,7 @@ export default {
             console.log(fucAnn)
             this.AnnotationInfo = fucAnn
             console.log(this.AnnotationInfo)
+             
         }
     },
     created() {

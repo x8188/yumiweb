@@ -30,26 +30,38 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="Population" prop="alias">
-                            <el-select v-model="formData.alias" placeholder="请选择Population" clearable
+                        <span style="color:#606266;font-size: 14px;font-weight: 700;">Indicator</span>
+                        <!-- <div class="indicator-box"> -->
+                        <div class="radio-box">
+                            <el-radio v-model="formData.radio" label="Fst">Fst</el-radio>
+                            <el-radio v-model="formData.radio" label="XPCLR">XPCLR</el-radio>
+                        </div>
+                        
+                        <!-- </div> -->
+                        
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="Selection Type" prop="description">
+                            <el-select v-model="formData.SelectType" placeholder="请选择Selection Type" clearable
                                 :style="{ width: '100%' }">
-                                <el-option v-for="(item, index) in aliasOptions" :key="index" :value="item"
+                                <el-option v-for="(item, index) in SelectionTypeOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="Analysis" prop="description">
-                            <el-select v-model="formData.description" placeholder="请选择Analysis" clearable
+                        <el-form-item label="Compare Population" prop="description">
+                            <el-select v-model="formData.PopCom" placeholder="请选择Compare Population" clearable
                                 :style="{ width: '100%' }">
-                                <el-option v-for="(item, index) in descriptionOptions" :key="index" :value="item"
+                                <el-option v-for="(item, index) in PopOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="Chr" prop="chr">
-                            <el-select v-model="formData.chr" placeholder="请选择Region" clearable :style="{ width: '100%' }">
+                        <el-form-item label="CHR" prop="description">
+                            <el-select v-model="formData.chr" placeholder="请选择CHR" clearable
+                                :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
                             </el-select>
@@ -68,29 +80,30 @@
 
         <div class="buttom_box">
             <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-            <el-table ref="multipleTable" :data="tableData" @cell-click="cellClick" tooltip-effect="dark" border=""
+            <el-table ref="multipleTable" :data="tableData"  tooltip-effect="dark" border=""
                 @selection-change="handleSelectionChange" height="400px">
                 <!-- 展示的条目 -->
                 <el-table-column type="selection" width="55" @click="getVID($event)">
                 </el-table-column>
 
-                <el-table-column label="Variant ID" show-overflow-tooltip>
+                <el-table-column label="REF/Version" show-overflow-tooltip>
                     <template slot-scope="scope">
-                        <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick($event)">{{ scope.row.vid
-                        }}</span>
+                        <span style="cursor:pointer;" >{{ scope.row.ref}}/{{ scope.row.version }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="chr" label="Chr" width="140">
+                <el-table-column prop="analysis_name" label="Analysis" >
                 </el-table-column>
-                <el-table-column prop="start" label="Start" width="140">
+                <el-table-column prop="select" label="Selection Type" >
                 </el-table-column>
-                <el-table-column prop="end" label="End" width="140">
+                <el-table-column prop="compare_pop" label="Pop Compared" >
                 </el-table-column>
-                <el-table-column prop="ntag" label="NTag" width="140">
+                <el-table-column prop="chro" label="Chr" >
                 </el-table-column>
-                <el-table-column prop="kbspan" label="Span(kb)" width="140">
+                <el-table-column prop="start" label="Start" >
                 </el-table-column>
-                <el-table-column prop="tags" label="Tags" width="140" ref="tag" :formatter="stateFormat">
+                <el-table-column prop="end" label="End">
+                </el-table-column>
+                <el-table-column prop="indicator" label="Fst">
                 </el-table-column>
             </el-table>
             <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum"
@@ -102,19 +115,15 @@
 </template>
 <script>
 import {
-    getSelectAnalysis,
-    getSelectConsequences,
-    getSelectImpacts,
-    getSelectPopulation,
+    getSelectChr,
+    getSelectIndicator,
+    getSelectPopCompared,
     getSelectReference,
-    getSelectRegion,
-    getSelectVariantClass,
+    getSelectType,
     getSelectVersion,
-} from "@/api/variations/getSelectOptions";
-import { searchTagVariant } from "@/api/tagvariation/tagvariant";
-import { toDetailPage } from "@/api/variations/toDetail";
-import { Download } from "@/api/tagvariation/download"
-import service, { download } from '@/utils/request'
+} from "@/api/evlution/getSelectOptions";
+import { Download } from "@/api/evlution/download";
+import { Search } from "@/api/evlution/search";
 import { tansParams, blobValidate, resetForm } from "@/utils/ruoyi";
 import { saveAs } from 'file-saver'
 export default {
@@ -134,36 +143,28 @@ export default {
             formData: {
                 accession: "",
                 version: "",
-                description: "",
-                population: "",
-                chr: "",
+                radio: "",
+                SelectType: "",
+                PopCom: "",
                 start: "",
-                end: ""
+                end: "",
+                chr:""
             },
             rules: {
                 accession: [],
                 version: [],
-                alias: [],
-                description: [],
-                type: [],
+                radio: [],
+                SelectType: [],
+                PopCom: [],
                 chr: [],
-                consequence: [],
-                impacts: [],
             },
             accessionOptions: [],
             versionOptions: [],
-            aliasOptions: [],
-            descriptionOptions: [],
+            SelectionTypeOptions: [],
+            PopOptions: [],
             typeOptions: [],
             chrOptions: [],
-            consequenceOptions: [],
-            impactsOptions: [],
-            field104Options: [],
-            field107Options: [],
             list: [],
-            queryList: {
-                ids: ""
-            },
             contentLength: 25,
             isShow: 1,
             filterHide: true
@@ -180,33 +181,36 @@ export default {
                     this.versionOptions = res.data
                 })
             }
+        },
+        "formData.radio":function(New,Old) {
+            if(New == null || New == "")
+            {
+
+            }
+            else
+            {
+                getSelectType(New).then(res=>{
+                    console.log(res)
+                    this.SelectionTypeOptions = res.data
+                })
+                getSelectPopCompared(New).then(res=>{
+                    console.log(res)
+                    this.PopOptions = res.data
+                })
+            }
         }
     },
     mounted() {
-        this.$nextTick(this.handleIsShow())
     },
     created() {
         this.Request_beforeMounted()
-        searchTagVariant(this.formData, this.queryParams).then(res => {
+        Search(this.formData, this.queryParams).then(res => {
             console.log(res.rows)
             this.total = res.total
             this.tableData = res.rows
         })
     },
     methods: {
-        //跳转到详情页面
-        handleClick(event) {
-            const VID = event.target.innerHTML
-            console.log(VID)
-            toDetailPage(VID).then(res => {
-                const data = res;
-                this.$router.push({
-                    path: '/web/variation/variation/detail',
-                    query: { data }
-                })
-            }).catch(err => {
-            })
-        },
         /** 查询岗位信息列表 */
         getList() {
             this.loading = true;
@@ -218,10 +222,11 @@ export default {
         handleSelectionChange(val) {
             console.log(val)
 
-            this.Download_Vid = []
-            val.forEach(item => {
-                this.Download_Vid.push(item.tagvariantId)
-            });
+            this.Download_Vid =val
+            // this.Download_Vid.push
+            // val.forEach(item => {
+            //     this.Download_Vid.push(item.tagvariantId)
+            // });
         },
         resetForm() {
             this.$refs['elForm'].resetFields()
@@ -229,12 +234,12 @@ export default {
         /** 导出操作按钮 */
         handleExport() {
             //后端需要的参数和若依官方不一致 两种下载 注释的为官方的下载 参数格式和若依官方不一致用不了
-            //  download("variations/variant/download",{...this.queryList},`Importfeature_${new Date().getTime()}.xlsx`) 
+            //  this.download("/variations/evolution/download",{...this.Download_Vid},`ImportEvolution_${new Date().getTime()}.xlsx`) 
             //自定义导出
             this.list = this.Download_Vid
             let formData = new FormData()
             formData.append("list", this.list)
-            Download(formData).then(res => {
+            Download(this.list).then(res => {
                 const isLogin = blobValidate(res);
                 if (isLogin) {
                     const blob = new Blob([res])
@@ -246,41 +251,19 @@ export default {
                     Message.error(errMsg);
                 }
             }).catch(err => {
+                console.log(err)
             })
+            console.log(111)
         },
         handleReset() {
             Object.keys(this.formData).forEach(item => {
                 this.formData[item] = ""
             })
         },
-        handleIsShow() {
-            const tag = this.$refs.tag
-            console.log(tag[0])
-        },
-        stateFormat(row, column, cellValue, index) {
-            // console.log(row)
-            // console.log(column)
-            // console.log(index)
-            // console.log(cellValue.slice(-1, -4).style)
-            // console.log(row.flag)
-            if (row.tags) {
-                if (!cellValue) return '';
-                if (cellValue.length > this.contentLength) {   // 超过contentLength长度的内容隐藏
-                    return cellValue.slice(0, this.contentLength) + '...';
-                    // return ()=>{
-                    //   cellValue.slice(0,this.contentLength)+"..."
-                    //   cons
-                    // }
-                }
-                return cellValue;
-            } else {
-                return cellValue;
-            }
-        },
         // 筛选页面
         filter_page() {
             console.log(this.formData)
-            searchTagVariant(this.formData, this.queryParams).then(res => {
+            Search(this.formData, this.queryParams).then(res => {
                 console.log(res)
                 this.tableData = res.rows
                 this.total = res.total
@@ -291,43 +274,37 @@ export default {
         //页面加载前请求
         Request_beforeMounted() {
             getSelectReference().then(res => {
+                console.log(res)
                 this.accessionOptions = res.data
             }).catch(err => {
-                console.log("Reference出现： " + err)
+                console.log(err)
             })
-            getSelectPopulation().then(res => {
-                this.aliasOptions = res.data
-            }).catch(err => {
-                console.log("Population出现： " + err)
-            })
-            getSelectAnalysis().then(res => {
-                this.descriptionOptions = res.data
-            }).catch(err => {
-                console.log("Analyies出现： " + err)
-            })
-            getSelectConsequences().then(res => {
-                this.consequenceOptions = res.data
-            }).catch(err => {
-                console.log("Consequences出现： " + err)
-            })
-            getSelectImpacts().then(res => {
-                this.impactsOptions = res.data
-            }).catch(err => {
-                console.log("Impacts出现： " + err)
-            })
-            getSelectRegion().then(res => {
+            getSelectChr().then(res => {
+                console.log(res)
                 this.chrOptions = res.data
             }).catch(err => {
-                console.log("Region出现： " + err)
+                console.log(res)
+                console.log(err)
             })
-            getSelectVariantClass().then(res => {
-                this.typeOptions = res.data
+            getSelectIndicator().then(res => {
+                console.log(res)
+                this.descriptionOptions = res.data
             }).catch(err => {
-                console.log("VariantClass出现： " + err)
+                console.log(err)
             })
-        },
-        cellClick(row, column, cell, event) {
-            console.log(row, column, cell, event)
+            getSelectPopCompared().then(res => {
+                console.log(res)
+                this.consequenceOptions = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+            getSelectType().then(res => {
+                console.log(res)
+                this.impactsOptions = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+           
         }
     }
 }
@@ -362,6 +339,17 @@ export default {
                      //  margin: 4px;
                  }
              }
+             .radio-box{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                // background-color: pink;
+                height: 45px;
+             }
+            //  .indicator-box{
+            //     background-color: pink;
+            //     width: 80%;
+            //  }
          }
 
          #col-one {
