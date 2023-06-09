@@ -72,7 +72,7 @@
 
         <el-table-column label="Name" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick($event)">{{ scope.row.featureId
+            <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.row)">{{ scope.row.name
             }}</span>
           </template>
         </el-table-column>
@@ -170,9 +170,9 @@ export default {
   methods: {
     //跳转到详情页面
     handleClick(event) {
-      console.log(event.target.innerHTML);  //接下来向后端传递这个参数实现页面跳转
+      console.log(event.featureId);  //接下来向后端传递这个参数实现页面跳转
       //跳转时 用路由传递参数，将数据正确展示到详情页面 未做
-      const featureId = event.target.innerHTML
+      const featureId = event.featureId
       toDetailPage(featureId).then(res => {
         console.log(res)
         let data = res;
@@ -263,6 +263,7 @@ export default {
         console.log("Chr出现： " + err)
       })
       Search(this.formData, this.queryParams).then(res => {
+        console.log(res)
         this.tableData = res.rows
         this.total = res.total
         this.loading = false
