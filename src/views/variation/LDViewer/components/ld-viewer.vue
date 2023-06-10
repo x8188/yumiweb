@@ -105,7 +105,7 @@
   </ZeamapCard>
 </template>
 <script>
-import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr,selectAll} from '@/api/gemo-viewer/geno-viewer'
+import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr,selectAll} from '@/api/ld-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
@@ -115,13 +115,13 @@ components: { SvgIcon },
       region: '1',
       viewerTitle: 'Geno viewer',
       formData: {
-        accession: "B73",
-        version: "4.43.0",
-        alias: "AMP",
-        description: "Genome assembly and annotation of Zea mays subsp. mays cultivar B73 Version 4",
-        start: '1',
-        end: '2000',
-        chorm: 'jjj',
+        accession: "",
+        version: "",
+        alias: "",
+        description: "",
+        start: '',
+        end: '',
+        chorm: '',
       },
       checkBox: [],
       options: {

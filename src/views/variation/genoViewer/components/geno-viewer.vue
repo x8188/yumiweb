@@ -11,12 +11,12 @@
               <div class="reference-item select-item">
                 <span>Reference</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.reference" placeholder="" @focus="focusSelect('reference')">
+                  <el-select filterable="" v-model="formData.accession" placeholder="" >
                     <el-option
-                      v-for="(item,i) in options.reference"
+                      v-for="(item,i) in options.accession"
                       :key="i"
                       :label="item"
-                      value="1"
+                      :value="item"
                       ></el-option>
                   </el-select>
                 </el-form-item>
@@ -24,12 +24,12 @@
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.version" placeholder="" >
+                  <el-select filterable v-model="formData.version" placeholder="" @focus="checkVersionIsNull" >
                     <el-option
                       v-for="(item,i) in options.version"
                       :key="i"
                       :label="item"
-                      value="1"
+                      :value="item"
                       ></el-option>
                   </el-select>
                 </el-form-item>
@@ -37,34 +37,59 @@
               <div class="population-item select-item">
                 <span>Population</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.population" placeholder="">
-                    <el-option label="population" value="population"></el-option>
+                  <el-select filterable v-model="formData.alias" placeholder="">
+                    <el-option
+                      v-for="(item,i) in options.alias"
+                      :key="i"
+                      :label="item"
+                      :value="item"
+                      ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="analysis-item select-item">
                 <span>Analysis</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.analysis" placeholder="">
-                    <el-option label="analysis" value="analysis"></el-option>
+                  <el-select filterable v-model="formData.description" placeholder="" @focus="checkAnalysis()">
+                    <el-option
+                      v-for="(item,i) in options.description"
+                      :key="i"
+                      :label="item"
+                      :value="item"
+                      ></el-option>
                 </el-select>
                 </el-form-item>
               </div>
             </div>
-          <div class="germplasm-select">
+          <div class="germplasm-select-container">
             <span>Germplasm</span>
-            <el-checkbox-group v-model="checkBox" class="germplasm-checkbox-group">
-              <el-collapse>
-                <el-collapse-item>
-                  <template slot="title">
-                    <el-checkbox label="TST(211/211)">
-                      TST
-                    </el-checkbox>
-                    <i class=" el-icon-arrow-down" style="margin-left: 8px;"></i>
-                  </template>
-                </el-collapse-item>
-              </el-collapse>
-            </el-checkbox-group>
+            <div class="germplasm-select-items">
+              <div class="germplasm-select-item" v-for="name in germplasmName">
+                <div  class="germplasm-checkbox-group">
+                  <el-collapse>
+                    <el-collapse-item>
+                      <template slot="title">
+                        <el-checkbox 
+                        :indeterminate="isIndeterminate[name]"
+                        @change="(val) => handleCheckAllGermplasm(name,val)" 
+                        v-model="checkAll[name]" 
+                        style="margin-left: 12px;">
+                        {{ name }}&nbsp;&nbsp;({{checkGermplasms[name].length }}/{{germplasmItems[name].length}})&nbsp;&nbsp;
+                        </el-checkbox>
+                        <i class=" el-icon-arrow-down" style="margin-left: 8px;"></i>
+                      </template>
+                      <div class="germplasm-collapse-items">
+                        <div class="germplasm-collapse-item" v-for="item in germplasmItems[name]">
+                          <el-checkbox-group v-model="checkGermplasms[name]" @change="(val) => handleCheckedGermplasmChange(name,val)">
+                            <el-checkbox :label="item">{{ item }}</el-checkbox>
+                          </el-checkbox-group>
+                        </div>
+                      </div>
+                    </el-collapse-item>
+                  </el-collapse>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="region-select">
             <span>Region</span>
@@ -76,8 +101,13 @@
                 <div class="chr">
                   <span>chr</span>
                   <el-form-item>
-                  <el-select filterable v-model="formData.chr" placeholder="">
-                    <el-option label="chr" value="chr"></el-option>
+                  <el-select @focus="checkChr()" filterable v-model="formData.chr" placeholder="">
+                    <el-option
+                      v-for="(item,i) in options.chorm"
+                      :key="i"
+                      :label="item"
+                      :value="item"
+                      ></el-option>
                   </el-select>
                 </el-form-item>
                 </div>
@@ -110,7 +140,7 @@
   </ZeamapCard>
 </template>
 <script>
-import { dropDownReference, dropDownVersion} from '@/api/gemo-viewer/geno-viewer'
+import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr, germplasmSelectTST,germplasmSelectMixed, germplasmSelectNSS,germplasmSelectSS} from '@/api/geno-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
@@ -118,67 +148,177 @@ components: { SvgIcon },
     return {
       region: '1',
       formData: {
-        reference: '',
+        accession: '',
         version: '',
-        population: '',
-        analysis: '',
+        alias: '',
+        description: '',
         start: '',
         end: '',
         chr: '',
       },
-      checkBox: [],
       options: {
-        reference: [],
-        version: []
+        accession: [],
+        version: [],
+        alias: [],
+        description: [],
+        chorm: []
       },
+      // 名字
+      germplasmName: ['TST','Mixed','NSS','SS'],
+      // 全选
+      checkAll: {
+        TST: false,
+        Mixed: false,
+        NSS: false,
+        SS: false
+      },
+      // 细分条下的每一项
+      germplasmItems: {
+        TST: [],
+        Mixed: [],
+        NSS: [],
+        SS: []
+      },
+      // 选择的小细分
+      checkGermplasms: {
+        TST: [],
+        Mixed: [],
+        NSS: [],
+        SS: []
+      },
+      // 待选
+      isIndeterminate: {
+        TST: true,
+        Mixed: true,
+        NSS: true,
+        SS: true
+      }
     }
   },
   created() {
     this.dropDownReference()
-    this.dropDownVersion()
+    this.dropDownPopulation()
+    this.initGermplasm()
+  },
+  watch: {
+    'formData.accession'(newValue, oldValue) {
+      // 处理 accession 属性变化的逻辑
+      this.dropDownVersion({accession: newValue})
+    }
   },
   methods:{
+   // version是否为空
+   checkVersionIsNull() {
+      if(this.formData.accession==='') {
+        this.$message.error('请先选择Reference')
+      }
+    },
     // 获取下拉框信息
     async dropDownReference() {
       const { data }= await dropDownReference()
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.reference = arr
-
+      this.options.accession = data
     },
-    async dropDownVersion() {
-      const { data }= await dropDownVersion()
-      console.log(data);
-      let arr = Object.values(data)
-      arr = arr.slice(1,51)
-      this.options.version = arr
+    async dropDownVersion(params) {
+      const { data }= await dropDownVersion(params)
+      this.options.version = data
     },
-    submitForm() {
-    this.$emit('showResult', 1211)
+    async dropDownPopulation() {
+      const { data }= await dropDownPopulation()
+      this.options.alias = data
     },
-    // 疯狂道歉
-    focusSelect(name) {
-      if(this.options[name].length === 0) {
-        this.$notify({
-          title: '已成功请求',
-          message: '数据正在拉取中，请稍等',
-          type: 'success'
-        })
+    async dropDownAnalysis() {
+      const { data }= await dropDownAnalysis(this.formData)
+      this.options.description = data
+    },
+    async dropDownChr() {
+      const { data }= await dropDownChr(this.formData)
+      this.options.chorm = data
+    },
+    checkChr() {
+      const { accession, version, alias, description} = this.formData;
+      if(accession !== '' && version !== '' && alias !== '' && description !== ''
+      ) {
+        this.dropDownChr()
+      } else {
+        this.$message.error('请先选择前边三项')
       }
     },
-  reset() {
+
+    // germplasm那一堆
+    async germplasmTST() {
+      const { data } = await germplasmSelectTST()
+      this.germplasmItems.TST = data
+    },
+    async germplasmMixed() {
+      const { data } = await germplasmSelectMixed()
+      this.germplasmItems.Mixed = data
+    },
+    async germplasmNSS() {
+      const { data } = await germplasmSelectNSS()
+      this.germplasmItems.NSS = data
+    },
+    async germplasmSS() {
+      const { data } = await germplasmSelectSS()
+      this.germplasmItems.SS = data
+    },
+    initGermplasm() {
+      this.germplasmTST()
+      this.germplasmMixed()
+      this.germplasmNSS()
+      this.germplasmSS()
+    },
+    // 全选
+    handleCheckAllGermplasm(name,val) {
+      this.checkGermplasms[name] = val ? this.germplasmItems[name] : []
+      this.isIndeterminate[name] = false
+    },
+    handleCheckedGermplasmChange(name,val) {
+      let checkedCount = val.length
+      this.checkAll[name] = checkedCount === this.germplasmItems[name].length
+      this.isIndeterminate[name] = checkedCount > 0 && checkedCount < this.germplasmItems[name].length
+    },
+    checkAnalysis() {
+      const { accession, version, alias } = this.formData;
+      if(accession !== '' && version !== '' && alias !== '') {
+        this.dropDownAnalysis()
+      } else {
+        this.$message.error('请先选择前边三项')
+      }
+    },
+    // 提交表单
+    submitForm() {
+    let queryForm = {}
+    queryForm.germplasm = []
+    for(let item of Object.values(this.checkGermplasms)) {
+      console.log(item)
+      queryForm.germplasm.push(...item)
+    }
+    queryForm = {...queryForm,...this.formData}
+    this.$emit('showResult', queryForm)
+    },
+    reset() {
       this.region= '1',
-      this.viewerTitle= 'Geno viewer',
-      this.formData.reference= '',
+      this.formData.accession= '',
       this.formData.version= '',
-      this.formData.population= '',
-      this.formData.analysis= '',
-      this.formData.checkBox= [],
+      this.formData.alias= '',
+      this.formData.description= '',
       this.formData.start= '',
       this.formData.end= '',
-      this.formData.chr= ''
+      this.formData.chr= '',
+      this.checkGermplasms.TST = [],
+      this.checkGermplasms.Mixed = [],
+      this.checkGermplasms.NSS = [],
+      this.checkGermplasms.SS = [],
+      this.isIndeterminate.TST = true,
+      this.isIndeterminate.Mixed = true,
+      this.isIndeterminate.NSS = true,
+      this.isIndeterminate.SS = true,
+      this.checkAll.TST = false,
+      this.checkAll.Mixed = false,
+      this.checkAll.NSS = false,
+      this.checkAll.SS = false
   }
-  }
+}
 }
 </script>
 
@@ -208,7 +348,7 @@ border-bottom: 1px solid #E6ECEC;
   }
 }
 }
-.germplasm-select {
+.germplasm-select-container {
 display: flex;
 padding-bottom: 20px;
 margin-bottom: 20px;
@@ -216,27 +356,20 @@ border-bottom: 1px solid #E6ECEC;
 span {
   margin-right: 20px;
 }
-.germplasm-checkbox-group {
+.germplasm-select-items {
   width: 90%;
-  ::v-deep .el-collapse-item,.el-collapse-item__header,.el-collapse-item__wrap {
-    :hover {
-      background-color: #EBEBEB;
-    }
+  .germplasm-checkbox-group {
+    padding-left: 10px;
   }
-  ::v-deep .el-collapse-item__content {
-    background-color: #fff!important;
-    div {
-      background-color: #fff!important;
-    }
-  }
-  ::v-deep .el-collapse-item__arrow{
-    display: none;
-  }
-  ::v-deep .el-checkbox__input {
+
+  .germplasm-collapse-items {
     margin-left: 20px;
-  }
-  ::v-deep .el-checkbox__label {
-    color: #595959;
+    display: flex;
+    flex-wrap: wrap;
+
+    .germplasm-collapse-item {
+      width: 20%;
+    }
   }
 }
 }
@@ -274,14 +407,7 @@ span {
     }
   }
 }
-::v-deep .el-select .el-input.is-focus .el-input__inner
- {
-  border-color: $mainColor; 
-}
 
-::v-deep .el-select-dropdown__item.selected,.el-select-dropdown__item.selected {
-  font-weight: normal;
-}
 .submit-buttons {
   display: flex;
   justify-content: center;

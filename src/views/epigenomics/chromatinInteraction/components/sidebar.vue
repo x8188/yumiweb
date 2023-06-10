@@ -22,7 +22,7 @@
         </div>
         <!-- Version -->
         <div class="menu-item">
-          <div  style="width: 90%;">
+          <div style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Version</span>
             <el-select filterable index="0" v-model="filters.version" placeholder="" style="width: 90%;margin-top: 10px;">
@@ -113,14 +113,6 @@ export default {
 components: { SvgIcon },
 created() {
   this.getDownAll()
-},
-watch: {
-  // async 'filters.accession'(newVal, oldVal) {
-  //   // 在accession属性发生变化时执行的逻辑
-  //   // console.log('accession 发生了变化', newVal, oldVal);
-  //   await this.changeVersion(newVal)
-  //   // this.$set(this.filters, 'version', this.options.version[0]);
-  // }
 },
 data() {
 return {

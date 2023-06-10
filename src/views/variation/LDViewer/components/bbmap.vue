@@ -1,8 +1,8 @@
 <template>
  <div class="">
     <div id="ldCanvas" style="position: relative; top: 50px; left: 80px;height: 900px;" @mousemove="mouseInit">
-        <canvas ref='nameCanvas' @mousemove="mousemoveNames" id="geneNames" width="620" height="500" style="position: absolute; top: 0px; left: 0px;"></canvas>
-        <canvas @mousemove="mousemoveCanvas"  ref="geneCanvas" class="geneCanvas" id="geneCanvas" width="620" height="600" style="position: absolute; top: 420px; left: 0px;" ></canvas>
+        <canvas ref='nameCanvas' @mousemove="mousemoveNames" id="geneNames" width="1220" height="500" style="position: absolute; top: 0px; left: 0px;"></canvas>
+        <canvas @mousemove="mousemoveCanvas"  ref="geneCanvas" class="geneCanvas" id="geneCanvas" width="1220" height="600" style="position: absolute; top: 420px; left: 0px;" ></canvas>
         <div class="color-side-bar" style="position: absolute;left: 0;top: 50%;">
             <img src="@/assets/images/color-sidebar.png" alt="">
         </div>
@@ -26,6 +26,9 @@ export default {
       firstLineNum: 42,
       lines: [],
       highlightedLine: null,
+      chartsData: [],
+      topToolNames: [],
+      diamondsData: []
     };
   },
   computed: {
@@ -35,15 +38,63 @@ export default {
   },
   created() {
     this.$store.watch(
-      (state) => state.ldViewer.result, // 监听的值，可以是state中的任意一个属性
-      (newCount, oldCount) => {
+      (state) => state.ldViewer.result, 
+      (newData, oldData) => {
+        this.chartsData = newData
+        this.chartsData.map(item => {
+          let infos = item.split(" ")
+          if(!this.topToolNames.includes(infos[0])) {
+            this.topToolNames.push(infos[0])
+          }
+
+          if(!this.topToolNames.includes(infos[1])) {
+            this.topToolNames.push(infos[1])
+          }
+        })
+        this.topToolNames = this.topToolNames.map((item,index) => ({
+            'index': index,
+            'name': item
+        }))
+        this.chartsData.map((item,index) => {
+          let infos = item.split(" ")
+          let firstCoord = 0
+          let secondCoord = 0
+          this.topToolNames.map(item => {
+            if(infos[0]=== item.name) {
+              firstCoord = item.index
+            }
+          })
+          this.topToolNames.map(item => {
+            if(infos[1]=== item.name) {
+              secondCoord = item.index
+            }
+          })
+          if(firstCoord>secondCoord) {
+            let temp = firstCoord
+            firstCoord = secondCoord
+            secondCoord = temp
+          }
+          let absX = secondCoord - firstCoord
+          let absY = firstCoord
+          this.diamondsData.push({
+            'index': index,
+            'firstCoord': firstCoord,
+            'secondCoord': secondCoord,
+            'colorVal': infos[2],
+            'firstName': this.topToolNames[firstCoord].name,
+            'secondName': this.topToolNames[secondCoord].name,
+            'absX': absX,
+            'absY': absY
+          })
+        })
+        console.log("56666666666",this.diamondsData)
         function findN(x) {
           let n = Math.floor(Math.sqrt(2 * x + 0.25) - 0.5); // 向下取整
           return n;
         }
 
-        this.firstLineNum = findN(newCount.length);
-        if (newCount.length === 0) this.firstLineNum = 42;
+        this.firstLineNum = findN(newData.length);
+        if (newData.length === 0) this.firstLineNum = 42;
         this.redraw();
       }
     );
@@ -68,7 +119,7 @@ export default {
       const deep3 = "#565656";
       const deep4 = "#CECECE";
       const deep5 = "#FFFFFF";
-      let firstLineNum = this.firstLineNum;
+      let firstLineNum = this.topToolNames.length
       let colorArr = new Array();
       for (let i = 0; i < firstLineNum; i++) {
         colorArr[i] = new Array(i);
@@ -87,7 +138,9 @@ export default {
       let beginX = 10;
       let beginY = 10;
       let halfWidth = 6;
-      let firstLineNum = this.firstLineNum;
+      let firstLineNum = this.topToolNames.length
+      let chartsData = this.chartsData
+      console.log("%%%%%%", chartsData)
       const colorArr = this.initColor();
       for (let i = 0; i < firstLineNum; i++) {
         // 21列
@@ -117,8 +170,9 @@ export default {
             nameX: i,
             nameY: j,
             borderColor: "#fff",
+            firstInfo: '',
+            secondInfo: ''
           });
-
           ctx.fill();
           // 初始化 beginX beginY
           beginX += halfWidth + 2.2;
@@ -127,6 +181,9 @@ export default {
         beginX = 10 + halfWidth * (i + 1) + 1 * i;
         beginY = 10 + halfWidth * (i + 1) + 1 * i;
       }
+      this.diamonds.data.map(item1 => {
+        
+      })
       ctx.fill();
     },
     mouseInit(e) {
@@ -147,7 +204,7 @@ export default {
           y > diamond.y &&
           y < diamond.y + diamond.height
         ) {
-          this.diamondInfo = `x: ${diamond.nameX}  y:${diamond.nameY}`;
+          this.diamondInfo = `x: ${diamond.nameX}  y:${diamond.nameY} ${diamond.firstInfo}-${diamond.secondInfo}`;
           break;
         }
       }
@@ -159,18 +216,18 @@ export default {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.lineWidth = 2;
 
-      let firstLineNum = this.firstLineNum;
+      let topToolNames = this.topToolNames;
 
       let nameStart = 15;
       let nameWidth = 14.3;
       
 
-      for (let i = 0; i < firstLineNum; i++) {
+      for (let i = 0; i < topToolNames.length; i++) {
         this.lines.push({
           x: nameStart + nameWidth * i,
-          y: 180,
+          y: 280,
           width: 2,
-          height: 220,
+          height: 120,
           column: i,
         });
       }
@@ -209,7 +266,8 @@ export default {
       this.drawLines(ctx);
     },
     drawLines(ctx) {
-      for (let i = 0; i < this.lines.length; i++) {
+      let topToolNames = this.topToolNames;
+      for (let i = 0; i < topToolNames.length; i++) {
         let line = this.lines[i];
 
         ctx.strokeStyle = line === this.highlightedLine ? "red" : "#999";
@@ -226,7 +284,7 @@ export default {
 
         ctx.fillStyle = line === this.highlightedLine ? "red" : "#000";
         ctx.font = "12px Arial";
-        ctx.fillText("Hello", 0, 0);
+        ctx.fillText(topToolNames[i].name, 0, 0);
         ctx.restore();
         ctx.fill();
       }
