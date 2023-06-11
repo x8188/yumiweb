@@ -105,7 +105,7 @@
   </ZeamapCard>
 </template>
 <script>
-import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr,selectAll} from '@/api/ld-viewer'
+import { dropDownReference, dropDownVersion, dropDownPopulation,dropDownAnalysis,dropDownChr} from '@/api/ld-viewer'
 import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
 components: { SvgIcon },
@@ -189,8 +189,7 @@ components: { SvgIcon },
       }
     },
     async submitAll() {
-      const {data} = await selectAll(this.formData)
-      this.$store.commit('ldViewer/setResult', data)
+      this.$emit('showResultData', this.formData)
     },
     // 重置所有条件
     reset() {
@@ -201,7 +200,7 @@ components: { SvgIcon },
       this.formData.start = ''
       this.formData.end = ''
       this.formData.chorm = ''
-      this.$store.commit('ldViewer/setResult', [])
+      this.$emit('showResultData', this.formData)
     }
   }
 }
@@ -265,14 +264,6 @@ border-bottom: 1px solid #E6ECEC;
       background-color: #ccc;
     }
   }
-}
-::v-deep .el-select .el-input.is-focus .el-input__inner
- {
-  border-color: $mainColor; 
-}
-
-::v-deep .el-select-dropdown__item.selected,.el-select-dropdown__item.selected {
-  font-weight: normal;
 }
 .submit-buttons {
   display: flex;

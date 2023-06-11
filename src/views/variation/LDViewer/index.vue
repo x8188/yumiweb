@@ -1,7 +1,7 @@
 <template>
     <div class="">
-      <LdViewer />
-      <ResultViewer />
+      <LdViewer @showResultData="showResultData"/>
+      <ResultViewer :formInfo="formInfo"/>
     </div>
 </template>
 
@@ -9,7 +9,17 @@
 import LdViewer from './components/ld-viewer.vue'
 import ResultViewer from './components/result-viewer.vue'
 export default {
-  components: { LdViewer, ResultViewer }
+  components: { LdViewer, ResultViewer },
+  data() {
+    return {
+      formInfo: {}
+    }
+  },
+  methods: {
+    showResultData(data) {
+      this.formInfo = data
+    }
+  }
 }
 </script>
 
