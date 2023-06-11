@@ -215,7 +215,7 @@ export default {
         /** 查询岗位信息列表 */
         getList() {
             this.loading = true;
-            searchTagVariant(this.formData, this.queryParams).then(res => {
+            Search(this.formData, this.queryParams).then(res => {
                 this.total = res.total
                 this.tableData = res.rows
             })
