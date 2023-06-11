@@ -179,6 +179,7 @@ export default {
             else {
                 getSelectVersion(New).then(res => {
                     this.versionOptions = res.data
+                    this.formData.version = this.versionOptions[0]
                 })
             }
         },
@@ -276,6 +277,7 @@ export default {
             getSelectReference().then(res => {
                 console.log(res)
                 this.accessionOptions = res.data
+                this.formData.accession = this.accessionOptions[0]
             }).catch(err => {
                 console.log(err)
             })
