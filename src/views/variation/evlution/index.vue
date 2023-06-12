@@ -179,6 +179,7 @@ export default {
             else {
                 getSelectVersion(New).then(res => {
                     this.versionOptions = res.data
+                    this.formData.version = this.versionOptions[0]
                 })
             }
         },
@@ -214,7 +215,7 @@ export default {
         /** 查询岗位信息列表 */
         getList() {
             this.loading = true;
-            searchTagVariant(this.formData, this.queryParams).then(res => {
+            Search(this.formData, this.queryParams).then(res => {
                 this.total = res.total
                 this.tableData = res.rows
             })
@@ -276,6 +277,7 @@ export default {
             getSelectReference().then(res => {
                 console.log(res)
                 this.accessionOptions = res.data
+                this.formData.accession = this.accessionOptions[0]
             }).catch(err => {
                 console.log(err)
             })

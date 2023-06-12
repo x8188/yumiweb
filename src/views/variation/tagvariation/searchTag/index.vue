@@ -178,6 +178,7 @@ export default {
             else {
                 getSelectVersion(New).then(res => {
                     this.versionOptions = res.data
+                    this.formData.version = this.versionOptions[0]
                 })
             }
         }
@@ -292,6 +293,7 @@ export default {
         Request_beforeMounted() {
             getSelectReference().then(res => {
                 this.accessionOptions = res.data
+                this.formData.accession = this.accessionOptions[0]
             }).catch(err => {
                 console.log("Reference出现： " + err)
             })
