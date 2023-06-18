@@ -10,7 +10,7 @@
       <div class="table-title" style="display: flex;justify-content: space-between;">
         <div class="info-nums">
           <span>show</span> 
-          <el-select filterable v-model="page.infoNums" placeholder="" style="width: 80px; margin: 0 8px;">
+          <el-select @change="changePageSize" filterable v-model="page.infoNums" placeholder="" style="width: 80px; margin: 0 8px;">
             <el-option label="10" value="10"></el-option>
             <el-option label="20" value="20"></el-option>
             <el-option label="30" value="30"></el-option>
@@ -18,63 +18,27 @@
           </el-select>
           <span>results</span>
         </div>
-        <button style="padding: 5px;">
-          <span style="margin-left: 8px; color: #929292"><i class="el-icon-download"></i> Download the results</span>
-        </button>
       </div>
       <div class="table-container">
         <el-table
+        v-loading="loading"
         border
+        :data="tableData"
         style="width: 100%;margin-top: 30px;">
         <el-table-column
           label="Position"
+          prop="position"
         >
         </el-table-column>
         <el-table-column
           label="ID"
+          prop="id"
         >
         </el-table-column>
         <el-table-column
-          label="REF">
-        </el-table-column>
-        <el-table-column
-          label="ALT">
-        </el-table-column>
-        <el-table-column
-          label="238">
-        </el-table-column>
-        <el-table-column
-          label="268">
-        </el-table-column>
-        <el-table-column
-          label="501">
-        </el-table-column>
-        <el-table-column
-          label="1462">
-        </el-table-column>
-        <el-table-column
-          label="4019">
-        </el-table-column>
-        <el-table-column
-          label="5237">
-        </el-table-column>
-        <el-table-column
-          label="5311">
-        </el-table-column>
-        <el-table-column
-          label="7327">
-        </el-table-column>
-        <el-table-column
-          label="7381">
-        </el-table-column>
-        <el-table-column
-          label="9782">
-        </el-table-column>
-        <el-table-column
-          label="526018">
-        </el-table-column>
-        <el-table-column
-          label="CIMBL">
+          v-for="name in formInfo.germplasm"
+          :label="name"
+          :prop="name">
         </el-table-column>
       </el-table>
     </div>
@@ -91,6 +55,7 @@
   </ZeamapCard>
 </template>
 <script>
+import { selectData } from '@/api/geno-viewer/index'
 export default {
   props: {
     formInfo: {
@@ -100,20 +65,73 @@ export default {
   },
   data() {
     return {
+      loading: false,
       page: {
         infoNums: 10,
         pageNum : 1,
         pageSize: 10,
         total: 0
-      } 
+      },
+      formAll: {},
+      tableData: []
     }
   },
   created() {
-    this.demo()
+    this.mergeFormInfos()
+    this.selectData()
   },
   methods: {
-    demo() {
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' , this.formInfo);
+    // 合并查询数据
+    mergeFormInfos() {
+      this.loading = true
+      this.formAll.accession = this.formInfo.accession
+      this.formAll.version = this.formInfo.version
+      this.formAll.alias = this.formInfo.alias
+      this.formAll.description = this.formInfo.description
+      this.formAll.choose = this.formInfo.germplasm.join(',')
+      this.formAll.chorm = this.formInfo.chorm
+      this.formAll.start = this.formInfo.start
+      this.formAll.end = this.formInfo.end
+      this.formAll.pageNum = this.page.pageNum
+      this.formAll.pageSize = this.page.pageSize
+    },
+    // 查数据 格式化数据
+    async selectData() {
+      const { total, rows } = await selectData(this.formAll)
+
+      this.page.total = total
+      const germplasms = this.formInfo.germplasm
+      const data = []
+      rows.map(item => {
+        const info = item.split(" ")
+        const dataInfo1 = {
+          position: this.formAll.chorm + ":" + info[0],
+          id: info[1]
+        }
+        const dataInfo2 = {} 
+
+        germplasms.map((germplasm,index) => {
+          dataInfo2[germplasm] = info[index+2]
+        })
+
+        const allData = {...dataInfo1,...dataInfo2}
+        data.push(allData)
+      })
+      this.tableData = data
+      this.loading = false
+    },
+    // 改变页码
+    changePage(newVal) {
+      this.page.pageNum = newVal
+      this.mergeFormInfos()
+      this.selectData()
+    },
+    // 改变pageSize
+    changePageSize(newVal) {
+      this.page.pageSize = Number(newVal)
+      this.page.pageNum = 1
+      this.mergeFormInfos()
+      this.selectData()
     },
     returnMultiExpression() {
       this.$emit('returnMultiExpression')

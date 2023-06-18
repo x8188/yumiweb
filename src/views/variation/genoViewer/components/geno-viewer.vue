@@ -74,9 +74,13 @@
                         @change="(val) => handleCheckAllGermplasm(name,val)" 
                         v-model="checkAll[name]" 
                         style="margin-left: 12px;">
-                        {{ name }}&nbsp;&nbsp;({{checkGermplasms[name].length }}/{{germplasmItems[name].length}})&nbsp;&nbsp;
+                        <span>
+                          {{ name }}&nbsp;&nbsp;({{checkGermplasms[name].length }}/
+                            <div class="skelection" v-if="germplasmItems[name].length === 0"></div>
+                           <span v-else>{{germplasmItems[name].length}})&nbsp;&nbsp;</span>
+                        </span>
+                        <i class=" el-icon-arrow-down" style="margin-left: -25px;"></i>
                         </el-checkbox>
-                        <i class=" el-icon-arrow-down" style="margin-left: 8px;"></i>
                       </template>
                       <div class="germplasm-collapse-items">
                         <div class="germplasm-collapse-item" v-for="item in germplasmItems[name]">
@@ -101,7 +105,7 @@
                 <div class="chr">
                   <span>chr</span>
                   <el-form-item>
-                  <el-select @focus="checkChr()" filterable v-model="formData.chr" placeholder="">
+                  <el-select @focus="checkChr()" filterable v-model="formData.chorm" placeholder="">
                     <el-option
                       v-for="(item,i) in options.chorm"
                       :key="i"
@@ -154,7 +158,7 @@ components: { SvgIcon },
         description: '',
         start: '',
         end: '',
-        chr: '',
+        chorm: '',
       },
       options: {
         accession: [],
@@ -285,6 +289,20 @@ components: { SvgIcon },
         this.$message.error('请先选择前边三项')
       }
     },
+    // 检查表单
+    checkSubmitForm(queryForm) {
+      const { accession, version, alias, description, germplasm, chorm, start, end} = queryForm
+      // 应该用责任链封装的，但是赶工，以后谁重写的时候再优化吧
+      if(accession == "") return '请先选择reference'
+      if(version == "") return "请先选择version"
+      if(alias == "") return "请先选择population"
+      if(description == "") return "请先选择analysis"
+      if(germplasm.length == 0) return  "请先选择germplasm"
+      if(chorm == "") return "请先选择chr"
+      if(start == "") return "请先选择start"
+      if(end == "" ) return "清闲选择end"
+      return true
+    },
     // 提交表单
     submitForm() {
     let queryForm = {}
@@ -294,7 +312,11 @@ components: { SvgIcon },
       queryForm.germplasm.push(...item)
     }
     queryForm = {...queryForm,...this.formData}
-    this.$emit('showResult', queryForm)
+    if(this.checkSubmitForm(queryForm) !== true) {
+      this.$message.error(this.checkSubmitForm(queryForm))
+    } else {
+      this.$emit('showResult', queryForm)
+    }
     },
     reset() {
       this.region= '1',
@@ -411,5 +433,12 @@ span {
 .submit-buttons {
   display: flex;
   justify-content: center;
+}
+
+.skelection {
+  display: inline-block;
+  width: 30px;
+  height: 12px;
+  background-color: #efefef;
 }
 </style>

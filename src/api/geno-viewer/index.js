@@ -65,3 +65,11 @@ export function germplasmSelectSS() {
     url: '/zeamap/genoviewer/SS'
   })
 }
+
+// 大查询
+export function selectData(params) {
+  return request({
+    url: '/zeamap/genoviewer/selectData',
+    params
+  })
+}
