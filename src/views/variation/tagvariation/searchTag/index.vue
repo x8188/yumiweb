@@ -226,6 +226,10 @@ export default {
         },
         resetForm() {
             this.$refs['elForm'].resetFields()
+            this.formData.start = ""
+            this.formData.end = ""
+            this.formData.accession = this.accessionOptions[0]
+            this.formData.version = this.versionOptions[0]
         },
         /** 导出操作按钮 */
         handleExport() {

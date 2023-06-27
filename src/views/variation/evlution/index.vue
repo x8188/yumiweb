@@ -30,18 +30,21 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <span style="color:#606266;font-size: 14px;font-weight: 700;">Indicator</span>
+                        <el-form-item label="Version" prop="radio">
+                            <span style="color:#606266;font-size: 14px;font-weight: 700;">Indicator</span>
                         <!-- <div class="indicator-box"> -->
-                        <div class="radio-box">
-                            <el-radio v-model="formData.radio" label="Fst">Fst</el-radio>
-                            <el-radio v-model="formData.radio" label="XPCLR">XPCLR</el-radio>
-                        </div>
+                            <div class="radio-box">
+                                <el-radio v-model="formData.radio" label="Fst">Fst</el-radio>
+                                <el-radio v-model="formData.radio" label="XPCLR">XPCLR</el-radio>
+                            </div>
+                        </el-form-item>
+                        
                         
                         <!-- </div> -->
                         
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="Selection Type" prop="description">
+                        <el-form-item label="Selection Type" prop="SelectType">
                             <el-select v-model="formData.SelectType" placeholder="请选择Selection Type" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in SelectionTypeOptions" :key="index" :value="item"
@@ -50,7 +53,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="Compare Population" prop="description">
+                        <el-form-item label="Compare Population" prop="PopCom">
                             <el-select v-model="formData.PopCom" placeholder="请选择Compare Population" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in PopOptions" :key="index" :value="item"
@@ -59,7 +62,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="CHR" prop="description">
+                        <el-form-item label="CHR" prop="chr">
                             <el-select v-model="formData.chr" placeholder="请选择CHR" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
@@ -68,11 +71,11 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <div id="inner_input">
-                            <el-input placeholder="start" v-model="formData.start"></el-input>
-                            <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-                            <el-input placeholder="end" v-model="formData.end"></el-input>
-                        </div>
+                            <div id="inner_input">
+                                <el-input placeholder="start" v-model="formData.start"></el-input>
+                                <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
+                                <el-input placeholder="end" v-model="formData.end"></el-input>
+                            </div>
                     </el-col>
                 </el-form>
             </el-row>
@@ -151,12 +154,14 @@ export default {
                 chr:""
             },
             rules: {
-                accession: [],
-                version: [],
-                radio: [],
-                SelectType: [],
-                PopCom: [],
-                chr: [],
+                accession: "",
+                version: "",
+                radio: "",
+                SelectType: "",
+                PopCom: "",
+                start: "",
+                end: "",
+                chr:""
             },
             accessionOptions: [],
             versionOptions: [],
@@ -231,6 +236,11 @@ export default {
         },
         resetForm() {
             this.$refs['elForm'].resetFields()
+            //此处设置为空其实应该将输入的绑定值 和prop的绑定值名字设置为相同 在这里为了方便直接设置
+            this.formData.start = ""
+            this.formData.end = ""
+            this.formData.accession = this.accessionOptions[0]
+            this.formData.version = this.versionOptions[0]
         },
         /** 导出操作按钮 */
         handleExport() {
