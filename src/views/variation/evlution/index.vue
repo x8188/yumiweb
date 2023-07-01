@@ -7,10 +7,7 @@
             </div>
             <el-row :gutter="12" class="filter_box">
                 <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium">
-                    <el-col id="col-one">
-                        <span @click="filter_page()" id="span-second">Filter</span>
-                        <span @click="resetForm">Reset</span>
-                    </el-col>
+                    
                     <el-col :span="6">
                         <el-form-item label="Reference" prop="accession">
                             <el-select v-model="formData.accession" placeholder="请选择Reference" clearable
@@ -77,13 +74,25 @@
                                 <el-input placeholder="end" v-model="formData.end"></el-input>
                             </div>
                     </el-col>
+                    <el-col>
+          <div  class="footer">
+        <el-button size="small" @click="resetForm" style="margin-right: 15px;">
+          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
+          <span style="color: #20AE35">清空</span>
+        </el-button>
+        <el-button type="primary" size="small" @click="filter_page()">
+          查询
+            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
+        </el-button>
+      </div>
+        </el-col>
                 </el-form>
             </el-row>
         </div>
 
         <div class="buttom_box">
             <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-            <el-table ref="multipleTable" :data="tableData"  tooltip-effect="dark" border=""
+            <el-table v-loading="loading" ref="multipleTable" :data="tableData"  tooltip-effect="dark" border=""
                 @selection-change="handleSelectionChange" height="400px">
                 <!-- 展示的条目 -->
                 <el-table-column type="selection" width="55" @click="getVID($event)">
@@ -139,6 +148,7 @@ export default {
                 pageNum: 1,
                 pageSize: 10,
             },
+            loading:true,
             multipleSelection: [],
             Download_Vid: [],
             tableData: [],
@@ -204,16 +214,30 @@ export default {
                     this.PopOptions = res.data
                 })
             }
+        },
+        formData:{
+            handler(newVal,oldVal){
+                this.loading = true;
+                Search(this.formData, this.queryParams).then(res => {
+                console.log(res.rows)
+                this.total = res.total
+                this.tableData = res.rows
+                this.loading = false
+            })
+            },
+            deep:true
         }
     },
     mounted() {
     },
     created() {
         this.Request_beforeMounted()
+        this.loading = true
         Search(this.formData, this.queryParams).then(res => {
             console.log(res.rows)
             this.total = res.total
             this.tableData = res.rows
+            this.loading = false
         })
     },
     methods: {
@@ -223,6 +247,7 @@ export default {
             Search(this.formData, this.queryParams).then(res => {
                 this.total = res.total
                 this.tableData = res.rows
+                this.loading =false
             })
         },
         handleSelectionChange(val) {
@@ -274,10 +299,12 @@ export default {
         // 筛选页面
         filter_page() {
             console.log(this.formData)
+            this.loading = false
             Search(this.formData, this.queryParams).then(res => {
                 console.log(res)
                 this.tableData = res.rows
                 this.total = res.total
+                this.loading = true
             }).catch(err => {
                 console.log(err)
             })
@@ -424,4 +451,12 @@ export default {
      .pagination-container {
          margin-left: 15px;
      }
- }</style>
+ }
+ .footer {
+margin-top: 20px;
+// margin-right: 20px;
+// background-color: pink;
+display: flex;
+justify-content: space-between
+}
+ </style>

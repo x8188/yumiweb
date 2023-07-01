@@ -7,10 +7,10 @@
     </div>
     <el-row :gutter="12" class="filter_box">
       <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium">
-        <el-col id="col-one">
+        <!-- <el-col id="col-one">
           <span @click="filter_page()" id="span-second">Filter</span>
           <span @click="resetForm">Reset</span>
-        </el-col>
+        </el-col> -->
         <el-col :span="6">
           <el-form-item label="Germplasm">
             <el-select v-model="formData.accession" placeholder="请选择Germplasm" clearable :style="{ width: '100%' }">
@@ -59,12 +59,25 @@
             <el-input placeholder="请输入Description" v-model="formData.description"></el-input>
           </el-form-item>
         </el-col>
+        <el-col>
+          <div  class="footer">
+        <el-button size="small" @click="resetForm" style="margin-right: 15px;">
+          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
+          <span style="color: #20AE35">清空</span>
+        </el-button>
+        <el-button type="primary" size="small" @click="filter_page()">
+          查询
+            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
+        </el-button>
+      </div>
+        </el-col>
       </el-form>
     </el-row>
+    
     </div>
     <div class="buttom_box">
       <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
+      <el-table  ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
         @selection-change="handleSelectionChange" height="400px" v-loading="loading" element-loading-text="拼命加载中....">
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID()">
@@ -110,7 +123,7 @@ export default {
   props: [],
   data() {
     return {
-      loading: false,
+      // loading: false,
       total: 0,
       queryParams: {
         pageNum: 1,
@@ -130,6 +143,7 @@ export default {
         commonname: undefined,
         description: undefined,
       },
+      loading:true,
       rules: {
         Germplasm: [],
         Version: [],
@@ -163,6 +177,18 @@ export default {
           console.log(err)
         })
       }
+    },
+    formData:{
+      handler(oldVal,newVal){
+        this.loading = true;
+        Search(this.formData, this.queryParams).then(res => {
+          console.log(res)
+          this.tableData = res.rows
+          this.total = res.total
+          this.loading = false
+        })
+      },
+      deep:true
     }
   },
 
@@ -252,7 +278,7 @@ export default {
       getSelectGermplasm().then(res => {
         console.log(res)
         this.GermplasmOptions = res.rows
-        this.formData.accession = this.GermplasmOptions[0]
+        this.formData.accession = this.GermplasmOptions[2]
       }).catch(err => {
         console.log("Germplasm出现： " + err)
       })
@@ -369,5 +395,12 @@ export default {
   .pagination-container {
     margin-left: 15px;
   }
+}
+.footer {
+// margin-top: 20px;
+// margin-right: 20px;
+// background-color: pink;
+display: flex;
+justify-content: space-between
 }
 </style>
