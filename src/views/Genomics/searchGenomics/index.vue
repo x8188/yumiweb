@@ -43,7 +43,9 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="Type">
-            <el-input placeholder="请输入Type" v-model="formData.name"></el-input>
+            <el-select v-model="formData.name" placeholder="请选择Type" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in nameOptions" :key="index" :label="item" :value="item"></el-option>
+              </el-select>
 
           </el-form-item>
         </el-col>
@@ -61,7 +63,7 @@
         </el-col>
         <el-col>
           <div  class="footer">
-        <el-button size="small" @click="resetForm" style="margin-right: 15px;">
+        <el-button size="small" @click="resetForm()" style="margin-right: 15px;">
           <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
           <span style="color: #20AE35">清空</span>
         </el-button>
@@ -110,6 +112,7 @@ import {
   getSelectGermplasm,
   getSelectVersion,
   getSelectChr,
+  getSelectType
 } from '@/api/Genomics/getSelectOptions';
 import { toDetailPage } from '@/api/Genomics/toDetail';
 import { Search } from '@/api/Genomics/search';
@@ -159,6 +162,7 @@ export default {
       ChrOptions: [],
       filterHide:true,
       TypeOptions: [],
+      nameOptions:[]
     }
   },
   computed: {},
@@ -183,7 +187,9 @@ export default {
         this.loading = true;
         Search(this.formData, this.queryParams).then(res => {
           console.log(res)
-          this.tableData = res.rows
+          const res11 = this.eidtMsg(res.rows)
+          console.log(res11)
+          this.tableData = res11
           this.total = res.total
           this.loading = false
         })
@@ -215,10 +221,21 @@ export default {
       this.loading = true;
       Search(this.formData, this.queryParams).then(res => {
         console.log(res)
-        this.tableData = res.rows
+        const res11 = this.eidtMsg(res.rows)
+        this.tableData = res11
         this.total = res.total
         this.loading = false
       })
+    },
+    eidtMsg(data){
+      data.forEach(item=>{
+        if(item.strand == 1)
+        {
+          item.strand = "+"
+        }
+        else item.strand = "-"
+      })
+      return data
     },
     handleSelectionChange(val) {
       console.log(val)
@@ -236,6 +253,12 @@ export default {
     },
     resetForm() {
       this.$refs['elForm'].resetFields()
+      this.formData.start = ""
+      this.formData.end = ""
+      this.formData.commonname = ""
+      this.formData.description = ""
+      this.formData.name = ""
+      this.formData.uniquename = ""
     },
     /** 导出操作按钮 */
     handleExport() {
@@ -264,7 +287,8 @@ export default {
       this.loading = true
       Search(this.formData, this.queryParams).then(res => {
         console.log(res)
-        this.tableData = res.rows
+        const res11 = this.eidtMsg(res.rows)
+        this.tableData = res11
         this.total = res.total
         console.log(this.tableData)
         this.loading = false
@@ -288,9 +312,14 @@ export default {
       }).catch(err => {
         console.log("Chr出现： " + err)
       })
+      getSelectType().then(res=>{
+        console.log(res)
+        this.nameOptions = res.rows
+      })
       Search(this.formData, this.queryParams).then(res => {
         console.log(res)
-        this.tableData = res.rows
+        const res11 = this.eidtMsg(res.rows)
+        this.tableData = res11
         this.total = res.total
         this.loading = false
       })
