@@ -27,11 +27,15 @@
               </div>
             </div>
           </div>
-          <el-form>
+          <el-form :rules="rules" :model="formData">
             <div class="gene-select">
               <div class="reference-item select-item">
                 <span>Reference</span>
-                <el-form-item class="oneMarginLeft" style="margin-top: 12px">
+                <el-form-item
+                  class="oneMarginLeft"
+                  style="margin-top: 12px"
+                  prop="reference"
+                >
                   <el-select
                     v-model="formData.reference"
                     placeholder=""
@@ -56,6 +60,7 @@
                     margin-left: 100px;
                     margin-top: 12px;
                   "
+                  prop="version"
                 >
                   <el-select
                     v-model="formData.version"
@@ -245,7 +250,7 @@ export default {
       qtlType: "association",
 
       region: "all",
-      viewerTitle: "Sreach QTL",
+      viewerTitle: "Search QTL",
       formData: {
         reference: undefined,
         version: "",
@@ -274,6 +279,15 @@ export default {
       exportLoading: false,
       tableShow: false,
       // traitid: "null",
+
+      rules: {
+        reference: [
+          { required: true, message: "Cannot be empty", trigger: "change" },
+        ],
+        version: [
+          { required: true, message: "Cannot be empty", trigger: "change" },
+        ],
+      },
     };
   },
   async created() {
@@ -341,6 +355,11 @@ export default {
       this.$emit("loadingUpdata", false);
     },
     async getVersionOp() {
+      if(this.formData.reference==''){
+        this.formData.reference=undefined
+        this.formData.version=""
+        return
+      }
       if (this.qtlType == "association") {
         let res2 = await this.$API.Qtl.reqselectversion(
           this.formData.reference
