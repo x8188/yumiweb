@@ -44,17 +44,17 @@ module.exports = {
       //   target:'http://43.143.200.52:8900',
       //   pathRewrite:{'^/dev-api/zeamap/expression':''}
       // },
-      "dev-api/variations": {
-        target: `http://43.143.200.52:8800`,
-        pathRewrite: { "^/dev-api/variations": '/variations' },
-        changeOrigin:true
-      },
-      "dev-api/system":{
-        target:`http://43.143.200.52:8800`,
-        pathRewrite:{"^/dev-api/system":"/system"},
-        changeOrigin:true
+      // "dev-api/variations": {
+      //   target: `http://43.143.200.52:8800`,
+      //   pathRewrite: { "^/dev-api/variations": '/variations' },
+      //   changeOrigin:true
+      // },
+      // "dev-api/system":{
+      //   target:`http://43.143.200.52:8800`,
+      //   pathRewrite:{"^/dev-api/system":"/system"},
+      //   changeOrigin:true
 
-      },
+      // },
       [process.env.VUE_APP_BASE_API]: {
         target: `http://43.143.200.52:8800`,
         changeOrigin: true,
