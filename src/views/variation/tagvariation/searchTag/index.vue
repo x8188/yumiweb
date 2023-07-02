@@ -78,7 +78,7 @@
         <div class="buttom_box">
             <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
             <el-table v-loading="loading" ref="multipleTable" :data="tableData" @cell-click="cellClick" tooltip-effect="dark" border=""
-                @selection-change="handleSelectionChange" height="400px">
+                @selection-change="handleSelectionChange" >
                 <!-- 展示的条目 -->
                 <el-table-column type="selection" width="55" @click="getVID($event)">
                 </el-table-column>

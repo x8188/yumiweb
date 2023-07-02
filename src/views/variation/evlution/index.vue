@@ -31,8 +31,8 @@
                             <span style="color:#606266;font-size: 14px;font-weight: 700;">Indicator</span>
                         <!-- <div class="indicator-box"> -->
                             <div class="radio-box">
-                                <el-radio v-model="formData.radio" label="Fst">Fst</el-radio>
-                                <el-radio v-model="formData.radio" label="XPCLR">XPCLR</el-radio>
+                                <el-radio v-model="formData.indicator" label="Fst">Fst</el-radio>
+                                <el-radio v-model="formData.indicator" label="XPCLR">XPCLR</el-radio>
                             </div>
                         </el-form-item>
                         
@@ -42,7 +42,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="Selection Type" prop="SelectType">
-                            <el-select v-model="formData.SelectType" placeholder="请选择Selection Type" clearable
+                            <el-select v-model="formData.select" placeholder="请选择Selection Type" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in SelectionTypeOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
@@ -51,7 +51,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="Compare Population" prop="PopCom">
-                            <el-select v-model="formData.PopCom" placeholder="请选择Compare Population" clearable
+                            <el-select v-model="formData.compare_pop" placeholder="请选择Compare Population" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in PopOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
@@ -60,7 +60,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="CHR" prop="chr">
-                            <el-select v-model="formData.chr" placeholder="请选择CHR" clearable
+                            <el-select v-model="formData.chro" placeholder="请选择CHR" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
@@ -93,7 +93,7 @@
         <div class="buttom_box">
             <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
             <el-table v-loading="loading" ref="multipleTable" :data="tableData"  tooltip-effect="dark" border=""
-                @selection-change="handleSelectionChange" height="400px">
+                @selection-change="handleSelectionChange" >
                 <!-- 展示的条目 -->
                 <el-table-column type="selection" width="55" @click="getVID($event)">
                 </el-table-column>
@@ -156,22 +156,22 @@ export default {
             formData: {
                 accession: "",
                 version: "",
-                radio: "",
-                SelectType: "",
-                PopCom: "",
+                indicator: "",
+                select: "",
+                compare_pop: "",
                 start: "",
                 end: "",
-                chr:""
+                chro:""
             },
             rules: {
                 accession: "",
                 version: "",
-                radio: "",
-                SelectType: "",
-                PopCom: "",
+                indicator: "",
+                select: "",
+                compare_pop: "",
                 start: "",
                 end: "",
-                chr:""
+                chro:""
             },
             accessionOptions: [],
             versionOptions: [],
