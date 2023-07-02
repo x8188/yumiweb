@@ -5,20 +5,20 @@
         <div class="top_left"></div>
         <span>Populations</span>
       </div>
-      <div class="container" v-for="item in 5" :key="item">
+      <div class="container" v-for="item in populations" :key="item.name">
         <div class="box">
-          <a>
+          <a @click="handle(item.name)">
             <div class="box_left">
-              <img>
+              <img src="@/assets/images/population.jpg" style="height: 180px;width: 90%">
             </div>
             <div class="box_right">
               <div>
-                <el-link type="success" :underline="false" class="box_right_a">maize association panel</el-link>
+                <el-link type="success" :underline="false" class="box_right_a" @click="handle(item.name)">{{item.name}}</el-link>
               </div>
               <div>
                 <p>
                   <span class="box_right_title">Alias: </span>
-                  <span class="box_right_content"> AMP</span>
+                  <span class="box_right_content">{{item.alias}}</span>
                 </p>
                 <p>
                   <span class="box_right_title">Description: </span>
@@ -34,8 +34,34 @@
 </template>
 
 <script>
+import {listPopulation} from "@/api/germplasm/populations";
+import {details} from "@/api/germplasm/details/details";
+
 export default {
-  name: 'index'
+  name: "populations",
+  data (){
+    return {
+      populations: [
+
+      ],
+    }
+  },
+  created() {
+    this.getPopulations()
+  },
+  methods:{
+    getPopulations(){
+      listPopulation().then(res =>{
+        this.populations = res.rows
+      })
+    },
+    handle(name){
+        this.$router.push({path:'/web/germplasm/germplasm/details',query:{name}});
+        details(name).then(res =>{
+          console.log(res)
+        });
+    }
+  }
 }
 </script>
 
