@@ -674,7 +674,6 @@ export default {
         reference: "",
         version: "",
         analysis: "",
-        flag: 0,
         environment: "",
         germplasm: "",
         population: "",
@@ -686,19 +685,20 @@ export default {
       fullData.reference = this.formData.rederence;
       fullData.version = this.formData.version;
 
+      let type=""
       if (this.dbxref_id == "tissue") {
-        fullData.flag = 1;
+        type="tissue"
         fullData.analysis = this.tissue_filter_data.analysis;
         fullData.environment = this.tissue_filter_data.environment;
         fullData.germplasm = this.tissue_filter_data.germplasm;
       } else if (this.dbxref_id == "germplasm") {
-        fullData.flag = 2;
+        type="tissue"
         fullData.analysis = this.germplasm_filter_data.analysis;
         fullData.environment = this.germplasm_filter_data.environment;
         fullData.tissue = this.germplasm_filter_data.tissue;
         fullData.population = this.germplasm_filter_data.population;
       } else {
-        fullData.flag = 3;
+        type="environment"
         fullData.analysis = this.environment_filter_data.analysis;
         fullData.germplasm = this.environment_filter_data.germplasm;
         fullData.tissue = this.environment_filter_data.tissue;
@@ -708,7 +708,7 @@ export default {
 
       fullData.selects=this.compare_selector.reduce((acc, item) => [...acc, ...item.checkedop], []);
       
-      let result = await this.$API.multi.reqMultiFull(fullData);
+      let result = await this.$API.multi.reqMultiFull(type,fullData);
 
       console.log(result);
     },
