@@ -41,7 +41,7 @@ export function dropDownChr(params) {
 // 大查询
 export function selectAll(params) {
   return request({
-    url: 'zeamap/LDviewer/selectAll',
+    url: '/zeamap/LDviewer/selectAll',
     params
   })
 }
