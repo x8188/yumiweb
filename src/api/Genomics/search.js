@@ -4,9 +4,7 @@ export function Search(data,query){
     return request({
         url:"/system/feature/enquiry",
         method:"post",
-        data:{
-            "QueryCriteria":data
-        },
+        data:data,
         params:query
     })
 }

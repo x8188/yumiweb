@@ -28,7 +28,7 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="Population" prop="alias">
-                            <el-select v-model="formData.alias" placeholder="请选择Population" clearable
+                            <el-select v-model="formData.population" placeholder="请选择Population" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in aliasOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
@@ -89,17 +89,17 @@
                         }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="chr" label="Chr" width="140">
+                <el-table-column prop="chr" label="Chr" width="">
                 </el-table-column>
-                <el-table-column prop="start" label="Start" width="140">
+                <el-table-column prop="start" label="Start" width="">
                 </el-table-column>
-                <el-table-column prop="end" label="End" width="140">
+                <el-table-column prop="end" label="End" width="">
                 </el-table-column>
-                <el-table-column prop="ntag" label="NTag" width="140">
+                <el-table-column prop="ntag" label="NTag" width="">
                 </el-table-column>
-                <el-table-column prop="kbspan" label="Span(kb)" width="140">
+                <el-table-column prop="kbspan" label="Span(kb)" width="">
                 </el-table-column>
-                <el-table-column prop="tags" label="Tags" width="140" ref="tag" :formatter="stateFormat">
+                <el-table-column prop="tags" label="Tags" width="" show-overflow-tooltip ref="tag" :formatter="stateFormat">
                 </el-table-column>
             </el-table>
             <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum"
