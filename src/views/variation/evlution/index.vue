@@ -198,7 +198,7 @@ export default {
                 })
             }
         },
-        "formData.radio":function(New,Old) {
+        "formData.indicator":function(New,Old) {
             if(New == null || New == "")
             {
 
