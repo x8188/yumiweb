@@ -7,10 +7,7 @@
             </div>
             <el-row :gutter="12" class="filter_box">
                 <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium">
-                    <el-col id="col-one">
-                        <span @click="filter_page()" id="span-second">Filter</span>
-                        <span @click="resetForm">Reset</span>
-                    </el-col>
+                    
                     <el-col :span="6">
                         <el-form-item label="Reference" prop="accession">
                             <el-select v-model="formData.accession" placeholder="请选择Reference" clearable
@@ -30,18 +27,21 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <span style="color:#606266;font-size: 14px;font-weight: 700;">Indicator</span>
+                        <el-form-item label="Version" prop="radio">
+                            <span style="color:#606266;font-size: 14px;font-weight: 700;">Indicator</span>
                         <!-- <div class="indicator-box"> -->
-                        <div class="radio-box">
-                            <el-radio v-model="formData.radio" label="Fst">Fst</el-radio>
-                            <el-radio v-model="formData.radio" label="XPCLR">XPCLR</el-radio>
-                        </div>
+                            <div class="radio-box">
+                                <el-radio v-model="formData.radio" label="Fst">Fst</el-radio>
+                                <el-radio v-model="formData.radio" label="XPCLR">XPCLR</el-radio>
+                            </div>
+                        </el-form-item>
+                        
                         
                         <!-- </div> -->
                         
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="Selection Type" prop="description">
+                        <el-form-item label="Selection Type" prop="SelectType">
                             <el-select v-model="formData.SelectType" placeholder="请选择Selection Type" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in SelectionTypeOptions" :key="index" :value="item"
@@ -50,7 +50,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="Compare Population" prop="description">
+                        <el-form-item label="Compare Population" prop="PopCom">
                             <el-select v-model="formData.PopCom" placeholder="请选择Compare Population" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in PopOptions" :key="index" :value="item"
@@ -59,7 +59,7 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="CHR" prop="description">
+                        <el-form-item label="CHR" prop="chr">
                             <el-select v-model="formData.chr" placeholder="请选择CHR" clearable
                                 :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
@@ -68,19 +68,31 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <div id="inner_input">
-                            <el-input placeholder="start" v-model="formData.start"></el-input>
-                            <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-                            <el-input placeholder="end" v-model="formData.end"></el-input>
-                        </div>
+                            <div id="inner_input">
+                                <el-input placeholder="start" v-model="formData.start"></el-input>
+                                <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
+                                <el-input placeholder="end" v-model="formData.end"></el-input>
+                            </div>
                     </el-col>
+                    <el-col>
+          <div  class="footer">
+        <el-button size="small" @click="resetForm" style="margin-right: 15px;">
+          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
+          <span style="color: #20AE35">清空</span>
+        </el-button>
+        <el-button type="primary" size="small" @click="filter_page()">
+          查询
+            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
+        </el-button>
+      </div>
+        </el-col>
                 </el-form>
             </el-row>
         </div>
 
         <div class="buttom_box">
             <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-            <el-table ref="multipleTable" :data="tableData"  tooltip-effect="dark" border=""
+            <el-table v-loading="loading" ref="multipleTable" :data="tableData"  tooltip-effect="dark" border=""
                 @selection-change="handleSelectionChange" height="400px">
                 <!-- 展示的条目 -->
                 <el-table-column type="selection" width="55" @click="getVID($event)">
@@ -136,6 +148,7 @@ export default {
                 pageNum: 1,
                 pageSize: 10,
             },
+            loading:true,
             multipleSelection: [],
             Download_Vid: [],
             tableData: [],
@@ -151,12 +164,14 @@ export default {
                 chr:""
             },
             rules: {
-                accession: [],
-                version: [],
-                radio: [],
-                SelectType: [],
-                PopCom: [],
-                chr: [],
+                accession: "",
+                version: "",
+                radio: "",
+                SelectType: "",
+                PopCom: "",
+                start: "",
+                end: "",
+                chr:""
             },
             accessionOptions: [],
             versionOptions: [],
@@ -199,16 +214,30 @@ export default {
                     this.PopOptions = res.data
                 })
             }
+        },
+        formData:{
+            handler(newVal,oldVal){
+                this.loading = true;
+                Search(this.formData, this.queryParams).then(res => {
+                console.log(res.rows)
+                this.total = res.total
+                this.tableData = res.rows
+                this.loading = false
+            })
+            },
+            deep:true
         }
     },
     mounted() {
     },
     created() {
         this.Request_beforeMounted()
+        this.loading = true
         Search(this.formData, this.queryParams).then(res => {
             console.log(res.rows)
             this.total = res.total
             this.tableData = res.rows
+            this.loading = false
         })
     },
     methods: {
@@ -218,6 +247,7 @@ export default {
             Search(this.formData, this.queryParams).then(res => {
                 this.total = res.total
                 this.tableData = res.rows
+                this.loading =false
             })
         },
         handleSelectionChange(val) {
@@ -231,6 +261,11 @@ export default {
         },
         resetForm() {
             this.$refs['elForm'].resetFields()
+            //此处设置为空其实应该将输入的绑定值 和prop的绑定值名字设置为相同 在这里为了方便直接设置
+            this.formData.start = ""
+            this.formData.end = ""
+            this.formData.accession = this.accessionOptions[0]
+            this.formData.version = this.versionOptions[0]
         },
         /** 导出操作按钮 */
         handleExport() {
@@ -264,10 +299,12 @@ export default {
         // 筛选页面
         filter_page() {
             console.log(this.formData)
+            this.loading = false
             Search(this.formData, this.queryParams).then(res => {
                 console.log(res)
                 this.tableData = res.rows
                 this.total = res.total
+                this.loading = true
             }).catch(err => {
                 console.log(err)
             })
@@ -414,4 +451,12 @@ export default {
      .pagination-container {
          margin-left: 15px;
      }
- }</style>
+ }
+ .footer {
+margin-top: 20px;
+// margin-right: 20px;
+// background-color: pink;
+display: flex;
+justify-content: space-between
+}
+ </style>

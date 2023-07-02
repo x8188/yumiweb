@@ -7,10 +7,7 @@
         </div>
       <el-row :gutter="12" class="filter_box" >
         <el-form v-show="filterHide" ref="elForm" :model="formData" :rules="rules" size="medium">
-          <el-col id="col-one">
-            <span @click="filter_page()" id="span-second">Filter</span>
-            <span @click="resetForm">Reset</span>
-          </el-col>
+        
           <el-col :span="6">
             <el-form-item label="Reference" prop="accession">
               <el-select v-model="formData.accession" placeholder="请选择Reference" clearable :style="{ width: '100%' }">
@@ -93,6 +90,18 @@
               <el-input placeholder="请输入最大值" v-model="formData.maf_max"></el-input>
             </div>
           </el-col>
+          <el-col>
+          <div  class="footer">
+        <el-button size="small" @click="resetForm" style="margin-right: 15px;">
+          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
+          <span style="color: #20AE35">清空</span>
+        </el-button>
+        <el-button type="primary" size="small" @click="filter_page()">
+          查询
+            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
+        </el-button>
+      </div>
+        </el-col>
         </el-form>
       </el-row>
     </div>
@@ -101,7 +110,7 @@
 
     <div class="buttom_box">
       <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
+      <el-table v-loading="loading" ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
         @selection-change="handleSelectionChange" height="400px">
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID($event)">
@@ -167,22 +176,23 @@ export default {
       },
       multipleSelection: [],
       Download_Vid: [],
+      loading:true,
       //  死数据 请求到的数据量太少
       tableData: [],
       multipleSelection: [],
       formData: {
         accession: "",
         version: "",
-        alias: "",
+        alias: "AMP",
         description: "",
-        type: "",
-        chr: "",
-        consequences: "",
-        impacts: "",
-        maf_min: "",
-        maf_max: "",
-        posi_min: "",
-        posi_max: ""
+        type: "DEL",
+        chr: "chr1",
+        consequences: "intergenic_variant",
+        impacts: "MODIFIER",
+        maf_min: "0",
+        maf_max: "0.9",
+        posi_min: "50000",
+        posi_max: "800000000"
       },
       rules: {
         accession: [],
@@ -223,8 +233,21 @@ export default {
           this.formData.version = this.versionOptions[0]
         })
       }
+    },
+    formData:{
+      handler(newval,odlval){
+        this.loading = true;
+        Search(this.formData, this.queryParams).then(res => {
+          this.total = res.total
+          this.tableData = res.rows
+          this.loading = false
+        })
+
+      },
+      deep:true
 
     }
+
   },
   mounted() {
     this.$nextTick(this.Request_beforeMounted())
@@ -244,7 +267,7 @@ export default {
         posi_min: "50000",
         posi_max: "800000000"
       }
-    Search(formm, this.queryParams).then(res => {
+    Search(this.formData, this.queryParams).then(res => {
       this.total = res.total
       this.tableData = res.rows
     })
@@ -269,6 +292,7 @@ export default {
       Search(this.formData, this.queryParams).then(res => {
         this.total = res.total
         this.tableData = res.rows
+        this.loading = false
       })
     },
     handleSelectionChange(val) {
@@ -279,6 +303,10 @@ export default {
     },
     resetForm() {
       this.$refs['elForm'].resetFields()
+      this.formData.start = ""
+      this.formData.end = ""
+      this.formData.accession = this.accessionOptions[0]
+      this.formData.version = this.versionOptions[0]
     },
     /** 导出操作按钮 */
     handleExport() {
@@ -311,9 +339,11 @@ export default {
     // 筛选页面
     filter_page() {
       console.log(this.formData)
+      this.loading = true
       Search(this.formData, this.queryParams).then(res => {
         this.tableData = res.rows
         this.total = res.total
+        this.loading = false
       }).catch(err => {
         console.log(err)
       })
@@ -331,6 +361,7 @@ export default {
       })
       getSelectPopulation().then(res => {
         this.aliasOptions = res.data
+        // this.formData.alias = this.aliasOptions[2]
       }).catch(err => {
         console.log("Population出现： " + err)
       })
@@ -341,6 +372,7 @@ export default {
       })
       getSelectConsequences().then(res => {
         this.consequenceOptions = res.data
+        // this.formData.consequence = this.consequenceOptions[1]
       }).catch(err => {
         console.log("Consequences出现： " + err)
       })
@@ -351,11 +383,13 @@ export default {
       })
       getSelectRegion().then(res => {
         this.chrOptions = res.data
+        // this.formData.chr = this.chrOptions[0]
       }).catch(err => {
         console.log("Region出现： " + err)
       })
       getSelectVariantClass().then(res => {
         this.typeOptions = res.data
+        // this.formData.type = this.typeOptions[1]
       }).catch(err => {
         console.log("VariantClass出现： " + err)
       })
@@ -379,7 +413,7 @@ export default {
    .el-form {
       width: 300px;
 
-     margin-top: 10px;
+    //  margin-top: 10px;
      display: flex;
      flex-direction: column;
      align-items: center;
@@ -393,7 +427,7 @@ export default {
 
          .el-input {
            flex: 1;
-           margin: 4px;
+           margin: 0px;
          }
        }
      }
@@ -459,5 +493,14 @@ export default {
    .pagination-container {
      margin-left: 15px;
    }
- }</style>
+ }
+ .footer {
+// margin-top: 20px;
+// margin-right: 20px;
+// background-color: pink;
+margin-top: 20px;
+display: flex;
+justify-content: space-between
+}
+ </style>
   
