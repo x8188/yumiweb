@@ -21,7 +21,7 @@ export function getImportVariant(variantId) {
 export function addImportVariant(data) {
   return request({
     url: '/zeamap/ImportVariant/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

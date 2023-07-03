@@ -21,7 +21,7 @@ export function getImportLqtl(linkageQtlId) {
 export function addImportLqtl(data) {
   return request({
     url: '/zeamap/ImportLqtl/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

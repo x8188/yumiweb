@@ -21,7 +21,7 @@ export function getTarget(tfbdTargetId) {
 export function addTarget(data) {
   return request({
     url: '/zeamap/Tfdbtarget/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

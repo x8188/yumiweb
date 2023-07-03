@@ -12,15 +12,7 @@ export function listGermplasm() {
 export function choose(params) {
   return request({
     url: '/zeamap/germplasm/choose',
-    method: 'get',
+    method: 'post',
     params: params
-  })
-}
-
-// germplasm表的下载
-export function listdownload() {
-  return request({
-    url:'/zeamap/germplasm/download',
-    method: 'get',
   })
 }

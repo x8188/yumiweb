@@ -20,8 +20,8 @@ export function getSubgroup(subgroupId) {
 // 新增Import
 export function addSubgroup(data) {
   return request({
-    url: '/zeamap/subgroup',
-    method: 'post',
+    url: '/zeamap/subgroup/add',
+    method: 'get',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addSubgroup(data) {
 // 修改Import
 export function updateSubgroup(data) {
   return request({
-    url: '/zeamap/subgroup',
+    url: '/zeamap/subgroup/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateSubgroup(data) {
 // 删除Import
 export function delSubgroup(subgroupId) {
   return request({
-    url: '/zeamap/subgroup/' + subgroupId,
+    url: '/zeamap/subgroup/remove/' + subgroupId,
     method: 'delete'
   })
 }

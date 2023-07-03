@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="180px">
       <el-form-item label="tissueClass" prop="tissueClass">
         <el-input
           v-model="queryParams.tissueClass"
@@ -33,7 +33,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="zmap_tissue_expression 上显示的具体名称" prop="tissueSvgclass">
+      <el-form-item label="zmap_tissue_expression" prop="tissueSvgclass">
         <el-input
           v-model="queryParams.tissueSvgclass"
           placeholder="请输入zmap_tissue_expression 上显示的具体名称"

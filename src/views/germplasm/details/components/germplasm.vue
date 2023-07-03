@@ -11,7 +11,6 @@
               <el-col :span="17">
                 <el-select
                   v-model="value"
-                  multiple
                   filterable
                   remote
                   reserve-keyword
@@ -27,6 +26,7 @@
                     :value="item.value">
                   </el-option>
                 </el-select>
+                <el-button type="primary" @click="resetTable">重置</el-button>
               </el-col>
             </el-form>
           </el-row>
@@ -90,7 +90,7 @@ export default {
   },
   watch: {},
   created() {
-    this.getTabbleData();
+    this.getTableData();
   },
   mounted() {
   },
@@ -102,16 +102,23 @@ export default {
     },
   },
   methods: {
-    Screening(data) {
-      if (data !== ''){
-        choose(data).then(res=>{
-          console.log(data)
-          this.tableData=res.rows;
+    resetTable() {
+      this.options = [];
+      this.getTableData();
+      this.value =[];
+    },
+    Screening(value) {
+      console.log(value,'9090')
+      if (value!== null){
+        choose({name : value}).then(res=>{
+          console.log(res)
+          //this.getTableData()
+          this.tableData=res.rows
           console.log(res.rows)
+          console.log(this.tableData)
         })
       } else {
-        console.log(data)
-        this.getTabbleData()
+        this.getTableData()
         console.log(this.tableData)
       }
     },
@@ -127,9 +134,10 @@ export default {
         }, 200);
       } else {
         this.options = [];
+        this.getTableData()
       }
     },
-    getTabbleData(){
+    getTableData(){
       listGermplasm().then(res=>{
         this.tableData=res.rows;
         console.log(res);

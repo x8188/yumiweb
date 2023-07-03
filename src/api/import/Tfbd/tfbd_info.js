@@ -21,7 +21,7 @@ export function getInfo(tfbdId) {
 export function addInfo(data) {
   return request({
     url: '/zeamap/Tfdbinfo/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

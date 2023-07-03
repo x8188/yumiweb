@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
       <el-form-item label="targetGene" prop="targetGene">
         <el-input
           v-model="queryParams.targetGene"
@@ -127,7 +127,7 @@
         <el-form-item label="targetGene" prop="targetGene">
           <el-input v-model="form.targetGene" placeholder="请输入targetGene" />
         </el-form-item>
-        <el-form-item label="pValue"" prop="pValue">
+        <el-form-item label="pValue" prop="pValue">
           <el-input v-model="form.pValue" placeholder="请输入pValue" />
         </el-form-item>
         <el-form-item label="tfbdNameId" prop="tfbdNameId">

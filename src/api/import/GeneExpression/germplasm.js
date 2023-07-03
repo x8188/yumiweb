@@ -20,8 +20,8 @@ export function getGermplasm(germplasmId) {
 // 新增产品详情
 export function addGermplasm(data) {
   return request({
-    url: '/zeamap/germplasm',
-    method: 'post',
+    url: '/zeamap/germplasm/add',
+    method: 'get',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addGermplasm(data) {
 // 修改产品详情
 export function updateGermplasm(data) {
   return request({
-    url: '/zeamap/germplasm',
+    url: '/zeamap/germplasm/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateGermplasm(data) {
 // 删除产品详情
 export function delGermplasm(germplasmId) {
   return request({
-    url: '/zeamap/germplasm/' + germplasmId,
+    url: '/zeamap/germplasm/remove/' + germplasmId,
     method: 'delete'
   })
 }
