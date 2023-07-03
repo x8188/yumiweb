@@ -1,10 +1,10 @@
 <template>
   <div class="geno-viewer-container">
     <transition name="fade-trans" mode="out-in">
-      <GenoViewer v-show="!showResult" @showResult="showResultData" />
+      <GenoViewer v-if ="!showResult" @showResult="showResultData" />
     </transition>
     <transition name="fade-trans" mode="out-in">
-      <ResultInfos v-show="showResult" @returnMultiExpression="returnMultiExpression"/>
+      <ResultInfos v-if="showResult" @returnMultiExpression="returnMultiExpression" :formInfo="formInfo"/>
     </transition>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       showResult: false,
-      formInfo : ''
+      formInfo : {}
     }
   },
   methods: {
