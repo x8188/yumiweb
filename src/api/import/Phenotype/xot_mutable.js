@@ -30,7 +30,7 @@ export function addImportXot_mutable(data) {
 export function updateImportXot_mutable(data) {
   return request({
     url: '/zeamap/ImportXot_mutable/edit',
-    method: 'put',
+    method: 'get',
     data: data
   })
 }

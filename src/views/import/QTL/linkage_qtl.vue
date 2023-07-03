@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
       <el-form-item label="chr" prop="chr">
         <el-input
           v-model="queryParams.chr"
@@ -25,10 +25,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="qtlUid"" prop="qtlUid">
+      <el-form-item label="qtlUid" prop="qtlUid">
         <el-input
           v-model="queryParams.qtlUid"
-          placeholder="请输入qtlUid""
+          placeholder="请输入qtlUid"
           clearable
           @keyup.enter.native="handleQuery"
         />

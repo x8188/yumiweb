@@ -1,6 +1,6 @@
 npm<template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="230px">
       <el-form-item label="组织高亮值" prop="expressionValue">
         <el-input
           v-model="queryParams.expressionValue"
@@ -33,7 +33,7 @@ npm<template>
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="基因ID feature 表的uniquename" prop="featureId">
+      <el-form-item label="基因ID feature 表的uniquename" prop="featureId" >
         <el-input
           v-model="queryParams.featureId"
           placeholder="请输入基因ID feature 表的uniquename"

@@ -21,7 +21,7 @@ export function getImportfeature(featureId) {
 export function addImportfeature(data) {
   return request({
     url: '/zeamap/Importfeature/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

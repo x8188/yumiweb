@@ -9,7 +9,7 @@
         <div class="box">
           <a @click="handle(item.name)">
             <div class="box_left">
-              <img>
+              <img src="@/assets/images/population.jpg" style="height: 180px;width: 90%">
             </div>
             <div class="box_right">
               <div>

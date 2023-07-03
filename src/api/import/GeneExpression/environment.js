@@ -20,8 +20,8 @@ export function getImport(environmentId) {
 // 新增ImportEnvironment
 export function addImport(data) {
   return request({
-    url: '/zeamap/Import',
-    method: 'post',
+    url: '/zeamap/Import/add',
+    method: 'get',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addImport(data) {
 // 修改ImportEnvironment
 export function updateImport(data) {
   return request({
-    url: '/zeamap/Import',
+    url: '/zeamap/Import/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImport(data) {
 // 删除ImportEnvironment
 export function delImport(environmentId) {
   return request({
-    url: '/zeamap/Import/' + environmentId,
+    url: '/zeamap/Import/remove' + environmentId,
     method: 'delete'
   })
 }

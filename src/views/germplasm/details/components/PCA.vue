@@ -6,7 +6,7 @@
       <el-row :gutter="15">
         <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
           <el-col :span="6">
-            <el-form-item label="PCA" prop="field101">
+            <el-form-item label="PCA" prop="field101" >
               <el-select v-model="formData.field101" :style="{width: '100%'}" @change="pcaChange(formData)">
                 <el-option v-for="(item, index) in field101Options" :key="index" :label="item.label"
                            :value="item.value" :disabled="item.disabled"></el-option>
@@ -15,7 +15,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label-width="1px" label="" prop="field102">
-              <el-select v-model="formData.field102" :style="{width: '60%'}" @change="pcaChange">
+              <el-select v-model="formData.field102" :style="{width: '60%'}" @change="pcaChange(formData)">
                 <el-option v-for="(item, index) in field102Options" :key="index" :label="item.label"
                            :value="item.value" :disabled="item.disabled"></el-option>
               </el-select>
@@ -47,23 +47,29 @@ export default {
       },
       field101Options: [{
         "label": "PC1",
-        "value": 1
+        "value": 1 ,
+        disabled: false ,
       }, {
         "label": "PC2",
-        "value": 2
+        "value": 2 ,
+        disabled: true,
       }, {
         "label": "PC3",
-        "value": 3
+        "value": 3,
+        disabled: false,
       }],
       field102Options: [{
         "label": "PC1",
-        "value": 1
+        "value": 1 ,
+        disabled: true
       }, {
         "label": "PC2",
-        "value": 2
+        "value": 2,
+        disabled: false
       }, {
         "label": "PC3",
-        "value": 3
+        "value": 3,
+        disabled: false
       }],
       pcalist:[],
     }
@@ -77,6 +83,49 @@ export default {
   },
   methods: {
     pcaChange(data){
+      if (data.field101==1&&data.field102==2){
+        this.field101Options[0].disabled=false;
+        this.field101Options[1].disabled=true;
+        this.field101Options[2].disabled=false;
+        this.field102Options[0].disabled=true;
+        this.field102Options[1].disabled=false;
+        this.field102Options[2].disabled=false;
+      } else if(data.field101==1&&data.field102==3){
+        this.field101Options[0].disabled=false;
+        this.field101Options[1].disabled=false;
+        this.field101Options[2].disabled=true;
+        this.field102Options[0].disabled=true;
+        this.field102Options[1].disabled=false;
+        this.field102Options[2].disabled=false;
+      } else if(data.field101==2&&data.field102==1){
+        this.field101Options[0].disabled=true;
+        this.field101Options[1].disabled=false;
+        this.field101Options[2].disabled=true;
+        this.field102Options[0].disabled=false;
+        this.field102Options[1].disabled=true;
+        this.field102Options[2].disabled=false;
+      } else if(data.field101==2&&data.field102==3){
+        this.field101Options[0].disabled=false;
+        this.field101Options[1].disabled=false;
+        this.field101Options[2].disabled=true;
+        this.field102Options[0].disabled=false;
+        this.field102Options[1].disabled=true;
+        this.field102Options[2].disabled=false;
+      } else if(data.field101==3&&data.field102==1){
+        this.field101Options[0].disabled=true;
+        this.field101Options[1].disabled=false;
+        this.field101Options[2].disabled=false;
+        this.field102Options[0].disabled=false;
+        this.field102Options[1].disabled=false;
+        this.field102Options[2].disabled=true;
+      } else if(data.field101==3&&data.field102==2){
+        this.field101Options[0].disabled=false;
+        this.field101Options[1].disabled=true;
+        this.field101Options[2].disabled=false;
+        this.field102Options[0].disabled=false;
+        this.field102Options[1].disabled=false;
+        this.field102Options[2].disabled=true;
+      }
       this.getPCA();
     },
     getPCA() {

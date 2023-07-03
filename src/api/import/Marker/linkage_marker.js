@@ -21,7 +21,7 @@ export function getImportmarker(linkageMarkerId) {
 export function addImportmarker(data) {
   return request({
     url: '/zeamap/Importmarker/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

@@ -20,8 +20,8 @@ export function getExpression(expressionId) {
 // 新增基因表达量查询
 export function addExpression(data) {
   return request({
-    url: '/zeamap/expression',
-    method: 'post',
+    url: '/zeamap/expression/add',
+    method: 'get',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addExpression(data) {
 // 修改基因表达量查询
 export function updateExpression(data) {
   return request({
-    url: '/zeamap/expression',
+    url: '/zeamap/expression/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateExpression(data) {
 // 删除基因表达量查询
 export function delExpression(expressionId) {
   return request({
-    url: '/zeamap/expression/' + expressionId,
+    url: '/zeamap/expression/remove/' + expressionId,
     method: 'delete'
   })
 }

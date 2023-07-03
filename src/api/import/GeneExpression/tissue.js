@@ -20,8 +20,8 @@ export function getImportTissue(tissueId) {
 // 新增组织
 export function addImportTissue(data) {
   return request({
-    url: '/zeamap/ImportTissue',
-    method: 'post',
+    url: '/zeamap/ImportTissue/add',
+    method: 'get',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addImportTissue(data) {
 // 修改组织
 export function updateImportTissue(data) {
   return request({
-    url: '/zeamap/ImportTissue',
+    url: '/zeamap/ImportTissue/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportTissue(data) {
 // 删除组织
 export function delImportTissue(tissueId) {
   return request({
-    url: '/zeamap/ImportTissue/' + tissueId,
+    url: '/zeamap/ImportTissue/remove/' + tissueId,
     method: 'delete'
   })
 }

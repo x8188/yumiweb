@@ -21,7 +21,7 @@ export function getFeatureloc(featurelocId) {
 export function addFeatureloc(data) {
   return request({
     url: '/zeamap/ImportFeatureloc/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

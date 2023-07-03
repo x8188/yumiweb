@@ -21,7 +21,7 @@ export function getImportMutable(mutableId) {
 export function addImportMutable(data) {
   return request({
     url: '/zeamap/ImportMutable/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

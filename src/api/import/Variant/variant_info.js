@@ -21,7 +21,7 @@ export function getImportInfo(variantinfoId) {
 export function addImportInfo(data) {
   return request({
     url: '/zeamap/ImportInfo/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }
