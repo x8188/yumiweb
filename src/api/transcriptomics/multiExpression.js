@@ -18,7 +18,8 @@ export const reqGermplasm = () =>
 export const reqTissue = () =>
   request({ url: `/zeamap/tissue/multi`, method: "get" });
 
-export const reqMultiFull= (fullData) =>
-    request({ url: `/zeamap/expression/mutil`, method: "post" ,data:fullData});
+// export const reqMultiFull= (fullData) =>
+//     request({ url: `/zeamap/expression/mutil`, method: "post" ,data:fullData});
 
-
+export const reqMultiFull = (type,fullData) =>
+  request({ url: `/zeamap/tissue/${type}`, method: "get" ,data:fullData});

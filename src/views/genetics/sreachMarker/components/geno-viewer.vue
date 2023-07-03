@@ -349,7 +349,7 @@ export default {
         lg: "",
         cm_min: 0.01,
         cm_max: 100.88,
-        TraitId: "null",
+        TraitId: "",
       },
       checkBox: [],
       options: {
@@ -400,7 +400,7 @@ export default {
           }));
         }
         let res4 = await this.$API.marker.reqselecttraitid(
-          this.formData.TraitId
+          "null"
         );
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
@@ -432,7 +432,7 @@ export default {
           }));
         }
         let res4 = await this.$API.marker.reqlinkagetraitid(
-          this.formData.TraitId
+         "null"
         );
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
