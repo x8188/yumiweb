@@ -11,7 +11,7 @@
               <div class="reference-item select-item">
                 <span>Reference</span>
                 <el-form-item>
-                  <el-select clearable filterable="" v-model="formData.accession" placeholder="" >
+                  <el-select @change="changeReference" clearable filterable="" v-model="formData.accession" placeholder="" >
                       <el-option
                         v-for="(item,i) in options.accession"
                         :key="i"
@@ -24,20 +24,22 @@
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select clearable filterable v-model="formData.version" placeholder="" @focus="checkVersionIsNull" >
-                    <el-option
-                      v-for="(item,i) in options.version"
-                      :key="i"
-                      :label="item"
-                      :value="item"
-                      ></el-option>
+                  <el-select @change="changeVersion" clearable filterable v-model="formData.version" placeholder="" @focus="dropDownVersion" >
+                    <div class="version-options-container" v-if="options.version.length > 0" >
+                      <el-option
+                        v-for="(item,i) in options.version"
+                        :key="i"
+                        :label="item"
+                        :value="item"
+                        ></el-option>
+                    </div>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="population-item select-item">
                 <span>Population</span>
                 <el-form-item>
-                  <el-select clearable filterable v-model="formData.alias" placeholder="">
+                  <el-select @change="changePopulation" clearable filterable v-model="formData.alias" placeholder="">
                     <el-option
                       v-for="(item,i) in options.alias"
                       :key="i"
@@ -110,21 +112,17 @@
                   <span>chr</span>
                   <el-form-item>
                   <el-select clearable  @focus="checkChr()" filterable v-model="formData.chorm" placeholder="">
-                    <template v-if="chrLoading">
-                      <div>
-                        <el-option label="正在加载中" :value="null" :key="null" disabled></el-option>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <div>
-                        <el-option
-                        v-for="(item,i) in options.chorm"
-                        :key="i"
-                        :label="item"
-                        :value="item"
-                        ></el-option>
-                      </div>
-                    </template>
+                      <el-option
+                      v-if="chrLoading && this.options.chorm.length === 0"
+                      :value="null"
+                      disabled
+                      ><span>正在加载中...</span></el-option>
+                      <el-option
+                      v-for="(item,i) in options.chorm"
+                      :key="i"
+                      :label="item"
+                      :value="item"
+                      ></el-option>
                   </el-select>
                 </el-form-item>
                 </div>
@@ -216,7 +214,6 @@ components: { SvgIcon },
   created() {
     this.dropDownReference()
     this.dropDownPopulation()
-    this.checkChr()
     this.initGermplasm()
   },
   watch: {
@@ -226,19 +223,17 @@ components: { SvgIcon },
     }
   },
   methods:{
-   // version是否为空
-   checkVersionIsNull() {
-      if(this.formData.accession==='') {
-        this.$message.error('请先选择Reference')
-      }
-    },
     // 获取下拉框信息
     async dropDownReference() {
       const { data }= await dropDownReference()
       this.options.accession = data
     },
-    async dropDownVersion(params) {
-      const { data }= await dropDownVersion(params)
+    async dropDownVersion() {
+      if(this.formData.accession==='') {
+        this.$message.error('请先选择Reference')
+        return
+      }
+      const { data } = await dropDownVersion({accession: this.formData.accession})
       this.options.version = data
     },
     async dropDownPopulation() {
@@ -253,18 +248,36 @@ components: { SvgIcon },
       const { data }= await dropDownChr(this.formData)
       this.options.chorm = data
     },
-    checkChr() {
+    async checkChr() {
       this.chrLoading = true
       const { accession, version, alias, description} = this.formData;
       if(accession !== '' && version !== '' && alias !== '' && description !== ''
       ) {
-        this.dropDownChr()
+        await this.dropDownChr()
         this.chrLoading = false
       } else {
         this.$message.error('请先选择前边三项')
       }
     },
+    // select改变事件
+    async changeReference(newVal) {
+      this.formData.accession = newVal
+      await this.dropDownVersion()
+      this.formData.version = this.options.version[0]
 
+      await this.dropDownAnalysis()
+      this.formData.description =  this.options.description.includes("WGS SNPs/INDELs/SVs in AMP")  ? "WGS SNPs/INDELs/SVs in AMP" : this.options.description[0]
+    },
+    async changeVersion(newVal) {
+      this.formData.version = newVal
+      await this.dropDownAnalysis()
+      this.formData.description =  this.options.description.includes("WGS SNPs/INDELs/SVs in AMP")  ? "WGS SNPs/INDELs/SVs in AMP" : this.options.description[0]
+    },
+    async changePopulation(newVal) {
+      this.formData.alias = newVal
+      await this.dropDownAnalysis()
+      this.formData.description =  this.options.description.includes("WGS SNPs/INDELs/SVs in AMP")  ? "WGS SNPs/INDELs/SVs in AMP" : this.options.description[0]
+    },
     // germplasm那一堆
     async germplasmTST() {
       const { data } = await germplasmSelectTST()
@@ -308,16 +321,29 @@ components: { SvgIcon },
     },
     // 检查表单
     checkSubmitForm(queryForm) {
+      console.log(this.formData)
       const { accession, version, alias, description, germplasm, chorm, start, end} = queryForm
       // 应该用责任链封装的，但是赶工，以后谁重写的时候再优化吧
       if(accession == "") return '请先选择reference'
-      if(version == "") return "请先选择version"
+      if(version == "" || version === undefined) return "请先选择version"
       if(alias == "") return "请先选择population"
-      if(description == "") return "请先选择analysis"
+      if(description === "" || description === undefined) return "请先选择analysis"
       if(germplasm.length == 0) return  "请先选择germplasm"
-      if(chorm == "") return "请先选择chr"
-      if(start == "") return "请先选择start"
-      if(end == "" ) return "清闲选择end"
+      if(chorm == "" || chorm === undefined) return "请先选择chr"
+      if(start === "" || isNaN(start)) {
+        if(start === "") {
+          return "请先选择start"
+        } else {
+          return "start必须为一个数字范围，请改正"
+        }
+      } 
+      if(end === "" || isNaN(end)) {
+        if(end === "") {
+          return "请先选择end"
+        } else {
+          return "end必须为一个数字范围，请改正"
+        }
+      } 
       return true
     },
     // 提交表单
@@ -337,10 +363,10 @@ components: { SvgIcon },
     },
     reset() {
       this.region= '1',
-      this.formData.accession= '',
-      this.formData.version= '',
-      this.formData.alias= '',
-      this.formData.description= '',
+      this.formData.accession= 'B73',
+      this.formData.version= '4.43.0',
+      this.formData.alias= 'AMP',
+      this.formData.description= 'WGS SNPs/INDELs/SVs in AMP',
       this.formData.start= '',
       this.formData.end= '',
       this.formData.chr= '',
