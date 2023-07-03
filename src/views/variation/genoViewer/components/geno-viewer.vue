@@ -11,20 +11,20 @@
               <div class="reference-item select-item">
                 <span>Reference</span>
                 <el-form-item>
-                  <el-select filterable="" v-model="formData.accession" placeholder="" >
-                    <el-option
-                      v-for="(item,i) in options.accession"
-                      :key="i"
-                      :label="item"
-                      :value="item"
-                      ></el-option>
+                  <el-select clearable filterable="" v-model="formData.accession" placeholder="" >
+                      <el-option
+                        v-for="(item,i) in options.accession"
+                        :key="i"
+                        :label="item"
+                        :value="item"
+                        ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="version-item select-item">
                 <span>Version</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.version" placeholder="" @focus="checkVersionIsNull" >
+                  <el-select clearable filterable v-model="formData.version" placeholder="" @focus="checkVersionIsNull" >
                     <el-option
                       v-for="(item,i) in options.version"
                       :key="i"
@@ -37,7 +37,7 @@
               <div class="population-item select-item">
                 <span>Population</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.alias" placeholder="">
+                  <el-select clearable filterable v-model="formData.alias" placeholder="">
                     <el-option
                       v-for="(item,i) in options.alias"
                       :key="i"
@@ -50,7 +50,7 @@
               <div class="analysis-item select-item">
                 <span>Analysis</span>
                 <el-form-item>
-                  <el-select filterable v-model="formData.description" placeholder="" @focus="checkAnalysis()">
+                  <el-select clearable filterable v-model="formData.description" placeholder="" @focus="checkAnalysis()">
                     <el-option
                       v-for="(item,i) in options.description"
                       :key="i"
@@ -74,12 +74,16 @@
                         @change="(val) => handleCheckAllGermplasm(name,val)" 
                         v-model="checkAll[name]" 
                         style="margin-left: 12px;">
-                        <span>
+                        <span style="display: flex;">
                           {{ name }}&nbsp;&nbsp;({{checkGermplasms[name].length }}/
-                            <div class="skelection" v-if="germplasmItems[name].length === 0"></div>
+                          <template v-if="germplasmItems[name].length === 0">
+                            <div style="display: flex;">
+                              <div class="skelection" ></div>
+                              <span>)</span>
+                            </div>
+                          </template>
                            <span v-else>{{germplasmItems[name].length}})&nbsp;&nbsp;</span>
                         </span>
-                        <i class=" el-icon-arrow-down" style="margin-left: -25px;"></i>
                         </el-checkbox>
                       </template>
                       <div class="germplasm-collapse-items">
@@ -105,13 +109,13 @@
                 <div class="chr">
                   <span>chr</span>
                   <el-form-item>
-                  <el-select @focus="checkChr()" filterable v-model="formData.chorm" placeholder="">
-                    <el-option
-                      v-for="(item,i) in options.chorm"
-                      :key="i"
-                      :label="item"
-                      :value="item"
-                      ></el-option>
+                  <el-select clearable  @focus="checkChr()" filterable v-model="formData.chorm" placeholder="">
+                      <el-option
+                        v-for="(item,i) in options.chorm"
+                        :key="i"
+                        :label="item"
+                        :value="item"
+                        ></el-option>
                   </el-select>
                 </el-form-item>
                 </div>
@@ -150,12 +154,13 @@ export default {
 components: { SvgIcon },
   data() {
     return {
+      chrLoading: true,
       region: '1',
       formData: {
-        accession: '',
-        version: '',
-        alias: '',
-        description: '',
+        accession: 'B73',
+        version: '4.43.0',
+        alias: 'AMP',
+        description: 'WGS SNPs/INDELs/SVs in AMP',
         start: '',
         end: '',
         chorm: '',
@@ -202,6 +207,7 @@ components: { SvgIcon },
   created() {
     this.dropDownReference()
     this.dropDownPopulation()
+    this.checkChr()
     this.initGermplasm()
   },
   watch: {
@@ -239,10 +245,12 @@ components: { SvgIcon },
       this.options.chorm = data
     },
     checkChr() {
+      this.chrLoading = true
       const { accession, version, alias, description} = this.formData;
       if(accession !== '' && version !== '' && alias !== '' && description !== ''
       ) {
         this.dropDownChr()
+        this.chrLoading = false
       } else {
         this.$message.error('请先选择前边三项')
       }
@@ -440,5 +448,24 @@ span {
   width: 30px;
   height: 12px;
   background-color: #efefef;
+  margin-top: 3px;
+  overflow: hidden;
+}
+
+.skelection::after {
+			content: '';
+			display: block;
+			width: 30px;
+			height: 12px;
+      margin-top: 3px;
+			transform: translateX(-100%);
+			background: linear-gradient(90deg, transparent, rgba(225, 225, 225, 0.753), transparent);
+			animation: loading 1.2s infinite;
+		}
+		
+@keyframes loading{
+  100% {
+    transform: translateX(100%);
+  }
 }
 </style>
