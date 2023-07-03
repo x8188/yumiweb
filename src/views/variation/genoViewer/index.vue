@@ -1,7 +1,7 @@
 <template>
   <div class="geno-viewer-container">
     <transition name="fade-trans" mode="out-in">
-      <GenoViewer v-if ="!showResult" @showResult="showResultData" />
+      <GenoViewer v-show="!showResult" @showResult="showResultData" />
     </transition>
     <transition name="fade-trans" mode="out-in">
       <ResultInfos v-if="showResult" @returnMultiExpression="returnMultiExpression" :formInfo="formInfo"/>

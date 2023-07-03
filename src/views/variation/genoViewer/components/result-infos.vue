@@ -1,9 +1,8 @@
 <template>
-  <ZeamapCard>
+  <ZeamapCard :style="{minHeight: minHeight+'px'}">
     <template v-slot:header>
       <Title>Result</Title>
     </template>
-
     <template>
       <el-button type="primary" style="margin-bottom: 20px;" @click="returnMultiExpression()"><i class="el-icon-arrow-left
 "></i> Return</el-button>
@@ -57,6 +56,11 @@
 <script>
 import { selectData } from '@/api/geno-viewer/index'
 export default {
+  computed: {
+    minHeight() {
+          return window.innerHeight-80;
+        }
+  },
   props: {
     formInfo: {
       type: Object,
