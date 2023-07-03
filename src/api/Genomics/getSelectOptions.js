@@ -26,9 +26,9 @@ export function getSelectChr(){
     })
 }
 
-// export function getSelectRegion(){
-//     return request({
-//         url:"/variations/variant/selectChr",
-//         method:"get"
-//     })
-// }
+export function getSelectType(){
+    return request({
+        url:"/system/feature/selectName",
+        method:"get"
+    })
+}
