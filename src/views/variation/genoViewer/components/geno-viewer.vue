@@ -110,12 +110,21 @@
                   <span>chr</span>
                   <el-form-item>
                   <el-select clearable  @focus="checkChr()" filterable v-model="formData.chorm" placeholder="">
-                      <el-option
+                    <template v-if="chrLoading">
+                      <div>
+                        <el-option label="正在加载中" :value="null" :key="null" disabled></el-option>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div>
+                        <el-option
                         v-for="(item,i) in options.chorm"
                         :key="i"
                         :label="item"
                         :value="item"
                         ></el-option>
+                      </div>
+                    </template>
                   </el-select>
                 </el-form-item>
                 </div>
