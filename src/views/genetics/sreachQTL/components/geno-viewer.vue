@@ -263,7 +263,7 @@ export default {
         QTLend: 999999999,
         LinkMap: "",
         TraitCategory: "",
-        TraitId: "null",
+        TraitId: "",
         lodStart: 0.01,
         lodEnd: 1000.88,
       },
@@ -314,7 +314,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqselecttraitid(this.formData.TraitId);
+        let res4 = await this.$API.Qtl.reqselecttraitid("null");
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -337,7 +337,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqlinkagetraitid(this.formData.TraitId);
+        let res4 = await this.$API.Qtl.reqlinkagetraitid("null");
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
