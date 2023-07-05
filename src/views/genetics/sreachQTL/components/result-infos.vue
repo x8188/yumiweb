@@ -41,17 +41,21 @@
           style="width: 100%; margin-top: 30px"
           :data="tableData"
           @selection-change="handleSelectionChange"
+          v-loading="tableloading"
         >
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column
             label="QTL ID"
             align="center"
-            prop="associationQtlId"
+            :prop="filterInfo.hasOwnProperty('linkagemap')?'linkageQtlId':'associationQtlId'"
           />
           <el-table-column label="REF" align="center" prop="accession" />
           <el-table-column label="Version" align="center" prop="version" />
-          <el-table-column label="omics" align="center" prop="omics" />
-          <el-table-column label="xot_uid" align="center" prop="xot_uid" />
+          <el-table-column label="Trait Category" align="center" prop="omics" />
+          <el-table-column label="Trait ID" align="center" prop="xot_uid" />
+          <el-table-column v-if="!filterInfo.hasOwnProperty('linkagemap')" label="Leading -log10(P)" align="center" prop="log" />
+          <el-table-column v-if="filterInfo.hasOwnProperty('linkagemap')" label="LOD" align="center" prop="lod" />
+          <el-table-column v-if="filterInfo.hasOwnProperty('linkagemap')" label="Linkage Map" align="center" prop="linkagemap" />
         </el-table>
         <el-pagination
           background
@@ -87,6 +91,10 @@ export default {
       type: Object,
       default: {},
     },
+    tableloading:{
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -180,15 +188,13 @@ export default {
     // changePage() {
     //   this.$emit("changePage", this.page);
     // },
-    nowPage(newVal) {
+    async nowPage(newVal) {
       this.page.pageNum = newVal;
-      // this.changePage();
-      this.$bus.$emit("changeQtlPage");
+      await this.$bus.$emit("changeQtlPage");
     },
-    changeResultsNums(newVal) {
+    async changeResultsNums(newVal) {
       this.page.pageSize = newVal;
-      this.$bus.$emit("changeQtlPage");
-      // this.changePage();
+      await this.$bus.$emit("changeQtlPage");
     },
   },
 };

@@ -21,7 +21,7 @@ export function getAnalysis(analysisId) {
 export function addAnalysis(data) {
   return request({
     url: '/zeamap/ImportAnalysis/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }
@@ -30,7 +30,7 @@ export function addAnalysis(data) {
 export function updateAnalysis(data) {
   return request({
     url: '/zeamap/ImportAnalysis/edit',
-    method: 'put',
+    method: 'get',
     data: data
   })
 }

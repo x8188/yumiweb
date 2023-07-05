@@ -21,7 +21,7 @@ export function getImportMarker(associationMarkerId) {
 export function addImportMarker(data) {
   return request({
     url: '/zeamap/ImportAssociatonMarker/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

@@ -216,7 +216,6 @@ methods: {
     this.page.pageNum = 1
     const query = {...filter,...this.page.pageSize}
     this.page = {...this.page,...query}
-    console.log('@@@@@@',this.page)
     const data = await this.getData(this.page)
   },
   // 改变每页展示的信息条数

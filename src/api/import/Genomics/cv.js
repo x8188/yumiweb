@@ -21,7 +21,7 @@ export function getCv(cvId) {
 export function addCv(data) {
   return request({
     url: '/zeamap/cv/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

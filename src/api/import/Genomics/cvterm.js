@@ -21,7 +21,7 @@ export function getCvterm(cvtermId) {
 export function addCvterm(data) {
   return request({
     url: '/zeamap/cvterm/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

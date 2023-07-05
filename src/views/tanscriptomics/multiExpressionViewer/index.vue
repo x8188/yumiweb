@@ -65,9 +65,9 @@
             </el-col>
             <el-col :span="24">
               <el-form-item size="large">
-                <el-button class="tryButton">try example</el-button>
-                <el-button type="primary" @click="submitForm">提交</el-button>
-                <el-button @click="resetForm">重置</el-button>
+                <el-button class="tryButton" @click="formData.geneId=exampleGene">try example</el-button>
+                <!-- <el-button type="primary" @click="submitForm">提交</el-button>
+                <el-button @click="resetForm">重置</el-button> -->
               </el-form-item>
             </el-col>
           </el-form>
@@ -81,7 +81,7 @@
           <el-radio label="environment">environment</el-radio>
         </el-radio-group>
         <div class="compareDiv">
-          <el-row :gutter="40">
+          <el-row :gutter="40" v-loading="compareloading">
             <el-col :span="6">
               <h3>Filters</h3>
 
@@ -336,7 +336,7 @@
                     @change="handleCheckAllChange($event, index)"
                     >{{ co_select.label }}</el-checkbox
                   >
-                  <div style="margin: 15px 0"></div>
+                  <!-- <div style="margin: 15px 0"></div> -->
                   <el-checkbox-group
                     v-model="co_select.checkedop"
                     @change="handleCheckedCitiesChange($event, index)"
@@ -524,6 +524,8 @@ export default {
           isIndeterminate: true,
         },
       ],
+      compareloading:false,
+      exampleGene:"Zm00001d008241,Zm00001d026280,Zm00001d014894,Zm00001d013999,Zm00001d004246,Zm00001d002361,Zm00001d046889,Zm00001d019881,Zm00001d023435,Zm00001d009230"
     };
   },
   computed: {},
@@ -537,13 +539,14 @@ export default {
   methods: {
     submitForm() {
       this.submitALL();
-      this.$refs["muExpForm"].validate((valid) => {
-        if (!valid) return;
-        // TODO 提交表单
-      });
+      // this.$refs["muExpForm"].validate((valid) => {
+      //   if (!valid) return;
+      //   // TODO 提交表单
+      // });
     },
     resetForm() {
-      this.$refs["muExpForm"].resetFields();
+      // this.$refs["muExpForm"].resetFields();
+      this.changeCompare()
     },
     handleCheckAllChange(val, index) {
       this.compare_selector[index].checkedop = val
@@ -560,6 +563,7 @@ export default {
         checkedCount < this.compare_selector[index].op.length;
     },
     async changeCompare() {
+      this.compareloading=true
       Object.keys(this.tissue_filter_data).forEach((key) => {
         this.tissue_filter_data[key] = undefined;
       });
@@ -609,6 +613,7 @@ export default {
           );
         }
       }
+      this.compareloading=false
     },
     async getDownMenu() {
       let MultiDownMenu = await this.$API.multi.reqMultiDownMenu();
@@ -661,6 +666,7 @@ export default {
           value: x,
         }));
       }
+      this.formData.version=this.versionOptions[0].value
     },
 
     async submitALL() {
@@ -668,7 +674,6 @@ export default {
         reference: "",
         version: "",
         analysis: "",
-        flag: 0,
         environment: "",
         germplasm: "",
         population: "",
@@ -680,19 +685,20 @@ export default {
       fullData.reference = this.formData.rederence;
       fullData.version = this.formData.version;
 
+      let type=""
       if (this.dbxref_id == "tissue") {
-        fullData.flag = 1;
+        type="tissue"
         fullData.analysis = this.tissue_filter_data.analysis;
         fullData.environment = this.tissue_filter_data.environment;
         fullData.germplasm = this.tissue_filter_data.germplasm;
       } else if (this.dbxref_id == "germplasm") {
-        fullData.flag = 2;
+        type="tissue"
         fullData.analysis = this.germplasm_filter_data.analysis;
         fullData.environment = this.germplasm_filter_data.environment;
         fullData.tissue = this.germplasm_filter_data.tissue;
         fullData.population = this.germplasm_filter_data.population;
       } else {
-        fullData.flag = 3;
+        type="environment"
         fullData.analysis = this.environment_filter_data.analysis;
         fullData.germplasm = this.environment_filter_data.germplasm;
         fullData.tissue = this.environment_filter_data.tissue;
@@ -702,7 +708,7 @@ export default {
 
       fullData.selects=this.compare_selector.reduce((acc, item) => [...acc, ...item.checkedop], []);
       
-      let result = await this.$API.multi.reqMultiFull(fullData);
+      let result = await this.$API.multi.reqMultiFull(type,fullData);
 
       console.log(result);
     },
@@ -712,6 +718,8 @@ export default {
 <style scoped>
 .Multi {
   margin-left: 30px;
+  width: 80%;
+  margin: 0 auto;
 }
 .tryButton {
   color: #09a620;

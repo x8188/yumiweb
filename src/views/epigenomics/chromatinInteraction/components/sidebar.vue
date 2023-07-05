@@ -10,7 +10,7 @@
           <div  style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Reference</span>
-            <el-select filterable index="0" v-model="filters.accession" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select clearable filterable index="0" v-model="filters.accession" placeholder="" style="width: 90%;margin-top: 10px;" @change="changeVersion" >
               <el-option
               v-for="(item,i) in options.reference"
               :key="i"
@@ -22,10 +22,10 @@
         </div>
         <!-- Version -->
         <div class="menu-item">
-          <div  style="width: 90%;">
+          <div style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Version</span>
-            <el-select filterable index="0" v-model="filters.version" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select clearable filterable index="0" v-model="filters.version" placeholder="" style="width: 90%;margin-top: 10px;">
               <el-option
               v-for="(item,i) in options.version"
               :key="i"
@@ -40,7 +40,7 @@
           <div style="width: 90%;">
             <!-- bfc -->
             <span class="title" >Analysis</span>
-            <el-select filterable v-model="filters.description" placeholder="" style="width: 90%;margin-top: 10px;">
+            <el-select clearable filterable v-model="filters.description" placeholder="" style="width: 90%;margin-top: 10px;">
               <el-option
               v-for="(item,i) in options.analysis"
               :key="i"
@@ -55,7 +55,7 @@
           <div style="width: 90%;">
             <span class="title" >Region A</span>
             <div class="item-container range-container">
-              <el-select filterable v-model="filters.chrA" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+              <el-select clearable filterable v-model="filters.chrA" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
               <el-option
               v-for="(item,i) in options.chrA"
               :key="i"
@@ -76,7 +76,7 @@
           <div style="width: 90%;">
             <span class="title" >Region B</span>
             <div class="item-container range-container">
-              <el-select filterable v-model="filters.chrB" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
+              <el-select clearable filterable v-model="filters.chrB" placeholder="" style="width: 90%;margin-top: 15px;margin-bottom: 25px;">
                 <el-option
               v-for="(item,i) in options.chrB"
               :key="i"
@@ -118,22 +118,22 @@ data() {
 return {
   hide: false,
   filters: {
-    accession: '',
-    version: '',
+    accession: 'B73',
+    version: '4.43.0',
     description: '',
     // chrA
     chrA: '',
-    startA: '',
-    endA: '',
+    startA: '0',
+    endA: '9999999999',
     // chrB
     chrB: '',
-    startB: '',
-    endB: ''
+    startB: '0',
+    endB: '9999999999'
   },
   options: {
-    reference: '',
-    version: '',
-    analysis: '',
+    reference: [],
+    version: [],
+    analysis: [],
     // chrA
     chrA: '',
     // chrB
@@ -142,24 +142,27 @@ return {
 }
 },
 methods: {
-changeShow() {
-this.hide = !this.hide
+  changeShow() {
+  this.hide = !this.hide
 },
 // 获取下拉框数据
 async getDownAll() {
-    const version = await dropDownVersion()
     const accession = await dropDownAccession()
     const analysis = await dropDownAnalysis()
     const chrA = await queryChrA()
     const chrB = await queryChrB()
 
     this.options.reference = accession.data
-    this.options.version = version.data
     this.options.analysis = analysis.data
     this.options.chrA = chrA.data
     this.options.chrB = chrB.data
   },
-
+async changeVersion(newVal) {
+  this.filters.accession = newVal
+  const version = await dropDownVersion({'accession': this.filters.accession})
+  this.options.version = version.data
+  this.filters.version = this.options.version[0]
+},
 // 传信息
 checkData() {
   if(this.filters.accession === '') {
@@ -185,19 +188,6 @@ checkData() {
 // 清空数据
 clearData() {
 this.filters= {
-    accession: '',
-    version: '',
-    description: '',
-    // chrA
-    chrA: '',
-    startA: '',
-    endA: '',
-    // chrB
-    chrB: '',
-    startB: '',
-    endB: ''
-  }
-  const query = {
     accession: 'B73',
     version: '4.43.0',
     description: '',
@@ -208,9 +198,9 @@ this.filters= {
     // chrB
     chrB: '',
     startB: '0',
-    endB: '999999999999999'
+    endB: '9999999999999999'
   }
-  this.$emit('getFilterData', query)
+  this.$emit('getFilterData', this.filters)
 }
 }
 }

@@ -21,7 +21,7 @@ export function getImportxotgermplasm(xotGermplasmId) {
 export function addImportxotgermplasm(data) {
   return request({
     url: '/zeamap/importxotgermplasm/add',
-    method: 'post',
+    method: 'get',
     data: data
   })
 }

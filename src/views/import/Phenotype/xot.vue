@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
       <el-form-item label="omics" prop="omics">
         <el-input
           v-model="queryParams.omics"
@@ -140,7 +140,7 @@
       <el-table-column label="crossreflink" align="center" prop="crossreflink" />
       <el-table-column label="description" align="center" prop="description" />
       <el-table-column label="mesuredetail" align="center" prop="mesuredetail" />
-      <el-table-column label="traitdetail align="center" prop="traitdetail" />
+      <el-table-column label="traitdetail" align="center" prop="traitdetail" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

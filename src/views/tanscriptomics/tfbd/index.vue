@@ -159,10 +159,10 @@
           <i v-if="filterHide" class="el-icon-s-fold"></i>
           <i v-else class="el-icon-s-unfold"></i>
         </div>
-        <div v-show="filterHide">
-          <div>
-            <i class="el-icon-refresh-left refFilter"></i>
-          </div>
+        <div v-show="filterHide" v-loading="filterloading">
+          <!-- <div>
+            <i class="el-icon-refresh-left refFilter" @click="reset"></i>
+          </div> -->
           <el-form
             ref="elForm"
             :model="formData"
@@ -170,6 +170,7 @@
             size="medium"
             label-width="100px"
             label-position="top"
+            style="width: 90%;"
           >
             <el-form-item label="Reference" prop="reference">
               <el-select
@@ -294,7 +295,29 @@
               ></el-input>
             </el-form-item>
           </el-form>
-          <el-button type="" @click="updata">筛选</el-button>
+          <!-- <el-button type="" @click="updata">筛选</el-button> -->
+          <div class="footer">
+            <el-button
+              size="small"
+              @click="reset"
+              style="margin-right: 15px"
+            >
+              <SvgIcon
+                icon-class="CLEAR"
+                color="20AE35"
+                style="margin-right: 7px; margin-left: 0"
+              ></SvgIcon>
+              <span style="color: #20ae35">清空</span>
+            </el-button>
+            <el-button type="primary" size="small" @click="updata">
+              查询
+              <SvgIcon
+                icon-class="search"
+                color="fff"
+                style="margin-left: 7px"
+              ></SvgIcon>
+            </el-button>
+          </div>
         </div>
       </div>
       <div class="tabelhide tableclass">
@@ -326,7 +349,11 @@
           </div>
         </div>
         <!-- v-loading="loading" -->
-        <el-table :data="tfbdList" @selection-change="handleSelectionChange">
+        <el-table
+          :data="tfbdList"
+          @selection-change="handleSelectionChange"
+          v-loading="tableloading"
+        >
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="accession" align="center" prop="accession" />
           <el-table-column label="version" align="center" prop="version" />
@@ -364,7 +391,7 @@
           />
           <el-table-column label="createBy" align="center" prop="createBy" /> -->
           <el-table-column label="p_value" align="center" prop="p_value" />
-          <el-table-column
+          <!-- <el-table-column
             label="操作"
             align="center"
             class-name="small-padding fixed-width"
@@ -387,21 +414,21 @@
                 >删除</el-button
               >
             </template>
-          </el-table-column>
+          </el-table-column> -->
         </el-table>
+        <el-pagination
+          v-show="total > 0"
+          :total="total"
+          :page-size="page.pageSize"
+          :current-page="page.pageNum"
+          @current-change="nowPage"
+          layout="prev, pager, next"
+          background
+          style="margin-top: 25px; margin-bottom: 50px; float: right"
+        />
       </div>
     </div>
     <!-- @pagination="getList" -->
-    <el-pagination
-      v-show="total > 0"
-      :total="total"
-      :page-size="page.pageSize"
-      :current-page="page.pageNum"
-      @current-change="nowPage"
-      layout="prev, pager, next"
-      background
-      style="margin-top: 25px; margin-bottom: 50px; float: right"
-    />
 
     <!-- 添加或修改Transcriptomics对话框 -->
     <!-- <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -466,7 +493,9 @@
 //   updateTfbd,
 // } from "@/api/zeamap/tfbd";
 import { blobValidate } from "@/utils/ruoyi";
+import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
 export default {
+  components: { SvgIcon },
   name: "Tfbd",
   data() {
     return {
@@ -503,7 +532,7 @@ export default {
       tfNameOptions: [],
       tfFamilyOptions: [],
       // 筛选器是否隐藏
-      filterHide: false,
+      filterHide: true,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -546,7 +575,10 @@ export default {
         pageNum: 1,
         pageSize: 10,
       },
-      multipleSelection:[]
+      multipleSelection: [],
+
+      tableloading: false,
+      filterloading: false,
     };
   },
   async created() {
@@ -554,22 +586,23 @@ export default {
     await this.getFilterOp();
     this.formData.reference = this.referenceOptions[0].value;
     await this.getVersionOp();
-    
-    let data = {
-      accession: this.formData.reference,
-      version: this.formData.version,
-      analysis_name: null,
-      info_name: null,
-      info_simplename: null,
-      info_family: null,
-      target_gene: null,
-      p_value: null,
-    };
-    let pageParams = {
-      pageNum: 1,
-      pageSize: 10,
-    };
-    this.getTaleData(data, pageParams);
+
+    this.updata();
+    // let data = {
+    //   accession: this.formData.reference,
+    //   version: this.formData.version,
+    //   analysis_name: null,
+    //   info_name: null,
+    //   info_simplename: null,
+    //   info_family: null,
+    //   target_gene: null,
+    //   p_value: null,
+    // };
+    // let pageParams = {
+    //   pageNum: 1,
+    //   pageSize: 10,
+    // };
+    // this.getTaleData(data, pageParams);
   },
   methods: {
     // 下载
@@ -597,8 +630,7 @@ export default {
 
         // const res2 = await blobValidate(res1)
         const res1 = new Blob([data]);
-        const fileName =
-          "transcriptomics_" + new Date().getTime() + ".xlsx";
+        const fileName = "transcriptomics_" + new Date().getTime() + ".xlsx";
 
         this.$download.saveAs(res1, fileName);
       } else {
@@ -612,6 +644,8 @@ export default {
       this.multipleSelection = val;
     },
     async getFilterOp() {
+      this.filterloading = true;
+
       let res1 = await this.$API.trans.reqSelectReference();
       if (res1.code == 200) {
         this.referenceOptions = res1.data.map((x) => ({
@@ -656,10 +690,13 @@ export default {
           value: x,
         }));
       }
+      this.filterloading = false;
     },
     async getVersionOp() {
       // let file = new FormData();
       // file.append('accession',this.formData.reference);
+      this.filterloading = true;
+
       let res2 = await this.$API.trans.reqSelectVersion(
         this.formData.reference
       );
@@ -670,6 +707,7 @@ export default {
         }));
         this.formData.version = this.versionOptions[0].value;
       }
+      this.filterloading = false;
     },
 
     async getTaleData(data, pageParams) {
@@ -680,7 +718,7 @@ export default {
       }
     },
 
-    updata() {
+    async updata() {
       // let file = new FormData();
       // file.append("accession",  this.formData.reference || "");
       // file.append("version", this.formData.version || "");
@@ -690,7 +728,7 @@ export default {
       // file.append("info_family",  this.formData.tfFamily || "");
       // file.append("target_gene", this.formData.geneId || "");
       // file.append("p_value", this.formData.maxPvalue || "");
-
+      this.tableloading = true;
       let data = {
         accession: this.formData.reference,
         version: this.formData.version,
@@ -705,7 +743,8 @@ export default {
         pageNum: this.page.pageNum,
         pageSize: this.page.pageSize,
       };
-      this.getTaleData(data, pageParams);
+      await this.getTaleData(data, pageParams);
+      this.tableloading = false;
     },
     nowPage(newVal) {
       this.page.pageNum = newVal;
@@ -713,6 +752,23 @@ export default {
     },
     changeResultsNums(newVal) {
       this.page.pageSize = newVal;
+      this.updata();
+    },
+    async reset() {
+      this.formData = {
+        reference: undefined,
+        version: undefined,
+        analysis: undefined,
+        tf: undefined,
+        tfFamily: undefined,
+        tfName: undefined,
+        geneId: undefined,
+        maxPvalue: undefined,
+      };
+      await this.getFilterOp();
+      this.formData.reference = this.referenceOptions[0].value;
+      await this.getVersionOp();
+
       this.updata();
     },
     // /** 查询Transcriptomics列表 */
@@ -886,5 +942,11 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+.footer {
+margin-top: 20px;
+margin-right: 20px;
+display: flex;
+justify-content: flex-end
 }
 </style>
