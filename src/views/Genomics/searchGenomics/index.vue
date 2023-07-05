@@ -120,6 +120,8 @@ import { Download } from '@/api/Genomics/Download';
 import { download } from '@/utils/request';
 import { saveAs } from 'file-saver'
 import { blobValidate } from '@/utils/ruoyi';
+import axios from 'axios'
+
 // import { nextTick } from "process";
 export default {
   components: {},
