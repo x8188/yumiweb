@@ -261,9 +261,13 @@ export default {
         },
         resetForm() {
             this.$refs['elForm'].resetFields()
+            console.log(1232312)
             //此处设置为空其实应该将输入的绑定值 和prop的绑定值名字设置为相同 在这里为了方便直接设置
             this.formData.start = ""
             this.formData.end = ""
+            this.formData.indicator = ""
+            this.formData.select = ""
+            this.formData.compare_pop = ""
             this.formData.accession = this.accessionOptions[0]
             this.formData.version = this.versionOptions[0]
         },
