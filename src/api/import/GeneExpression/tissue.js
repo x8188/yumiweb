@@ -21,7 +21,7 @@ export function getImportTissue(tissueId) {
 export function addImportTissue(data) {
   return request({
     url: '/zeamap/ImportTissue/add',
-    method: 'get',
+    method: 'post',
     data: data
   })
 }

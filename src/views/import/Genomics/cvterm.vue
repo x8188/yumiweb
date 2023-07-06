@@ -63,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:cvterm:add']"
+          v-hasPermi="['zeamap:ImportCvterm:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -74,7 +74,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:cvterm:edit']"
+          v-hasPermi="['zeamap:ImportCvterm:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -85,7 +85,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:cvterm:remove']"
+          v-hasPermi="['zeamap:ImportCvterm:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -150,10 +150,7 @@
 
     <!-- 添加或修改ImportCvterm对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="cvtermId" prop="cvtermId">
-          <el-input v-model="form.cvtermId" placeholder="请输入cvtermId" />
-        </el-form-item>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="name" prop="name">
           <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>

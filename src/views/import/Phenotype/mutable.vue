@@ -123,7 +123,7 @@
 
     <!-- 添加或修改ImportMutable对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="140px">
         <el-form-item label="mutableClass" prop="mutableClass">
           <el-input v-model="form.mutableClass" placeholder="请输入mutableClass" />
         </el-form-item>

@@ -109,7 +109,7 @@
 
     <!-- 添加或修改ImportInfo对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="vid" prop="vid">
           <el-input v-model="form.vid" type="textarea" placeholder="请输入内容" />
         </el-form-item>
@@ -233,6 +233,7 @@ export default {
       this.loading = true;
       listImportInfo(this.queryParams).then(response => {
         this.ImportInfoList = response.rows;
+        console.log(this.ImportInfoList)
         this.total = response.total;
         this.loading = false;
       });

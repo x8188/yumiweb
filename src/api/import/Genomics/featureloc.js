@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询ImportFeatureloc列表
 export function listFeatureloc(query) {
   return request({
-    url: '/zeamap/featureloc/list',
+    url: '/zeamap/ImportFeatureloc/list',
     method: 'get',
     params: query
   })
@@ -21,7 +21,7 @@ export function getFeatureloc(featurelocId) {
 export function addFeatureloc(data) {
   return request({
     url: '/zeamap/ImportFeatureloc/add',
-    method: 'get',
+    method: 'post',
     data: data
   })
 }

@@ -21,7 +21,7 @@ export function getImportXot(xotId) {
 export function addImportXot(data) {
   return request({
     url: '/zeamap/ImportXot/add',
-    method: 'get',
+    method: 'post',
     data: data
   })
 }

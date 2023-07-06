@@ -71,7 +71,7 @@ npm<template>
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:expression:add']"
+          v-hasPermi="['zeamap:ImportExpression:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -82,7 +82,7 @@ npm<template>
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:expression:edit']"
+          v-hasPermi="['zeamap:ImportExpression:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -93,7 +93,7 @@ npm<template>
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:expression:remove']"
+          v-hasPermi="['zeamap:ImportExpression:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -103,7 +103,7 @@ npm<template>
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:expression:export']"
+          v-hasPermi="['zeamap:ImportExpression:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -113,7 +113,7 @@ npm<template>
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['zeamap:expression:import']"
+          v-hasPermi="['zeamap:ImportExpression:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -138,14 +138,14 @@ npm<template>
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:expression:edit']"
+            v-hasPermi="['zeamap:ImportExpression:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:expression:remove']"
+            v-hasPermi="['zeamap:ImportExpression:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -161,7 +161,7 @@ npm<template>
 
     <!-- 添加或修改基因表达量查询对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="180px">
         <el-form-item label="组织高亮值" prop="expressionValue">
           <el-input v-model="form.expressionValue" placeholder="请输入组织高亮值" />
         </el-form-item>

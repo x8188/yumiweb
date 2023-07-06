@@ -108,7 +108,6 @@ export default {
       this.value =[];
     },
     Screening(value) {
-      console.log(value,'9090')
       if (value!== null){
         choose({name : value}).then(res=>{
           console.log(res)
@@ -144,7 +143,7 @@ export default {
         this.states = res.rows.map(function (item) {
           return item.name
         })
-        console.log(this.states)
+        console.log(this.states,'9090')
       })
     },
   }

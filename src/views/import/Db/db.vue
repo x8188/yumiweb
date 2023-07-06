@@ -55,7 +55,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:Db:add']"
+          v-hasPermi="['zeamap:ImportDb:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -66,7 +66,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:Db:edit']"
+          v-hasPermi="['zeamap:ImportDb:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -77,7 +77,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:Db:remove']"
+          v-hasPermi="['zeamap:ImportDb:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -87,7 +87,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:Db:export']"
+          v-hasPermi="['zeamap:ImportDb:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -97,7 +97,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['zeamap:Db:import']"
+          v-hasPermi="['zeamap:ImportDb:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -117,14 +117,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:Db:edit']"
+            v-hasPermi="['zeamap:ImportDb:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:Db:remove']"
+            v-hasPermi="['zeamap:ImportDb:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -140,20 +140,17 @@
 
     <!-- 添加或修改db对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="dbId" prop="dbId">
-          <el-input v-model="form.dbId" placeholder="请输入dbId" />
-        </el-form-item>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="name" prop="name">
           <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
         <el-form-item label="description" prop="description">
           <el-input v-model="form.description" placeholder="请输入description" />
         </el-form-item>
-        <el-form-item label="$urlprefix" prop="urlprefix">
+        <el-form-item label="urlprefix" prop="urlprefix">
           <el-input v-model="form.urlprefix" placeholder="请输入urlprefix" />
         </el-form-item>
-        <el-form-item label="$url" prop="url">
+        <el-form-item label="url" prop="url">
           <el-input v-model="form.url" placeholder="请输入url" />
         </el-form-item>
       </el-form>
@@ -225,7 +222,6 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        dbId: null,
         name: null,
         description: null,
         urlprefix: null,
@@ -243,7 +239,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/zeamap/Import/importDbData" // todo
+        url: process.env.VUE_APP_BASE_API + "/zeamap/import/importDbData" // todo
       },
       // 表单参数
       form: {},
@@ -260,6 +256,7 @@ export default {
     getList() {
       this.loading = true;
       listDb(this.queryParams).then(response => {
+        console.log(response)
         this.dbList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -302,6 +299,7 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加db";
+      this.valid = 1;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -345,7 +343,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('zeamap/Db/export', {
+      this.download('zeamap/ImportDb/export', {
         ...this.queryParams
       }, `db_${new Date().getTime()}.xlsx`)
     },

@@ -141,7 +141,7 @@
 
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="linkageGroup" prop="linkageGroup">
           <el-input v-model="form.linkageGroup" placeholder="请输入linkageGroup" />
         </el-form-item>
@@ -154,7 +154,7 @@
         <el-form-item label="qtlId" prop="qtlId">
           <el-input v-model="form.qtlId" placeholder="请输入qtlId" />
         </el-form-item>
-        <el-form-item label="variantId}" prop="variantId">
+        <el-form-item label="variantId" prop="variantId">
           <el-input v-model="form.variantId" placeholder="请输入variantId" />
         </el-form-item>
       </el-form>

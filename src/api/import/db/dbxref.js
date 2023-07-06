@@ -21,7 +21,7 @@ export function getDbxref(dbxrefId) {
 export function addDbxref(data) {
   return request({
     url: '/zeamap/ImportDbxref/add',
-    method: 'get',
+    method: 'post',
     data: data
   })
 }

@@ -47,7 +47,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:Import:add']"
+          v-hasPermi="['zeamap:ImportEnvironment:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -58,7 +58,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:Import:edit']"
+          v-hasPermi="['zeamap:ImportEnvironment:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -69,7 +69,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:Import:remove']"
+          v-hasPermi="['zeamap:ImportEnvironment:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -79,7 +79,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:Import:export']"
+          v-hasPermi="['zeamap:ImportEnvironment:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -89,7 +89,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['zeamap:Import:import']"
+          v-hasPermi="['zeamap:ImportEnvironment:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -111,14 +111,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['zeamap:Import:edit']"
+            v-hasPermi="['zeamap:ImportEnvironment:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['zeamap:Import:remove']"
+            v-hasPermi="['zeamap:ImportEnvironment:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -134,7 +134,7 @@
 
     <!-- 添加或修改ImportEnvironment对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="180px">
         <el-form-item label="name" prop="name">
           <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>

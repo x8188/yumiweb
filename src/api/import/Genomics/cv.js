@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询ImportCv列表
 export function listCv(query) {
   return request({
-    url: '/zeamap/cv/list',
+    url: '/zeamap/ImportCv/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listCv(query) {
 // 查询ImportCv详细
 export function getCv(cvId) {
   return request({
-    url: '/zeamap/cv/' + cvId,
+    url: '/zeamap/ImportCv/' + cvId,
     method: 'get'
   })
 }
@@ -20,8 +20,8 @@ export function getCv(cvId) {
 // 新增ImportCv
 export function addCv(data) {
   return request({
-    url: '/zeamap/cv/add',
-    method: 'get',
+    url: '/zeamap/ImportCv/add',
+    method: 'post',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addCv(data) {
 // 修改ImportCv
 export function updateCv(data) {
   return request({
-    url: '/zeamap/cv/edit',
+    url: '/zeamap/ImportCv/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateCv(data) {
 // 删除ImportCv
 export function delCv(cvId) {
   return request({
-    url: '/zeamap/cv/remove/' + cvId,
+    url: '/zeamap/ImportCv/remove/' + cvId,
     method: 'delete'
   })
 }

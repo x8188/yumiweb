@@ -149,10 +149,7 @@
 
     <!-- 添加或修改ImportFeatureloc对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="featurelocId" prop="featurelocId">
-          <el-input v-model="form.featurelocId" placeholder="请输入featurelocId" />
-        </el-form-item>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="fmin" prop="fmin">
           <el-input v-model="form.fmin" placeholder="请输入fmin" />
         </el-form-item>

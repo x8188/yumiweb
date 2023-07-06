@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询Import列表
 export function listInfo(query) {
   return request({
-    url: '/zeamap/Tfdbinfo/list',
+    url: '/zeamap/ImportTfdbinfo/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listInfo(query) {
 // 查询Import详细
 export function getInfo(tfbdId) {
   return request({
-    url: '/zeamap/Tfdbinfo/' + tfbdId,
+    url: '/zeamap/ImportTfdbinfo/' + tfbdId,
     method: 'get'
   })
 }
@@ -20,8 +20,8 @@ export function getInfo(tfbdId) {
 // 新增Import
 export function addInfo(data) {
   return request({
-    url: '/zeamap/Tfdbinfo/add',
-    method: 'get',
+    url: '/zeamap/ImportTfdbinfo/add',
+    method: 'post',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addInfo(data) {
 // 修改Import
 export function updateInfo(data) {
   return request({
-    url: '/zeamap/Tfdbinfo/edit',
+    url: '/zeamap/ImportTfdbinfo/edit',
     method: 'put',
     data: data
   })
