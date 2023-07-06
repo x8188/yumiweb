@@ -1,86 +1,89 @@
 <template>
   <div class="filter_page">
     <div :class="{ fitershide: filterHide }" class="left-box">
-    <div @click="filterHide = !filterHide" class="fiterShow">
-          <i v-if="filterHide" class="el-icon-s-fold"></i>
-          <i v-else class="el-icon-s-unfold"></i>
-    </div>
-    <el-row :gutter="12" class="filter_box">
-      <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium">
-        <!-- <el-col id="col-one">
+      <div @click="filterHide = !filterHide" class="fiterShow">
+        <i v-if="filterHide" class="el-icon-s-fold"></i>
+        <i v-else class="el-icon-s-unfold"></i>
+      </div>
+      <el-row :gutter="12" class="filter_box">
+        <el-form ref="elForm" v-show="filterHide" :model="formData" size="medium">
+          <!-- <el-col id="col-one">
           <span @click="filter_page()" id="span-second">Filter</span>
           <span @click="resetForm">Reset</span>
         </el-col> -->
-        <el-col :span="6">
-          <el-form-item label="Germplasm">
-            <el-select v-model="formData.accession" placeholder="请选择Germplasm" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in GermplasmOptions" :key="index" :label="item" :value="item"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Version">
-            <el-select v-model="formData.version" placeholder="请选择Version" clearable :style="{ width: '100%' }">
-              <el-option v-for="(item, index) in VersionOptions" :key="index" :label="item" :value="item"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <span style="color:#606266;font-size: 14px;font-weight: 700;">Chromosome</span>
-          <div id="inner_item">
-            <el-form-item label="Chr">
-              <el-select v-model="formData.uniquename" placeholder="请选择Chr" clearable :style="{ width: '100%' }">
-                <el-option v-for="(item, index) in ChrOptions" :key="index" :label="item" :value="item"></el-option>
+          <el-col :span="6">
+            <el-form-item label="Germplasm">
+              <el-select v-model="formData.accession" placeholder="请选择Germplasm" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in GermplasmOptions" :key="index" :label="item" :value="item"></el-option>
               </el-select>
             </el-form-item>
-            <span style="color:#606266;font-size: 14px;font-weight: 700;">Location</span>
-            <div id="inner_input">
-              <el-input placeholder="请输入最小值" v-model="formData.start"></el-input>
-              <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-              <el-input placeholder="请输入最大值" v-model="formData.end"></el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Version">
+              <el-select v-model="formData.version" placeholder="请选择Version" clearable :style="{ width: '100%' }">
+                <el-option v-for="(item, index) in VersionOptions" :key="index" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <span style="color:#606266;font-size: 14px;font-weight: 700;">Chromosome</span>
+            <div id="inner_item">
+              <el-form-item label="Chr">
+                <el-select v-model="formData.uniquename" placeholder="请选择Chr" clearable :style="{ width: '100%' }">
+                  <el-option v-for="(item, index) in ChrOptions" :key="index" :label="item" :value="item"></el-option>
+                </el-select>
+              </el-form-item>
+              <span style="color:#606266;font-size: 14px;font-weight: 700;">Location</span>
+              <el-form-item >
+                <div id="inner_input">
+                <el-input placeholder="请输入最小值" v-model="formData.start" number @input="handleinput"></el-input>
+                <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
+                <el-input placeholder="请输入最大值" v-model="formData.end" ></el-input>
+              </div>
+              </el-form-item>
+              
             </div>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="Type">
-            <el-select v-model="formData.name" placeholder="请选择Type" clearable :style="{ width: '100%' }">
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="Type">
+              <el-select v-model="formData.name" placeholder="请选择Type" clearable :style="{ width: '100%' }">
                 <el-option v-for="(item, index) in nameOptions" :key="index" :label="item" :value="item"></el-option>
               </el-select>
 
-          </el-form-item>
-        </el-col>
+            </el-form-item>
+          </el-col>
 
-        <el-col :span="6">
-          <el-form-item label="Name">
-            <el-input placeholder="请输入Name" v-model="formData.commonname"></el-input>
-          </el-form-item>
-        </el-col>
+          <el-col :span="6">
+            <el-form-item label="Name">
+              <el-input placeholder="请输入Name" v-model="formData.commonname"></el-input>
+            </el-form-item>
+          </el-col>
 
-        <el-col :span="6">
-          <el-form-item label="Description">
-            <el-input placeholder="请输入Description" v-model="formData.description"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col>
-          <div  class="footer">
-        <el-button size="small" @click="resetForm()" style="margin-right: 15px;">
-          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
-          <span style="color: #20AE35">清空</span>
-        </el-button>
-        <el-button type="primary" size="small" @click="filter_page()">
-          查询
-            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
-        </el-button>
-      </div>
-        </el-col>
-      </el-form>
-    </el-row>
-    
+          <el-col :span="6">
+            <el-form-item label="Description">
+              <el-input placeholder="请输入Description" v-model="formData.description"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col>
+            <div class="footer">
+              <el-button size="small" @click="resetForm()" style="margin-right: 15px;">
+                <!-- <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon> -->
+                <span style="color: #20AE35">清空</span>
+              </el-button>
+              <el-button type="primary" size="small" @click="filter_page()">
+                查询
+                <!-- <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon> -->
+              </el-button>
+            </div>
+          </el-col>
+        </el-form>
+      </el-row>
+
     </div>
     <div class="buttom_box">
       <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-      <el-table  ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
-        @selection-change="handleSelectionChange"  v-loading="loading" element-loading-text="拼命加载中....">
+      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
+        @selection-change="handleSelectionChange" v-loading="loading" element-loading-text="拼命加载中....">
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID()">
         </el-table-column>
@@ -120,6 +123,8 @@ import { Download } from '@/api/Genomics/Download';
 import { download } from '@/utils/request';
 import { saveAs } from 'file-saver'
 import { blobValidate } from '@/utils/ruoyi';
+import axios from 'axios'
+
 // import { nextTick } from "process";
 export default {
   components: {},
@@ -146,13 +151,19 @@ export default {
         commonname: "",
         description: "",
       },
-      loading:true,
+      loading: true,
       rules: {
         Germplasm: [],
         Version: [],
         Chr: [],
-        min_Loca: [],
-        max_Loca: [],
+        start: [
+          { required: false },
+          { type: 'number', message: 'Location必须为数字值' }
+        ],
+        end: [
+          { required: false },
+          { type: 'number', message: 'Location必须为数字值' }
+        ],
         Type: [],
         Name: [],
         Description: [],
@@ -160,9 +171,9 @@ export default {
       GermplasmOptions: [],
       VersionOptions: [],
       ChrOptions: [],
-      filterHide:true,
+      filterHide: true,
       TypeOptions: [],
-      nameOptions:[]
+      nameOptions: []
     }
   },
   computed: {},
@@ -182,8 +193,8 @@ export default {
         })
       }
     },
-    formData:{
-      handler(oldVal,newVal){
+    formData: {
+      handler(oldVal, newVal) {
         this.loading = true;
         Search(this.formData, this.queryParams).then(res => {
           console.log(res)
@@ -194,7 +205,7 @@ export default {
           this.loading = false
         })
       },
-      deep:true
+      deep: true
     }
   },
 
@@ -216,6 +227,10 @@ export default {
         console.log(err)
       })
     },
+    handleinput(value){
+      this.formData.start = value.replace(/\D/g, '') 
+      this.$message("请输入数字")
+    },
     /** 查询岗位信息列表 */
     getList() {
       this.loading = true;
@@ -227,10 +242,9 @@ export default {
         this.loading = false
       })
     },
-    eidtMsg(data){
-      data.forEach(item=>{
-        if(item.strand == 1)
-        {
+    eidtMsg(data) {
+      data.forEach(item => {
+        if (item.strand == 1) {
           item.strand = "+"
         }
         else item.strand = "-"
@@ -312,7 +326,7 @@ export default {
       }).catch(err => {
         console.log("Chr出现： " + err)
       })
-      getSelectType().then(res=>{
+      getSelectType().then(res => {
         console.log(res)
         this.nameOptions = res.rows
       })
@@ -333,77 +347,79 @@ export default {
   padding-left: 20px;
   display: flex;
 }
-.left-box{
 
-.filter_box {
-  // width: 20%;
-  // height: 100vh;
-  // border-right: 1px solid black;
+.left-box {
 
-  .el-form {
-    width: 300px;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .filter_box {
+    // width: 20%;
+    // height: 100vh;
+    // border-right: 1px solid black;
 
-    .el-col {
-      margin: 0 auto;
-      //  width: 300px;
-      width: 80%;
+    .el-form {
+      width: 300px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-      #inner_input {
-        display: flex;
+      .el-col {
+        margin: 0 auto;
+        //  width: 300px;
+        width: 80%;
 
-        .el-input {
-          flex: 1;
-          margin: 4px;
+        #inner_input {
+          display: flex;
+
+          .el-input {
+            flex: 1;
+            margin: 4px;
+          }
         }
       }
-    }
 
-    #col-one {
-      display: flex;
-      padding-left: 6px;
-      padding-right: 6px;
+      #col-one {
+        display: flex;
+        padding-left: 6px;
+        padding-right: 6px;
 
-      span {
-        flex: 1;
-        text-align: center;
+        span {
+          flex: 1;
+          text-align: center;
+        }
+
+        #span-second {
+          color: #409EFF;
+          cursor: pointer;
+        }
       }
 
-      #span-second {
-        color: #409EFF;
-        cursor: pointer;
-      }
-    }
+      #inner_item {
+        //  width: 200px;
+        //  height: 220px;
+        border: 1px solid black;
+        padding: 10px;
+        margin-top: 8px;
 
-    #inner_item {
-      //  width: 200px;
-      //  height: 220px;
-      border: 1px solid black;
-      padding: 10px;
-      margin-top: 8px;
-
-      .el-form-item {
-        line-height: 60px;
+        .el-form-item {
+          line-height: 60px;
+        }
       }
     }
   }
 }
-}
 
 .filterDiv {
-   margin-right: 10px;
- }
+  margin-right: 10px;
+}
 
- .fiterShow i {
-   font-size: 30px;
-   color: #489e38;
-   cursor: pointer;
-   margin: 10px 10px 10px 5px;
-   // margin: 10px;
- }
+.fiterShow i {
+  font-size: 30px;
+  color: #489e38;
+  cursor: pointer;
+  margin: 10px 10px 10px 5px;
+  // margin: 10px;
+}
+
 .buttom_box {
   flex: 1;
   overflow: hidden;
@@ -425,11 +441,12 @@ export default {
     margin-left: 15px;
   }
 }
+
 .footer {
-// margin-top: 20px;
-// margin-right: 20px;
-// background-color: pink;
-display: flex;
-justify-content: space-between
+  // margin-top: 20px;
+  // margin-right: 20px;
+  // background-color: pink;
+  display: flex;
+  justify-content: space-between
 }
 </style>
