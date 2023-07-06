@@ -170,10 +170,11 @@
             size="medium"
             label-width="100px"
             label-position="top"
-            style="width: 90%;"
+            style="width: 90%"
           >
             <el-form-item label="Reference" prop="reference">
               <el-select
+                filterable
                 v-model="formData.reference"
                 placeholder="请选择Reference"
                 clearable
@@ -191,6 +192,7 @@
             </el-form-item>
             <el-form-item label="Version" prop="version">
               <el-select
+                filterable
                 v-model="formData.version"
                 placeholder="请选择Version"
                 clearable
@@ -208,6 +210,7 @@
             </el-form-item>
             <el-form-item label="Analysis" prop="analysis">
               <el-select
+                filterable
                 v-model="formData.analysis"
                 placeholder="请选择Analysis"
                 clearable
@@ -224,6 +227,7 @@
             </el-form-item>
             <el-form-item label="TF" prop="tf">
               <el-select
+                filterable
                 v-model="formData.tf"
                 placeholder="请选择TF"
                 clearable
@@ -240,6 +244,7 @@
             </el-form-item>
             <el-form-item label="TF Family" prop="tf">
               <el-select
+                filterable
                 v-model="formData.tfFamily"
                 placeholder="请选择TF"
                 clearable
@@ -256,6 +261,7 @@
             </el-form-item>
             <el-form-item label="TF Name" prop="tf">
               <el-select
+                filterable
                 v-model="formData.tfName"
                 placeholder="请选择TF"
                 clearable
@@ -272,6 +278,7 @@
             </el-form-item>
             <el-form-item label="Target Gene ID" prop="geneId">
               <el-select
+                filterable
                 v-model="formData.geneId"
                 placeholder="请选择Target Gene ID"
                 clearable
@@ -289,19 +296,17 @@
             <el-form-item label="Maximun Confidence P-value" prop="maxPvalue">
               <el-input
                 v-model="formData.maxPvalue"
-                placeholder="请输入Maximun Confidence P-value"
+                placeholder="The range of Max P-value is 0-1"
                 clearable
                 :style="{ width: '100%' }"
+                @input="onInputRebate"
+                autocomplete="off"
               ></el-input>
             </el-form-item>
           </el-form>
           <!-- <el-button type="" @click="updata">筛选</el-button> -->
           <div class="footer">
-            <el-button
-              size="small"
-              @click="reset"
-              style="margin-right: 15px"
-            >
+            <el-button size="small" @click="reset" style="margin-right: 15px">
               <SvgIcon
                 icon-class="CLEAR"
                 color="20AE35"
@@ -493,7 +498,8 @@
 //   updateTfbd,
 // } from "@/api/zeamap/tfbd";
 import { blobValidate } from "@/utils/ruoyi";
-import SvgIcon from '@/components/CommonComponents/SvgIcon.vue'
+import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
+
 export default {
   components: { SvgIcon },
   name: "Tfbd",
@@ -514,13 +520,7 @@ export default {
         version: [],
         analysis: [],
         tf: [],
-        geneId: [
-          {
-            required: true,
-            message: "请选择Target Gene ID",
-            trigger: "change",
-          },
-        ],
+        geneId: [],
         maxPvalue: [],
       },
       referenceOptions: [],
@@ -605,6 +605,24 @@ export default {
     // this.getTaleData(data, pageParams);
   },
   methods: {
+    onInputRebate() {
+      // 获取当前表单输入的返点
+      let rebate = this.formData.maxPvalue;
+      // 去除小数点和数字以外的字符
+      let newRebate = rebate.replace(/[^\d.]/g, "");
+      // 将返点字符拆分成数组
+      let splitRebate = newRebate.split("");
+      // 第一个字符必须为0
+      if (splitRebate[0] && splitRebate[0] != "0") {
+        splitRebate[0] = "";
+      }
+      // 第二个字符必须为小数点
+      if (splitRebate[1] && splitRebate[1] != ".") {
+        splitRebate = ["0"];
+      }
+
+      this.formData.maxPvalue = splitRebate.join("");
+    },
     // 下载
     async downloadData() {
       console.log(this.multipleSelection);
@@ -728,23 +746,30 @@ export default {
       // file.append("info_family",  this.formData.tfFamily || "");
       // file.append("target_gene", this.formData.geneId || "");
       // file.append("p_value", this.formData.maxPvalue || "");
-      this.tableloading = true;
-      let data = {
-        accession: this.formData.reference,
-        version: this.formData.version,
-        analysis_name: this.formData.analysis,
-        info_name: this.formData.tf,
-        info_simplename: this.formData.tfName,
-        info_family: this.formData.tfFamily,
-        target_gene: this.formData.geneId,
-        p_value: this.formData.maxPvalue,
-      };
-      let pageParams = {
-        pageNum: this.page.pageNum,
-        pageSize: this.page.pageSize,
-      };
-      await this.getTaleData(data, pageParams);
-      this.tableloading = false;
+      this.$refs["elForm"].validate(async (valid) => {
+        if (valid) {
+          this.tableloading = true;
+          let data = {
+            accession: this.formData.reference,
+            version: this.formData.version,
+            analysis_name: this.formData.analysis,
+            info_name: this.formData.tf,
+            info_simplename: this.formData.tfName,
+            info_family: this.formData.tfFamily,
+            target_gene: this.formData.geneId,
+            p_value: this.formData.maxPvalue,
+          };
+          let pageParams = {
+            pageNum: this.page.pageNum,
+            pageSize: this.page.pageSize,
+          };
+          await this.getTaleData(data, pageParams);
+          this.tableloading = false;
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
     nowPage(newVal) {
       this.page.pageNum = newVal;
@@ -944,9 +969,9 @@ export default {
   margin-bottom: 10px;
 }
 .footer {
-margin-top: 20px;
-margin-right: 20px;
-display: flex;
-justify-content: flex-end
+  margin-top: 20px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

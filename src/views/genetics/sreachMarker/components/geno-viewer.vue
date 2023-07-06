@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <el-form :rules="rules" :model="formData">
+          <el-form ref="elform" :rules="rules" :model="formData">
             <div class="gene-select">
               <div class="reference-item select-item">
                 <span>Reference</span>
@@ -157,14 +157,14 @@
                       </el-form-item>
                     </div>
                     <div class="start">
-                      <el-form-item>
+                      <el-form-item prop="cm_min">
                         <el-input v-model="formData.cm_min"></el-input>
                       </el-form-item>
                       <span>cM</span>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
-                      <el-form-item>
+                      <el-form-item prop="cm_max">
                         <el-input v-model="formData.cm_max"></el-input>
                       </el-form-item>
                       <span>cM</span>
@@ -204,14 +204,14 @@
                     </div>
                     <div class="start">
                       <span>start</span>
-                      <el-form-item>
+                      <el-form-item prop="start">
                         <el-input v-model="formData.start"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
                       <span>end</span>
-                      <el-form-item>
+                      <el-form-item prop="end">
                         <el-input v-model="formData.end"></el-input>
                       </el-form-item>
                     </div>
@@ -246,14 +246,14 @@
                     </div>
                     <div class="start">
                       <span>start</span>
-                      <el-form-item>
+                      <el-form-item prop="log_min">
                         <el-input v-model="formData.log_min"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
                       <span>end</span>
-                      <el-form-item>
+                      <el-form-item prop="log_max">
                         <el-input v-model="formData.log_max"></el-input>
                       </el-form-item>
                     </div>
@@ -264,14 +264,14 @@
                     </div>
                     <div class="start">
                       <span>start</span>
-                      <el-form-item>
+                      <el-form-item prop="effect_min">
                         <el-input v-model="formData.effect_min"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
                       <span>end</span>
-                      <el-form-item>
+                      <el-form-item prop="effect_max">
                         <el-input v-model="formData.effect_max"></el-input>
                       </el-form-item>
                     </div>
@@ -282,14 +282,14 @@
                     </div>
                     <div class="start">
                       <span>start</span>
-                      <el-form-item>
+                      <el-form-item prop="pip_min">
                         <el-input v-model="formData.pip_min"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
                       <span>end</span>
-                      <el-form-item>
+                      <el-form-item prop="pip_max">
                         <el-input v-model="formData.pip_max"></el-input>
                       </el-form-item>
                     </div>
@@ -320,6 +320,7 @@
 </template>
 <script>
 import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
+import { async } from "q";
 // import Title from "@/components/CommonComponents/Title.vue";
 export default {
   components: { SvgIcon },
@@ -372,6 +373,16 @@ export default {
         version: [
           { required: true, message: "Cannot be empty", trigger: "change" },
         ],
+        log_min: [{ validator: this.validatorNum, trigger: "change" }],
+        log_max: [{ validator: this.validatorNum, trigger: "change" }],
+        effect_min: [{ validator: this.validatorNum, trigger: "change" }],
+        effect_max: [{ validator: this.validatorNum, trigger: "change" }],
+        pip_min: [{ validator: this.validatorNum, trigger: "change" }],
+        pip_max: [{ validator: this.validatorNum, trigger: "change" }],
+        start: [{ validator: this.validatorNum, trigger: "change" }],
+        end: [{ validator: this.validatorNum, trigger: "change" }],
+        cm_min: [{ validator: this.validatorNum, trigger: "change" }],
+        cm_max: [{ validator: this.validatorNum, trigger: "change" }],
       },
     };
   },
@@ -381,6 +392,23 @@ export default {
     await this.getVersionOp();
   },
   methods: {
+    validatorNum(rule, value, callback) {
+      if (!this.isNumber(value)) {
+        callback(new Error("请输入数字值"));
+      } else {
+        callback();
+      }
+    },
+    isNumber(val) {
+      var regPos = /^\d+(\.\d+)?$/;
+      var regNeg =
+        /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/;
+      if (regPos.test(val) || regNeg.test(val)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     async getdata() {
       this.$emit("loadingUpdata", true);
       if (this.qtlType == "association") {
@@ -399,9 +427,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.marker.reqselecttraitid(
-          "null"
-        );
+        let res4 = await this.$API.marker.reqselecttraitid("null");
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -431,9 +457,7 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.marker.reqlinkagetraitid(
-         "null"
-        );
+        let res4 = await this.$API.marker.reqlinkagetraitid("null");
         if (res4.code == 200) {
           this.options.TraitId = res4.data.map((x) => ({
             label: x,
@@ -542,58 +566,70 @@ export default {
       this.getQtl();
     },
     async getQtl() {
-      this.$emit("loadingUpdata", true);
+      this.$refs["elform"].validate(async (valid) => {
+        if (valid) {
+          this.$emit("loadingUpdata", true);
 
-      if (this.qtlType == "association") {
-        let data = {
-          accession: this.formData.reference,
-          version: this.formData.version,
-          omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
-          chr: this.formData.chr,
-          start: this.formData.start,
-          end: this.formData.end,
-          type: this.formData.varType.toString(),
-          log_min: this.formData.log_min,
-          log_max: this.formData.log_max,
-          effect_min: this.formData.effect_min,
-          effect_max: this.formData.effect_max,
-          pip_min: this.formData.pip_min,
-          pip_max: this.formData.pip_max,
-        };
-        let pageParams = {
-          pageNum: this.page.pageNum,
-          pageSize: this.page.pageSize,
-        };
-        let res = await this.$API.marker.reqassociation_qtl(data, pageParams);
+          if (this.qtlType == "association") {
+            let data = {
+              accession: this.formData.reference,
+              version: this.formData.version,
+              omics: this.formData.TraitCategory,
+              xot_uid:
+                this.formData.TraitId == "null" ? "" : this.formData.TraitId,
+              chr: this.formData.chr,
+              start: this.formData.start,
+              end: this.formData.end,
+              variantType: this.formData.varType.toString(),
+              log_min: this.formData.log_min,
+              log_max: this.formData.log_max,
+              effect_min: this.formData.effect_min,
+              effect_max: this.formData.effect_max,
+              pip_min: this.formData.pip_min,
+              pip_max: this.formData.pip_max,
+            };
+            let pageParams = {
+              pageNum: this.page.pageNum,
+              pageSize: this.page.pageSize,
+            };
+            let res = await this.$API.marker.reqassociation_qtl(
+              data,
+              pageParams
+            );
 
-        if (res.code == 200) {
-          this.page.total = res.total;
-          this.$emit("showResult", res.rows, data);
+            if (res.code == 200) {
+              this.page.total = res.total;
+              this.$emit("showResult", res.rows, data);
+            }
+          } else {
+            let data = {
+              accession: this.formData.reference,
+              version: this.formData.version,
+              omics: this.formData.TraitCategory,
+              linkagemap: this.formData.LinkMap,
+              xot_uid:
+                this.formData.TraitId == "null" ? "" : this.formData.TraitId,
+              lg: this.formData.lg,
+              cm_min: this.formData.cm_min,
+              cm_max: this.formData.cm_max,
+            };
+            let pageParams = {
+              pageNum: this.page.pageNum,
+              pageSize: this.page.pageSize,
+            };
+            let res = await this.$API.marker.reqlinkage(data, pageParams);
+
+            if (res.code == 200) {
+              this.page.total = res.total;
+              this.$emit("showResult", res.rows, data);
+            }
+          }
+          this.$emit("loadingUpdata", false);
+        } else {
+          console.log("error submit!!");
+          return false;
         }
-      } else {
-        let data = {
-          accession: this.formData.reference,
-          version: this.formData.version,
-          omics: this.formData.TraitCategory,
-          linkagemap: this.formData.LinkMap,
-          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
-          lg: this.formData.lg,
-          cm_min: this.formData.cm_min,
-          cm_max: this.formData.cm_max,
-        };
-        let pageParams = {
-          pageNum: this.page.pageNum,
-          pageSize: this.page.pageSize,
-        };
-        let res = await this.$API.marker.reqlinkage(data, pageParams);
-
-        if (res.code == 200) {
-          this.page.total = res.total;
-          this.$emit("showResult", res.rows, data);
-        }
-      }
-      this.$emit("loadingUpdata", false);
+      });
     },
     async changeType() {
       this.formData = {
@@ -615,7 +651,7 @@ export default {
         lg: "",
         cm_min: 0.01,
         cm_max: 100.88,
-        TraitId: "null",
+        TraitId: "",
       };
       this.options = {
         reference: [],
@@ -651,7 +687,7 @@ export default {
         lg: "",
         cm_min: 0.01,
         cm_max: 100.88,
-        TraitId: "null",
+        TraitId: "",
       };
       await this.getdata();
       this.formData.reference = this.options.reference[0].value;
