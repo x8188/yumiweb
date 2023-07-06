@@ -34,7 +34,6 @@
 
 <script>
   import  svgViewer from '@/api/system/svgViewer/svgViewer-expressionViewer.js'
-
   // import 'bootstrap/dist/css/bootstrap.css'
   // import '@/assets/styles/bootstrap.min.css';
   // import '@/assets/styles/style.css';
@@ -44,6 +43,7 @@
 
   import request from '@/utils/request'
   export default {
+    svgViewer,
     mounted() {
       $(document).ready(function(){
         // var geneID = Drupal.settings.zmap_tissue_expression.geneID ? Drupal.settings.zmap_tissue_expression.geneID : '';

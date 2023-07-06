@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <el-form :rules="rules" :model="formData">
+          <el-form ref="elform" :rules="rules" :model="formData">
             <div class="gene-select">
               <div class="reference-item select-item">
                 <span>Reference</span>
@@ -165,15 +165,15 @@
                     </div>
                     <div class="start">
                       <span>start</span>
-                      <el-form-item>
-                        <el-input v-model="formData.start"></el-input>
+                      <el-form-item prop="start">
+                        <el-input v-model="formData.start" clearable></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
                       <span>end</span>
-                      <el-form-item>
-                        <el-input v-model="formData.end"></el-input>
+                      <el-form-item prop="end">
+                        <el-input v-model="formData.end" clearable></el-input>
                       </el-form-item>
                     </div>
                   </div>
@@ -187,15 +187,15 @@
                 <div class="form-item">
                   <div class="start">
                     <span>Leading -log10(P)</span>
-                    <el-form-item>
-                      <el-input v-model="formData.QTLstart"></el-input>
+                    <el-form-item prop="QTLstart">
+                      <el-input v-model="formData.QTLstart" clearable></el-input>
                     </el-form-item>
                   </div>
                   <span class="start-to-end"></span>
                   <div class="end">
                     <span></span>
-                    <el-form-item>
-                      <el-input v-model="formData.QTLend"></el-input>
+                    <el-form-item prop="QTLend">
+                      <el-input v-model="formData.QTLend" clearable></el-input>
                     </el-form-item>
                   </div>
                 </div>
@@ -207,15 +207,15 @@
                 <div class="form-item">
                   <div class="start">
                     <span>Lod</span>
-                    <el-form-item>
-                      <el-input v-model="formData.lodStart"></el-input>
+                    <el-form-item prop="lodStart">
+                      <el-input v-model="formData.lodStart" clearable></el-input>
                     </el-form-item>
                   </div>
                   <span class="start-to-end"></span>
                   <div class="end">
                     <span></span>
-                    <el-form-item>
-                      <el-input v-model="formData.lodEnd"></el-input>
+                    <el-form-item prop="lodEnd">
+                      <el-input v-model="formData.lodEnd" clearable></el-input>
                     </el-form-item>
                   </div>
                 </div>
@@ -241,6 +241,7 @@
 </template>
 <script>
 import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
+import { async } from "q";
 // import Title from "@/components/CommonComponents/Title.vue";
 export default {
   components: { SvgIcon },
@@ -287,6 +288,12 @@ export default {
         version: [
           { required: true, message: "Cannot be empty", trigger: "change" },
         ],
+        QTLstart: [{ validator: this.validatorNum, trigger: "change" }],
+        QTLend: [{ validator: this.validatorNum, trigger: "change" }],
+        lodStart: [{ validator: this.validatorNum, trigger: "change" }],
+        lodEnd: [{ validator: this.validatorNum, trigger: "change" }],
+        start: [{ validator: this.validatorNum, trigger: "change" }],
+        end: [{ validator: this.validatorNum, trigger: "change" }],
       },
     };
   },
@@ -296,6 +303,23 @@ export default {
     await this.getVersionOp();
   },
   methods: {
+    validatorNum(rule, value, callback) {
+      if (!this.isNumber(value)) {
+        callback(new Error("请输入数字值"));
+      } else {
+        callback();
+      }
+    },
+    isNumber(val) {
+      var regPos = /^\d+(\.\d+)?$/;
+      var regNeg =
+        /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/;
+      if (regPos.test(val) || regNeg.test(val)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     async getdata() {
       this.$emit("loadingUpdata", true);
       if (this.qtlType == "association") {
@@ -355,10 +379,10 @@ export default {
       this.$emit("loadingUpdata", false);
     },
     async getVersionOp() {
-      if(this.formData.reference==''){
-        this.formData.reference=undefined
-        this.formData.version=""
-        return
+      if (this.formData.reference == "") {
+        this.formData.reference = undefined;
+        this.formData.version = "";
+        return;
       }
       if (this.qtlType == "association") {
         let res2 = await this.$API.Qtl.reqselectversion(
@@ -446,54 +470,63 @@ export default {
       this.getQtl();
     },
     async getQtl() {
-      this.$emit("loadingUpdata", true);
-      if (this.qtlType == "association") {
-        let data = {
-          accession: this.formData.reference,
-          version: this.formData.version,
-          omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
-          chr: this.formData.chr,
-          start: this.formData.start,
-          end: this.formData.end,
-          log_min: this.formData.QTLstart,
-          log_max: this.formData.QTLend,
-        };
-        let pageParams = {
-          pageNum: this.page.pageNum,
-          pageSize: this.page.pageSize,
-        };
-        let res = await this.$API.Qtl.reqassociation_qtl(data, pageParams);
+      this.$refs["elform"].validate(async (valid) => {
+        if (valid) {
+          this.$emit("loadingUpdata", true);
+          if (this.qtlType == "association") {
+            let data = {
+              accession: this.formData.reference,
+              version: this.formData.version,
+              omics: this.formData.TraitCategory,
+              xot_uid:
+                this.formData.TraitId == "null" ? "" : this.formData.TraitId,
+              chr: this.formData.chr,
+              start: this.formData.start,
+              end: this.formData.end,
+              log_min: this.formData.QTLstart,
+              log_max: this.formData.QTLend,
+            };
+            let pageParams = {
+              pageNum: this.page.pageNum,
+              pageSize: this.page.pageSize,
+            };
+            let res = await this.$API.Qtl.reqassociation_qtl(data, pageParams);
 
-        if (res.code == 200) {
-          this.page.total = res.total;
-          this.$emit("showResult", res.rows, data);
-        }
-      } else {
-        let data = {
-          accession: this.formData.reference,
-          version: this.formData.version,
-          omics: this.formData.TraitCategory,
-          xot_uid: this.formData.TraitId == "null" ? "" : this.formData.TraitId,
-          linkagemap: this.formData.LinkMap,
-          chr: this.formData.chr,
-          start: this.formData.start,
-          end: this.formData.end,
-          lod_min: this.formData.lodStart,
-          lod_max: this.formData.lodEnd,
-        };
-        let pageParams = {
-          pageNum: this.page.pageNum,
-          pageSize: this.page.pageSize,
-        };
-        let res = await this.$API.Qtl.reqlinkage(data, pageParams);
+            if (res.code == 200) {
+              this.page.total = res.total;
+              this.$emit("showResult", res.rows, data);
+            }
+          } else {
+            let data = {
+              accession: this.formData.reference,
+              version: this.formData.version,
+              omics: this.formData.TraitCategory,
+              xot_uid:
+                this.formData.TraitId == "null" ? "" : this.formData.TraitId,
+              linkagemap: this.formData.LinkMap,
+              chr: this.formData.chr,
+              start: this.formData.start,
+              end: this.formData.end,
+              lod_min: this.formData.lodStart,
+              lod_max: this.formData.lodEnd,
+            };
+            let pageParams = {
+              pageNum: this.page.pageNum,
+              pageSize: this.page.pageSize,
+            };
+            let res = await this.$API.Qtl.reqlinkage(data, pageParams);
 
-        if (res.code == 200) {
-          this.page.total = res.total;
-          this.$emit("showResult", res.rows, data);
+            if (res.code == 200) {
+              this.page.total = res.total;
+              this.$emit("showResult", res.rows, data);
+            }
+          }
+          this.$emit("loadingUpdata", false);
+        } else {
+          console.log("error submit!!");
+          return false;
         }
-      }
-      this.$emit("loadingUpdata", false);
+      });
     },
     async changeType() {
       this.getdata();
@@ -510,7 +543,7 @@ export default {
         QTLend: 999999999,
         LinkMap: "",
         TraitCategory: "",
-        TraitId: "null",
+        TraitId: "",
         lodStart: 0.01,
         lodEnd: 1000.88,
       };
@@ -531,7 +564,7 @@ export default {
         QTLend: 1000.88,
         LinkMap: "",
         TraitCategory: "",
-        TraitId: "null",
+        TraitId: "",
         lodStart: 0.01,
         lodEnd: 1000.88,
       };
