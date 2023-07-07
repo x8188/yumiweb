@@ -54,9 +54,9 @@
                     </el-col>
                     <el-col :span="6">
                         <div id="inner_input">
-                            <el-input placeholder="start" v-model="formData.start"></el-input>
+                            <el-input placeholder="start" v-model="formData.start" number @input="handleinput"></el-input>
                             <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-                            <el-input placeholder="end" v-model="formData.end"></el-input>
+                            <el-input placeholder="end" v-model="formData.end" number @input="handleinput1"></el-input>
                         </div>
                     </el-col>
                     <el-col>
@@ -85,7 +85,7 @@
 
                 <el-table-column label="Variant ID" show-overflow-tooltip>
                     <template slot-scope="scope">
-                        <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick($event)">{{ scope.row.vid
+                        <span style="cursor:pointer;color:rgb(64,158,255)">{{ scope.row.vid
                         }}</span>
                     </template>
                 </el-table-column>
@@ -196,7 +196,6 @@ export default {
             handler(){
                 this.loading = true
                 searchTagVariant(this.formData, this.queryParams).then(res => {
-                console.log(res.rows)
                 this.total = res.total
                 this.tableData = res.rows
                 this.loading = false
@@ -212,7 +211,6 @@ export default {
         this.Request_beforeMounted()
         this.loading = true
         searchTagVariant(this.formData, this.queryParams).then(res => {
-            console.log(res.rows)
             this.total = res.total
             this.tableData = res.rows
             this.loading = true
@@ -222,7 +220,6 @@ export default {
         //跳转到详情页面
         handleClick(event) {
             const VID = event.target.innerHTML
-            console.log(VID)
             toDetailPage(VID).then(res => {
                 const data = res;
                 this.$router.push({
@@ -231,6 +228,26 @@ export default {
                 })
             }).catch(err => {
             })
+        },
+        handleinput(value){
+            if(isNaN(value))
+            {
+                this.formData.start = value.replace(/\D/g, '') 
+                this.$message("请输入数字!!!!")
+            }
+            else{
+                
+            }
+        },
+        handleinput1(value){
+            if(isNaN(value))
+            {
+                this.formData.end = value.replace(/\D/g, '') 
+                this.$message("请输入数字!!!!")
+            }
+            else{
+                
+            }
         },
         /** 查询岗位信息列表 */
         getList() {
@@ -242,7 +259,6 @@ export default {
             })
         },
         handleSelectionChange(val) {
-            console.log(val)
 
             this.Download_Vid = []
             val.forEach(item => {
@@ -285,14 +301,8 @@ export default {
         },
         handleIsShow() {
             const tag = this.$refs.tag
-            console.log(tag[0])
         },
         stateFormat(row, column, cellValue, index) {
-            // console.log(row)
-            // console.log(column)
-            // console.log(index)
-            // console.log(cellValue.slice(-1, -4).style)
-            // console.log(row.flag)
             if (row.tags) {
                 if (!cellValue) return '';
                 if (cellValue.length > this.contentLength) {   // 超过contentLength长度的内容隐藏
@@ -309,13 +319,10 @@ export default {
         },
         // 筛选页面
         filter_page() {
-            console.log(this.formData)
             searchTagVariant(this.formData, this.queryParams).then(res => {
-                console.log(res)
                 this.tableData = res.rows
                 this.total = res.total
             }).catch(err => {
-                console.log(err)
             })
         },
         //页面加载前请求
@@ -324,41 +331,33 @@ export default {
                 this.accessionOptions = res.data
                 this.formData.accession = this.accessionOptions[0]
             }).catch(err => {
-                console.log("Reference出现： " + err)
             })
             getSelectPopulation().then(res => {
                 this.aliasOptions = res.data
             }).catch(err => {
-                console.log("Population出现： " + err)
             })
             getSelectAnalysis().then(res => {
                 this.descriptionOptions = res.data
             }).catch(err => {
-                console.log("Analyies出现： " + err)
             })
             getSelectConsequences().then(res => {
                 this.consequenceOptions = res.data
             }).catch(err => {
-                console.log("Consequences出现： " + err)
             })
             getSelectImpacts().then(res => {
                 this.impactsOptions = res.data
             }).catch(err => {
-                console.log("Impacts出现： " + err)
             })
             getSelectRegion().then(res => {
                 this.chrOptions = res.data
             }).catch(err => {
-                console.log("Region出现： " + err)
             })
             getSelectVariantClass().then(res => {
                 this.typeOptions = res.data
             }).catch(err => {
-                console.log("VariantClass出现： " + err)
             })
         },
         cellClick(row, column, cell, event) {
-            console.log(row, column, cell, event)
         }
     }
 }
