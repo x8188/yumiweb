@@ -103,6 +103,11 @@ export default {
     async selectData() {
       const { total, rows } = await selectData(this.formAll)
 
+      if(total === 0) {
+        this.loading = false
+        return
+      }
+
       this.page.total = total
       const germplasms = this.formInfo.germplasm
       const data = []
