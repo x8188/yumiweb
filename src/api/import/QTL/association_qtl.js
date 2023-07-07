@@ -21,7 +21,7 @@ export function getImportAqtl(associationQtlId) {
 export function addImportAqtl(data) {
   return request({
     url: '/zeamap/ImportAqtl/add',
-    method: 'get',
+    method: 'post',
     data: data
   })
 }

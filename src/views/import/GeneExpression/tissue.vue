@@ -152,7 +152,7 @@
 
     <!-- 添加或修改组织对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="180px">
         <el-form-item label="tissueClass" prop="tissueClass">
           <el-input v-model="form.tissueClass" placeholder="请输入tissueClass" />
         </el-form-item>

@@ -4,23 +4,19 @@
     <p>IIIustration of population structures based on Principal component analysis(PCA), chose the proper principal components(PCa)for X and Y axes to load a scatter plot. Each point represents an individual in the population, which is colored according to priori-knowledge-based classification. See Tutorial for more details.</p>
     <div>
       <el-row :gutter="15">
-        <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
-          <el-col :span="6">
-            <el-form-item label="PCA" prop="field101" >
-              <el-select v-model="formData.field101" :style="{width: '100%'}" @change="pcaChange(formData)">
+        <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="80px">
+            <el-form-item label="PCA" prop="field101" style="float: left;width: 200px">
+              <el-select v-model="formData.field101"  @change="pcaChange(formData)">
                 <el-option v-for="(item, index) in field101Options" :key="index" :label="item.label"
                            :value="item.value" :disabled="item.disabled"></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label-width="1px" label="" prop="field102">
-              <el-select v-model="formData.field102" :style="{width: '60%'}" @change="pcaChange(formData)">
+            <el-form-item label-width="1px" label="" prop="field102" style="float: left;width: 120px">
+              <el-select v-model="formData.field102" @change="pcaChange(formData)">
                 <el-option v-for="(item, index) in field102Options" :key="index" :label="item.label"
                            :value="item.value" :disabled="item.disabled"></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
         </el-form>
       </el-row>
     </div>

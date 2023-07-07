@@ -177,10 +177,7 @@
 
     <!-- 添加或修改ImportVariant对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="variantId" prop="variantId">
-          <el-input v-model="form.variantId" placeholder="请输入variantId" />
-        </el-form-item>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="vid" prop="vid">
           <el-input v-model="form.vid" placeholder="请输入vid" />
         </el-form-item>

@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询ImportInfo列表
 export function listImportInfo(query) {
   return request({
-    url: '/zeamap/ImportInfo/list',
+    url: '/zeamap/ImportVariantInfo/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listImportInfo(query) {
 // 查询ImportInfo详细
 export function getImportInfo(variantinfoId) {
   return request({
-    url: '/zeamap/ImportInfo/' + variantinfoId,
+    url: '/zeamap/ImportVariantInfo/' + variantinfoId,
     method: 'get'
   })
 }
@@ -20,8 +20,8 @@ export function getImportInfo(variantinfoId) {
 // 新增ImportInfo
 export function addImportInfo(data) {
   return request({
-    url: '/zeamap/ImportInfo/add',
-    method: 'get',
+    url: '/zeamap/ImportVariantInfo/add',
+    method: 'post',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addImportInfo(data) {
 // 修改ImportInfo
 export function updateImportInfo(data) {
   return request({
-    url: '/zeamap/ImportInfo/edit',
+    url: '/zeamap/ImportVariantInfo/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportInfo(data) {
 // 删除ImportInfo
 export function delImportInfo(variantinfoId) {
   return request({
-    url: '/zeamap/ImportInfo/remove/' + variantinfoId,
+    url: '/zeamap/ImportVariantInfo/remove/' + variantinfoId,
     method: 'delete'
   })
 }

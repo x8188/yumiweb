@@ -12,7 +12,7 @@
       <el-form-item label="pValue" prop="pValue">
         <el-input
           v-model="queryParams.pValue"
-          placeholder="请输入pValue}"
+          placeholder="请输入pValue"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -123,7 +123,7 @@
 
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="targetGene" prop="targetGene">
           <el-input v-model="form.targetGene" placeholder="请输入targetGene" />
         </el-form-item>

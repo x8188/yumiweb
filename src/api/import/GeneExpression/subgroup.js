@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询Import列表
 export function listSubgroup(query) {
   return request({
-    url: '/zeamap/subgroup/list',
+    url: '/zeamap/ImportSubgroup/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listSubgroup(query) {
 // 查询Import详细
 export function getSubgroup(subgroupId) {
   return request({
-    url: '/zeamap/subgroup/' + subgroupId,
+    url: '/zeamap/ImportGubgroup/' + subgroupId,
     method: 'get'
   })
 }
@@ -20,8 +20,8 @@ export function getSubgroup(subgroupId) {
 // 新增Import
 export function addSubgroup(data) {
   return request({
-    url: '/zeamap/subgroup/add',
-    method: 'get',
+    url: '/zeamap/ImportSubgroup/add',
+    method: 'post',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addSubgroup(data) {
 // 修改Import
 export function updateSubgroup(data) {
   return request({
-    url: '/zeamap/subgroup/edit',
+    url: '/zeamap/ImportSubgroup/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateSubgroup(data) {
 // 删除Import
 export function delSubgroup(subgroupId) {
   return request({
-    url: '/zeamap/subgroup/remove/' + subgroupId,
+    url: '/zeamap/ImportSubgroup/remove/' + subgroupId,
     method: 'delete'
   })
 }

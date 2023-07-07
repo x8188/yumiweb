@@ -21,7 +21,7 @@ export function getDb(dbId) {
 export function addDb(data) {
   return request({
     url: '/zeamap/ImportDb/add',
-    method: 'get',
+    method: 'post',
     data: data
   })
 }

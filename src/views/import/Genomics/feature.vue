@@ -120,7 +120,7 @@
 
     <!-- 添加或修改Importfeature对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="200px">
         <el-form-item label="expression表关联的id" prop="uniquename">
           <el-input v-model="form.uniquename" placeholder="请输入expression表关联的id" />
         </el-form-item>

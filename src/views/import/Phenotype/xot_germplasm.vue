@@ -124,7 +124,7 @@
 
     <!-- 添加或修改import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="value" prop="value">
           <el-input v-model="form.value" placeholder="请输入value}" />
         </el-form-item>

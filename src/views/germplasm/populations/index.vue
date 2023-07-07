@@ -2,8 +2,7 @@
   <div>
     <div class="app">
       <div class="top">
-        <div class="top_left"></div>
-        <span>Populations</span>
+        <Title>Populations</Title>
       </div>
       <div class="container" v-for="item in populations" :key="item.name">
         <div class="box">
@@ -39,6 +38,8 @@ import {details} from "@/api/germplasm/details/details";
 
 export default {
   name: "populations",
+  components: {},
+
   data (){
     return {
       populations: [
@@ -75,19 +76,10 @@ export default {
 }
 .top{
   background: #fff;
-  height: 50px;
-  font-size: 20px;
-  font-family: 微软雅黑;
+  height: 90px;
   padding: 15px 30px;
   overflow: hidden;
   font-weight: bold;
-}
-.top_left{
-  background: #13ce66;
-  width: 3px;
-  height: 27px;
-  float: left;
-  margin: 0 10px;
 }
 .box{
   background: #fff;

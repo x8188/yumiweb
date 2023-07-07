@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询Import列表
 export function listTarget(query) {
   return request({
-    url: '/zeamap/Tfdbtarget/list',
+    url: '/zeamap/ImportTfdbtarget/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listTarget(query) {
 // 查询Import详细
 export function getTarget(tfbdTargetId) {
   return request({
-    url: '/zeamap/Tfdbtarget/' + tfbdTargetId,
+    url: '/zeamap/ImportTfdbtarget/' + tfbdTargetId,
     method: 'get'
   })
 }
@@ -20,8 +20,8 @@ export function getTarget(tfbdTargetId) {
 // 新增Import
 export function addTarget(data) {
   return request({
-    url: '/zeamap/Tfdbtarget/add',
-    method: 'get',
+    url: '/zeamap/ImportTfdbtarget/add',
+    method: 'post',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addTarget(data) {
 // 修改Import
 export function updateTarget(data) {
   return request({
-    url: '/zeamap/Tfdbtarget/edit',
+    url: '/zeamap/ImportTfdbtarget/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateTarget(data) {
 // 删除Import
 export function delTarget(tfbdTargetId) {
   return request({
-    url: '/zeamap/Tfdbtarget/remove/' + tfbdTargetId,
+    url: '/zeamap/ImportTfdbtarget/remove/' + tfbdTargetId,
     method: 'delete'
   })
 }

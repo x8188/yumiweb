@@ -132,7 +132,7 @@
 
     <!-- 添加或修改dbxref对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="Reference" prop="accession">
           <el-input v-model="form.accession" placeholder="请输入Reference" />
         </el-form-item>

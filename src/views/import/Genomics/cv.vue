@@ -39,7 +39,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['zeamap:cv:add']"
+          v-hasPermi="['zeamap:ImportCv:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -50,7 +50,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['zeamap:cv:edit']"
+          v-hasPermi="['zeamap:ImportCv:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -61,7 +61,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['zeamap:cv:remove']"
+          v-hasPermi="['zeamap:ImportCv:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,7 +71,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['zeamap:cv:export']"
+          v-hasPermi="['zeamap:ImportCv:export']"
         >导出</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -81,7 +81,7 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-          v-hasPermi="['zeamap:cv:import']"
+          v-hasPermi="['zeamap:ImportCv:import']"
         >导入</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -123,9 +123,6 @@
     <!-- 添加或修改ImportCv对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="cvId" prop="cvId">
-          <el-input v-model="form.cvId" placeholder="请输入cvId" />
-        </el-form-item>
         <el-form-item label="name" prop="name">
           <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>

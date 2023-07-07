@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询import列表
 export function listImportxotgermplasm(query) {
   return request({
-    url: '/zeamap/importxotgermplasm/list',
+    url: '/zeamap/importXotGermplasm/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listImportxotgermplasm(query) {
 // 查询import详细
 export function getImportxotgermplasm(xotGermplasmId) {
   return request({
-    url: '/zeamap/importxotgermplasm/' + xotGermplasmId,
+    url: '/zeamap/importXotGermplasm/' + xotGermplasmId,
     method: 'get'
   })
 }
@@ -20,8 +20,8 @@ export function getImportxotgermplasm(xotGermplasmId) {
 // 新增import
 export function addImportxotgermplasm(data) {
   return request({
-    url: '/zeamap/importxotgermplasm/add',
-    method: 'get',
+    url: '/zeamap/importXotGermplasm/add',
+    method: 'post',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addImportxotgermplasm(data) {
 // 修改import
 export function updateImportxotgermplasm(data) {
   return request({
-    url: '/zeamap/importxotgermplasm/edit',
+    url: '/zeamap/importXotGermplasm/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImportxotgermplasm(data) {
 // 删除import
 export function delImportxotgermplasm(xotGermplasmId) {
   return request({
-    url: '/zeamap/importxotgermplasm/remove/' + xotGermplasmId,
+    url: '/zeamap/importXotGermplasm/remove/' + xotGermplasmId,
     method: 'delete'
   })
 }

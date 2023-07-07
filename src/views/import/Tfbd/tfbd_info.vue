@@ -181,7 +181,7 @@
 
     <!-- 添加或修改Import对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="name" prop="name">
           <el-input v-model="form.name" placeholder="请输入name" />
         </el-form-item>
@@ -212,7 +212,7 @@
         <el-form-item label="atsimplename" prop="atsimplename">
           <el-input v-model="form.atsimplename" placeholder="请输入atsimplename" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="description">
+        <el-form-item label="description" prop="description">
           <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="analysisId" prop="analysisId">

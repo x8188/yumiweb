@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询ImportEnvironment列表
 export function listImport(query) {
   return request({
-    url: '/zeamap/Import/list',
+    url: '/zeamap/ImportEnvironment/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listImport(query) {
 // 查询ImportEnvironment详细
 export function getImport(environmentId) {
   return request({
-    url: '/zeamap/Import/' + environmentId,
+    url: '/zeamap/ImportEnvironment/' + environmentId,
     method: 'get'
   })
 }
@@ -20,8 +20,8 @@ export function getImport(environmentId) {
 // 新增ImportEnvironment
 export function addImport(data) {
   return request({
-    url: '/zeamap/Import/add',
-    method: 'get',
+    url: '/zeamap/ImportEnvironment/add',
+    method: 'post',
     data: data
   })
 }
@@ -29,7 +29,7 @@ export function addImport(data) {
 // 修改ImportEnvironment
 export function updateImport(data) {
   return request({
-    url: '/zeamap/Import/edit',
+    url: '/zeamap/ImportEnvironment/edit',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateImport(data) {
 // 删除ImportEnvironment
 export function delImport(environmentId) {
   return request({
-    url: '/zeamap/Import/remove' + environmentId,
+    url: '/zeamap/ImportEnvironment/remove' + environmentId,
     method: 'delete'
   })
 }

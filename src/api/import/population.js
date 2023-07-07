@@ -21,7 +21,7 @@ export function getPopulation(populationId) {
 export function addPopulation(data) {
   return request({
     url: '/zeamap/population/add',
-    method: 'get',
+    method: 'post',
     data: data
   })
 }
