@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="Multi">
+    <el-card class="Multi" style="margin-top: 20px;" v-loading="loading">
       <div>
-        <h2>Multi expression viewer</h2>
+        <Title>Multi expression viewer</Title>
       </div>
       <div class="firstSearch">
         <p>search for exp:</p>
@@ -20,6 +20,7 @@
                   v-model="formData.rederence"
                   placeholder="请选择下拉选择Rederence"
                   clearable
+                  filterable
                   :style="{ width: '100%' }"
                   @change="getVerDownMenu"
                 >
@@ -39,6 +40,7 @@
                   v-model="formData.version"
                   placeholder="请选择Version"
                   clearable
+                  filterable
                   :style="{ width: '100%' }"
                   :disabled="formData.rederence == undefined"
                 >
@@ -65,7 +67,11 @@
             </el-col>
             <el-col :span="24">
               <el-form-item size="large">
-                <el-button class="tryButton" @click="formData.geneId=exampleGene">try example</el-button>
+                <el-button
+                  class="tryButton"
+                  @click="formData.geneId = exampleGene"
+                  >try example</el-button
+                >
                 <!-- <el-button type="primary" @click="submitForm">提交</el-button>
                 <el-button @click="resetForm">重置</el-button> -->
               </el-form-item>
@@ -99,6 +105,7 @@
                     v-model="tissue_filter_data.analysis"
                     placeholder="请选择Analysis"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -115,6 +122,7 @@
                     v-model="tissue_filter_data.environment"
                     placeholder="请选择environment"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -131,6 +139,7 @@
                     v-model="tissue_filter_data.germplasm"
                     placeholder="请选择Germplasm"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -162,6 +171,7 @@
                     v-model="germplasm_filter_data.analysis"
                     placeholder="请选择Analysis"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -178,6 +188,7 @@
                     v-model="germplasm_filter_data.environment"
                     placeholder="请选择environment"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -194,6 +205,7 @@
                     v-model="germplasm_filter_data.tissue"
                     placeholder="请选择Tissue"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -210,6 +222,7 @@
                     v-model="germplasm_filter_data.population"
                     placeholder="请选择population"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -241,6 +254,7 @@
                     v-model="environment_filter_data.analysis"
                     placeholder="请选择Analysis"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -257,6 +271,7 @@
                     v-model="environment_filter_data.germplasm"
                     placeholder="请选择Germplasm"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -273,6 +288,7 @@
                     v-model="environment_filter_data.tissue"
                     placeholder="请选择Tissue"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -289,6 +305,7 @@
                     v-model="environment_filter_data.population"
                     placeholder="请选择population"
                     clearable
+                    filterable
                     :style="{ width: '100%' }"
                   >
                     <el-option
@@ -304,6 +321,7 @@
                   <el-select
                     v-model="environment_filter_data.subgroup"
                     placeholder="请选择subgroup"
+                    filterable
                     clearable
                     :style="{ width: '100%' }"
                   >
@@ -324,7 +342,7 @@
             </el-col>
             <el-col :span="18" class="Select">
               <h3>Select</h3>
-              <div>
+              <div style="border: 1px #ccc solid; height: 370px; overflow: auto; padding: 10px">
                 <div
                   v-for="(co_select, index) in compare_selector"
                   :key="index"
@@ -354,7 +372,61 @@
           </el-row>
         </div>
       </div>
+    </el-card>
+    <el-card id="MultiResult" v-if="resultShow" class="Multi" style="margin-top: 20px;" v-loading="loading">
+      <div>
+        <Title>Multi expression result</Title>
+      </div>
+      <div v-if="alldata.length==0"><strong>No Result</strong></div>
+      <div v-if="alldata.length!=0">
+        <el-table :data="alldata">
+          <el-table-column label="expressionId" align="center" prop="expressionId" />
+          <el-table-column label="expressionUnit" align="center" prop="expressionUnit" />
+          <el-table-column label="expressionValue" align="center" prop="expressionValue" />
+          <el-table-column label="analysisDetail" align="center" prop="analysis">
+            <template slot-scope="scope">
+              <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.$index,scope.row,'analysis')">{{ scope.row.analysisId }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="environmentDetail" align="center" prop="environment">
+            <template slot-scope="scope">
+              <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.$index,scope.row,'environment')">{{ scope.row.environmentId }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="germplasmDetail" align="center" prop="germplasm">
+            <template slot-scope="scope">
+              <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.$index,scope.row,'germplasm')">{{ scope.row.germplasmId }}</span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column label="germplasmDetail" align="center" prop="germplasm">
+            <template slot-scope="scope">
+              <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.$index,scope.row,'germplasm')">{{ scope.row.germplasmId }}</span>
+            </template>
+          </el-table-column> -->
+          <el-table-column label="tissueDetail" align="center" prop="tissue">
+            <template slot-scope="scope">
+              <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.$index,scope.row,'tissue')">{{ scope.row.tissueId }}</span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column label="environmentId" align="center" prop="environmentId" />
+          <el-table-column label="featureId" align="center" prop="featureId" />
+          <el-table-column label="germplasmId" align="center" prop="germplasmId" />
+          <el-table-column label="tissueId" align="center" prop="tissueId" /> -->
+        </el-table>
+      </div>
+    </el-card>
+
+    <el-drawer
+      :title="DEtitle"
+      :visible.sync="drawer"
+      direction="rtl"
+      size="20%"
+      style="height: 50%;top: 20%;"
+    >
+    <div v-for="(value, key) in detail" :key="key" style="margin: 10px;">
+    <strong>{{ key }}</strong>: {{ value }}
     </div>
+    </el-drawer>
   </div>
 </template>
 
@@ -374,23 +446,23 @@ export default {
       rules: {
         rederence: [
           {
-            
+            required: true,
             message: "请选择下拉选择Rederence",
             trigger: "change",
           },
         ],
         version: [
           {
-            
+            required: true,
             message: "请选择Version",
             trigger: "change",
           },
         ],
         geneId: [
           {
-            
+            required: true,
             message: "请输入Gene ID",
-            trigger: "blur",
+            trigger: "change",
           },
         ],
       },
@@ -525,14 +597,25 @@ export default {
         },
       ],
       compareloading:false,
-      exampleGene:"Zm00001d008241,Zm00001d026280,Zm00001d014894,Zm00001d013999,Zm00001d004246,Zm00001d002361,Zm00001d046889,Zm00001d019881,Zm00001d023435,Zm00001d009230"
+      exampleGene:"Zm00002d004455,Zm00002d004246",
+
+      alldata:[],
+      detail:{},
+      resultShow:false,
+
+      drawer:false,
+      DEtitle:"",
+
+      loading:false
     };
   },
   computed: {},
   watch: {},
-  created() {
+  async created() {
     this.changeCompare();
-    this.getRefDownMenu();
+    await this.getRefDownMenu();
+    this.formData.rederence=this.rederenceOptions[0].value
+    this.getVerDownMenu()
     this.getDownMenu();
   },
   mounted() {},
@@ -564,9 +647,14 @@ export default {
     },
     async changeCompare() {
       this.compareloading=true
-      Object.keys(this.tissue_filter_data).forEach((key) => {
-        this.tissue_filter_data[key] = undefined;
-      });
+
+      // 临时的
+      this.tissue_filter_data["analysis"] = "Zhong Silin TFBS data w";
+      this.tissue_filter_data["environment"] = "Normal";
+      this.tissue_filter_data["germplasm"] = "CIMBL958";
+      // Object.keys(this.tissue_filter_data).forEach((key) => {
+      //   this.tissue_filter_data[key] = undefined;
+      // });
       Object.keys(this.germplasm_filter_data).forEach((key) => {
         this.germplasm_filter_data[key] = undefined;
       });
@@ -670,6 +758,28 @@ export default {
     },
 
     async submitALL() {
+
+      let tem=true
+      this.$refs['muExpForm'].validate((valid) => {
+          if (valid) {
+            
+          } else {
+            tem=false
+            return false;
+          }
+        });
+      
+      if(tem==false) return
+
+      if(this.compare_selector.reduce((acc, item) => [...acc, ...item.checkedop], []).length==0){
+        this.$message({
+          message: 'Select至少要选择一个',
+          type: 'warning'
+        });
+        return
+      }
+
+      this.loading=true
       let fullData = {
         reference: "",
         version: "",
@@ -678,12 +788,12 @@ export default {
         germplasm: "",
         population: "",
         tissue: "",
-        subgroup: "",
         geneIds: [],
         selects: [],
       };
       fullData.reference = this.formData.rederence;
       fullData.version = this.formData.version;
+      fullData.geneIds=this.formData.geneId
 
       let type=""
       if (this.dbxref_id == "tissue") {
@@ -706,12 +816,45 @@ export default {
         fullData.subgroup = this.environment_filter_data.subgroup;
       }
 
-      fullData.selects=this.compare_selector.reduce((acc, item) => [...acc, ...item.checkedop], []);
+      fullData.selects=this.compare_selector.reduce((acc, item) => [...acc, ...item.checkedop], []).join(",");
       
+      // fullData={
+      //   reference:"B73",
+      //   version:"4.48.8",
+      //   analysis:"Zhong Silin TFBS data w",
+      //   environment:"Normal",
+      //   geneIds:"Zm00002d004455,Zm00002d004246",
+      //   selects:"B73_6-7_internode,B73_7-8_internode",
+      //   germplasm:"CIMBL958",
+      // }
+
       let result = await this.$API.multi.reqMultiFull(type,fullData);
 
-      console.log(result);
+      if(result.code==200){
+        this.alldata=result.data
+        this.resultShow=true
+        setTimeout(function(){
+          let hightDiv = document.getElementById('MultiResult')  // 需要滚动位置元素
+          hightDiv.scrollIntoView({ behavior: 'smooth' });
+        },500)
+      }
+      
+      this.loading=false
+
     },
+    handleClick(index,row,col){
+      console.log(index,row,col)
+      this.detail={}
+      let tem=row[col]
+      for (var key in tem) {
+        if (tem.hasOwnProperty(key) && tem[key] !== null&& tem[key] !== '') {
+          this.detail[key] = tem[key];
+        }
+      }
+      this.DEtitle=col
+      this.drawer=true
+      console.log(this.detail)
+    }
   },
 };
 </script>
