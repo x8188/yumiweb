@@ -38,7 +38,7 @@
                 <div id="inner_input">
                 <el-input placeholder="请输入最小值" v-model="formData.start" number @input="handleinput"></el-input>
                 <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-                <el-input placeholder="请输入最大值" v-model="formData.end" ></el-input>
+                <el-input placeholder="请输入最大值" v-model="formData.end" number @input="handleinput2"></el-input>
               </div>
               </el-form-item>
               
@@ -180,16 +180,12 @@ export default {
   watch: {
     "formData.accession": function (New, Old) {
       if (New == null || New == "") {
-        this.versionOptions = ["Please choose Reference first!"]
       }
       else {
         getSelectVersion(New).then(res => {
-          console.log(res)
           this.VersionOptions = res.rows
           this.formData.version = this.VersionOptions[1]
-          console.log(this.VersionOptions)
         }).catch(err => {
-          console.log(err)
         })
       }
     },
@@ -197,9 +193,7 @@ export default {
       handler(oldVal, newVal) {
         this.loading = true;
         Search(this.formData, this.queryParams).then(res => {
-          console.log(res)
           const res11 = this.eidtMsg(res.rows)
-          console.log(res11)
           this.tableData = res11
           this.total = res.total
           this.loading = false
@@ -213,7 +207,6 @@ export default {
   methods: {
     //跳转到详情页面
     handleClick(event) {
-      console.log(event.featureId);  //接下来向后端传递这个参数实现页面跳转
       //跳转时 用路由传递参数，将数据正确展示到详情页面 未做
       const featureId = event.featureId
       toDetailPage(featureId).then(res => {
@@ -224,18 +217,26 @@ export default {
           query: { data }
         })
       }).catch(err => {
-        console.log(err)
       })
     },
     handleinput(value){
-      this.formData.start = value.replace(/\D/g, '') 
-      this.$message("请输入数字")
+      if(isNaN(value)){
+        this.formData.start = value.replace(/\D/g, '') 
+        this.$message("请输入数字!!!!")
+      }
+      
+    },
+    handleinput2(value){
+      if(isNaN(value)){
+        this.formData.end = value.replace(/\D/g, '') 
+        this.$message("请输入数字!!!!")
+      }
+      
     },
     /** 查询岗位信息列表 */
     getList() {
       this.loading = true;
       Search(this.formData, this.queryParams).then(res => {
-        console.log(res)
         const res11 = this.eidtMsg(res.rows)
         this.tableData = res11
         this.total = res.total
@@ -252,12 +253,10 @@ export default {
       return data
     },
     handleSelectionChange(val) {
-      console.log(val)
       this.Download_Vid = []
       val.forEach(item => {
         this.Download_Vid.push(item.featureId)
       });
-      console.log(this.Download_Vid)
     },
     submitForm() {
       this.$refs['elForm'].validate(valid => {
@@ -280,11 +279,9 @@ export default {
       const formData = new FormData()
       formData.append("feature_id", feature_id)
       Download(feature_id).then(res => {
-        console.log(res)
         const isLogin = blobValidate(res);
         if (isLogin) {
           const blob = new Blob([res])
-          console.log(blob)
           saveAs(blob, `Importfeature_${new Date().getTime()}.xlsx`)
         } else {
           const resText = data.text();
@@ -293,45 +290,35 @@ export default {
           Message.error(errMsg);
         }
       }).catch(err => {
-        console.log(err)
       })
     },
     // 筛选页面
     filter_page() {
       this.loading = true
       Search(this.formData, this.queryParams).then(res => {
-        console.log(res)
         const res11 = this.eidtMsg(res.rows)
         this.tableData = res11
         this.total = res.total
-        console.log(this.tableData)
         this.loading = false
       }).catch(err => {
-        console.log(err)
       })
     },
     //页面加载前请求
     Request_beforeMounted() {
       this.loading = true
       getSelectGermplasm().then(res => {
-        console.log(res)
         this.GermplasmOptions = res.rows
-        this.formData.accession = this.GermplasmOptions[2]
+        this.formData.accession = this.GermplasmOptions[0]
       }).catch(err => {
-        console.log("Germplasm出现： " + err)
       })
       getSelectChr().then(res => {
-        console.log(res)
         this.ChrOptions = res.rows
       }).catch(err => {
-        console.log("Chr出现： " + err)
       })
       getSelectType().then(res => {
-        console.log(res)
         this.nameOptions = res.rows
       })
       Search(this.formData, this.queryParams).then(res => {
-        console.log(res)
         const res11 = this.eidtMsg(res.rows)
         this.tableData = res11
         this.total = res.total

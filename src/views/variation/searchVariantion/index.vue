@@ -59,9 +59,9 @@
           <el-col :span="6">
             <span style="color:#606266;font-size: 14px;font-weight: 700;">Posi</span>
             <div id="inner_input">
-              <el-input placeholder="请输入最小值" v-model="formData.posi_min"></el-input>
+              <el-input placeholder="请输入最小值" v-model="formData.posi_min" number @input="handleinput"></el-input>
               <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-              <el-input placeholder="请输入最大值" v-model="formData.posi_max"></el-input>
+              <el-input placeholder="请输入最大值" v-model="formData.posi_max" number @input="handleinput2"></el-input>
             </div>
           </el-col>
           <el-col :span="6">
@@ -85,9 +85,9 @@
           <el-col :span="6">
             <span style="color:#606266;font-size: 14px;font-weight: 700;">MAF</span>
             <div id="inner_input">
-              <el-input placeholder="请输入最小值" v-model="formData.maf_min"></el-input>
+              <el-input placeholder="请输入最小值" v-model="formData.maf_min" number @input="handleinput3"></el-input>
               <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-              <el-input placeholder="请输入最大值" v-model="formData.maf_max"></el-input>
+              <el-input placeholder="请输入最大值" v-model="formData.maf_max" number @input="handleinput4"></el-input>
             </div>
           </el-col>
           <el-col>
@@ -276,7 +276,6 @@ export default {
     //跳转到详情页面
     handleClick(event) {
       const VID = event.target.innerHTML
-      console.log(VID)
       toDetailPage(VID).then(res => {
         const data = res;
         this.$router.push({
@@ -308,6 +307,42 @@ export default {
       this.formData.accession = this.accessionOptions[0]
       this.formData.version = this.versionOptions[0]
     },
+    handleinput(value){
+      if(isNaN(value))
+            {
+                this.formData.posi_min = value.replace(/\D/g, '') 
+                this.$message("请输入数字!!!!")
+            }
+            else{
+            }
+    },
+    handleinput2(value){
+      if(isNaN(value))
+            {
+                this.formData.posi_max = value.replace(/\D/g, '') 
+                this.$message("请输入数字!!!!")
+            }
+            else{
+            }
+    },
+    handleinput3(value){
+      if(isNaN(value))
+            {
+                this.formData.maf_min = value.replace(/\D/g, '') 
+                this.$message("请输入数字!!!!")
+            }
+            else{
+            }
+    },
+    handleinput4(value){
+      if(isNaN(value))
+            {
+                this.formData.maf_max = value.replace(/\D/g, '') 
+                this.$message("请输入数字!!!!")
+            }
+            else{
+            }
+    },
     /** 导出操作按钮 */
     handleExport() {
       this.queryList.ids = this.Download_Vid
@@ -338,14 +373,12 @@ export default {
     },
     // 筛选页面
     filter_page() {
-      console.log(this.formData)
       this.loading = true
       Search(this.formData, this.queryParams).then(res => {
         this.tableData = res.rows
         this.total = res.total
         this.loading = false
       }).catch(err => {
-        console.log(err)
       })
 
     },
@@ -353,45 +386,37 @@ export default {
     Request_beforeMounted() {
       getSelectReference().then(res => {
         this.accessionOptions = res.data
-        console.log(res)
         this.formData.accession = this.accessionOptions[0]
 
       }).catch(err => {
-        console.log("Reference出现： " + err)
       })
       getSelectPopulation().then(res => {
         this.aliasOptions = res.data
         // this.formData.alias = this.aliasOptions[2]
       }).catch(err => {
-        console.log("Population出现： " + err)
       })
       getSelectAnalysis().then(res => {
         this.descriptionOptions = res.data
       }).catch(err => {
-        console.log("Analyies出现： " + err)
       })
       getSelectConsequences().then(res => {
         this.consequenceOptions = res.data
         // this.formData.consequence = this.consequenceOptions[1]
       }).catch(err => {
-        console.log("Consequences出现： " + err)
       })
       getSelectImpacts().then(res => {
         this.impactsOptions = res.data
       }).catch(err => {
-        console.log("Impacts出现： " + err)
       })
       getSelectRegion().then(res => {
         this.chrOptions = res.data
         // this.formData.chr = this.chrOptions[0]
       }).catch(err => {
-        console.log("Region出现： " + err)
       })
       getSelectVariantClass().then(res => {
         this.typeOptions = res.data
         // this.formData.type = this.typeOptions[1]
       }).catch(err => {
-        console.log("VariantClass出现： " + err)
       })
     }
   }

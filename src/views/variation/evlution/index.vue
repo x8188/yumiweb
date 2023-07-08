@@ -69,20 +69,18 @@
                     </el-col>
                     <el-col :span="6">
                             <div id="inner_input">
-                                <el-input placeholder="start" v-model="formData.start"></el-input>
+                                <el-input placeholder="start" v-model="formData.start" number @input="handleinput"></el-input>
                                 <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
-                                <el-input placeholder="end" v-model="formData.end"></el-input>
+                                <el-input placeholder="end" v-model="formData.end" number @input="handleinput2"></el-input>
                             </div>
                     </el-col>
                     <el-col>
           <div  class="footer">
         <el-button size="small" @click="resetForm" style="margin-right: 15px;">
-          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
           <span style="color: #20AE35">清空</span>
         </el-button>
         <el-button type="primary" size="small" @click="filter_page()">
           查询
-            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
         </el-button>
       </div>
         </el-col>
@@ -206,11 +204,9 @@ export default {
             else
             {
                 getSelectType(New).then(res=>{
-                    console.log(res)
                     this.SelectionTypeOptions = res.data
                 })
                 getSelectPopCompared(New).then(res=>{
-                    console.log(res)
                     this.PopOptions = res.data
                 })
             }
@@ -219,7 +215,6 @@ export default {
             handler(newVal,oldVal){
                 this.loading = true;
                 Search(this.formData, this.queryParams).then(res => {
-                console.log(res.rows)
                 this.total = res.total
                 this.tableData = res.rows
                 this.loading = false
@@ -234,7 +229,6 @@ export default {
         this.Request_beforeMounted()
         this.loading = true
         Search(this.formData, this.queryParams).then(res => {
-            console.log(res.rows)
             this.total = res.total
             this.tableData = res.rows
             this.loading = false
@@ -250,8 +244,23 @@ export default {
                 this.loading =false
             })
         },
+        handleinput(value){
+        if(isNaN(value))
+        {
+            this.formData.start = value.replace(/\D/g, '') 
+            this.$message("请输入数字!!!!")
+        }
+       
+        },
+        handleinput2(value){
+        if(isNaN(value))
+        {
+            this.formData.end = value.replace(/\D/g, '') 
+            this.$message("请输入数字!!!!")
+        }
+       
+        },
         handleSelectionChange(val) {
-            console.log(val)
 
             this.Download_Vid =val
             // this.Download_Vid.push
@@ -261,13 +270,13 @@ export default {
         },
         resetForm() {
             this.$refs['elForm'].resetFields()
-            console.log(1232312)
             //此处设置为空其实应该将输入的绑定值 和prop的绑定值名字设置为相同 在这里为了方便直接设置
             this.formData.start = ""
             this.formData.end = ""
             this.formData.indicator = ""
             this.formData.select = ""
             this.formData.compare_pop = ""
+            this.formData.chro = ""
             this.formData.accession = this.accessionOptions[0]
             this.formData.version = this.versionOptions[0]
         },
@@ -291,9 +300,7 @@ export default {
                     Message.error(errMsg);
                 }
             }).catch(err => {
-                console.log(err)
             })
-            console.log(111)
         },
         handleReset() {
             Object.keys(this.formData).forEach(item => {
@@ -302,50 +309,36 @@ export default {
         },
         // 筛选页面
         filter_page() {
-            console.log(this.formData)
             this.loading = false
             Search(this.formData, this.queryParams).then(res => {
-                console.log(res)
                 this.tableData = res.rows
                 this.total = res.total
                 this.loading = true
             }).catch(err => {
-                console.log(err)
             })
         },
         //页面加载前请求
         Request_beforeMounted() {
             getSelectReference().then(res => {
-                console.log(res)
                 this.accessionOptions = res.data
                 this.formData.accession = this.accessionOptions[0]
             }).catch(err => {
-                console.log(err)
             })
             getSelectChr().then(res => {
-                console.log(res)
                 this.chrOptions = res.data
             }).catch(err => {
-                console.log(res)
-                console.log(err)
             })
             getSelectIndicator().then(res => {
-                console.log(res)
                 this.descriptionOptions = res.data
             }).catch(err => {
-                console.log(err)
             })
             getSelectPopCompared().then(res => {
-                console.log(res)
                 this.consequenceOptions = res.data
             }).catch(err => {
-                console.log(err)
             })
             getSelectType().then(res => {
-                console.log(res)
                 this.impactsOptions = res.data
             }).catch(err => {
-                console.log(err)
             })
            
         }
