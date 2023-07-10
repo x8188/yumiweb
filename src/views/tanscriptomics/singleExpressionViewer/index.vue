@@ -33,7 +33,8 @@
 </template>
 
 <script>
-  import  svgViewer from '@/api/system/svgViewer/svgViewer-expressionViewer.js'
+  // import  svgViewer from '@/api/system/svgViewer/svgViewer-expressionViewer.js'
+  var svgViewer = require('@/api/system/svgViewer/svgViewer-expressionViewer.js')
   // import 'bootstrap/dist/css/bootstrap.css'
   // import '@/assets/styles/bootstrap.min.css';
   // import '@/assets/styles/style.css';
@@ -43,7 +44,6 @@
 
   import request from '@/utils/request'
   export default {
-    svgViewer,
     mounted() {
       $(document).ready(function(){
         // var geneID = Drupal.settings.zmap_tissue_expression.geneID ? Drupal.settings.zmap_tissue_expression.geneID : '';
@@ -126,7 +126,7 @@
           // 	}
           // });
           let data = await request({
-            url: "/zeamap/feature/uniquename1?uniquename=" + geneID,
+            url: "/system/feature/uniquename1?uniquename=" + geneID,
             type: "get",
             dataType: "json",
           });
@@ -151,7 +151,7 @@
           // 如 ds.remoteSelectOne(url).then(...)
           // 通过查看gene的结构类型，了解后台返回的结构类型
           // var retriveExpUrl = '/zmap_tissue_expression/api/retrive/exp/' + geneID;
-           var retriveExpUrl = "/zeamap/feature/uniquename2?uniquename=" + geneID;
+           var retriveExpUrl = "/system/feature/uniquename2?uniquename=" + geneID;
           ds.remoteSelectOne(retriveExpUrl).then(function (gene) {
           // 	console.log(gene)
 
