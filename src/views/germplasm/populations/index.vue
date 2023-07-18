@@ -57,7 +57,7 @@ export default {
       })
     },
     handle(name){
-        this.$router.push({path:'/web/germplasm/germplasm/details',query:{name}});
+        this.$router.push({path:'/germplasm/germplasm/details',query:{name}});
         details(name).then(res =>{
           console.log(res)
         });

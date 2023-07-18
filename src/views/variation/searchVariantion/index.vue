@@ -109,8 +109,8 @@
 
 
     <div class="buttom_box">
-      <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-      <el-table v-loading="loading" ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
+      <el-button type="primary" icon="el-icon-download" @click="handleExport">下载</el-button>
+      <el-table v-loading="loading" ref="multipleTable" :data="tableData" tooltip-effect="dark"
         @selection-change="handleSelectionChange" >
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID($event)">
@@ -163,9 +163,10 @@ import { saveAs } from 'file-saver'
 import { list } from "@/api/monitor/logininfor";
 import json from "highlight.js/lib/languages/json";
 
+import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 
 export default {
-  components: {},
+  components: { SvgIcon },
   props: [],
   data() {
     return {
@@ -279,7 +280,7 @@ export default {
       toDetailPage(VID).then(res => {
         const data = res;
         this.$router.push({
-          path: '/web/variation/variation/detail',
+          path: '/variation/variation/detail',
           query: { data }
         })
       }).catch(err => {
@@ -520,12 +521,10 @@ export default {
    }
  }
  .footer {
-// margin-top: 20px;
-// margin-right: 20px;
-// background-color: pink;
-margin-top: 20px;
-display: flex;
-justify-content: space-between
+  margin-top: 20px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
 }
  </style>
   
