@@ -116,20 +116,20 @@
         <el-table-column type="selection" width="55" @click="getVID($event)">
         </el-table-column>
 
-        <el-table-column label="Variant ID" show-overflow-tooltip>
+        <el-table-column label="Variant ID" show-overflow-tooltip width="240">
           <template slot-scope="scope">
             <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick($event)">{{ scope.row.vid }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="Type" width="140">
+        <el-table-column prop="type" label="Type" >
         </el-table-column>
-        <el-table-column prop="chr" label="Chr" width="140">
+        <el-table-column prop="chr" label="Chr" >
         </el-table-column>
-        <el-table-column prop="posi" label="Posi" width="140">
+        <el-table-column prop="posi" label="Posi" >
         </el-table-column>
-        <el-table-column prop="maf" label="MAF" width="140">
+        <el-table-column prop="maf" label="MAF" >
         </el-table-column>
-        <el-table-column prop="genorate" label="GenoRate" width="140">
+        <el-table-column prop="genorate" label="GenoRate">
         </el-table-column>
         <el-table-column prop="consequences" label="Consequence" width="140">
         </el-table-column>
