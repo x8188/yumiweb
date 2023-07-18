@@ -76,11 +76,18 @@
       white-space: nowrap !important;
     }
 
+    // // menu hover
+    // .submenu-title-noDropdown,
+    // .el-submenu__title {
+    //   &:hover {
+    //     background-color: rgba(0, 0, 0, 0.06) !important;
+    //   }
+    // }
+
     // menu hover
-    .submenu-title-noDropdown,
-    .el-submenu__title {
+    .submenu-title-noDropdown, .el-submenu__title {
       &:hover {
-        background-color: rgba(0, 0, 0, 0.06) !important;
+        background-color: $base-sub-menu-hover !important;
       }
     }
 

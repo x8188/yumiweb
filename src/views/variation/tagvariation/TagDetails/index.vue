@@ -190,7 +190,7 @@
         toDetailPage(VID).then(res => {
           const data = res;
           this.$router.push({
-            path: '/web/variation/variation/detail',
+            path: '/variation/variation/detail',
             query: { data }
           })
         }).catch(err => {

@@ -67,12 +67,12 @@
           <el-col>
             <div class="footer">
               <el-button size="small" @click="resetForm()" style="margin-right: 15px;">
-                <!-- <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon> -->
+                <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
                 <span style="color: #20AE35">清空</span>
               </el-button>
               <el-button type="primary" size="small" @click="filter_page()">
                 查询
-                <!-- <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon> -->
+                <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
               </el-button>
             </div>
           </el-col>
@@ -81,8 +81,8 @@
 
     </div>
     <div class="buttom_box">
-      <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border=""
+      <el-button type="primary" icon="el-icon-download" @click="handleExport">下载</el-button>
+      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark"
         @selection-change="handleSelectionChange" v-loading="loading" element-loading-text="拼命加载中....">
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID()">
@@ -126,8 +126,11 @@ import { blobValidate } from '@/utils/ruoyi';
 import axios from 'axios'
 
 // import { nextTick } from "process";
+
+import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
+
 export default {
-  components: {},
+  components: { SvgIcon },
   props: [],
   data() {
     return {
@@ -213,7 +216,7 @@ export default {
         console.log(res)
         let data = res;
         this.$router.push({
-          path: '/web/Genomics/Genomics/details',
+          path: '/Genomics/Genomics/details',
           query: { data }
         })
       }).catch(err => {
@@ -430,10 +433,9 @@ export default {
 }
 
 .footer {
-  // margin-top: 20px;
-  // margin-right: 20px;
-  // background-color: pink;
+  margin-top: 20px;
+  margin-right: 20px;
   display: flex;
-  justify-content: space-between
+  justify-content: flex-end;
 }
 </style>

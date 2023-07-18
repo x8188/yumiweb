@@ -76,14 +76,14 @@
         </div>
 
         <div class="buttom_box">
-            <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-            <el-table v-loading="loading" ref="multipleTable" :data="tableData" @cell-click="cellClick" tooltip-effect="dark" border=""
+            <el-button type="primary" icon="el-icon-download" @click="handleExport">下载</el-button>
+            <el-table v-loading="loading" ref="multipleTable" :data="tableData" @cell-click="cellClick" tooltip-effect="dark"
                 @selection-change="handleSelectionChange" >
                 <!-- 展示的条目 -->
                 <el-table-column type="selection" width="55" @click="getVID($event)">
                 </el-table-column>
 
-                <el-table-column label="Variant ID" show-overflow-tooltip>
+                <el-table-column label="Variant ID" show-overflow-tooltip  width="240">
                     <template slot-scope="scope">
                         <span style="cursor:pointer;color:rgb(64,158,255)">{{ scope.row.vid
                         }}</span>
@@ -99,7 +99,7 @@
                 </el-table-column>
                 <el-table-column prop="kbspan" label="Span(kb)" width="">
                 </el-table-column>
-                <el-table-column prop="tags" label="Tags" width="" show-overflow-tooltip ref="tag" :formatter="stateFormat">
+                <el-table-column prop="tags" label="Tags" width="340" show-overflow-tooltip ref="tag" :formatter="stateFormat">
                 </el-table-column>
             </el-table>
             <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum"
@@ -126,8 +126,10 @@ import { Download } from "@/api/tagvariation/download"
 import service, { download } from '@/utils/request'
 import { tansParams, blobValidate, resetForm } from "@/utils/ruoyi";
 import { saveAs } from 'file-saver'
+
+import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 export default {
-    components: {},
+    components: { SvgIcon },
     props: [],
     data() {
         return {
@@ -223,7 +225,7 @@ export default {
             toDetailPage(VID).then(res => {
                 const data = res;
                 this.$router.push({
-                    path: '/web/variation/variation/detail',
+                    path: '/variation/variation/detail',
                     query: { data }
                 })
             }).catch(err => {
@@ -456,10 +458,9 @@ export default {
      }
  }
  .footer {
-// margin-top: 20px;
-// margin-right: 20px;
-// background-color: pink;
-display: flex;
-justify-content: space-between
+  margin-top: 20px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
 }
  </style>

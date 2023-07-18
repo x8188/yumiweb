@@ -75,12 +75,14 @@
                             </div>
                     </el-col>
                     <el-col>
-          <div  class="footer">
+      <div  class="footer">
         <el-button size="small" @click="resetForm" style="margin-right: 15px;">
+          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
           <span style="color: #20AE35">清空</span>
         </el-button>
         <el-button type="primary" size="small" @click="filter_page()">
           查询
+            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
         </el-button>
       </div>
         </el-col>
@@ -89,8 +91,8 @@
         </div>
 
         <div class="buttom_box">
-            <el-button type="primary" plain icon="el-icon-download" @click="handleExport">Go to FTP</el-button>
-            <el-table v-loading="loading" ref="multipleTable" :data="tableData"  tooltip-effect="dark" border=""
+            <el-button type="primary" icon="el-icon-download" @click="handleExport">下载</el-button>
+            <el-table v-loading="loading" ref="multipleTable" :data="tableData"  tooltip-effect="dark"
                 @selection-change="handleSelectionChange" >
                 <!-- 展示的条目 -->
                 <el-table-column type="selection" width="55" @click="getVID($event)">
@@ -136,8 +138,10 @@ import { Download } from "@/api/evlution/download";
 import { Search } from "@/api/evlution/search";
 import { tansParams, blobValidate, resetForm } from "@/utils/ruoyi";
 import { saveAs } from 'file-saver'
+
+import SvgIcon from "@/components/CommonComponents/SvgIcon.vue";
 export default {
-    components: {},
+    components: { SvgIcon },
     props: [],
     data() {
         return {
@@ -455,5 +459,12 @@ margin-top: 20px;
 // background-color: pink;
 display: flex;
 justify-content: space-between
+}
+
+.footer {
+  margin-top: 20px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
 }
  </style>
