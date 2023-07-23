@@ -1,5 +1,6 @@
 <template>
     <div class="charts-container">
+      <ninth-chart></ninth-chart>
       <first-chart></first-chart>
       <second-chart></second-chart>
       <third-chart></third-chart>
@@ -20,6 +21,7 @@ import fifthChart from "./components/fifthChart.vue";
 import sixthChart from "./components/sixthChart.vue";
 import seventhChart from "./components/seventhChart.vue";
 import eighthChart from "./components/eighthChart.vue";
+import ninthChart from "./components/ninthChart.vue";
 export default {
   components: {
     firstChart,
@@ -30,6 +32,7 @@ export default {
     sixthChart,
     seventhChart,
     eighthChart,
+    ninthChart,
   },
 };
 </script>
