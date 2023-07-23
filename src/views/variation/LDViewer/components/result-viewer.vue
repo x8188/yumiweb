@@ -60,22 +60,22 @@ export default {
     },
     // 初始化基因图的每个小菱形的颜色
     initColor() {
-      const deep0_1 = "#F7F7F";
-      const deep1_2 = "#DCDCDC";
-      const deep2_3 = "#C0C0C0";
-      const deep3_4 = "#A5A5A5";
-      const deep4_5 = "#898989";
-      const deep5_6 = "#6E6E6E";
-      const deep7_8 = "#373737";
-      const deep8_9 = "#1B1B1B";
-      const deep9_10 = "#000000";
+      const deep0= "#F7F7F";
+      const deep1= "#DCDCDC";
+      const deep2= "#C0C0C0";
+      const deep3= "#A5A5A5";
+      const deep4= "#898989";
+      const deep5= "#6E6E6E";
+      const deep7= "#373737";
+      const deep8= "#1B1B1B";
+      const deep9 = "#000000";
       const deep_none = '#fff'
       let firstLineNum = this.firstLineNum;
       let colorArr = new Array();
       for (let i = 0; i < firstLineNum; i++) {
         colorArr[i] = new Array(i);
         for (let j = 0; j < firstLineNum - i; j++) {
-          colorArr[i][j] = deep4_5;
+          colorArr[i][j] = deep4;
         }
       }
       return colorArr;

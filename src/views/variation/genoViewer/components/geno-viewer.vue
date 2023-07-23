@@ -78,7 +78,7 @@
                         style="margin-left: 12px;">
                         <span style="display: flex;">
                           {{ name }}&nbsp;&nbsp;({{checkGermplasms[name].length }}/
-                          <template v-if="germplasmItems[name].length === 0">
+                          <template v-if="germplasmLoading[name]">
                             <div style="display: flex;">
                               <div class="skelection" ></div>
                               <span>)</span>
@@ -161,6 +161,12 @@ export default {
 components: { SvgIcon },
   data() {
     return {
+      germplasmLoading: {
+        TST: true,
+        Mixed: true,
+        NSS: true,
+        SS: true
+      },
       chrLoading: true,
       region: '1',
       formData: {
@@ -282,18 +288,22 @@ components: { SvgIcon },
     async germplasmTST() {
       const { data } = await germplasmSelectTST()
       this.germplasmItems.TST = data
+      this.germplasmLoading.TST = false
     },
     async germplasmMixed() {
       const { data } = await germplasmSelectMixed()
       this.germplasmItems.Mixed = data
+      this.germplasmLoading.Mixed = false
     },
     async germplasmNSS() {
       const { data } = await germplasmSelectNSS()
       this.germplasmItems.NSS = data
+      this.germplasmLoading.NSS = false 
     },
     async germplasmSS() {
       const { data } = await germplasmSelectSS()
       this.germplasmItems.SS = data
+      this.germplasmLoading.SS = false
     },
     initGermplasm() {
       this.germplasmTST()
