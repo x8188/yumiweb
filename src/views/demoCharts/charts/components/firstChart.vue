@@ -4,20 +4,6 @@
       <Title>第一个chart</Title>
     </template>
       <div id="firstChart"></div>
-      <!-- <div class="balnk" style="height: 500px"></div> -->
-      <!-- <svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" stroke-width="1" stroke="#B1B1B1">
-        <foreignObject x="0" y="0" width="100%" height="100%">
-          <div xmlns="http://www.w3.org/1999/xhtml" style="background-color:#CDCBCE;height:100%;line-height:100px;color:#474A47;  font-size:95px;text-align:center;border:1px solid #000">
-            <span style="color:#4C4750;">
-              EE26
-            </span>
-          </div>
-        </foreignObject>
-        <rect x="0" y="10" width="25%" height="50%" fill="#0E02EE"></rect>
-        <rect x="10" y="10" width="25%" height="50%" fill="#F3030D"></rect>
-        <rect x="20" y="10" width="25%" height="50%" fill="#00FF02"></rect>
-        <rect x="30" y="10" width="25%" height="50%" fill="#14F2F6"></rect>
-      </svg> -->
   </ZeamapCard>
 </template>
 
