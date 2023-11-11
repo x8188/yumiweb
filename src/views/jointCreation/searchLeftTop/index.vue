@@ -1,0 +1,130 @@
+<template>
+  <div class="left_top">
+    <div style="margin: 20px"></div>
+    <el-form
+      :label-position="labelPosition"
+      label-width="90px"
+      v-model="formLabelAlign"
+      style="margin: 50px"
+    >
+      <el-form-item :label="$i18n.t('name/pedigreer')"  >
+        <el-input class="input_chart" v-model="formLabelAlign.pedigree"></el-input>
+      </el-form-item>
+      <el-form-item :label="$i18n.t('year')">
+        <el-input class="input_chart" v-model="formLabelAlign.year"></el-input>
+      </el-form-item>
+      <el-form-item :label="$i18n.t('trait')">
+        <el-input class="input_chart" v-model="formLabelAlign.trait"></el-input>
+      </el-form-item>
+      <el-form-item :label="$i18n.t('location')" >
+        <el-input
+          class="input_chart"
+          v-model="formLabelAlign.location"
+        ></el-input>
+      </el-form-item>
+      <el-button class="left_search" @click="search" type="info" plain
+        >{{ $i18n.t('search')}}</el-button
+      >
+    </el-form>
+  </div>
+</template>
+
+<script>
+import { param } from "@/utils";
+// import { $t } from 'vue-i18n';
+import en from '../../../locales/en'
+
+// import {detail} from "@/api/"
+export default {
+  data() {
+    return {
+      labelPosition: "left",
+      formLabelAlign: {
+        pedigree:"",
+        year: "",
+        trait: "",
+        location: "",
+      },
+    };
+  },
+  methods: {
+    $t(key) {
+      return $t(key);
+    },
+    someMethod() {
+      const translatedText = {
+        year:this.$i18n.t('year'),
+        'name/pedigreer ':this.$i18n.t('name/pedigreer','名字/系谱'),
+        trait:this.$i18n.t('trait'),
+        location:this.$i18n.t('location'),
+        search:this.$i18n.t('search'),
+
+      }
+      console.log(translatedText)
+
+      // 其他代码...
+    },
+    search() {
+      const pedigree = this.formLabelAlign.pedigree;
+      const year = this.formLabelAlign.year;
+      const trait = this.formLabelAlign.trait;
+      const location = this.formLabelAlign.location;
+
+      let params = {};
+      // 根据需要构建查询参数
+      let searchUrl = "/jointCreation/detail";
+      if (pedigree && !trait) {
+        searchUrl += `/searchByName`;
+        params = { pedigree: pedigree }
+        }
+      if (year) {
+        console.log(searchUrl);
+        searchUrl += `/searchByYear`;
+        params = { year: year };
+      }
+      if (trait && !pedigree) {
+        searchUrl += `/searchByTrait`;
+        params = { trait: trait };
+      }
+      if (location) {
+        searchUrl += `/searchByLocation`;
+        params = { location: location };
+      }
+      if (pedigree && trait) {
+        searchUrl += `/searchByNatr`;
+        params = { pedigree: pedigree, trait: trait };
+      }
+      //   window.location.href = searchUrl;
+      //  //跳转到另一个页面，传递查询参数
+      console.log(params, "555");
+      this.$router.push({
+        path: searchUrl, // 替换为实际的目标页面名称
+        query: params ? params : "",
+      });
+    },
+  },
+  mounted(){
+    this.$i18n.setLocaleMessage('en', en);
+    this.$i18n.locale = 'en';
+  }
+};
+</script>
+<style scoped>
+/* .left_top{
+  width: 100%;
+  padding-top: 10px;
+  margin: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+} */
+.left_search {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+.input_chart {
+  width: 200px;
+}
+</style>
