@@ -5,6 +5,9 @@ import Cookies from 'js-cookie'
 import Element from 'element-ui'
 import './assets/styles/element-variables.scss'
 
+import VueI18n from 'vue-i18n';
+import en from './locales/en';
+import zh from './locales/zh';
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/ruoyi.scss' // ruoyi css
 import App from './App'
@@ -100,12 +103,47 @@ Vue.config.productionTip = false
 import Meta from "vue-meta";
 Vue.use(Meta);
 
+Vue.use(VueI18n);
+const i18n = new VueI18n({
+  locale: 'en', // 默认语言
+  messages: {
+    en, // 英语翻译文本
+    zh // 中文翻译文本
+  }
+});
+// const router = new VueRouter({
+//   routes: [
+//     {
+//       path: '/jointCreation/searchLeftTop/index',
+//       component: index, // 首页组件
+//       meta: {
+//         lang: 'zh' // 指定语言环境为中文
+//       }
+//     },
+//     {
+//       path: '/jointCreation/searchLeftTop/detail/searchByName',
+//       component: searchByName, // 其他页面组件
+//       meta: {
+//         lang: 'zh' // 指定语言环境为中文
+//       }
+//     }
+//   ],
+// })
+// router.beforeEach((to, from, next) => {
+//   const lang = to.meta.lang; // 假设路由中定义了 meta 字段用于指定语言环境
+//   if (lang) {
+//     i18n.locale = lang;
+//   }
+//   next();
+// }),
+
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   render: h => h(App),
-  
+
   beforeCreate() {
     Vue.prototype.$bus = this
   }
