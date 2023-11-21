@@ -45,32 +45,40 @@ export default {
           ([tableDataResponse, chartDataResponse]) => {
             let tableData = tableDataResponse.data;
             let chartData = chartDataResponse.data;
-
             this.tableData = tableData;
-            this.chartNatrData = chartData.map((item) => ({
-              location: item.location,
-              year: item.year,
-              trait: item.trait,
-            }));
-            console.log(this.chartNatrData, "xxxx");
+              this.chartNatrData = chartData.map((item) => ({
+                location: item.location,
+                trait: item.trait,
+                year: item.year,
+              }));
             resolve();
           }
-        );
+        ).catch((error) => {
+          console.log(error);
+          this.$message.warning("该性状不存在");
+        })
       });
     },
     renderNatrCharts() {
       var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
       var option;
-
-      const xAxisData = this.chartNatrData.map((item) => item.location);
-      const xAxisData2 = xAxisData.filter(
-        (item, index) =>
-          (xAxisData.indexOf(item) !== index &&
-            xAxisData.lastIndexOf(item) === index) ||
-          xAxisData.indexOf(item) === xAxisData.lastIndexOf(item)
-      );
-      const yAxisData = this.chartNatrData.map((item) => item.trait);
+      if (this.chartNatrData.length === 0) {
+        console.log("该性状不存在");
+        this.$message.warning("该性状不存在");
+        return; // 终止执行
+      }
+      // const wrappedData = this.chartNatrData.map((data) => {
+      //   return [data.location, data.trait];
+      // });
+      const wrappedData = [];
+      this.chartNatrData.forEach((data) => {
+        const yearIndex = data.year - 2021;
+        if (!wrappedData[yearIndex]) {
+          wrappedData[yearIndex] = [];
+        }
+        wrappedData[yearIndex].push([data.location, data.trait, data.year]);
+      });
 
       option = {
         legend: {
@@ -78,7 +86,6 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: xAxisData2,
           splitLine: {
             lineStyle: {
               type: "dashed",
@@ -96,9 +103,21 @@ export default {
         series: [
           {
             SymboSize: 20,
-            data: yAxisData,
+            data: wrappedData[0],
             type: "scatter",
-            name: "2021",
+            name: 2021,
+          },
+          {
+            SymboSize: 20,
+            data: wrappedData[1],
+            type: "scatter",
+            name: 2022,
+          },
+          {
+            ymboSize: 20,
+            data: wrappedData[2],
+            type: "scatter",
+            name: 2023,
           },
         ],
         markLine: {
@@ -134,8 +153,8 @@ export default {
   width: 80%;
   margin: 0 auto;
   text-align: center;
-  margin-top: 80px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 20px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 .bottom-chart {

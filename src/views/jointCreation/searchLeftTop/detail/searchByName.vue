@@ -176,27 +176,28 @@ export default {
           this.chartsData3 = [
             chartData.height,
             chartData.stemDiameter,
-            chartData.earHeight,
             chartData.leafWidth,
             chartData.leafLength,
-            chartData.maleSpikes,
             chartData.spindleLength,
+            chartData.maleSpikes,
+            chartData.earHeight,
           ];
           console.log(this.chartsData3, "ttt");
           resolve();
         });
         getMorMeanByName(query).then((res) => {
           let chartData = res.data;
-          console.log(chartData, "kkk");
+          // console.log(chartData, "kkk");
           this.chartsData4 = [
-            // chartData.height,
-            // chartData.stemDiameter,
-            chartData.earHeight,
+            chartData.height,
+            chartData.stemDiameter,
             chartData.leafWidth,
             chartData.leafLength,
-            chartData.maleSpikes,
             chartData.spindleLength,
+            chartData.maleSpikes,
+            chartData.earHeight,
           ];
+          console.log(this.chartsData4, "chartdata4");
           resolve();
         });
         getAgrByName(query).then((res) => {
@@ -305,7 +306,8 @@ export default {
           chartsData9,
           chartsData10,
         ]) => {
-          console.log(chartsData3, "tgtgtg");
+          console.log(chartsData3, "chartdata3");
+          console.log(chartsData4,'chartdata4');
 
           //Morphologicall雷达图
           var chartDom1 = document.getElementById("main1");
@@ -315,12 +317,18 @@ export default {
           (option = {
             title: {
               text: "Morphological",
+              textStyle: {
+                fontSize:14
+              },
+              left:'left',
+              top:'top',
             },
             legend: {
               data: ["4CV", "平均值"],
             },
             radar: {
               // shape: 'circle',
+              radius: "60%", // 设置雷达图的半径大小为 60%
               indicator: [
                 { name: "株高" },
                 { name: "茎粗" },
@@ -359,11 +367,17 @@ export default {
           (option2 = {
             title: {
               text: "Agronomical",
+              textStyle: {
+                fontSize:14
+              },
+              left:'left',
+              top:"top",
             },
             legend: {
               data: ["4CV", "平均值"],
             },
             radar: {
+              radius: "60%", // 设置雷达图的半径大小为 60%
               // shape: 'circle',
               indicator: [
                 { name: "穗长" },
@@ -436,7 +450,7 @@ export default {
               var formattedDate = year + "/" + month + "/" + day;
               return formattedDate;
             });
-            console.log(formattedData2, "hdjshka");
+            // console.log(formattedData2, "hdjshka");
             promises.push(Promise.resolve(formattedData2));
           }
           if (promises.length > 0) {
@@ -444,6 +458,7 @@ export default {
               console.log(results, "jjjj");
             });
           }
+          console.log(formattedData1,'formatteddata1');
           var formattedData3 = formattedData1.concat(formattedData2);
           console.log(formattedData3, "formattedData3");
           const formattedData4 = formattedData3.map(
@@ -561,6 +576,7 @@ export default {
   height: 420px;
   margin: 20px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 .chartRight {
   display: flex;
@@ -571,11 +587,12 @@ export default {
   margin-bottom: 20px;
   flex-wrap: nowrap;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 .chartRight1 {
   /* width: 55%; */
   margin-top: 20px;
-  margin-left: 10%;
+  /* margin-left: 10%; */
   /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
   flex-wrap: wrap;
   margin-left: 50px;
@@ -590,6 +607,7 @@ export default {
   flex-wrap: wrap;
   margin-left: 50px;
   width: 45%;
+  border-radius: 10px;
 }
 .bar {
   width: 100%;
@@ -617,15 +635,15 @@ export default {
   margin-left: 50px;
 }
 #main1 {
-  width: 450px;
+  width: 400px;
   height: 400px;
 }
 #main2 {
-  width: 450px;
+  width: 400px;
   height: 400px;
 }
 #graph1 {
-  width: 850px;
+  width: 870px;
   height: 500px;
 }
 #graph2 {

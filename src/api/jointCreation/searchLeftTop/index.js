@@ -1,10 +1,9 @@
 import request from '@/utils/request'
 
-export function getCheckTrait(params) {
+export function getCheckTrait() {
   return request({
     url: '/zeamap/Phenotype/checkTraitTypeName',
-    params: params,
-    method: 'post'
+    method: 'get'
   })
 }
 

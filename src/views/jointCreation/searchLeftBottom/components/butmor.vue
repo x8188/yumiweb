@@ -170,12 +170,12 @@ export default {
           type: "violin",
           x: flatten_xAxisData1,
           y: flatten_yAxisData1,
-          box: {
-            visible: true,
-          },
-          meanline: {
-            visible: true,
-          },
+          // box: {
+          //   visible: true,
+          // },
+          // meanline: {
+          //   visible: true,
+          // },
           // name: "data 1",
         },
       ];

@@ -6,7 +6,8 @@
         </el-table-column>
         <el-table-column prop="pedigree" label="系谱" width="280">
         </el-table-column>
-        <el-table-column prop="pastSource" label="旧来源" width="120"> </el-table-column>
+        <el-table-column prop="pastSource" label="旧来源" width="120">
+        </el-table-column>
         <el-table-column prop="trait" label="株高"> </el-table-column>
       </el-table>
     </div>
@@ -21,7 +22,7 @@ import {
 } from "@/api/jointCreation/searchLeftTop/index";
 import * as echarts from "echarts";
 import { promised, resolve } from "q";
-import index_v1Vue from '../../../index_v1.vue';
+import index_v1Vue from "../../../index_v1.vue";
 export default {
   data() {
     return {
@@ -50,8 +51,8 @@ export default {
           trait: trait,
         };
 
-        Promise.all([searchByTrait(query), searchChartByTrait(query)]).then(
-          ([traitData, chartTraitData]) => {
+        Promise.all([searchByTrait(query), searchChartByTrait(query)])
+          .then(([traitData, chartTraitData]) => {
             let tableData = traitData.data;
             let chartData = chartTraitData.data;
             this.tableData = tableData;
@@ -60,9 +61,13 @@ export default {
               year: item.year,
               trait: item.trait,
             }));
+            console.log(this.chartData, "ff");
             resolve();
-          }
-        );
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.warning("该性状不存在");
+          });
       });
     },
 
@@ -78,10 +83,12 @@ export default {
           xAxisData.indexOf(item) === xAxisData.lastIndexOf(item)
       );
       const yAxisData = this.chartData.map((item) => parseInt(item.trait));
+      console.log(yAxisData, "kkk");
       var uniqueYAxisData = Array.from(new Set(yAxisData));
       const sortedData = uniqueYAxisData
         .filter((value) => !isNaN(value))
         .sort((a, b) => a - b);
+      console.log(sortedData, "sortedData");
       let seriesData = [];
       let xItem = "hhh";
       let newArray = xAxisData;
@@ -97,11 +104,35 @@ export default {
           }
         }
       }
-      seriesData.sort((a,b) => a[2]-b[2]);
-      let newYAxisData = seriesData.map((item,index)=> index);
-      seriesData.forEach((item,index)=>{
-        item[1]= newYAxisData[index]
-      })
+      const countMap = {};
+      this.chartData.forEach((item) => {
+        const locationYear = item.location + item.year;
+        const trait = item.trait;
+        if (!countMap[locationYear]) {
+          countMap[locationYear] = {};
+        }
+        if (countMap[locationYear][trait]) {
+          countMap[locationYear][trait]++;
+        } else {
+          countMap[locationYear][trait] = 1;
+        }
+      });
+      console.log(countMap, "ddd");
+      const heatMapData = [];
+      for (const locationYear in countMap) {
+        const traitCounts = countMap[locationYear];
+        for (const trait in traitCounts) {
+          const count = traitCounts[trait];
+          heatMapData.push([locationYear, count, trait]);
+        }
+      }
+
+      console.log(heatMapData, "hhh");
+      seriesData.sort((a, b) => a[2] - b[2]);
+      let newYAxisData = seriesData.map((item, index) => index);
+      seriesData.forEach((item, index) => {
+        item[1] = newYAxisData[index];
+      });
 
       console.log(seriesData, "seriesdata");
 
@@ -113,6 +144,15 @@ export default {
         null,
         seriesData.map((item) => item[2])
       );
+
+      var xData = Array.from(new Set(heatMapData.map((item) => item[0])));
+      var yData = Array.from(new Set(heatMapData.map((item) => item[1])));
+      var convertedData = heatMapData.map((item) => {
+        var xIndex = xData.indexOf(item[0]);
+        var yIndex = yData.indexOf(item[1]);
+        return [xIndex, yIndex, item[2]];
+      });
+      console.log(convertedData, "ooo");
       option = {
         tooltip: {
           position: "top",
@@ -124,14 +164,16 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: xAxisData2,
+          data: xData,
+
           splitArea: {
             show: true,
           },
         },
         yAxis: {
           type: "category",
-          data: sortedData,
+     
+          data: yData,
           splitArea: {
             show: true,
           },
@@ -147,23 +189,44 @@ export default {
           },
         },
         visualMap: {
-          min: minValue,
-          max: maxValue,
+          min: Math.min(...heatMapData.map((item) => item[2])), // trait 值的最小值,
+          max: Math.max(...heatMapData.map((item) => item[2])), // trait 值的最大值,
           // show:false,
+
           range: [0, 1],
           calculable: true,
-          orient: "horizontal",
-          left: "center",
-          bottom: "5%",
+          orient: "vertical",
+          top: "5%",
+          itemWidth: 40, // 设置颜色控制条宽度
+          itemHeight: 500, // 设置颜色控制条高度
+          width: "60%", // 设置颜色控制条的长度
+          right: "1%",
+          bottom:100,
+          height: "500px",
           inRange: {
             color: ["#313695", "#4575b4", "#74add1", "#abd9e9", "#e0f3f8"],
           },
+          pieces: [
+        { min: minValue, max: minValue + (maxValue - minValue) / 4, label: "Low" },
+        { min: minValue + (maxValue - minValue) / 4, max: minValue + (maxValue - minValue) / 2, label: "Low-Mid" },
+        { min: minValue + (maxValue - minValue) / 2, max: minValue + (maxValue - minValue) * 3 / 4, label: "Mid" },
+        { min: minValue + (maxValue - minValue) * 3 / 4, max: maxValue, label: "Mid-High" },
+        { min: maxValue, max: maxValue + 1, label: "High" },
+
+      ],
+      formatter: function (value) {
+        return value.toFixed(0); // 格式化显示的值为两位小数
+      },
         },
         series: [
           {
             // name: "热力图",
             type: "heatmap",
-            data: seriesData,
+            data: heatMapData.map((item) => [
+              xData.indexOf(item[0]),
+              yData.indexOf(item[1]),
+              item[2],
+            ]), // 将坐标转换为索引,
             // label: {
             //   show: true,
             // },
@@ -178,7 +241,6 @@ export default {
             progressiveThreshold: 500, // 渲染优化，数据量较大时设置较小的数值
           },
         ],
-
       };
       myChart.setOption(option);
     },

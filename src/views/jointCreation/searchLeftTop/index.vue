@@ -7,7 +7,7 @@
       v-model="formLabelAlign"
       style="margin: 50px"
     >
-      <el-form-item :label="$i18n.t('name/pedigreer')"  >
+      <el-form-item :label="$i18n.t('name/pedigree')"  >
         <el-input class="input_chart" v-model="formLabelAlign.pedigree"></el-input>
       </el-form-item>
       <el-form-item :label="$i18n.t('year')">
@@ -48,22 +48,7 @@ export default {
     };
   },
   methods: {
-    $t(key) {
-      return $t(key);
-    },
-    someMethod() {
-      const translatedText = {
-        year:this.$i18n.t('year'),
-        'name/pedigreer ':this.$i18n.t('name/pedigreer','名字/系谱'),
-        trait:this.$i18n.t('trait'),
-        location:this.$i18n.t('location'),
-        search:this.$i18n.t('search'),
 
-      }
-      console.log(translatedText)
-
-      // 其他代码...
-    },
     search() {
       const pedigree = this.formLabelAlign.pedigree;
       const year = this.formLabelAlign.year;
@@ -125,6 +110,7 @@ export default {
   margin-bottom: 30px;
 }
 .input_chart {
+  margin-left: 20px;
   width: 200px;
 }
 </style>
