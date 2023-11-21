@@ -4,20 +4,22 @@
       <el-table-column prop="code" label="系谱内部码" width="100">
       </el-table-column>
       <el-table-column prop="pedigree" label="系谱" width="280"> </el-table-column>
+      <el-table-column prop="year" label="年份" width="120"> </el-table-column>
+      <el-table-column prop="location" label="地区" width="120"> </el-table-column>
+
       <el-table-column prop="newsource" label="新来源" width="100">
       </el-table-column>
-      <el-table-column prop="pastsource" label="旧来源" width="100">
+      <el-table-column prop="pastsource" label="旧来源" width="120">
       </el-table-column>
       <el-table-column prop="silking" label="吐丝期" width="100">
       </el-table-column>
-      <el-table-column prop="oldSource" label="旧来源"> </el-table-column>
       <el-table-column prop="dispersal" label="散粉期" width="100">
       </el-table-column>
       <el-table-column prop="mature" label="成熟期" width="100">
       </el-table-column>
       <el-table-column prop="height" label="株高"> </el-table-column>
       <el-table-column prop="earheight" label="穗位"> </el-table-column>
-      <el-table-column prop="malespikes" label="雄穗分枝数" width="100">
+      <el-table-column prop="malespikes" label="雄穗分枝数" width="100" >
       </el-table-column>
 
       <el-table-column prop="oldSource" label="雄花主轴长度" width="100">

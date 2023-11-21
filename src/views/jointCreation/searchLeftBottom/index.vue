@@ -1,12 +1,12 @@
 <template>
   <div  class="left_bottom">
-    <div style="margin: 40px"></div>
+    <div style="margin: 10px"></div>
     <div>
-    <el-button plain @click="search('all')" class="all">All</el-button>
-    <el-button plain @click="search('Morphological')" class="single">Morphological</el-button>
-    <el-button plain @click="search('Agronomical')" class="single">Agronomical</el-button>
-    <el-button plain @click="search('Biotic stress')" class="single">Biotic stress</el-button>
-    <el-button plain @click="search('Abiotic stress')" class="single">Abiotic stress</el-button>
+    <el-button plain @click="search('all')" class="all">{{ $i18n.t('All')}}</el-button>
+    <el-button plain @click="search('Morphological')" class="single">{{ $i18n.t('Morphological')}}</el-button>
+    <el-button plain @click="search('Agronomical')" class="single">{{ $i18n.t('Agronomical')}}</el-button>
+    <el-button plain @click="search('Biotic stress')" class="single">{{ $i18n.t('Biotic stress')}}</el-button>
+    <el-button plain @click="search('Abiotic stress')" class="single">{{ $i18n.t('Abiotic stress')}}</el-button>
   </div>
   </div>
 </template>
@@ -14,6 +14,8 @@
 <script>
 export default {
   methods: {
+
+
     search(category) {
       // 根据点击的按钮跳转到不同的页面
       switch (category) {

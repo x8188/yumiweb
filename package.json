@@ -45,7 +45,7 @@
     "echarts": "^5.4.2",
     "echarts-gl": "^2.0.9",
     "echarts-stat": "^1.2.0",
-    "element-ui": "^2.15.12",
+    "element-ui": "^2.15.14",
     "file-saver": "2.0.5",
     "fuse.js": "6.4.3",
     "fuzzy-search": "^3.2.1",

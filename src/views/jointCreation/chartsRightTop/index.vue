@@ -77,7 +77,7 @@ export default {
         },
         legend: {
           top: "2%",
-          left: "3%",
+          left: "10%",
           orient: "vertical",
           data: [
             {
@@ -97,7 +97,17 @@ export default {
             left: "25%",
             bottom: "2%",
             right: "60%",
-            symbolSize: 7,
+            symbolSize: 9,
+            lineStyle: {
+            color: ' #6699cc',
+            width: 2
+        },
+        itemStyle: {
+                    color: "#f0f0f0",
+                    borderColor: 'blue',
+                    shape: 'rect', // 设置节点形状为长方形
+                    borderWidth: 2
+                },
             label: {
               position: "left",
               verticalAlign: "middle",
@@ -125,7 +135,13 @@ export default {
             left: "60%",
             bottom: "22%",
             right: "18%",
-            symbolSize: 7,
+            symbolSize: 9,
+            itemStyle: {
+                    color: "#f0f0f0",
+                    borderColor: 'blue',
+                    shape: 'rect', // 设置节点形状为长方形
+                    borderWidth: 2
+                },
             label: {
               position: "left",
               verticalAlign: "middle",
