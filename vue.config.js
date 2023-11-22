@@ -77,7 +77,7 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src'),
-        'jquery': path.resolve(__dirname, '../ruoyi-ui/public/js/jquery.js'),
+        'jquery': path.resolve(__dirname, './public/js/jquery.js'),
       }
     },
     plugins: [
@@ -90,8 +90,8 @@ module.exports = {
         minRatio: 0.8                   // 压缩率小于1才会压缩
       }),
       new webpack.ProvidePlugin({
-        $: path.resolve(__dirname, '../ruoyi-ui/public/js/jquery.js'),
-        jQuery: path.resolve(__dirname, '../ruoyi-ui/public/js/jquery.js')
+        $: path.resolve(__dirname, './public/js/jquery.js'),
+        jQuery: path.resolve(__dirname, './public/js/jquery.js')
       })
     ],
   },
