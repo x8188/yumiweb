@@ -2,14 +2,62 @@
   <div class="all-mor">
     <div class="chart-mor">
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="height" label="株高"> </el-table-column>
-        <el-table-column prop="earHeight" label="穗位"> </el-table-column>
-        <el-table-column prop="maleSpikes" label="雄穗分枝数" width="100">
+        <el-table-column
+          prop="code"
+          label="系谱内部码"
+          width="100"
+          :align="'center'"
+        >
         </el-table-column>
-        <el-table-column prop="leafLength" label="穗上叶长"> </el-table-column>
-        <el-table-column prop="leafWidth" label="穗上叶宽"> </el-table-column>
-        <el-table-column prop="stemDiameter" label="茎粗"> </el-table-column>
-        <el-table-column prop="spindleLength" label="轴长">
+        <el-table-column
+          prop="pedigree"
+          label="系谱"
+          width="280"
+          :align="'center'"
+        >
+        </el-table-column>
+        <el-table-column prop="year" label="年份" width="120" :align="'center'">
+        </el-table-column>
+        <el-table-column
+          prop="location"
+          label="地区"
+          width="120"
+          :align="'center'"
+        >
+        </el-table-column>
+
+        <el-table-column
+          prop="newsource"
+          label="新来源"
+          width="100"
+          :align="'center'"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="pastsource"
+          label="旧来源"
+          width="120"
+          :align="'center'"
+        >
+        </el-table-column>
+        <el-table-column prop="height" label="株高" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="earHeight" label="穗位" :align="'center'">
+        </el-table-column>
+        <el-table-column
+          prop="maleSpikes"
+          label="雄穗分枝数"
+          width="100"
+          :align="'center'"
+        >
+        </el-table-column>
+        <el-table-column prop="leafLength" label="穗上叶长" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="leafWidth" label="穗上叶宽" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="stemDiameter" label="茎粗" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="spindleLength" label="轴长" :align="'center'">
         </el-table-column>
       </el-table>
     </div>
@@ -35,12 +83,13 @@ export default {
   },
   methods: {
     getMorAll() {
+      // 获取表格数据
       return new Promise((resolve) => {
         btnMorAll().then((res) => {
           this.tableData = res.data;
           resolve();
         });
-// 获取小提琴图数据
+        // 获取小提琴图数据
         btnMor().then((res) => {
           let MorData = res.data;
           this.MorData = MorData.map((item) => ({
@@ -54,7 +103,6 @@ export default {
             spindleLength: item.spindleLength,
           }));
           resolve();
-          console.log(this.MorData, "dfdff");
           this.getMorChartAll();
         });
       });
@@ -69,13 +117,13 @@ export default {
         item.year + "轴长",
         item.year + "茎干",
       ]);
+      // 形成year+text数据数组
       const xAxisData2 = [];
       xAxisData1.forEach(function (row) {
         row.forEach(function (element) {
           xAxisData2.push(element);
         });
       });
-      console.log(xAxisData2, "rrrr");
       const xAxisData3 = [];
       const seen = {};
 
@@ -86,34 +134,21 @@ export default {
         } else {
           xAxisData3[Object.keys(seen).indexOf(item)].push(item);
         }
-      }
+      } 
       // 将x轴数据按顺序依次渲染（确保与y轴数据一一对应）
-      const order = [
-        "2013株高",
-        "2013叶长",
-        "2013叶宽",
-        "2013雄穗",
-        "2013轴长",
-        "2013茎干",
-        "2021株高",
-        "2021叶长",
-        "2021叶宽",
-        "2021雄穗",
-        "2021轴长",
-        "2021茎干",
-        "2022株高",
-        "2022叶长",
-        "2022叶宽",
-        "2022雄穗",
-        "2022轴长",
-        "2022茎干",
-      ];
       xAxisData3.sort((a, b) => {
-        const indexA = order.indexOf(a[0]);
-        const indexB = order.indexOf(b[0]);
-        return indexA - indexB;
+        const yearA = Number(a[0].substring(0, 4)); // 提取年份并转换为数字
+        const yearB = Number(b[0].substring(0, 4));
+        return yearA - yearB;
       });
-      const flatten_xAxisData1 = xAxisData3.flat();
+      const flatten_xAxisData = xAxisData3.reduce((acc, subArray) => {
+        const year = subArray[0].substring(0, 4); // 提取年份
+        console.log(year, "year");
+        const items = subArray.slice(0);
+        console.log(items, "items");
+        const combinedItems = items.map((item) => item);
+        return acc.concat(combinedItems);
+      }, []);
       // 将y轴数据按顺序放入一维数组，确保与x轴一一对应
       const yAxisData1 = this.MorData.reduce((result, obj) => {
         const year = obj.year;
@@ -136,56 +171,26 @@ export default {
         });
         return result;
       }, {});
-      const orders = [
-        "2013Height",
-        "2013LeafLength",
-        "2013LeafWidth",
-        "2013MaleSpikes",
-        "2013SpindleLength",
-        "2013StemDiameter",
-        "2021Height",
-        "2021LeafLength",
-        "2021LeafWidth",
-        "2021MaleSpikes",
-        "2021SpindleLength",
-        "2021StemDiameter",
-        "2022Height",
-        "2022LeafLength",
-        "2022LeafWidth",
-        "2022MaleSpikes",
-        "2022SpindleLength",
-        "2022StemDiameter", /*...*/,
-      ];
-      const flatten_yAxisData1 = orders.reduce((acc, key) => {
-        const arr = yAxisData1[key];
-        if (arr !== undefined) {
-          return acc.concat(arr);
-        } else {
-          return acc.concat(0);
-        }
-      }, []);
+      // 把对象转换为二维数组
+      const sortedEntries = Object.entries(yAxisData1).sort();
+      // 把二维数组展平为一维数组
+      const newArray = [];
+      for (const [key, value] of sortedEntries) {
+        newArray.push(value);
+      }
+      const flattenedArray = newArray
+        .flat()
+        .map((value) => (value === null ? 0 : value));
+
       // 小提琴图配置
       const chartdata = [
         {
           type: "violin",
-          x: flatten_xAxisData1,
-          y: flatten_yAxisData1,
-          // box: {
-          //   visible: true,
-          // },
-          // meanline: {
-          //   visible: true,
-          // },
-          // name: "data 1",
+          x: flatten_xAxisData,
+          y: flattenedArray,
         },
       ];
       const layout = {
-        // xaxis: {
-        //   title: "xaxis title",
-        // },
-        // yaxis: {
-        //   title: "yaxis title",
-        // },
         violinmode: "group",
         showlegend: true,
         legend: {
@@ -199,7 +204,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .all-mor {
   display: flex;
   width: 100%;
@@ -226,6 +231,6 @@ export default {
 }
 #main {
   width: 600px;
-  height:630px;
+  height: 630px;
 }
 </style>

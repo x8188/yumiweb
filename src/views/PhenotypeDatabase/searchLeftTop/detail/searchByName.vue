@@ -18,51 +18,55 @@
     </div>
     <div class="content">
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="code" label="系谱内部码" width="100">
+        <el-table-column prop="code" label="系谱内部码" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="pedigree" label="系谱"> </el-table-column>
-        <el-table-column prop="newsource" label="新来源" width="100">
+        <el-table-column prop="pedigree" label="系谱" :align="'center'"> </el-table-column>
+        <el-table-column prop="newsource" label="新来源" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="pastsource" label="旧来源" width="100">
+        <el-table-column prop="pastsource" label="旧来源" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="silking" label="吐丝期" width="100">
+        <el-table-column prop="year" label="年份" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="dispersal" label="散粉期" width="100">
+        <el-table-column prop="location" label="地点" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="mature" label="成熟期" width="100">
+        <el-table-column prop="silking" label="吐丝期" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="height" label="株高"> </el-table-column>
-        <el-table-column prop="earheight" label="穗位"> </el-table-column>
-        <el-table-column prop="malespikes" label="雄穗分枝数" width="100">
+        <el-table-column prop="dispersal" label="散粉期" width="100" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="mature" label="成熟期" width="100" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="height" label="株高" :align="'center'"> </el-table-column>
+        <el-table-column prop="earheight" label="穗位" :align="'center'"> </el-table-column>
+        <el-table-column prop="malespikes" label="雄穗分枝数" width="100" :align="'center'">
         </el-table-column>
 
-        <el-table-column prop="oldSource" label="雄花主轴长度" width="100">
+        <el-table-column prop="spindleLength" label="雄花主轴长度" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="leaflenght" label="穗上叶长"> </el-table-column>
-        <el-table-column prop="leaflength" label="穗上叶宽"> </el-table-column>
-        <el-table-column prop="stemdiameter" label="茎粗"> </el-table-column>
-        <el-table-column prop="rates" label="倒伏折射率之和(%)" width="140">
+        <el-table-column prop="leaflength" label="穗上叶长" :align="'center'"> </el-table-column>
+        <el-table-column prop="leaflength" label="穗上叶宽" :align="'center'"> </el-table-column>
+        <el-table-column prop="stemdiameter" label="茎粗" :align="'center'"> </el-table-column>
+        <el-table-column prop="rates" label="倒伏折射率之和(%)" width="140" :align="'center'">
         </el-table-column>
-        <el-table-column prop="rust" label="锈病(级)"> </el-table-column>
-        <el-table-column prop="stemrot" label="茎腐病(%)" width="100">
+        <el-table-column prop="rust" label="锈病(级)" :align="'center'"> </el-table-column>
+        <el-table-column prop="stemrot" label="茎腐病(%)" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="roughdwarf" label="粗缩(%)"> </el-table-column>
-        <el-table-column prop="hollow" label="空杆(%)"> </el-table-column>
-        <el-table-column prop="plantsnum" label="株数"> </el-table-column>
-        <el-table-column prop="blackpowder" label="黑粉"> </el-table-column>
-        <el-table-column prop="expression" label="果穗表现" width="200">
+        <el-table-column prop="roughdwarf" label="粗缩(%)" :align="'center'"> </el-table-column>
+        <el-table-column prop="hollow" label="空杆(%)" :align="'center'"> </el-table-column>
+        <el-table-column prop="plantsnum" label="株数" :align="'center'"> </el-table-column>
+        <el-table-column prop="blackpowder" label="黑粉" :align="'center'"> </el-table-column>
+        <el-table-column prop="expression" label="果穗表现" width="200" :align="'center'">
         </el-table-column>
-        <el-table-column prop="spikelength" label="穗长"> </el-table-column>
-        <el-table-column prop="spikewidth" label="穗粗"> </el-table-column>
-        <el-table-column prop="row" label="穗行数"> </el-table-column>
-        <el-table-column prop="kernels" label="行粒数"> </el-table-column>
-        <el-table-column prop="axiscolor" label="轴色"> </el-table-column>
-        <el-table-column prop="grainweight" label="百粒重"> </el-table-column>
-        <el-table-column prop="grainlength" label="籽粒长"> </el-table-column>
-        <el-table-column prop="grainwidth" label="籽粒宽"> </el-table-column>
-        <el-table-column prop="yield" label="小区标准产量(KG)" width="140">
+        <el-table-column prop="spikelength" label="穗长" :align="'center'"> </el-table-column>
+        <el-table-column prop="spikewidth" label="穗粗" :align="'center'"> </el-table-column>
+        <el-table-column prop="row" label="穗行数" :align="'center'"> </el-table-column>
+        <el-table-column prop="kernels" label="行粒数" :align="'center'"> </el-table-column>
+        <el-table-column prop="axiscolor" label="轴色" :align="'center'"> </el-table-column>
+        <el-table-column prop="grainweight" label="百粒重" :align="'center'"> </el-table-column>
+        <el-table-column prop="grainlength" label="籽粒长" :align="'center'"> </el-table-column>
+        <el-table-column prop="grainwidth" label="籽粒宽" :align="'center'"> </el-table-column>
+        <el-table-column prop="yield" label="小区标准产量(KG)" width="140" :align="'center'">
         </el-table-column>
-        <el-table-column prop="seedyield" label="出籽率"> </el-table-column>
+        <el-table-column prop="seedyield" label="出籽率" :align="'center'"> </el-table-column>
       </el-table>
     </div>
   </div>
@@ -84,7 +88,6 @@ import {
 import * as echarts from "echarts";
 import en from '@/locales/en'
 import moment from "moment";
-import { promised } from "q";
 export default {
   data() {
     return {
@@ -138,14 +141,8 @@ export default {
     someMethod() {
       const translatedText = {
         pedigree:this.$i18n.t('pedigree'),
-        // trait:this.$i18n.t('trait'),
-        // location:this.$i18n.t('location'),
-        // search:this.$i18n.t('search'),
 
       }
-      console.log(translatedText)
-
-      // 其他代码...
     },
     getData() {
       return new Promise((resolve) => {
@@ -153,7 +150,7 @@ export default {
         const query = {
           pedigree: pedigree,
         };
-
+// 获取左上角数据
         searchByName(query).then((res) => {
           const data = res.data[0];
           this.pedigree = data.pedigree;
@@ -165,14 +162,10 @@ export default {
           this.chartsData1 = [data.silking, data.dipersal, data.mature];
           this.chartsData2 = [data.rates, data.stemrot];
           resolve();
-
-          // this.data = data
-          // console.log(this.data,'777');
-        });
-
+        })
+// 获取mor网状图数据
         getMorByName(query).then((res) => {
           let chartData = res.data;
-          console.log(chartData, "ooo");
           this.chartsData3 = [
             chartData.height,
             chartData.stemDiameter,
@@ -182,12 +175,11 @@ export default {
             chartData.maleSpikes,
             chartData.earHeight,
           ];
-          console.log(this.chartsData3, "ttt");
           resolve();
-        });
+        })
+// 获取mor平均值数据
         getMorMeanByName(query).then((res) => {
           let chartData = res.data;
-          // console.log(chartData, "kkk");
           this.chartsData4 = [
             chartData.height,
             chartData.stemDiameter,
@@ -197,12 +189,11 @@ export default {
             chartData.maleSpikes,
             chartData.earHeight,
           ];
-          console.log(this.chartsData4, "chartdata4");
           resolve();
-        });
+        })
+// 获取agr网状图数据
         getAgrByName(query).then((res) => {
           let chartData = res.data;
-          console.log(chartData, "ooo");
           this.chartsData5 = [
             chartData.spikeLength,
             chartData.spikeWidth,
@@ -214,9 +205,9 @@ export default {
             chartData.yield,
             chartData.seedYield,
           ];
-          console.log(this.chartsData5, "chartdata5");
           resolve();
-        });
+        })
+// 获取agr平均值数据
         getAgrMeanByName().then((res) => {
           let chartData = res.data;
           this.chartsData6 = [
@@ -230,9 +221,9 @@ export default {
             chartData.yield,
             chartData.seedYield,
           ];
-          console.log(this.chartsData6, "chartdata6");
           resolve();
-        });
+        })
+// 获取y轴为日期柱状图数据
         getPhenoTypeDataByName(query).then((res) => {
           let chartData = res.data;
           this.chartsData7 = [
@@ -240,9 +231,9 @@ export default {
             chartData.dispersal,
             chartData.mature,
           ];
-          console.log(this.chartsData7, "chartdata7");
           resolve();
-        });
+        })
+// 获取y轴为日期柱状图平均值数据
         getPhenoTypeDataMeanByName().then((res) => {
           let chartData = res.data;
           this.chartsData8 = [
@@ -250,11 +241,9 @@ export default {
             chartData.dispersal,
             chartData.mature,
           ];
-
-          console.log(this.chartsData8, "chartdata8");
           resolve();
-        });
-
+        })
+// 获取y轴为数值柱状图数据
         getPhenoTypeRateByName(query).then((res) => {
           let chartData = res.data;
           this.chartsData9 = [
@@ -262,9 +251,9 @@ export default {
             chartData.stemrot,
             chartData.roughdwarf,
           ];
-          console.log(this.chartsData9, "chartdata9");
           resolve();
-        });
+        })
+// 获取y轴为数值柱状图平均值数据
         getPhenoTypeRateMeanByName().then((res) => {
           let chartData = res.data;
           this.chartsData10 = [
@@ -272,19 +261,18 @@ export default {
             chartData.stemrot,
             chartData.roughdwarf,
           ];
-          console.log(this.chartsData10, "chartdata10");
           resolve();
-        });
+        })
+// 获取下方表格数据
         getPhenoTypeByName(query).then((res) => {
           let chartData = res.data;
-
           this.tableData = chartData;
           resolve();
-        });
+        })
       });
     },
     renderCharts() {
-      // console.log('ddddd');
+// 等待所以数据请求成功后再渲染echarts
       Promise.all([
         getMorByName(),
         getMorMeanByName(),
@@ -306,10 +294,8 @@ export default {
           chartsData9,
           chartsData10,
         ]) => {
-          console.log(chartsData3, "chartdata3");
-          console.log(chartsData4,'chartdata4');
 
-          //Morphologicall雷达图
+//Morphologicall雷达图
           var chartDom1 = document.getElementById("main1");
           var myChart1 = echarts.init(chartDom1);
           var option;
@@ -323,11 +309,29 @@ export default {
               left:'left',
               top:'top',
             },
+            tooltip:{
+              show:true,
+              formatter:function(params){
+                const dataIndex = params.dataIndex;
+                const value = params.value[dataIndex];
+              return `数值${value}`
+              }
+            },
             legend: {
               data: ["4CV", "平均值"],
             },
+            label:{
+              show:true,
+              color:'#f2f2f2',
+              fontSize:6
+            },
             radar: {
-              // shape: 'circle',
+              axisLabel:{
+                show:true,
+                formatter:function(value){
+                  return `${value}`
+                }
+              },
               radius: "60%", // 设置雷达图的半径大小为 60%
               indicator: [
                 { name: "株高" },
@@ -339,11 +343,10 @@ export default {
                 { name: "穗位" },
               ],
             },
+
             series: [
               {
-                // name: "Budget vs spending",
                 type: "radar",
-                // data:chartData.value,
                 data: [
                   {
                     value: this.chartsData3,
@@ -359,11 +362,10 @@ export default {
           }),
             option && myChart1.setOption(option);
 
-          //Agronomical雷达图
+//Agronomical雷达图
           var chartDom2 = document.getElementById("main2");
           var myChart2 = echarts.init(chartDom2);
           var option2;
-          console.log(this.chartsData5 + "1212127777");
           (option2 = {
             title: {
               text: "Agronomical",
@@ -373,12 +375,30 @@ export default {
               left:'left',
               top:"top",
             },
+            tooltip:{
+              show:true,
+              formatter:function(params){
+                const dataIndex = params.dataIndex;
+                const value = params.value[dataIndex];
+              return `数值${value}`
+              }
+            },
             legend: {
               data: ["4CV", "平均值"],
             },
+            label:{
+              show:true,
+              color:'#f2f2f2',
+              fontSize:6
+            },
             radar: {
+              axisLabel:{
+                show:true,
+                formatter:function(value){
+                  return `${value}`
+                }
+              },
               radius: "60%", // 设置雷达图的半径大小为 60%
-              // shape: 'circle',
               indicator: [
                 { name: "穗长" },
                 { name: "出籽率" },
@@ -393,7 +413,6 @@ export default {
             },
             series: [
               {
-                // name: "Budget vs spending",
                 type: "radar",
                 data: [
                   {
@@ -434,7 +453,6 @@ export default {
             });
             promises.push(Promise.resolve(formattedData1));
           }
-          console.log(formattedData1, "cccccc");
           if (Array.isArray(this.chartsData8) && this.chartsData8.length > 0) {
             var formattedData2 = this.chartsData8.map(function (dateString) {
               var dateParts = dateString.split("-");
@@ -450,7 +468,6 @@ export default {
               var formattedDate = year + "/" + month + "/" + day;
               return formattedDate;
             });
-            // console.log(formattedData2, "hdjshka");
             promises.push(Promise.resolve(formattedData2));
           }
           if (promises.length > 0) {
@@ -458,9 +475,7 @@ export default {
               console.log(results, "jjjj");
             });
           }
-          console.log(formattedData1,'formatteddata1');
           var formattedData3 = formattedData1.concat(formattedData2);
-          console.log(formattedData3, "formattedData3");
           const formattedData4 = formattedData3.map(
             (dateString) => new Date(dateString)
           );
@@ -473,7 +488,6 @@ export default {
             (date) =>
               `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
           );
-          console.log(formattedData, "formatteddata");
           option = {
             legend: {
               data: ["4CV", "平均值"],
@@ -518,12 +532,11 @@ export default {
             ],
           };
           option && myChart3.setOption(option);
-
+// y轴为数值的柱状图
           var app = {};
           var chartDom4 = document.getElementById("graph2");
           var myChart4 = echarts.init(chartDom4);
-          var option;
-          console.log(this.chartsData9, "chartsData9");
+          var option; 
 
           option = {
             legend: {
@@ -560,7 +573,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .all {
   width: 100%;
   display: flex;

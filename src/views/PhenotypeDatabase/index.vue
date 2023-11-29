@@ -78,17 +78,17 @@ export default {
 }
 .right-top {
   width: 40%;
-  margin-left: 100px;
+  margin-left: 50px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 30px; 
   border-top:60px solid rgb(9, 107, 117);
   border-radius: 10px;
 }
 .right-bottom {
   width: 40%;
   margin: 0 auto;
-  margin-left: 80px;
+  margin-left: 60px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
   margin-top: 30px;

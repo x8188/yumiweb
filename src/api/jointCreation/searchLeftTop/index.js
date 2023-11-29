@@ -81,6 +81,13 @@ export function searchByYear(params) {
     method: 'post'
   })
 }
+export function searchByYelo(params) {
+  return request({
+    url: '/zeamap/Phenotype/allByYearLocation',
+    params:params,
+    method: 'post'
+  })
+}
 export function searchByTrait(params) {
   return request({
     url: '/zeamap/Phenotype/trait',
