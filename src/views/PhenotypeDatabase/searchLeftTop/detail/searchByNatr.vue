@@ -2,10 +2,14 @@
   <div class="allNatr">
     <div class="top-chart">
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="newSource" label="新来源"> </el-table-column>
-        <el-table-column prop="pedigree" label="系谱"> </el-table-column>
-        <el-table-column prop="pastSource" label="旧来源"> </el-table-column>
-        <el-table-column prop="trait" label="株高"> </el-table-column>
+        <el-table-column prop="newSource" label="新来源" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="pedigree" label="系谱" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="pastSource" label="旧来源" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="trait" label="株高" :align="'center'">
+        </el-table-column>
       </el-table>
     </div>
     <div id="main" ref="chart" class="bottom-chart"></div>
@@ -41,24 +45,26 @@ export default {
           pedigree: pedigree,
           trait: trait,
         };
-        Promise.all([searchByNatr(query), searchChartByNatr(query)]).then(
-          ([tableDataResponse, chartDataResponse]) => {
+// 获取表格数据和散点图数据
+        Promise.all([searchByNatr(query), searchChartByNatr(query)])
+          .then(([tableDataResponse, chartDataResponse]) => {
             let tableData = tableDataResponse.data;
             let chartData = chartDataResponse.data;
             this.tableData = tableData;
-              this.chartNatrData = chartData.map((item) => ({
-                location: item.location,
-                trait: item.trait,
-                year: item.year,
-              }));
+            this.chartNatrData = chartData.map((item) => ({
+              location: item.location,
+              trait: item.trait,
+              year: item.year,
+            }));
             resolve();
-          }
-        ).catch((error) => {
-          console.log(error);
-          this.$message.warning("该性状不存在");
-        })
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.warning("该性状不存在");
+          });
       });
     },
+// 渲染散点图
     renderNatrCharts() {
       var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
@@ -68,9 +74,8 @@ export default {
         this.$message.warning("该性状不存在");
         return; // 终止执行
       }
-      // const wrappedData = this.chartNatrData.map((data) => {
-      //   return [data.location, data.trait];
-      // });
+      const yearData = this.chartNatrData.map((data) => data.year + "");
+// 获取不同年份、地点下的trait值
       const wrappedData = [];
       this.chartNatrData.forEach((data) => {
         const yearIndex = data.year - 2021;
@@ -82,7 +87,7 @@ export default {
 
       option = {
         legend: {
-          data: ["2021", "2022", "2023"],
+          data: yearData,
         },
         xAxis: {
           type: "category",
@@ -100,26 +105,14 @@ export default {
             },
           },
         },
-        series: [
-          {
-            SymboSize: 20,
-            data: wrappedData[0],
+        series: yearData.map((year, index) => {
+          return {
+            SymbolSize: 20,
+            data: wrappedData[index],
             type: "scatter",
-            name: 2021,
-          },
-          {
-            SymboSize: 20,
-            data: wrappedData[1],
-            type: "scatter",
-            name: 2022,
-          },
-          {
-            ymboSize: 20,
-            data: wrappedData[2],
-            type: "scatter",
-            name: 2023,
-          },
-        ],
+            name: year,
+          };
+        }),
         markLine: {
           symbol: "none",
           data: [
@@ -142,8 +135,7 @@ export default {
 
 <style scoped>
 .allNatr {
-  width: 100%;
-  /* background: #f0f0f0; */
+  width: 100%; 
   display: flex;
   text-align: center;
   flex-wrap: wrap;

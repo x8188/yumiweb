@@ -1,10 +1,10 @@
 <template>
   <el-table :data="tableData" border style="width: 100%">
-    <el-table-column prop="class" :label="$i18n.t('Class')" width="180">
+    <el-table-column prop="class" :label="$i18n.t('Class')" width="180" :align="'center'">
     </el-table-column>
-    <el-table-column prop="num" :label="$i18n.t('Trait Num')" width="180">
+    <el-table-column prop="num" :label="$i18n.t('Trait Num')" width="180" :align="'center'">
     </el-table-column>
-    <el-table-column prop="recordNum" :label="$i18n.t('record num')">
+    <el-table-column prop="recordNum" :label="$i18n.t('record num')" :align="'center'">
     </el-table-column>
   </el-table>
 </template>
@@ -21,7 +21,6 @@ export default {
       Agronomical: "Agronomical",
       "Abiotic stress": "Abiotic stress",
       "Biotic stress": "Biotic stress",
-      sum: "sum",
     };
   },
   mounted() {
@@ -42,31 +41,24 @@ export default {
           { key: "Biotic stress", value: "this.Biotic stress" },
           { key: "Abiotic stress", value: "this.Abiotic stress" },
         ];
-        console.log(rows, "ggg");
         let index = 0;
+// 根据索引依次渲染每行数据
         for (const row of rows){
           const response = await getCheckTrait();
+        console.log(response,'response');
           this.tableData.push({
             class: row.key,
             num: response.data[index],
-            recordNum: null,
+            recordNum:response.data.pop() ,
           });
           index++;
         }
-        // rows.forEach(async (row) => {
-        //   const response = await getCheckTrait();
-        //   this.tableData.push({
-        //     class: row.key,
-        //     num: response.data[index],
-        //     recordNum: null,
-        //   });
-        //   index++;
-        // });
         this.tableData = data;
       } catch (error) {
         console.log(error);
       }
     },
+// 统计total数量
     calculateTotalSum() {
       this.totalSum = this.tableData.reduce(
         (sum, row) => sum + row.num,
@@ -74,7 +66,7 @@ export default {
       );
 
       const totalSumRow = {
-        class: "sum",
+        class: "Total",
         num: this.totalSum,
         recordNum: null,
       };

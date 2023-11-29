@@ -75,6 +75,10 @@ service.interceptors.response.use(res => {
   if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
     return res.data
   }
+  // if(res.data ==[]){
+  //   Message({ message: '暂无数据', type: 'warning' });
+  //   return Promise.reject(new Error(msg))
+  // }
 
   if (code === 401) {
     if (!isRelogin.show) {
@@ -89,8 +93,17 @@ service.interceptors.response.use(res => {
       });
     }
     return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
-  } else if (code === 500) {
-    Message({ message: msg, type: 'error' })
+  }else if (code ===400) {
+    Message({ message: '查询格式错误', type: 'warning' });
+    return Promise.reject(new Error(msg))
+  }
+   else if (code === 500) {
+    if (msg === '/ by zero') {
+      Message({ message: '暂无数据', type: 'warning' });
+    }else{
+      Message({ message: msg, type: 'error' })
+    }
+
     return Promise.reject(new Error(msg))
   } else if (code === 601) {
     Message({ message: msg, type: 'warning' })
@@ -112,6 +125,8 @@ service.interceptors.response.use(res => {
       message = "后端接口连接异常";
     } else if (message.includes("timeout")) {
       message = "系统接口请求超时";
+    } else if (message.includes('400')){
+      message = "参数格式错误";
     } else if (message.includes("Request failed with status code")) {
       message = "系统接口" + message.substr(message.length - 3) + "异常";
     }
