@@ -1,7 +1,7 @@
 <template>
   <div class="all-mor">
     <div class="chart-mor">
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
           prop="code"
           label="系谱内部码"
@@ -98,7 +98,16 @@ export default {
     getAgroAll() {
       return new Promise((resolve) => {
         btnAgroAll().then((res) => {
-          this.tableData = res.data;
+          let chartData = res.data;
+          chartData = chartData.map((item) => {
+            for (let key in item) {
+              if (item[key] === null) {
+                item[key] = "-";
+              }
+            }
+            return item;
+          });
+          this.tableData = chartData;
           resolve();
           console.log(this.tableData, "this.tableData");
         });
@@ -184,7 +193,7 @@ export default {
           // "seedyield",
           // "spikelength",
           // "spikewidth",
-          "yield"
+          "yield",
         ];
         attributes.forEach((attribute) => {
           const key = `${year}${attribute
@@ -197,7 +206,7 @@ export default {
         });
         return result;
       }, {});
-      console.log(yAxisData1,'yAxisData1');
+      console.log(yAxisData1, "yAxisData1");
       // 把对象转换为二维数组
       const sortedEntries = Object.entries(yAxisData1).sort();
       // 把二维数组展平为一维数组
@@ -216,10 +225,9 @@ export default {
           type: "violin",
           x: flatten_xAxisData,
           y: flattenedArray,
-
         },
       ];
-      const layout = { 
+      const layout = {
         violinmode: "group",
         showlegend: true,
         legend: {
@@ -261,5 +269,5 @@ export default {
 #main {
   width: 600px;
   height: 630px;
-}
+} 
 </style>

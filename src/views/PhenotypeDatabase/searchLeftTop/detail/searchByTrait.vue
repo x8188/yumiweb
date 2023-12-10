@@ -1,17 +1,35 @@
 <template>
   <div class="trait">
     <div class="left-chart">
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="newSource" label="新来源" width="100" :align="'center'">
+      <el-table :data="tableData" border height="800" style="width: 100%">
+        <el-table-column
+          prop="newSource"
+          label="新来源"
+          width="100"
+          :align="'center'"
+        >
         </el-table-column>
-        <el-table-column prop="pedigree" label="系谱" width="280" :align="'center'">
+        <el-table-column
+          prop="pedigree"
+          label="系谱"
+          width="280"
+          :align="'center'"
+        >
         </el-table-column>
-        <el-table-column prop="pastSource" label="旧来源" width="120" :align="'center'">
+        <el-table-column
+          prop="pastSource"
+          label="旧来源"
+          width="120"
+          :align="'center'"
+        >
         </el-table-column>
-        <el-table-column prop="trait" label="株高" :align="'center'"> </el-table-column>
+        <el-table-column prop="trait" label="株高" :align="'center'">
+        </el-table-column>
       </el-table>
     </div>
     <div id="main" class="right-echart"></div>
+
+    <div class="axis-tip"></div>
   </div>
 </template>
 
@@ -48,17 +66,19 @@ export default {
         const query = {
           trait: trait,
         };
-// 获取表格、热力图数据
+        // 获取表格、热力图数据
         Promise.all([searchByTrait(query), searchChartByTrait(query)])
           .then(([traitData, chartTraitData]) => {
             let tableData = traitData.data;
             let chartData = chartTraitData.data;
             this.tableData = tableData;
             this.chartData = chartData.map((item) => ({
+              pedigree: item.pedigree,
               location: item.location,
               year: item.year,
               trait: item.trait,
             }));
+            console.log(this.chartData, "ddd");
             resolve();
           })
           .catch((error) => {
@@ -67,17 +87,55 @@ export default {
           });
       });
     },
-// 处理热力图数据
+    // 处理热力图数据
     renderTraitCharts() {
       var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
       var option;
-// 组合year+location
+      // test1
+      var xData1 = Array.from(
+        new Set(this.chartData.map((item) => item.year + " " + item.location))
+      );
+      var yData1 = Array.from(
+        new Set(this.chartData.map((item) => item.pedigree))
+      );
+      var heatMapData1 = this.chartData.map((item) => [
+        xData1.indexOf(item.year + " " + item.location) + 1,
+        yData1.indexOf(item.pedigree),
+        parseFloat(item.trait),
+      ]);
+      console.log(heatMapData1, "xdata1");
+      // test2
+      var xData2 = Array.from(
+        new Set(this.chartData.map((item) => item.year + " " + item.location))
+      );
+      var yData2 = Array.from(
+        new Set(this.chartData.map((item) => item.pedigree))
+      );
+
+      var xIndexMap = {};
+      xData2.forEach((value, index) => {
+        xIndexMap[value] = index;
+      });
+
+      var yIndexMap = {};
+      yData2.forEach((value, index) => {
+        yIndexMap[value] = index;
+      });
+
+      var heatMapData2 = this.chartData.map((item) => [
+        xIndexMap[item.year + " " + item.location],
+        yIndexMap[item.pedigree],
+        parseFloat(item.trait),
+      ]);
+      console.log(yData2, "ydata2");
+      console.log(heatMapData2, "heatMapData2");
+      // 组合year+location
       const countMap = {};
       for (const dataPoint of this.chartData) {
         const { location, year, trait } = dataPoint;
         const locationYear = location + year;
-// 统计year+location下trait出现次数
+        // 统计year+location下trait出现次数
         if (countMap.hasOwnProperty(locationYear)) {
           const countObj = countMap[locationYear];
           if (countObj.hasOwnProperty(trait)) {
@@ -89,7 +147,8 @@ export default {
           countMap[locationYear] = { [trait]: 1 };
         }
       }
-// 生成数组
+      console.log(countMap, "countMap");
+      // 生成数组
       const heatMapData = [];
       for (const locationYear in countMap) {
         const traitCounts = countMap[locationYear];
@@ -98,19 +157,49 @@ export default {
           heatMapData.push([locationYear, count, trait]);
         }
       }
-// 需要渲染的x轴、y轴数据
+      // 需要渲染的x轴、y轴数据
       var xData = Array.from(new Set(heatMapData.map((item) => item[0])));
       var yData = Array.from(new Set(heatMapData.map((item) => item[1]))).sort(
         (a, b) => a - b
       );
-// 形成热力图坐标数组，如[1,2,193.5]
+      // 形成热力图坐标数组，如[1,2,193.5]
       var convertedData = heatMapData.map((item) => {
         var xIndex = xData.indexOf(item[0]);
         var yIndex = yData.indexOf(item[1]);
         return [xIndex, yIndex, item[2]];
       });
-// 热力图配置
+      console.log(
+        heatMapData.map((item) => [
+          xData.indexOf(item[0]),
+          yData.indexOf(item[1]),
+          item[2],
+        ]),
+        "convertedData"
+      );
+      // 热力图配置
       option = {
+        gird: {
+          left: 50,
+        },
+        dataZoom: [
+          {
+            type: "slider", // 滑动条类型
+            show: true, // 显示滑动条
+            xAxisIndex: 0, // 应用于第一个横坐标轴
+            start: 0, // 默认滑动条起始位置
+            end: 150, // 默认滑动条结束位置
+            bottom: 13,
+          },
+          {
+            type: "slider", // 滑动条类型
+            show: true, // 显示滑动条
+            yAxisIndex: 0, // 应用于第一个横坐标轴
+            start: 0, // 默认滑动条起始位置
+            end: 150, // 默认滑动条结束位置
+            top: 55,
+            left: 1,
+          },
+        ],
         tooltip: {
           position: "top",
         },
@@ -121,36 +210,44 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: xData,
 
+          data: xData2,
+          axisLabel: {
+            width: 5, // 设置标签的宽度，可以根据实际需求进行调整
+          },
           splitArea: {
             show: true,
           },
         },
         yAxis: {
           type: "category",
-
-          data: yData,
+          triggerEvent: true,
+          data: yData2,
           splitArea: {
             show: true,
           },
           axisLabel: {
+            rotate: 50,
             interval: 0, // 设置为 0，表示所有刻度标签都显示
-            formatter: function (value, index) {
-              if (index % 2 === 0) {
-                return value;
-              } else {
-                return "";
+            formatter: function (value) {
+              var texts = value;
+              if (texts.length > 6) {
+                // 限制长度自设
+                texts = texts.substr(0, 6) + "...";
               }
+              return texts;
             },
           },
+
+
+
         },
         visualMap: {
           min: Math.min(...heatMapData.map((item) => item[2])), // trait 值的最小值,
           max: Math.max(...heatMapData.map((item) => item[2])), // trait 值的最大值,
-          // show:false,
+          show: true,
 
-          range: [0, 1],
+          // range: [0, 1],
           calculable: true,
           orient: "vertical",
           top: "10%",
@@ -172,11 +269,7 @@ export default {
           {
             // name: "热力图",
             type: "heatmap",
-            data: heatMapData.map((item) => [
-              xData.indexOf(item[0]),
-              yData.indexOf(item[1]),
-              item[2],
-            ]), // 将坐标转换为索引,
+            data: heatMapData2, // 将坐标转换为索引,
             // label: {
             //   show: true,
             // },
@@ -193,6 +286,18 @@ export default {
         ],
       };
       myChart.setOption(option);
+       myChart.on("mouseover", "yAxis.category", function (e) {
+        let axisTip = document.querySelector(".axis-tip");
+        axisTip.innerText = e.value;
+        axisTip.style.left = e.event.offsetX + "px";
+        axisTip.style.top = e.event.offsetY + "px";
+        axisTip.style.display = "block";
+      });
+        myChart.on("mouseout", "yAxis.category", function (e) {
+        let axisTip = document.querySelector(".axis-tip");
+        axisTip.innerText = "";
+        axisTip.style.display = "none";
+      });
     },
   },
 };
@@ -204,7 +309,10 @@ export default {
   display: flex;
 }
 .left-chart {
-  width: 45%;
+  width: 40%;
+  /* margin:0 auto; */
+  text-align: center;
+  /* margin-left: 50px; */
   margin: 20px;
   padding: 10px;
   height: 45vw;
@@ -212,12 +320,31 @@ export default {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 .right-echart {
-  width: 45%;
+  width: 50%;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin: 20px;
 }
-#main {
+element.style {
   width: 800px;
-  height: 45vw;
+  height: 650px;
+}
+.axis-tip {
+  display: none;
+  position: absolute;
+  margin-left: 550px;
+  margin-top: -30px;
+  padding: 5px 5px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #575757;
+  background: #ffffff;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+#main {
+  left: -10px;
+  width: 800px;
+  height: 80vh;
 }
 </style>

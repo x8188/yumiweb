@@ -58,30 +58,25 @@ export default {
       let params = {};
       // 根据需要构建查询参数
       let searchUrl = "/PhenotypeDatabase/searchLeftTop/detail";
-      if (pedigree && !trait) {
+
+      if(pedigree && !year && !location && !trait){
         searchUrl += `/searchByName`;
-        params = { pedigree: pedigree }
-        }
-      if (year && !location) {
-        console.log(searchUrl);
+        params = {pedigree: pedigree}
+      }else if(!pedigree && year && !location && !trait){
         searchUrl += `/searchByYear`;
-        params = { year: year };
-      }
-      if (trait && !pedigree) {
-        searchUrl += `/searchByTrait`;
-        params = { trait: trait };
-      }
-      if (location && !year) {
+        params = {year: year}
+      }else if(!pedigree && !year && location && !trait){
         searchUrl += `/searchByLocation`;
-        params = { location: location };
-      }
-      if (pedigree && trait) {
+        params = {location: location}
+      }else if(!pedigree && !year && !location && trait){
+        searchUrl += `/searchByTrait`;
+        params = {trait: trait}
+      }else if(pedigree && !year && !location && trait){
         searchUrl += `/searchByNatr`;
         params = { pedigree: pedigree, trait: trait };
-      }
-      if(year && location){
+      }else{
         searchUrl += `/searchByYelo`;
-        params = { year:year, location: location};
+        params = {pedigree: pedigree, year: year, trait: trait, location: location}
       }
       //   window.location.href = searchUrl;
       //  //跳转到另一个页面，传递查询参数
@@ -98,12 +93,10 @@ export default {
 };
 </script>
 <style scoped>
-/* .left_top{
+.left_top{
   width: 100%;
-  padding-top: 10px;
-  margin: 20px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-} */
+  margin: 0 auto;
+}
 .top_search{
   margin-top: 20px;
   font-size: 45px;
@@ -116,9 +109,9 @@ export default {
   margin: 0 auto;
   text-align: center;
   margin-top: 40px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   margin-bottom: 30px;
-  background: #f1f8f8; 
+  background: #f1f8f8;
 }
 .left_search:hover{
   background: rgb(9, 107, 117);

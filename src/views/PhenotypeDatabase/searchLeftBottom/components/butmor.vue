@@ -1,7 +1,7 @@
 <template>
   <div class="all-mor">
     <div class="chart-mor">
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="tableData" border height="800" style="width: 100%">
         <el-table-column
           prop="code"
           label="系谱内部码"
@@ -86,7 +86,16 @@ export default {
       // 获取表格数据
       return new Promise((resolve) => {
         btnMorAll().then((res) => {
-          this.tableData = res.data;
+          let chartData = res.data;
+          chartData = chartData.map((item) => {
+            for (let key in item) {
+              if (item[key] === null) {
+                item[key] = "-";
+              }
+            }
+            return item;
+          });
+      this.tableData = chartData;
           resolve();
         });
         // 获取小提琴图数据
@@ -134,7 +143,7 @@ export default {
         } else {
           xAxisData3[Object.keys(seen).indexOf(item)].push(item);
         }
-      } 
+      }
       // 将x轴数据按顺序依次渲染（确保与y轴数据一一对应）
       xAxisData3.sort((a, b) => {
         const yearA = Number(a[0].substring(0, 4)); // 提取年份并转换为数字

@@ -1,7 +1,7 @@
 <template>
   <div class="all-abio">
     <div class="chart-abio">
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
           prop="code"
           label="系谱内部码"

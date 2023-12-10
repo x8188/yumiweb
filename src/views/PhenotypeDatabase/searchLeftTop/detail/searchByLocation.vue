@@ -60,7 +60,7 @@
       return {
         tableData: []
       }
-    }, 
+    },
     mounted() {
       const location = this.$route.query.location;
       const query = {
@@ -68,9 +68,20 @@
       }
       searchByLocation(query)
       .then(res => {
-        const data = res.data;
-        this.tableData = data
-      })
+        let chartData = res.data;
+      chartData = chartData.map((item) => {
+            for (let key in item) {
+              if (item[key] === null) {
+                item[key] = "-";
+              }
+            }
+            return item;
+          });
+      this.tableData = chartData;
+      }).catch((error) => {
+            console.log(error);
+            this.$message.warning("暂无数据");
+          });
     },
   }
 </script>
