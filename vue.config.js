@@ -56,7 +56,8 @@ module.exports = {
 
       // },
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://43.143.200.52:10383`,
+        target: `http://43.143.200.52:10385`,
+        // target: `http://122.205.72.119:10383`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
