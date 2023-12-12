@@ -1,31 +1,7 @@
+import Genomics_zh from './Genomics_lau/zh'
+import phenotypeDB_zh from './phenotypeDB/zh'
+
 export default{
-  name:'名字',
-   year:'年份',
-   trait:'时间',
-   'name/pedigree':'名字/系谱',
-   All:'全部',
-   Morphological:'形态',
-   Agronomical:'农艺',
-   'Biotic stress':'生物',
-   'Abiotic stress':'非生物',
-   Class:'种类',
-   'Trait Num':'性状数量',
-   'record num':'记录数量',
-   search:'搜索',
-   switchLanguage:'切换语言',
-   location:'地点',
-   pedigree:'系谱',
-   newsource:'新来源',
-   group:'组别',
-   describe:'描述',
-   interlinkage:'interlinkage',
-   stemDiameter:'茎粗',
-   height:'株高',
-   leafWidth:'穗上叶宽',
-   leafLength:'穗上叶长',
-   femalespike:'雄穗分枝数',
-   earHeight:'穗位',
-   earLength:'earLength',
-   code:'系谱内部码',
-   greeting:'你好',
+   ...Genomics_zh,
+   ...phenotypeDB_zh
 }
