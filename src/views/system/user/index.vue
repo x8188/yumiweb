@@ -235,9 +235,12 @@
               <el-input v-model="form.userName" placeholder="请输入用户名称" maxlength="30" />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+        </el-row>
+        <el-row>
+          <el-col :span="18">
             <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
-              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" maxlength="20" show-password/>
+              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" show-password style="margin-bottom:10px"/>
+              <PsdStrength :password="form.password"> </PsdStrength>
             </el-form-item>
           </el-col>
         </el-row>
@@ -346,6 +349,20 @@ import { getToken } from "@/utils/auth";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
+// var ISPWD =/^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*,\._\+(){}])[0-9a-zA-Z!@#$%^&*,\\._\+(){}]{11,}$/;
+var ISPWD =/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!?|/@#$%^&*,\._\+(){}])[A-Za-z\d!?|/@#$%^&*,\._\+(){}]{11,}$/;
+// var ISPWD =/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{11,}$/;
+
+// 密码校验
+const validatePassword = (rule, value, callback) =>{
+   
+   if (!ISPWD.test(value)) {
+      callback(new Error("用户密码必须包含字母、数字和特殊符号"));
+   } else {
+      callback();
+   }
+}
+
 export default {
   name: "User",
   dicts: ['sys_normal_disable', 'sys_user_sex'],
@@ -432,8 +449,9 @@ export default {
           { required: true, message: "用户昵称不能为空", trigger: "blur" }
         ],
         password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
-          { min: 5, max: 20, message: '用户密码长度必须介于 5 和 20 之间', trigger: 'blur' }
+          { required: true, message: "用户密码不能为空", trigger: "blur" }, 
+          { min: 11, message: "用户密码长度必须大于10", trigger: "blur" },
+          {validator: validatePassword, trigger: 'blur' }
         ],
         email: [
           {
@@ -590,8 +608,8 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         closeOnClickModal: false,
-        inputPattern: /^.{5,20}$/,
-        inputErrorMessage: "用户密码长度必须介于 5 和 20 之间"
+        inputPattern: ISPWD,
+        inputErrorMessage: "用户密码必须包含字母、数字和特殊符号。且长度大于10",
       }).then(({ value }) => {
           resetUserPwd(row.userId, value).then(response => {
             this.$modal.msgSuccess("修改成功，新密码是：" + value);

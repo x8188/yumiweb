@@ -5,9 +5,6 @@
         <i v-if="filterHide" class="el-icon-s-fold"></i>
         <i v-else class="el-icon-s-unfold"></i>
       </span>
-      <span>{{$t('girl')}}</span>
-      <button @click="$i18n.locale=='zh'?$i18n.locale='en':$i18n.locale='zh'">t</button>
-
 
       <el-form ref="elForm" v-show="filterHide" :model="formData" size="medium" :inline="true">
         <el-row :gutter="24" class="filter_box" type="flex" justify="center">
@@ -16,23 +13,23 @@
             <span @click="filter_page()" id="span-second">Filter</span>
             <span @click="resetForm">Reset</span>
           </el-col> -->
-              <el-form-item label="Germplasm">
+              <el-form-item :label="$t('Germplasm')">
                 <el-select v-model="formData.accession" placeholder="请选择Germplasm" clearable :style="{ width: '100%' }">
                   <el-option v-for="(item, index) in GermplasmOptions" :key="index" :label="item" :value="item"></el-option>
                 </el-select>
               </el-form-item>
 
-              <el-form-item label="Version">
+              <el-form-item :label="$t('Version')">
                 <el-select v-model="formData.version" placeholder="请选择Version" clearable :style="{ width: '100%' }">
                   <el-option v-for="(item, index) in VersionOptions" :key="index" :label="item" :value="item"></el-option>
                 </el-select>
               </el-form-item>
 
-              <el-form-item label="UniqueName">
+              <el-form-item :label="$t('UniqueName')">
                 <el-input placeholder="请输入Name" v-model="formData.uniquename"></el-input>
               </el-form-item>
 
-              <el-form-item label="CommonName">
+              <el-form-item :label="$t('CommonName')">
                 <el-input placeholder="请输入Name" v-model="formData.commonname"></el-input>
               </el-form-item>
           
@@ -40,13 +37,13 @@
 
                       <!-- <span style="color:#606266;font-size: 14px;font-weight: 700;">Chromosome</span> -->
         <el-row type="flex" justify="center">
-          <el-form-item label="Chr">
+          <el-form-item :label="$t('Chr')">
             <el-select v-model="formData.chrom" placeholder="请选择Chr" clearable :style="{ width: '100%' }">
               <el-option v-for="(item, index) in ChrOptions" :key="index" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <!-- <span style="color:#606266;font-size: 14px;font-weight: 700;">Location</span> -->
-          <el-form-item label="Location">
+          <el-form-item :label="$t('Location')">
             <div id="inner_input">
             <el-input placeholder="请输入最小值" v-model="formData.start" number @input="handleinput"></el-input>
             <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
@@ -73,10 +70,10 @@
               <div class="footer">
                 <el-button size="small" @click="resetForm()" style="margin-right: 15px;">
                   <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
-                  <span style="color: #20AE35">清空</span>
+                  <span style="color: #20AE35">{{$t('reset')}}</span>
                 </el-button>
                 <el-button type="primary" size="small" @click="filter_page()">
-                  查询
+                  {{$t('search')}}
                   <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
                 </el-button>
               </div>
@@ -85,8 +82,8 @@
     </div>
     <div class="buttom_box">
       <div style="text-align: center;align-items: center; margin-bottom: 10px;line-height: 30px;margin-top: 10px;">
-        <p style="display:inline;font-size:25px;">Genomics Table</p>
-        <el-button type="primary" icon="el-icon-download" @click="handleExport">下载</el-button>
+        <p style="display:inline;font-size:25px;">{{$t('GenomicsTable')}}</p>
+        <el-button type="primary" icon="el-icon-download" @click="handleExport">{{$t('download')}}</el-button>
       </div>
 
       <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark"
@@ -95,23 +92,23 @@
         <el-table-column type="selection" width="55" @click="getVID()">
         </el-table-column>
 
-        <el-table-column label="Name" show-overflow-tooltip>
+        <el-table-column :label="$t('Name')" show-overflow-tooltip>
           <template slot-scope="scope">
             <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.row)">{{ scope.row.name
             }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="uniquename" label="UniqueName" width="180">
+        <el-table-column prop="uniquename" :label="$t('UniqueName')" width="180">
         </el-table-column>
-        <el-table-column prop="commonname" label="CommonName" width="180">
+        <el-table-column prop="commonname" :label="$t('CommonName')" width="180">
         </el-table-column>
-        <el-table-column prop="chrom" label="CHROM" width="180">
+        <el-table-column prop="chrom" :label="$t('CHROM')" width="180">
         </el-table-column>
-        <el-table-column prop="start" label="Start" width="180">
+        <el-table-column prop="start" :label="$t('Start')" width="180">
         </el-table-column>
-        <el-table-column prop="end" label="End" width="180">
+        <el-table-column prop="end" :label="$t('End')" width="180">
         </el-table-column>
-        <el-table-column prop="strand" label="Strand" width="180">
+        <el-table-column prop="strand" :label="$t('Strand')" width="180">
         </el-table-column>
       </el-table>
       <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
@@ -156,13 +153,13 @@ export default {
       formData: {
         accession: "",
         version: "",
-        chrom: "chr1",
-        start: "10000",
-        end: "20000",
+        chrom: "chr8",
+        start: "222267508",
+        end: "239266180",
         // name: "",
         commonname: "",
         // description: "",
-        uniquename:"",
+        uniquename:"GENE",
       },
       loading: true,
       rules: {

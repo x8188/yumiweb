@@ -41,6 +41,9 @@ import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
 
+// 密码强度检测
+import PsdStrength from '@/components/PsdStrength'
+
 // 引入百度地图
 import BaiduMap from 'vue-baidu-map'
 
@@ -74,6 +77,8 @@ Vue.component('FileUpload', FileUpload)
 Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
 Vue.component('UI',UI)
+
+Vue.component('PsdStrength', PsdStrength)
 
 Vue.use(BaiduMap, {
   ak: 'YOUR_APP_KEY'    //这个地方是官方提供的ak密钥
