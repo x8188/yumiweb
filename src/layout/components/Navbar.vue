@@ -17,6 +17,8 @@
           <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
         </el-tooltip> -->
 
+        <el-button class="right-menu-item hover-effect" type="text" @click="$i18n.locale=='zh'?$i18n.locale='en':$i18n.locale='zh'">{{$t('SwitchLanguage')}}</el-button>
+
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
