@@ -8,7 +8,12 @@
         </el-table-column>
         <el-table-column prop="pastSource" label="旧来源" :align="'center'">
         </el-table-column>
-        <el-table-column prop="trait" label="株高" :align="'center'">
+        <el-table-column
+          prop="trait"
+          :label=translatedTraitLabel
+          :align="'center'"
+          width="140"
+        >
         </el-table-column>
       </el-table>
     </div>
@@ -27,12 +32,72 @@ import {
 export default {
   data() {
     return {
+      trait: "",
       tableData: [],
       chartNatrData: [],
     };
   },
+  computed: {
+    translatedTraitLabel() {
+      // 中英文转换逻辑
+      const translationMap = {
+        // 中文 -> 英文 映射关系
+        'height': '株高',
+        'silking':'吐丝期',
+        'dispersal':'散粉期',
+        'mature':'成熟期',
+        'earheight':'穗位',
+        'maleSpikes':'雄穗分枝数',
+        'malespikes':'雄穗分枝数',
+        'spindlelength':'雄花主轴长度',
+        'spindleLength':'雄花主轴长度',
+        'leaflength':'穗上叶长',
+        'leafLength':'穗上叶长',
+        'leafwidth':'穗上叶宽',
+        'leafWidth':'穗上叶宽',
+        'stemdiameter':'茎粗',
+        'stemDiameter':'茎粗',
+        'rates':'倒伏折射率之和(%)',
+        'rust':'锈病(级)',
+        'stemrot':'茎腐病(%)',
+        'roughdwarf':'粗缩(%)',
+        'roughDwarf':'粗缩(%)',
+        'hollow':'空杆(%)',
+        'plantsnum':'株数',
+        'plantsNum':'株数',
+        'blackpowder':'黑粉',
+        'blackPowder':'黑粉',
+        'expression':'果穗表现',
+        'spikelength':'穗长',
+        'spikeLength':'穗长',
+        'spikewidth':'穗粗',
+        'spikeWidth':'穗粗',
+        'row':'穗行数',
+        'kernels':'行粒数',
+        'axiscolor':'轴色',
+        'axisColor':'轴色',
+        'grainweight':'百粒重',
+        'grainWeight':'百粒重',
+        'grainlength':'籽粒长',
+        'grainLength':'籽粒长',
+        'grainwidth':'籽粒宽',
+        'grainWidth':'籽粒宽',
+        'yield':'小区标准产量(KG)',
+        'seedyield':'出籽率',
+        'seedYield':'出籽率',
+
+        // 添加更多映射关系...
+      };
+
+      // 根据traitLabel的值进行中英文转换
+      const translatedLabel = translationMap[this.trait] || this.trait;
+
+      return translatedLabel;
+    }
+  },
   mounted() {
-    this.getNatrData().then(() => {
+    this.getNatrData().then((trait) => {
+      this.trait = trait;
       this.renderNatrCharts();
     });
   },
@@ -45,7 +110,7 @@ export default {
           pedigree: pedigree,
           trait: trait,
         };
-// 获取表格数据和散点图数据
+        // 获取表格数据和散点图数据
         Promise.all([searchByNatr(query), searchChartByNatr(query)])
           .then(([tableDataResponse, chartDataResponse]) => {
             let tableData = tableDataResponse.data;
@@ -56,7 +121,7 @@ export default {
               trait: item.trait,
               year: item.year,
             }));
-            resolve();
+            resolve(trait);
           })
           .catch((error) => {
             console.log(error);
@@ -64,7 +129,7 @@ export default {
           });
       });
     },
-// 渲染散点图
+    // 渲染散点图
     renderNatrCharts() {
       var chartDom = document.getElementById("main");
       var myChart = echarts.init(chartDom);
@@ -75,7 +140,7 @@ export default {
         return; // 终止执行
       }
       const yearData = this.chartNatrData.map((data) => data.year + "");
-// 获取不同年份、地点下的trait值
+      // 获取不同年份、地点下的trait值
       const wrappedData = [];
       this.chartNatrData.forEach((data) => {
         const yearIndex = data.year - 2021;
@@ -135,7 +200,7 @@ export default {
 
 <style scoped>
 .allNatr {
-  width: 100%; 
+  width: 100%;
   display: flex;
   text-align: center;
   flex-wrap: wrap;

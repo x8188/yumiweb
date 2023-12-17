@@ -24,7 +24,7 @@
         <el-table-column prop="malespikes" label="雄穗分枝数" width="100" :align="'center'">
         </el-table-column>
 
-        <el-table-column prop="spindleLength" label="雄花主轴长度" width="100" :align="'center'">
+        <el-table-column prop="spindlelength" label="雄花主轴长度" width="100" :align="'center'">
         </el-table-column>
         <el-table-column prop="leaflength" label="穗上叶长" :align="'center'"> </el-table-column>
         <el-table-column prop="leaflength" label="穗上叶宽" :align="'center'"> </el-table-column>

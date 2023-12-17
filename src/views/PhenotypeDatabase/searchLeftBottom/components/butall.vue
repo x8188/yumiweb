@@ -3,7 +3,7 @@
     <el-table
       ref="multipleTable"
       :data="tableData"
-      height="800"
+      height="660"
       style="width: 100%;margin:auto"
       tooltip-effect="dark"
       class="main trait-form-table"
@@ -209,7 +209,7 @@ export default {
 } */
 .content {
   width: 90%;
-  height: 85vh;
+  height: 80vh;
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 10px;

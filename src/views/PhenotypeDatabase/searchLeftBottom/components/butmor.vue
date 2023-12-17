@@ -86,7 +86,10 @@ export default {
       // 获取表格数据
       return new Promise((resolve) => {
         btnMorAll().then((res) => {
+          console.log(res.data, "MorAll");
           let chartData = res.data;
+
+          console.log(chartData,'chartData');
           chartData = chartData.map((item) => {
             for (let key in item) {
               if (item[key] === null) {

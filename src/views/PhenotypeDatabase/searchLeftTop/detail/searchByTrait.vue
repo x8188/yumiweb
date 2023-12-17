@@ -23,7 +23,12 @@
           :align="'center'"
         >
         </el-table-column>
-        <el-table-column prop="trait" label="株高" :align="'center'">
+        <el-table-column
+          prop="trait"
+          :label=translatedTraitLabel
+          :align="'center'"
+          width="140"
+        >
         </el-table-column>
       </el-table>
     </div>
@@ -42,22 +47,75 @@ import * as echarts from "echarts";
 export default {
   data() {
     return {
-      tableData: [
-        {
-          newsource: "",
-          pedigree: "",
-          pastsource: "",
-          height: "",
-        },
-      ],
+      trait: "",
+      tableData: [],
       chartData: [],
     };
   },
+  computed: {
+    translatedTraitLabel() {
+      // 中英文转换逻辑
+      const translationMap = {
+        // 中文 -> 英文 映射关系
+        height: "株高",
+        silking: "吐丝期",
+        dispersal: "散粉期",
+        mature: "成熟期",
+        earheight: "穗位",
+        maleSpikes: "雄穗分枝数",
+        malespikes: "雄穗分枝数",
+        spindlelength: "雄花主轴长度",
+        spindleLength: "雄花主轴长度",
+        leaflength: "穗上叶长",
+        leafLength: "穗上叶长",
+        leafwidth: "穗上叶宽",
+        leafWidth: "穗上叶宽",
+        stemdiameter: "茎粗",
+        stemDiameter: "茎粗",
+        rates: "倒伏折射率之和(%)",
+        rust: "锈病(级)",
+        stemrot: "茎腐病(%)",
+        roughdwarf: "粗缩(%)",
+        roughDwarf: "粗缩(%)",
+        hollow: "空杆(%)",
+        plantsnum: "株数",
+        plantsNum: "株数",
+        blackpowder: "黑粉",
+        blackPowder: "黑粉",
+        expression: "果穗表现",
+        spikelength: "穗长",
+        spikeLength: "穗长",
+        spikewidth: "穗粗",
+        spikeWidth: "穗粗",
+        row: "穗行数",
+        kernels: "行粒数",
+        axiscolor: "轴色",
+        axisColor: "轴色",
+        grainweight: "百粒重",
+        grainWeight: "百粒重",
+        grainlength: "籽粒长",
+        grainLength: "籽粒长",
+        grainwidth: "籽粒宽",
+        grainWidth: "籽粒宽",
+        yield: "小区标准产量(KG)",
+        seedyield: "出籽率",
+        seedYield: "出籽率",
 
+        // 添加更多映射关系...
+      };
+
+      // 根据traitLabel的值进行中英文转换
+      const translatedLabel = translationMap[this.trait] || this.trait;
+
+      return translatedLabel;
+    },
+  },
   mounted() {
-    this.getTraitData().then(() => {
+    this.getTraitData().then((trait) => {
+      this.trait = trait;
       this.renderTraitCharts();
     });
+    console.log(this.trait, "this.trait");
   },
   methods: {
     getTraitData() {
@@ -72,14 +130,16 @@ export default {
             let tableData = traitData.data;
             let chartData = chartTraitData.data;
             this.tableData = tableData;
+
             this.chartData = chartData.map((item) => ({
               pedigree: item.pedigree,
               location: item.location,
               year: item.year,
-              trait: item.trait,
+              trait: item.trait !== null ? item.trait : 0,
             }));
+            console.log(this.tableData, "this.tableData");
             console.log(this.chartData, "ddd");
-            resolve();
+            resolve(trait);
           })
           .catch((error) => {
             console.log(error);
@@ -238,24 +298,21 @@ export default {
               return texts;
             },
           },
-
-
-
         },
         visualMap: {
-          min: Math.min(...heatMapData.map((item) => item[2])), // trait 值的最小值,
-          max: Math.max(...heatMapData.map((item) => item[2])), // trait 值的最大值,
+          min: Math.min(...heatMapData2.map((item) => item[2])), // trait 值的最小值,
+          max: Math.max(...heatMapData2.map((item) => item[2])), // trait 值的最大值,
           show: true,
 
           // range: [0, 1],
           calculable: true,
           orient: "vertical",
           top: "10%",
-          itemWidth: 40, // 设置颜色控制条宽度
-          itemHeight: 500, // 设置颜色控制条高度
+          itemWidth: 30, // 设置颜色控制条宽度
+          itemHeight: 450, // 设置颜色控制条高度
           width: "60%", // 设置颜色控制条的长度
           right: "1%",
-          bottom: 100,
+          bottom: 120,
           height: "500px",
           inRange: {
             color: ["#313695", "#4575b4", "#74add1", "#abd9e9", "#e0f3f8"],
@@ -265,6 +322,7 @@ export default {
             return value.toFixed(0); // 格式化显示的值为两位小数
           },
         },
+
         series: [
           {
             // name: "热力图",
@@ -286,14 +344,14 @@ export default {
         ],
       };
       myChart.setOption(option);
-       myChart.on("mouseover", "yAxis.category", function (e) {
+      myChart.on("mouseover", "yAxis.category", function (e) {
         let axisTip = document.querySelector(".axis-tip");
         axisTip.innerText = e.value;
         axisTip.style.left = e.event.offsetX + "px";
         axisTip.style.top = e.event.offsetY + "px";
         axisTip.style.display = "block";
       });
-        myChart.on("mouseout", "yAxis.category", function (e) {
+      myChart.on("mouseout", "yAxis.category", function (e) {
         let axisTip = document.querySelector(".axis-tip");
         axisTip.innerText = "";
         axisTip.style.display = "none";
@@ -341,10 +399,12 @@ element.style {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
-
+.echarts-slider {
+    width: 10px; /* 设置滑动条的宽度 */
+  }
 #main {
   left: -10px;
   width: 800px;
-  height: 80vh;
+  height: 81vh;
 }
 </style>

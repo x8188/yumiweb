@@ -194,7 +194,7 @@ export default {
 }
 .chart-abio {
   width: 40%;
-  height: 44vw;
+  height: 80vh;
   overflow: auto;
   margin: 0 auto;
   padding: 10px;
@@ -204,13 +204,14 @@ export default {
 }
 .echart-abio {
   margin: 0 auto;
-  height: 58vw;
+  width: 100%;
+  height: 80vh;
   margin-left: 20px;
   margin-top: 50px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 #main {
-  width: 600px;
+  width: 700px;
   height: 630px;
 }
 </style>

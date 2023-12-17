@@ -4,6 +4,7 @@
       :data="tableData"
       border
       tooltip-effect="dark"
+      height="660"
       stripe
       style="width: 100%"
     >
@@ -185,7 +186,7 @@ export default {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   padding: 5px;
   width: 90%;
-  height: 800px;
+  height: 700px;
   overflow: auto;
   margin: 0 auto;
   margin-top: 50px;

@@ -25,7 +25,7 @@
           :align="'center'"
         >
         </el-table-column>
-        <el-table-column prop="pedigree" label="系谱" :align="'center'">
+        <el-table-column prop="pedigree" label="系谱" :align="'center'" width="260">
         </el-table-column>
         <el-table-column
           prop="newsource"
@@ -224,9 +224,11 @@ export default {
       return new Promise((resolve) => {
         const pedigree = this.$route.query.pedigree;
         const query = {
-          pedigree: encodeURIComponent(pedigree),
+          pedigree:encodeURIComponent(pedigree),
         };
+        this.query = pedigree
         console.log(query, "query");
+        resolve()
 
         // 获取左上角数据
         searchByName(query).then((res) => {
@@ -284,7 +286,7 @@ export default {
             chartData.seedYield,
           ];
           resolve();
-          console.log(this.chartsData51, "this.chartsData5");
+          console.log(this.chartsData5, "this.chartsData5");
         });
         // 获取agr平均值数据
         getAgrMeanByName().then((res) => {
@@ -324,22 +326,27 @@ export default {
         });
         // 获取y轴为数值柱状图数据
         getPhenoTypeRateByName(query).then((res) => {
-          let chartData = res.data;
+
+          let chartData = res.data[0];
+          console.log(chartData,'res.data');
           this.chartsData9 = [
             chartData.rates,
             chartData.stemrot,
             chartData.roughdwarf,
           ];
+          console.log(this.chartsData9,'this.chartsData9');
           resolve();
         });
         // 获取y轴为数值柱状图平均值数据
         getPhenoTypeRateMeanByName().then((res) => {
           let chartData = res.data;
+          console.log(chartData,'chartData');
           this.chartsData10 = [
             chartData.rates,
             chartData.stemrot,
             chartData.roughdwarf,
           ];
+          console.log(this.chartsData10,'this.chartsData10');
           resolve();
         });
         // 获取下方表格数据
@@ -359,7 +366,7 @@ export default {
         });
       });
     },
-    renderCharts() {
+     renderCharts(){
       // 等待所以数据请求成功后再渲染echarts
       Promise.all([
         getMorByName(),
@@ -394,11 +401,16 @@ export default {
                 fontSize: 14,
               },
               left: "left",
-              top: "top",
+              top:"top",
             },
 
             legend: {
-              data: ["4CV", "平均值"],
+              data: [this.query, "平均值"],
+              textStyle: {
+                fontSize: 10,
+              },
+              left: 15,
+              top: 20,
             },
             label: {
               show: true,
@@ -442,7 +454,7 @@ export default {
                 data: [
                   {
                     value: this.chartsData3,
-                    name: "4CV",
+                    name: this.query,
                   },
                   {
                     value: this.chartsData4,
@@ -474,7 +486,12 @@ export default {
               },
             },
             legend: {
-              data: ["4CV", "平均值"],
+              data: [this.query, "平均值"],
+              textStyle: {
+                fontSize: 10,
+              },
+              left: 15,
+              top: 20,
             },
             label: {
               show: true,
@@ -510,7 +527,7 @@ export default {
                 data: [
                   {
                     value: this.chartsData5,
-                    name: "4CV",
+                    name:this.query,
                   },
                   {
                     value: this.chartsData6,
@@ -531,7 +548,8 @@ export default {
           const promises = [];
           if (Array.isArray(this.chartsData7) && this.chartsData7.length > 0) {
             var formattedData1 = this.chartsData7.map(function (dateString) {
-              var dateParts = dateString.split("-");
+              if(dateString){
+                var dateParts = dateString.split("-");
               var year = dateParts[0];
               var month = dateParts[1];
               var day = dateParts[2];
@@ -543,6 +561,8 @@ export default {
               }
               var formattedDate = year + "/" + month + "/" + day;
               return formattedDate;
+              }
+
             });
             promises.push(Promise.resolve(formattedData1));
           }
@@ -583,7 +603,7 @@ export default {
           );
           option = {
             legend: {
-              data: ["4CV", "平均值"],
+              data: [this.query, "平均值"],
             },
             xAxis: {
               type: "category",
@@ -613,7 +633,7 @@ export default {
                 barWidth: 30,
                 data: [formattedData[2], formattedData[3], formattedData[5]],
                 color: "#ED7D31",
-                name: "4CV",
+                name: this.query,
               },
               {
                 type: "bar",
@@ -633,7 +653,7 @@ export default {
 
           option = {
             legend: {
-              data: ["4CV", "平均值"],
+              data: [this.query, "平均值"],
             },
             xAxis: {
               type: "category",
@@ -645,7 +665,7 @@ export default {
             series: [
               {
                 type: "bar",
-                name: "4CV",
+                name: this.query,
                 barWidth: 30,
                 data: this.chartsData9,
                 color: "#ED7D31",
