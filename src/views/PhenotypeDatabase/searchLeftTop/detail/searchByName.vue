@@ -25,7 +25,12 @@
           :align="'center'"
         >
         </el-table-column>
-        <el-table-column prop="pedigree" label="系谱" :align="'center'" width="260">
+        <el-table-column
+          prop="pedigree"
+          label="系谱"
+          :align="'center'"
+          width="260"
+        >
         </el-table-column>
         <el-table-column
           prop="newsource"
@@ -224,11 +229,11 @@ export default {
       return new Promise((resolve) => {
         const pedigree = this.$route.query.pedigree;
         const query = {
-          pedigree:encodeURIComponent(pedigree),
+          pedigree: encodeURIComponent(pedigree),
         };
-        this.query = pedigree
+        this.query = pedigree;
         console.log(query, "query");
-        resolve()
+        resolve();
 
         // 获取左上角数据
         searchByName(query).then((res) => {
@@ -307,11 +312,13 @@ export default {
         // 获取y轴为日期柱状图数据
         getPhenoTypeDataByName(query).then((res) => {
           let chartData = res.data;
+          console.log(chartData, "tttt");
           this.chartsData7 = [
             chartData.silking,
             chartData.dispersal,
             chartData.mature,
           ];
+          console.log(this.chartsData7, "this.chartsData7");
           resolve();
         });
         // 获取y轴为日期柱状图平均值数据
@@ -326,27 +333,26 @@ export default {
         });
         // 获取y轴为数值柱状图数据
         getPhenoTypeRateByName(query).then((res) => {
-
-          let chartData = res.data[0];
-          console.log(chartData,'res.data');
+          let chartData = res.data;
+          console.log(chartData, "res.data");
           this.chartsData9 = [
             chartData.rates,
             chartData.stemrot,
             chartData.roughdwarf,
           ];
-          console.log(this.chartsData9,'this.chartsData9');
+          console.log(this.chartsData9, "this.chartsData9");
           resolve();
         });
         // 获取y轴为数值柱状图平均值数据
         getPhenoTypeRateMeanByName().then((res) => {
           let chartData = res.data;
-          console.log(chartData,'chartData');
+          console.log(chartData, "chartData");
           this.chartsData10 = [
             chartData.rates,
             chartData.stemrot,
             chartData.roughdwarf,
           ];
-          console.log(this.chartsData10,'this.chartsData10');
+          console.log(this.chartsData10, "this.chartsData10");
           resolve();
         });
         // 获取下方表格数据
@@ -366,7 +372,7 @@ export default {
         });
       });
     },
-     renderCharts(){
+    renderCharts() {
       // 等待所以数据请求成功后再渲染echarts
       Promise.all([
         getMorByName(),
@@ -401,7 +407,7 @@ export default {
                 fontSize: 14,
               },
               left: "left",
-              top:"top",
+              top: "top",
             },
 
             legend: {
@@ -430,6 +436,7 @@ export default {
                   textAlign: "left", // 设置标签文本左对齐
                 },
               },
+
               radius: "60%", // 设置雷达图的半径大小为 60%
               indicator: [
                 { name: "株高" },
@@ -444,6 +451,9 @@ export default {
 
             tooltip: {
               trigger: "item",
+              textStyle: {
+                align: "left",
+              },
               axisPointer: {
                 type: "shadow",
               },
@@ -451,6 +461,7 @@ export default {
             series: [
               {
                 type: "radar",
+
                 data: [
                   {
                     value: this.chartsData3,
@@ -481,6 +492,9 @@ export default {
             },
             tooltip: {
               trigger: "item",
+              textStyle: {
+                align: "left",
+              },
               axisPointer: {
                 type: "shadow",
               },
@@ -527,7 +541,7 @@ export default {
                 data: [
                   {
                     value: this.chartsData5,
-                    name:this.query,
+                    name: this.query,
                   },
                   {
                     value: this.chartsData6,
@@ -548,21 +562,20 @@ export default {
           const promises = [];
           if (Array.isArray(this.chartsData7) && this.chartsData7.length > 0) {
             var formattedData1 = this.chartsData7.map(function (dateString) {
-              if(dateString){
+              if (dateString) {
                 var dateParts = dateString.split("-");
-              var year = dateParts[0];
-              var month = dateParts[1];
-              var day = dateParts[2];
-              if (month.length === 1) {
-                month = "0" + month;
+                var year = dateParts[0];
+                var month = dateParts[1];
+                var day = dateParts[2];
+                if (month.length === 1) {
+                  month = "0" + month;
+                }
+                if (day.length === 1) {
+                  day = "0" + day;
+                }
+                var formattedDate = year + "/" + month + "/" + day;
+                return formattedDate;
               }
-              if (day.length === 1) {
-                day = "0" + day;
-              }
-              var formattedDate = year + "/" + month + "/" + day;
-              return formattedDate;
-              }
-
             });
             promises.push(Promise.resolve(formattedData1));
           }

@@ -33,14 +33,14 @@
       </el-table-column>
 
       <el-table-column
-        prop="newsource"
+        prop="newSource"
         label="新来源"
         width="100"
         :align="'center'"
       >
       </el-table-column>
       <el-table-column
-        prop="pastsource"
+        prop="pastSource"
         label="旧来源"
         width="120"
         :align="'center'"
