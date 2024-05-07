@@ -3,12 +3,13 @@
     <div class="chart-mor">
       <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
-          prop="code"
-          label="系谱内部码"
-          width="100"
-          :align="'center'"
-        >
-        </el-table-column>
+        label="序号"
+        type="index"
+        :align="'center'"
+        width="80"
+        fixed="left"
+      >
+      </el-table-column>
         <el-table-column
           prop="pedigree"
           label="系谱"
@@ -27,48 +28,75 @@
         </el-table-column>
 
         <el-table-column
-          prop="newsource"
+          prop="pedigreesource1"
           label="新来源"
           width="100"
           :align="'center'"
         >
         </el-table-column>
         <el-table-column
-          prop="pastsource"
+          prop="pedigreesource2"
           label="旧来源"
           width="120"
           :align="'center'"
         >
         </el-table-column>
-
-        <el-table-column prop="grainLength" label="籽粒长" :align="'center'">
+        <el-table-column prop="fieldEvaluation" label="田评" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column prop="grainWeight" label="百粒重" :align="'center'">
+        <el-table-column prop="fieldEvaluation2" label="田评2" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column
-          prop="grainWidth"
-          label="籽粒宽"
-          width="100"
-          :align="'center'"
-        >
+        <el-table-column prop="laboratoryEvaluation" label="室评" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column prop="kernels" label="行粒数" :align="'center'">
+        <el-table-column prop="laboratoryEvaluation2" label="室评2" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column prop="row" label="穗行数" :align="'center'">
+        <el-table-column prop="benefitial" label="沾光" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column prop="seedYield" label="出籽率" :align="'center'">
+        <el-table-column prop="emptyStalkNumber" label="空杆数" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column prop="spikeLength" label="穗长" :align="'center'">
+        <el-table-column prop="selectedPlantNumber" label="入选株数" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column prop="spikeWidth" label="穗宽" :align="'center'">
+        <el-table-column prop="plantNumber" label="区株数" :align="'center'" width="200">
         </el-table-column>
-        <el-table-column
-          prop="yield"
-          label="小区标准产量"
-          width="120"
-          :align="'center'"
-        >
+        <el-table-column prop="leafStayGreen" label="保绿度" :align="'center'" width="200">
         </el-table-column>
+        <el-table-column prop="pollinationPlan1" label="授粉计划1" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="pollinationPlan2" label="授粉计划2" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="doubleEarNumber" label="双穗数" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="decisionStrip" label="翌年处理意见" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="decisionSource" label="决策来源" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="siteDiscrepancy" label="位点差" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="tests1" label="测试种1" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="tests2" label="测试种2" :align="'center'" width="200">
+        </el-table-column>
+        <!-- <el-table-column prop="daysToTassel" label="抽雄期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="daysToSeedling" label="出苗期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="daysToMaturity" label="成熟期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="datePlanted" label="播种期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="growthPeriod" label="生育期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="daysToAnther" label="散粉期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="daysToSilk" label="吐丝期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="dateHarvested" label="收获日期" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="daysToAnther2" label="散粉期（补）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="daysToSilk2" label="吐丝期（补）" :align="'center'" width="200">
+        </el-table-column> -->
+        <el-table-column prop="antherTasselInterval" label="散粉吐丝间隔" :align="'center'" width="200">
+        </el-table-column> 
       </el-table>
     </div>
     <div id="main" class="echart-mor" ref="chart"></div>
@@ -109,8 +137,11 @@ export default {
           });
           this.tableData = chartData;
           resolve();
-          console.log(this.tableData, "this.tableData");
-        });
+        })
+        .catch((error) => {
+        console.log(error);
+        this.$message.warning("暂无数据");
+      });
 
         // 获取小提琴图数据
         btnAgro().then((res) => {
@@ -137,15 +168,24 @@ export default {
     getAgroChartData() {
       // 小提琴图x轴数据
       const xAxisData1 = this.AgroData.map((item) => [
-        // item.year + "籽粒长",
-        // item.year + "百粒重",
-        // item.year + "籽粒宽",
-        item.year + "行粒数",
-        item.year + "穗行树",
-        // item.year + "出籽率",
-        // item.year + "穗长",
-        // item.year + "穗宽",
-        item.year + "小区标准产量",
+        item.year + "田评",
+        item.year + "田评2",
+        item.year + "室评",
+        item.year + "室评2",
+        item.year + "沾光",
+        item.year + "空杆数",
+        item.year + "入选株数",
+        item.year + "区株数",
+        item.year + "保绿度",
+        item.year + "授粉计划1",
+        item.year + "授粉计划2",
+        item.year + "双穗数",
+        item.year + "翌年处理意见",
+        item.year + "决策来源",
+        item.year + "位点差",
+        item.year + "测试种1",
+        item.year + "测试种2",
+        item.year + "散粉吐丝间隔",
       ]);
       const xAxisData2 = [];
       xAxisData1.forEach(function (row) {
@@ -185,15 +225,25 @@ export default {
       const yAxisData1 = this.AgroData.reduce((result, obj) => {
         const year = obj.year;
         const attributes = [
-          // "grainlength",
-          // "grainweight",
-          // "grainwidth ",
-          "kernels",
-          "row",
-          // "seedyield",
-          // "spikelength",
-          // "spikewidth",
-          "yield",
+          "fieldEvaluation",
+          "fieldEvaluation2",
+          "laboratoryEvaluation",
+          "laboratoryEvaluation2",
+          "benefitial",
+          "emptyStalkNumber",
+          "selectedPlantNumber",
+          "plantNumber",
+          "leafStayGreen",
+          "pollinationPlan1",
+          "pollinationPlan2",
+          "doubleEarNumber",
+          "decisionStrip",
+          "decisionSource",
+          "siteDiscrepancy",
+          "tests1",
+          "tests2",
+          "antherTasselInterval"
+
         ];
         attributes.forEach((attribute) => {
           const key = `${year}${attribute

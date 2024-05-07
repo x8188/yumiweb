@@ -2,8 +2,14 @@
   <div class="all-mor">
     <div class="chart-mor">
       <el-table :data="tableData" height="800" border style="width: 100%">
-        <el-table-column prop="code" label="系谱内部码" width="100" :align="'center'">
-        </el-table-column>
+        <el-table-column
+        label="序号"
+        type="index"
+        :align="'center'"
+        width="80"
+        fixed="left"
+      >
+      </el-table-column>
         <el-table-column prop="pedigree" label="系谱" width="280" :align="'center'">
         </el-table-column>
         <el-table-column prop="year" label="年份" width="120" :align="'center'">
@@ -11,11 +17,64 @@
         <el-table-column prop="location" label="地区" width="120" :align="'center'">
         </el-table-column>
 
-        <el-table-column prop="newsource" label="新来源" width="100" :align="'center'">
+        <el-table-column prop="pedigreesource1" label="来源1" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="pastsource" label="旧来源" width="120" :align="'center'">
+        <el-table-column prop="pedigreesource2" label="来源2" width="120" :align="'center'">
         </el-table-column>
-        <el-table-column prop="rates" label="倒伏倒折率之和" width="120" :align="'center'"> </el-table-column>
+        <el-table-column prop="ustilagoMaydis" label="瘤黑粉" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="maizeEarRot" label="穗腐病" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="maizeSheathBlight" label="纹枯病（级）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="southernCornRust" label="锈病（级）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="leafSpotDisease" label="叶斑病（级）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="maizeBorer" label="玉米螟" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="maizeStalkRot" label="茎腐病（青枯病）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="maizeRoughDwarfDisease" label="粗缩病" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="southernCornRustTxt" label="锈病txt" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="northernLeafBlight" label="大斑病" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="maizeDwarfMosaicDisease" label="矮花叶病" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="maizeAlbinism" label="白化病" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="physodermaMaydis" label="褐斑病" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="grayLeafSpot" label="灰斑病" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="earKernelRot" label="粒腐病" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="southernLeafBlight" label="小斑病" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="graminearumStalkRot" label="禾谷茎腐（%）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="pythiumStalkRot" label="腐霉茎腐（%）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="fGraminearum" label="禾谷穗腐（%）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="fVerticillioides" label="拟轮枝穗腐（级）" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="aphis" label="蚜虫" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="borerResistance" label="抗虫性" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="treatmentsApplied" label="接种处理" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="resistanceCharacters1" label="抗性性状1" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="resistanceCharacters2" label="抗性性状2" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="resistanceCharacters3" label="抗性性状3" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="comprehensiveResistance" label="综合抗性" :align="'center'" width="200">
+        </el-table-column>
       </el-table>
     </div>
     <div id="main" class="echart-mor" ref="chart"></div>
@@ -55,7 +114,11 @@ export default {
           });
       this.tableData = chartData;
           resolve();
-        });
+        })
+        .catch((error) => {
+        console.log(error);
+        this.$message.warning("暂无数据");
+      });
 // 获取小提琴图数据
         btnBio().then((res) => {
           let BioData = res.data;
@@ -71,7 +134,32 @@ export default {
     getMorChartAll() {
 // 小提琴图x轴数据
       const xAxisData1 = this.BioData.map((item) => [
-        item.year + "倒伏倒折率之和",
+        item.year + "瘤黑粉",
+        item.year + "穗腐病",
+        item.year + "纹枯病（级)",
+        item.year + "锈病（级）",
+        item.year + "叶斑病（级）",
+        item.year + "玉米螟",
+        item.year + "茎腐病（青枯病）",
+        item.year + "粗缩病",
+        item.year + "锈病txt",
+        item.year + "大斑病",
+        item.year + "矮花叶病",
+        item.year + "白化病",
+        item.year + "褐斑病",
+        item.year + "灰斑病",
+        item.year + "粒腐病",
+        item.year + "小斑病",
+        item.year + "禾谷茎腐（%）",
+        item.year + "腐霉茎腐（%）",
+        item.year + "拟轮枝穗腐（级）",
+        item.year + "蚜虫",
+        item.year + "抗虫性",
+        item.year + "接种处理",
+        item.year + "抗性性状1",
+        item.year + "抗性性状2",
+        item.year + "抗性性状3",
+        item.year + "综合抗性",
       ]);
       const xAxisData2 = [];
       xAxisData1.forEach(function (row) {
@@ -108,7 +196,33 @@ export default {
       const yAxisData1 = this.BioData.reduce((result, obj) => {
         const year = obj.year;
         const attributes = [
-          "rates",
+          "ustilagoMaydis",
+          "maizeEarRot",
+          "maizeSheathBlight",
+          "southernCornRust",
+          "leafSpotDisease",
+          "maizeBorer",
+          "maizeStalkRot",
+          "maizeRoughDwarfDisease",
+          "southernCornRustTxt",
+          "northernLeafBlight",
+          "maizeDwarfMosaicDisease",
+          "maizeAlbinism",
+          "physodermaMaydis",
+          "grayLeafSpot",
+          "earKernelRot",
+          "southernLeafBlight",
+          "graminearumStalkRot",
+          "pythiumStalkRot",
+          "f.graminearum",
+          "f.verticillioides",
+          "aphis",
+          "borerResistance",
+          "treatmentsApplied",
+          "resistanceCharacters1",
+          "resistanceCharacters2",
+          "resistanceCharacters3",
+          "comprehensiveResistance"
         ];
         attributes.forEach((attribute) => {
           const key = `${year}${attribute

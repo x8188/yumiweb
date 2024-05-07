@@ -11,19 +11,58 @@
         <el-input
           class="input_chart"
           v-model="formLabelAlign.pedigree"
+          placeholder="请输入"
+
         ></el-input>
       </el-form-item>
       <el-form-item :label="$i18n.t('year')">
-        <el-input class="input_chart" v-model="formLabelAlign.year"></el-input>
+        <el-select v-model="formLabelAlign.year" multiple>
+          <el-option
+            v-for="(item, index) in years"
+            :key="index"
+            :label="item"
+            :value="item"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
+
       <el-form-item :label="$i18n.t('trait')">
-        <el-input class="input_chart" v-model="formLabelAlign.trait"></el-input>
+        <el-select
+          v-model="formLabelAlign.trait"
+          multiple
+          filterable
+          remote
+          :loading="loading"
+          :default-first-option="false"
+        >
+          <el-option
+            v-for="(item, index) in traits"
+            :key="index"
+            :label="item"
+            :value="item"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
+
       <el-form-item :label="$i18n.t('location')">
-        <el-input
-          class="input_chart"
+        <el-select
           v-model="formLabelAlign.location"
-        ></el-input>
+          multiple
+          filterable
+          remote
+          :loading="loading"
+          :default-first-option="false"
+        >
+          <el-option
+            v-for="(item, index) in locations"
+            :key="index"
+            :label="item"
+            :value="item"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-button class="left_search" @click="search" type="info" plain>{{
         $i18n.t("search")
@@ -34,71 +73,107 @@
 
 <script>
 import { param } from "@/utils";
-import { Message, MessageBox } from 'element-ui';
+import { Message, MessageBox } from "element-ui";
 // import { $t } from 'vue-i18n';
 import en from "../../../locales/en";
-
-// import {detail} from "@/api/"
+import {
+  getYear,
+  getLocation,
+  getTrait,
+} from "@/api/jointCreation/searchLeftTop";
 export default {
   data() {
     return {
+      item: null,
+      years: [],
+      traits: [],
+      locations: [],
       labelPosition: "left",
       formLabelAlign: {
         pedigree: "",
-        year: "",
-        trait: "",
-        location: "",
+        year:[],
+        trait:"",
+        location:"",
       },
+      loading: false,
     };
   },
+
+  created() {
+    // 在组件创建时从后端获取可选的年份列表
+    this.getYearData();
+    this.getTraitData();
+    this.getLocationData();
+  },
   methods: {
+    getYearData() {
+      getYear().then((res) => {
+        this.years = [...res.data];
+      });
+    },
+    getTraitData() {
+      getTrait().then((res) => {
+        this.traits = [...res.data];
+        console.log(this.traits,'io');
+      });
+
+    },
+    getLocationData() {
+      getLocation().then((res) => {
+        this.locations = [...res.data];
+        console.log(this.locations, "kkk");
+      });
+    },
+
     search() {
       const pedigree = this.formLabelAlign.pedigree;
       const year = this.formLabelAlign.year;
+      console.log(year,'opo');
       const trait = this.formLabelAlign.trait;
       const location = this.formLabelAlign.location;
-
       let params = {};
       // 根据需要构建查询参数
       let searchUrl = "/PhenotypeDatabase/searchLeftTop/detail";
-
-      if (pedigree && !year && !location && !trait) {
+      console.log(pedigree,year,trait,location,'vbvbvb');
+      if (pedigree.length !== 0 && Object.keys(year).length == 0 && Object.keys(location).length == 0 && Object.keys(trait).length == 0) {
         searchUrl += `/searchByName`;
-        params = { pedigree: pedigree };
-      } else if (!pedigree && year && !location && !trait) {
-        if (/^\d{4}$/.test(year)) {
+        params = {pedigree:pedigree};
+      }else if (!pedigree && Object.keys(year).length !== 0 && Object.keys(location).length == 0 && Object.keys(trait).length == 0) {
+
           searchUrl += "/searchByYear";
-          params = { year: year };
-        } else {
-          Message.error("请输入正确查询参数！如‘2021’");
-          return false;
-        }
-      } else if (!pedigree && !year && location && !trait) {
+          params.year =year;
+
+      }else if (!pedigree && Object.keys(year).length == 0 && Object.keys(location).length !== 0 && Object.keys(trait).length == 0) {
         searchUrl += `/searchByLocation`;
-        params = { location: location };
-      } else if (!pedigree && !year && !location && trait) {
+        params = { location: location};
+      }else if (!pedigree && Object.keys(year).length == 0 && Object.keys(location).length == 0 && Object.keys(trait).length !== 0) {
         searchUrl += `/searchByTrait`;
         params = { trait: trait };
-      } else if (pedigree && !year && !location && trait) {
+      } else if (pedigree && Object.keys(year).length == 0 && Object.keys(location).length == 0 && Object.keys(trait).length !== 0) {
         searchUrl += `/searchByNatr`;
-        params = { pedigree: pedigree, trait: trait };
-      } else {
+        params = { pedigree: pedigree, trait: trait};
+      }
+       else {
         searchUrl += `/searchByYelo`;
         params = {
-          pedigree: pedigree,
-          year: year,
-          trait: trait,
-          location: location,
+          pedigree:pedigree,
+          year:year,
+          trait:trait,
+          location:location,
         };
-      }
+       }
+      //   console.log(params,'hhh');
+      // }
       //   window.location.href = searchUrl;
       //  //跳转到另一个页面，传递查询参数
-      this.$router.push({
+    return this.$router.push({
         path: searchUrl,
         query: params ? params : "",
+
       });
     },
   },
+
   mounted() {
     this.$i18n.setLocaleMessage("en", en);
     this.$i18n.locale = "en";
@@ -129,7 +204,8 @@ export default {
   background: rgb(9, 107, 117);
 }
 .input_chart {
-  margin-left: 20px;
-  width: 200px;
+  margin-left: 3px;
+  width: 191px;
+  height: 38px;
 }
 </style>

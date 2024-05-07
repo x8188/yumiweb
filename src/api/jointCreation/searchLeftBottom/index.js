@@ -2,55 +2,55 @@ import request from '@/utils/request'
 
 export function btnAll() {
   return request({
-    url: '/zeamap/Phenotype/all',
+    url: '/zeamap/Wphenotype/all',
     method: 'get'
   })
 }
 export function btnMorAll() {
   return request({
-    url: '/zeamap/Phenotype/allMor',
+    url: '/zeamap/Wphenotype/allMor',
     method: 'get'
   })
 }
 export function btnMor() {
   return request({
-    url: '/zeamap/Phenotype/yearMor',
+    url: '/zeamap/Wphenotype/yearMor',
     method: 'get'
   })
 }
 export function btnAgroAll() {
   return request({
-    url: '/zeamap/Phenotype/allAgr',
+    url: '/zeamap/Wphenotype/allAgr',
     method: 'get'
   })
 }
 export function btnAgro() {
   return request({
-    url: '/zeamap/Phenotype/yearAgr',
+    url: '/zeamap/Wphenotype/yearAgr',
     method: 'get'
   })
 }
 export function btnBioAll() {
   return request({
-    url: '/zeamap/Phenotype/allBiotic',
+    url: '/zeamap/Wphenotype/allBiotic',
     method: 'get'
   })
 }
 export function btnBio() {
   return request({
-    url: '/zeamap/Phenotype/yearBiotic',
+    url: '/zeamap/Wphenotype/yearBiotic',
     method: 'get'
   })
 }
 export function btnAbioAll() {
   return request({
-    url: '/zeamap/Phenotype/allAbiotic',
+    url: '/zeamap/Wphenotype/allAbiotic',
     method: 'get'
   })
 }
 export function btnAbio() {
   return request({
-    url: '/zeamap/Phenotype/yearAbiotic',
+    url: '/zeamap/Wphenotype/yearAbiotic',
     method: 'get'
   })
 }
