@@ -301,7 +301,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-            this.$message.warning("该性状不存在");
+            this.$message.warning("暂无散点图数据");
           });
       });
     },

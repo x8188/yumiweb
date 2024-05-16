@@ -12,11 +12,17 @@
           class="input_chart"
           v-model="formLabelAlign.pedigree"
           placeholder="请输入"
-
         ></el-input>
       </el-form-item>
       <el-form-item :label="$i18n.t('year')">
-        <el-select v-model="formLabelAlign.year" multiple>
+        <el-select
+          v-model="formLabelAlign.year"
+          multiple
+          filterable
+          remote
+          :loading="loading"
+          :default-first-option="false"
+        >
           <el-option
             v-for="(item, index) in years"
             :key="index"
@@ -91,9 +97,9 @@ export default {
       labelPosition: "left",
       formLabelAlign: {
         pedigree: "",
-        year:[],
-        trait:"",
-        location:"",
+        year: [],
+        trait: "",
+        location: "",
       },
       loading: false,
     };
@@ -114,9 +120,8 @@ export default {
     getTraitData() {
       getTrait().then((res) => {
         this.traits = [...res.data];
-        console.log(this.traits,'io');
+        console.log(this.traits, "io");
       });
-
     },
     getLocationData() {
       getLocation().then((res) => {
@@ -128,48 +133,69 @@ export default {
     search() {
       const pedigree = this.formLabelAlign.pedigree;
       const year = this.formLabelAlign.year;
-      console.log(year,'opo');
+      console.log(year, "opo");
       const trait = this.formLabelAlign.trait;
       const location = this.formLabelAlign.location;
       let params = {};
       // 根据需要构建查询参数
       let searchUrl = "/PhenotypeDatabase/searchLeftTop/detail";
-      console.log(pedigree,year,trait,location,'vbvbvb');
-      if (pedigree.length !== 0 && Object.keys(year).length == 0 && Object.keys(location).length == 0 && Object.keys(trait).length == 0) {
+      console.log(pedigree, year, trait, location, "vbvbvb");
+      if (
+        pedigree.length !== 0 &&
+        Object.keys(year).length == 0 &&
+        Object.keys(location).length == 0 &&
+        Object.keys(trait).length == 0
+      ) {
         searchUrl += `/searchByName`;
-        params = {pedigree:pedigree};
-      }else if (!pedigree && Object.keys(year).length !== 0 && Object.keys(location).length == 0 && Object.keys(trait).length == 0) {
-
-          searchUrl += "/searchByYear";
-          params.year =year;
-
-      }else if (!pedigree && Object.keys(year).length == 0 && Object.keys(location).length !== 0 && Object.keys(trait).length == 0) {
+        params = { pedigree: pedigree };
+      } else if (
+        !pedigree &&
+        Object.keys(year).length !== 0 &&
+        Object.keys(location).length == 0 &&
+        Object.keys(trait).length == 0
+      ) {
+        searchUrl += "/searchByYear";
+        params.year = year;
+      } else if (
+        !pedigree &&
+        Object.keys(year).length == 0 &&
+        Object.keys(location).length !== 0 &&
+        Object.keys(trait).length == 0
+      ) {
         searchUrl += `/searchByLocation`;
-        params = { location: location};
-      }else if (!pedigree && Object.keys(year).length == 0 && Object.keys(location).length == 0 && Object.keys(trait).length !== 0) {
+        params = { location: location };
+      } else if (
+        !pedigree &&
+        Object.keys(year).length == 0 &&
+        Object.keys(location).length == 0 &&
+        Object.keys(trait).length !== 0
+      ) {
         searchUrl += `/searchByTrait`;
         params = { trait: trait };
-      } else if (pedigree && Object.keys(year).length == 0 && Object.keys(location).length == 0 && Object.keys(trait).length !== 0) {
+      } else if (
+        pedigree &&
+        Object.keys(year).length == 0 &&
+        Object.keys(location).length == 0 &&
+        Object.keys(trait).length !== 0
+      ) {
         searchUrl += `/searchByNatr`;
-        params = { pedigree: pedigree, trait: trait};
-      }
-       else {
+        params = { pedigree: pedigree, trait: trait };
+      } else {
         searchUrl += `/searchByYelo`;
         params = {
-          pedigree:pedigree,
-          year:year,
-          trait:trait,
-          location:location,
+          pedigree: pedigree,
+          year: year,
+          trait: trait,
+          location: location,
         };
-       }
+      }
       //   console.log(params,'hhh');
       // }
       //   window.location.href = searchUrl;
       //  //跳转到另一个页面，传递查询参数
-    return this.$router.push({
+      return this.$router.push({
         path: searchUrl,
         query: params ? params : "",
-
       });
     },
   },

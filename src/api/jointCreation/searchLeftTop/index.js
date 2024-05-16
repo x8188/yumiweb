@@ -28,7 +28,7 @@ export function getCheckTrait() {
 
 export function searchByName(params) {
   return request({
-    url: '/zeamap/Phenotype/name',
+    url: '/zeamap/Wphenotype/name',
     params:params,
     method: 'post'
   })

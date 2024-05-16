@@ -8,6 +8,7 @@ export default {
     Agronomical:'农艺',
     'Biotic stress':'生物',
     'Abiotic stress':'非生物',
+    Yield:'产量',
     Class:'种类',
     'Trait Num':'性状数量',
     'record num':'记录数量',

@@ -17,9 +17,10 @@
         <el-table-column prop="location" label="地区" width="120" :align="'center'">
         </el-table-column>
 
-        <el-table-column prop="pedigreesource1" label="来源1" width="100" :align="'center'">
+        <el-table-column prop="pedigreeSource1" label="来源1" width="100" :align="'center'">
         </el-table-column>
-        <el-table-column prop="pedigreesource2" label="来源2" width="120" :align="'center'">
+
+        <el-table-column prop="pedigreeSource2" label="来源2" width="120" :align="'center'">
         </el-table-column>
         <el-table-column prop="ustilagoMaydis" label="瘤黑粉" :align="'center'">
         </el-table-column>

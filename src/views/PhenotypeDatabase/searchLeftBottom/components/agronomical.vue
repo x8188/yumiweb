@@ -28,15 +28,15 @@
         </el-table-column>
 
         <el-table-column
-          prop="pedigreesource1"
-          label="新来源"
+          prop="pedigreeSource1"
+          label="来源1"
           width="100"
           :align="'center'"
         >
         </el-table-column>
         <el-table-column
-          prop="pedigreesource2"
-          label="旧来源"
+          prop="pedigreeSource2"
+          label="来源2"
           width="120"
           :align="'center'"
         >
@@ -74,29 +74,9 @@
         <el-table-column prop="tests1" label="测试种1" :align="'center'" width="200">
         </el-table-column>
         <el-table-column prop="tests2" label="测试种2" :align="'center'" width="200">
-        </el-table-column>
-        <!-- <el-table-column prop="daysToTassel" label="抽雄期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="daysToSeedling" label="出苗期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="daysToMaturity" label="成熟期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="datePlanted" label="播种期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="growthPeriod" label="生育期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="daysToAnther" label="散粉期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="daysToSilk" label="吐丝期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="dateHarvested" label="收获日期" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="daysToAnther2" label="散粉期（补）" :align="'center'" width="200">
-        </el-table-column>
-        <el-table-column prop="daysToSilk2" label="吐丝期（补）" :align="'center'" width="200">
-        </el-table-column> -->
-        <el-table-column prop="antherTasselInterval" label="散粉吐丝间隔" :align="'center'" width="200">
         </el-table-column> 
+        <el-table-column prop="antherTasselInterval" label="散粉吐丝间隔" :align="'center'" width="200">
+        </el-table-column>
       </el-table>
     </div>
     <div id="main" class="echart-mor" ref="chart"></div>

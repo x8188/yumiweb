@@ -7,6 +7,7 @@ export default {
     Agronomical:'Agronomical',
     'Biotic stress':'Biotic stress',
     'Abiotic stress':'Abiotic stress',
+    Yield:'Yield',
     Class:'Class',
     'Trait Num':'Trait Num',
     'record num':'record num',

@@ -54,3 +54,15 @@ export function btnAbio() {
     method: 'get'
   })
 }
+export function btnYieldAll() {
+  return request({
+    url: '/zeamap/Wphenotype/allYield',
+    method: 'get'
+  })
+}
+export function btnYield() {
+  return request({
+    url: '/zeamap/Wphenotype/yearYield',
+    method: 'get'
+  })
+}

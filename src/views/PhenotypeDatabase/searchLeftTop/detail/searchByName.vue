@@ -2,7 +2,8 @@
   <div class="all">
     <div class="chartLeft">
       <div class="detailed">{{ $i18n.t("pedigree") }}：{{ pedigree }}</div>
-      <div class="detailed">来源：{{ newsource }}</div>
+      <div class="detailed">来源1：{{ pedigreeSource1 }}</div>
+      <div class="detailed">来源2：{{ pedigreeSource2 }}</div>
       <div class="detailed">日期：{{ year }}</div>
       <div class="detailed">杂优群：{{ group }}</div>
       <div class="detailed">描述：{{ describe }}</div>
@@ -46,7 +47,7 @@
         </el-table-column>
         <el-table-column
           :fixed="false"
-          prop="pedigreesource1"
+          prop="pedigreeSource1"
           label="来源1"
           :align="'center'"
           width="200"
@@ -54,7 +55,7 @@
         </el-table-column>
         <el-table-column
           :fixed="false"
-          prop="pedigreesource2"
+          prop="pedigreeSource2"
           label="来源2"
           :align="'center'"
           width="200"
@@ -365,9 +366,19 @@ export default {
 
         // 获取左上角数据
         searchByName(query).then((res) => {
+          if (res.data.length === 0) {
+            console.warn("没有该pedigree");
+            this.$message.error("没有该系谱");
+            setTimeout(() => {
+              this.$router.go(-1); // 返回上一页
+            }, 3000);
+            return;
+          }
+
           const data = res.data[0];
           this.pedigree = data.pedigree;
-          this.newsource = data.newsource;
+          this.pedigreeSource1 = data.pedigreeSource1;
+          this.pedigreeSource2 = data.pedigreeSource2;
           this.year = data.year;
           this.group = data.group;
           this.describe = data.describe;
@@ -487,39 +498,49 @@ export default {
           ];
         });
         // 获取y轴为日期柱状图数据
-        getPhenoTypeDataByName(query).then((res) => {
-          let chartData = res.data;
-          console.log(chartData, "tttt");
-          this.chartsData7 = [
-            chartData.dateHarvested,
-            chartData.datePlanted,
-            chartData.daysToAnther,
-            chartData.daysToMaturity,
-            chartData.daysToSeedling,
-            chartData.daysToSilk,
-            chartData.daysToTassel,
-            chartData.growthPeriod,
-          ];
+        getPhenoTypeDataByName(query)
+          .then((res) => {
+            let chartData = res.data;
+            console.log(chartData, "tttt");
+            this.chartsData7 = [
+              chartData.dateHarvested,
+              chartData.datePlanted,
+              chartData.daysToAnther,
+              chartData.daysToMaturity,
+              chartData.daysToSeedling,
+              chartData.daysToSilk,
+              chartData.daysToTassel,
+              chartData.growthPeriod,
+            ];
 
-          console.log(this.chartsData7, "this.chartsData7");
-          resolve();
-        });
+            console.log(this.chartsData7, "this.chartsData7");
+            resolve();
+          })
+          .catch(() => {
+            this.$message.warning("暂无柱状图数据");
+            setTimeout(() => {  // 返回上一页
+            }, 3000);
+          });
         // 获取y轴为日期柱状图平均值数据
-        getPhenoTypeDataMeanByName().then((res) => {
-          let chartData = res.data;
-          this.chartsData8 = [
-            chartData.dateHarvested,
-            chartData.datePlanted,
-            chartData.daysToAnther,
-            chartData.daysToMaturity,
-            chartData.daysToSeedling,
-            chartData.daysToSilk,
-            chartData.daysToTassel,
-            chartData.growthPeriod,
-          ];
-          console.log(this.chartsData8, "this.chartsData8");
-          resolve();
-        });
+        getPhenoTypeDataMeanByName()
+          .then((res) => {
+            let chartData = res.data;
+            this.chartsData8 = [
+              chartData.dateHarvested,
+              chartData.datePlanted,
+              chartData.daysToAnther,
+              chartData.daysToMaturity,
+              chartData.daysToSeedling,
+              chartData.daysToSilk,
+              chartData.daysToTassel,
+              chartData.growthPeriod,
+            ];
+            console.log(this.chartsData8, "this.chartsData8");
+            resolve();
+          })
+          .catch(() => {
+            this.$message.warning("暂无柱状图数据");
+          });
         // 获取y轴为数值柱状图数据
         getPhenoTypeRateByName(query).then((res) => {
           let chartData = res.data[0];
@@ -566,6 +587,7 @@ export default {
             return item;
           });
           this.tableData = chartData;
+          console.log(this.tableData, "this.tableData");
 
           resolve();
         });
@@ -902,7 +924,7 @@ export default {
           option = {
             legend: {
               data: [this.query, "平均值"],
-            },
+            }, 
             xAxis: {
               type: "category",
               data: [

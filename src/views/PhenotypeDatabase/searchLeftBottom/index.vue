@@ -2,11 +2,13 @@
   <div  class="left_bottom">
     <div style="margin: 10px"></div>
     <div>
-    <el-button plain type="info" @click="search('all')" class="all">{{ $i18n.t('All')}}</el-button>
+    <el-button plain type="info" @click="search('all')" class="single">{{ $i18n.t('All')}}</el-button>
+    <el-button plain type="info" @click="search('Yield')" class="single">{{ $i18n.t('Yield')}}</el-button>
     <el-button plain type="info" @click="search('Morphological')" class="single">{{ $i18n.t('Morphological')}}</el-button>
     <el-button plain type="info" @click="search('Agronomical')" class="single">{{ $i18n.t('Agronomical')}}</el-button>
     <el-button plain type="info" @click="search('Biotic stress')" class="single">{{ $i18n.t('Biotic stress')}}</el-button>
     <el-button plain type="info" @click="search('Abiotic stress')" class="single">{{ $i18n.t('Abiotic stress')}}</el-button>
+
   </div>
   </div>
 </template>
@@ -33,6 +35,9 @@ export default {
           break;
         case 'Abiotic stress':
           this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/abioticStress'); // 替换为实际的目标页面路径
+          break;
+        case 'Yield':
+          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/yield'); // 替换为实际的目标页面路径
           break;
         default:
           break;

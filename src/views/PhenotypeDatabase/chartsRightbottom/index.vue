@@ -21,6 +21,7 @@ export default {
       Agronomical: "Agronomical",
       "Abiotic stress": "Abiotic stress",
       "Biotic stress": "Biotic stress",
+      Yield: "Yield",
     };
   },
   mounted() {
@@ -40,6 +41,7 @@ export default {
           { key: "Agronomical", value: this.Agronomical },
           { key: "Biotic stress", value: "this.Biotic stress" },
           { key: "Abiotic stress", value: "this.Abiotic stress" },
+          { key: "Yield", value: "this.Yield" },
         ];
         let index = 0;
 // 根据索引依次渲染每行数据
