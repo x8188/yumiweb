@@ -1,5 +1,5 @@
 <template>
-  <div class="all-mor">
+  <div class="all-mor" v-loading="loading">
     <div class="chart-mor">
       <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
@@ -93,6 +93,7 @@ export default {
     return {
       tableData: [],
       BioData: [],
+      loading: false,
     };
   },
   mounted() {
@@ -102,6 +103,7 @@ export default {
 
     getBioAll() {
       return new Promise((resolve) => {
+        this.loading=true;
 // 获取表格数据
         btnBioAll().then((res) => {
           let chartData = res.data;
@@ -119,7 +121,9 @@ export default {
         .catch((error) => {
         console.log(error);
         this.$message.warning("暂无数据");
-      });
+      }).finally(() => {
+        this.loading=false;
+      })
 // 获取小提琴图数据
         btnBio().then((res) => {
           let BioData = res.data;
@@ -130,6 +134,7 @@ export default {
           resolve();
           this.getMorChartAll();
         });
+
       });
     },
     getMorChartAll() {

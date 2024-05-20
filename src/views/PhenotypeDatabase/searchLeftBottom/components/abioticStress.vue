@@ -1,5 +1,5 @@
 <template>
-  <div class="all-abio">
+  <div class="all-abio" v-loading="loading">
     <div class="chart-abio">
       <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
@@ -84,6 +84,7 @@ export default {
     return {
       tableData: [],
       AbioData: [],
+      loading: false,
     };
   },
   mounted() {
@@ -93,6 +94,7 @@ export default {
     // 获取左侧表格数据
     getAbioAll() {
       return new Promise((resolve) => {
+        this.loading=true,
         btnAbioAll().then((res) => {
           let chartData = res.data;
       chartData = chartData.map((item) => {
@@ -109,7 +111,9 @@ export default {
         .catch((error) => {
         console.log(error);
         this.$message.warning("暂无数据");
-      });
+      }).finally(() => {
+        this.loading=false;
+      })
         // 获取小提琴图数据
         btnAbio().then((res) => {
           let AbioData = res.data;
@@ -123,8 +127,10 @@ export default {
           resolve();
           console.log(this.AbioData, "this.AbioData");
           this.getAbioChartData();
-        });
+        })
+
       });
+
     },
     getAbioChartData() {
       // 小提琴图x轴数据

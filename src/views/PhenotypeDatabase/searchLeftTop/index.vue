@@ -9,6 +9,7 @@
     >
       <el-form-item :label="$i18n.t('name/pedigree')">
         <el-input
+
           class="input_chart"
           v-model="formLabelAlign.pedigree"
           placeholder="请输入"
@@ -137,10 +138,20 @@ export default {
       const trait = this.formLabelAlign.trait;
       const location = this.formLabelAlign.location;
       let params = {};
+      if (
+    pedigree.length === 0 &&
+    Object.keys(year).length === 0 &&
+    Object.keys(location).length === 0 &&
+    Object.keys(trait).length === 0
+  ) {
+    // 提示用户输入搜索条件
+     this.$message.error("请选择搜索条件")
+    return;
+  }
       // 根据需要构建查询参数
       let searchUrl = "/PhenotypeDatabase/searchLeftTop/detail";
       console.log(pedigree, year, trait, location, "vbvbvb");
-      if (
+     if (
         pedigree.length !== 0 &&
         Object.keys(year).length == 0 &&
         Object.keys(location).length == 0 &&

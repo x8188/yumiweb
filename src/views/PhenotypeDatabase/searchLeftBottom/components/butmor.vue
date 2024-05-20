@@ -1,5 +1,5 @@
 <template>
-  <div class="all-mor">
+  <div class="all-mor" v-loading="loading">
     <div class="chart-mor">
       <el-table :data="tableData" border height="800" style="width: 100%">
         <el-table-column
@@ -298,6 +298,7 @@ export default {
     return {
       tableData: [],
       MorData: [],
+      loading: false,
     };
   },
   mounted() {
@@ -307,6 +308,7 @@ export default {
     getMorAll() {
       // 获取表格数据
       return new Promise((resolve) => {
+        this.loading = true;
         btnMorAll().then((res) => {
           console.log(res.data, "MorAll");
           let chartData = res.data;
@@ -342,7 +344,9 @@ export default {
           }));
           resolve();
           this.getMorChartAll();
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
       });
     },
     getMorChartAll() {

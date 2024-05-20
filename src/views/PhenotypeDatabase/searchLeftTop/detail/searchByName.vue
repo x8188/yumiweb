@@ -1,5 +1,5 @@
 <template>
-  <div class="all">
+  <div class="all" v-loading="loading">
     <div class="chartLeft">
       <div class="detailed">{{ $i18n.t("pedigree") }}：{{ pedigree }}</div>
       <div class="detailed">来源1：{{ pedigreeSource1 }}</div>
@@ -346,15 +346,19 @@ export default {
       chartsData8: [],
       chartsData9: [],
       chartsData10: [],
+      loading: false,
     };
   },
   mounted() {
     this.getData().then(() => {
       this.renderCharts();
+      this.loading = true;
+      console.log(this.loading,'opop');
     });
   },
   methods: {
     getData() {
+
       return new Promise((resolve) => {
         const pedigree = this.$route.query.pedigree;
         const query = {
@@ -363,6 +367,7 @@ export default {
         this.query = pedigree;
         console.log(query, "query");
         resolve();
+        this.loading = true;
 
         // 获取左上角数据
         searchByName(query).then((res) => {
@@ -386,7 +391,9 @@ export default {
           this.chartsData1 = [data.silking, data.dipersal, data.mature];
           this.chartsData2 = [data.rates, data.stemrot];
           resolve();
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取mor雷达图数据
         getMorByName(query).then((res) => {
           let chartData = res.data[0];
@@ -406,7 +413,9 @@ export default {
           ];
           resolve();
           console.log(this.chartsData3, "this.chartsData3");
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取mor平均值数据
         getMorMeanByName(query).then((res) => {
           let chartData = res.data;
@@ -425,7 +434,9 @@ export default {
             chartData.grainColor,
           ];
           resolve();
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取agr雷达图数据
         getAgrByName(query).then((res) => {
           let chartData = res.data;
@@ -442,7 +453,9 @@ export default {
           ];
           resolve();
           console.log(this.chartsData5, "this.chartsData5");
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取agr平均值数据
         getAgrMeanByName().then((res) => {
           let chartData = res.data;
@@ -458,7 +471,9 @@ export default {
             chartData.daysToSilk,
           ];
           resolve();
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取yield雷达图数据
         getYieldByName(query).then((res) => {
           let chartData = res.data[0];
@@ -478,7 +493,9 @@ export default {
           ];
           resolve();
           console.log(this.chartsData11, "this.chartsData11");
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取yield平均值数据
         getYieldMeanByName().then((res) => {
           let chartData = res.data;
@@ -496,7 +513,9 @@ export default {
             chartData.grainWaterContent,
             chartData.kernelPercentage,
           ];
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取y轴为日期柱状图数据
         getPhenoTypeDataByName(query)
           .then((res) => {
@@ -518,9 +537,12 @@ export default {
           })
           .catch(() => {
             this.$message.warning("暂无柱状图数据");
-            setTimeout(() => {  // 返回上一页
+            setTimeout(() => {
+              // 返回上一页
             }, 3000);
-          });
+          }).finally(() => {
+          this.loading = false;
+        })
         // 获取y轴为日期柱状图平均值数据
         getPhenoTypeDataMeanByName()
           .then((res) => {
@@ -539,8 +561,10 @@ export default {
             resolve();
           })
           .catch(() => {
-            this.$message.warning("暂无柱状图数据");
-          });
+            this.$message.warning("暂无平均值数据");
+          }).finally(() => {
+          this.loading = false;
+        })
         // 获取y轴为数值柱状图数据
         getPhenoTypeRateByName(query).then((res) => {
           let chartData = res.data[0];
@@ -557,7 +581,9 @@ export default {
           ];
           console.log(this.chartsData9, "this.chartsData9");
           resolve();
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取y轴为数值柱状图平均值数据
         getPhenoTypeRateMeanByName().then((res) => {
           let chartData = res.data;
@@ -574,7 +600,9 @@ export default {
           ];
           console.log(this.chartsData10, "this.chartsData10");
           resolve();
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
         // 获取下方表格数据
         getPhenoTypeByName(query).then((res) => {
           let chartData = res.data;
@@ -590,7 +618,9 @@ export default {
           console.log(this.tableData, "this.tableData");
 
           resolve();
-        });
+        }).finally(() => {
+          this.loading = false;
+        })
       });
     },
     renderCharts() {
@@ -863,8 +893,10 @@ export default {
           var myChart3 = echarts.init(chartDom3);
           var option;
           const promises = [];
+          let formattedData1 = [];
+          let formattedData2 = [];
           if (Array.isArray(this.chartsData7) && this.chartsData7.length > 0) {
-            var formattedData1 = this.chartsData7.map(function (dateString) {
+            formattedData1 = this.chartsData7.map(function (dateString) {
               if (dateString) {
                 var dateParts = dateString.split("-");
                 var year = dateParts[0];
@@ -882,9 +914,16 @@ export default {
             });
             promises.push(Promise.resolve(formattedData1));
           }
+          formattedData1 = formattedData1.map((date) => {
+            return date.replace(/\/(\d{2})\/(\d{2})/, (match, p1, p2) => {
+              return `/${parseInt(p1, 10)}/${parseInt(p2, 10)}`;
+            });
+          });
+
           console.log(formattedData1, "formatteddata1");
+
           if (Array.isArray(this.chartsData8) && this.chartsData8.length > 0) {
-            var formattedData2 = this.chartsData8.map(function (dateString) {
+            formattedData2 = this.chartsData8.map(function (dateString) {
               var dateParts = dateString.split("-");
               var year = dateParts[0];
               var month = dateParts[1];
@@ -899,15 +938,21 @@ export default {
               return formattedDate;
             });
             promises.push(Promise.resolve(formattedData2));
-            console.log(formattedData2, "formatteddata2");
           }
+          formattedData2 = formattedData2.map((date) => {
+            return date.replace(/\/(\d{2})\/(\d{2})/, (match, p1, p2) => {
+              return `/${parseInt(p1, 10)}/${parseInt(p2, 10)}`;
+            });
+          });
+          console.log(formattedData2, "formatteddata2");
 
           if (promises.length > 0) {
             Promise.all(promises).then((results) => {
               console.log(results, "jjjj");
             });
           }
-          var formattedData3 = formattedData1.concat(formattedData2);
+          let formattedData3 = formattedData1.concat(formattedData2);
+          console.log(formattedData3, "3232323");
           const formattedData4 = formattedData3.map(
             (dateString) => new Date(dateString)
           );
@@ -921,10 +966,15 @@ export default {
               `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
           );
           console.log(formattedData, "oopo");
+          var uniqueData = [...new Set(formattedData)];
+          if (uniqueData[0] !== "0") {
+            uniqueData.unshift("0");
+          }
+          console.log(uniqueData, "uniqueData");
           option = {
             legend: {
               data: [this.query, "平均值"],
-            }, 
+            },
             xAxis: {
               type: "category",
               data: [
@@ -935,7 +985,7 @@ export default {
                 "出苗期",
                 "吐丝期",
                 "抽雄期",
-                "出苗期",
+                "生育期",
               ],
             },
 
@@ -954,21 +1004,22 @@ export default {
                 },
                 rotate: 30,
               },
+              min: 0,
               boundaryGap: false,
-              data: formattedData,
+              data: uniqueData,
             },
             series: [
               {
                 type: "bar",
                 barWidth: 30,
-                data: formattedData,
+                data: formattedData1,
                 color: "#ED7D31",
                 name: this.query,
               },
               {
                 type: "bar",
                 barWidth: 30,
-                data: formattedData,
+                data: formattedData2,
                 color: "#4472C4",
                 name: "平均值",
               },
@@ -993,6 +1044,10 @@ export default {
             legend: {
               data: [this.query, "平均值"],
             },
+            dataset: {
+              source: [],
+            },
+
             xAxis: {
               type: "category",
               data: [

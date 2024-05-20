@@ -19,6 +19,7 @@
     <div class="content">
       <el-table
       ref="multipleTable"
+      v-loading="loading"
       :data="tableData"
       height="690"
       style="width: 100%; margin: auto"
@@ -96,7 +97,7 @@
 
       <el-table-column
         :fixed="false"
-        prop="pedigreesource1"
+        prop="pedigreeSource1"
         label="来源1"
         :align="'center'"
         width="200"
@@ -104,7 +105,7 @@
       </el-table-column>
       <el-table-column
         :fixed="false"
-        prop="pedigreesource2"
+        prop="pedigreeSource2"
         label="来源2"
         :align="'center'"
         width="200"
@@ -1089,6 +1090,7 @@
       </el-table-column>
     </el-table>
     </div>
+    <!-- <el-loading v-if="loading" size="large" fullscreen text="加载中..."></el-loading> -->
   </div>
 </template>
 
@@ -1098,6 +1100,7 @@ export default {
   data() {
     return {
       tableData: [],
+      loading:'false',
     };
   },
   mounted() {
@@ -1108,6 +1111,7 @@ export default {
       years: queryYears,
     };
     console.log(query, "ghgh");
+    this.loading = true;
     // 获取表格数据
     searchByYear(query).then((res) => {
       let chartData = res.data;
@@ -1120,7 +1124,9 @@ export default {
         return item;
       });
       this.tableData = chartData;
-    });
+    }).finally(() => {
+      this.loading = false;
+    })
   },
 };
 </script>

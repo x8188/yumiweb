@@ -3,6 +3,7 @@
     <el-table
       ref="multipleTable"
       :data="tableData"
+      v-loading="loading"
       height="690"
       style="width: 100%; margin: auto"
       tooltip-effect="dark"
@@ -1081,10 +1082,12 @@ export default {
   data() {
     return {
       tableData: [],
+      loading: false,
     };
   },
   mounted() {
     // 获取表格数据
+    this.loading = true;
     btnAll().then((res) => {
       let chartData = res.data;
       chartData = chartData.map((item) => {
@@ -1096,7 +1099,9 @@ export default {
         return item;
       });
       this.tableData = chartData;
-    });
+    }).finally(() => {
+      this.loading = false;
+    })
   },
 };
 </script>

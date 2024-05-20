@@ -1,5 +1,5 @@
 <template>
-  <div class="all-mor">
+  <div class="all-mor" v-loading="loading">
     <div class="chart-mor">
       <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
@@ -74,7 +74,7 @@
         <el-table-column prop="tests1" label="测试种1" :align="'center'" width="200">
         </el-table-column>
         <el-table-column prop="tests2" label="测试种2" :align="'center'" width="200">
-        </el-table-column> 
+        </el-table-column>
         <el-table-column prop="antherTasselInterval" label="散粉吐丝间隔" :align="'center'" width="200">
         </el-table-column>
       </el-table>
@@ -96,6 +96,7 @@ export default {
     return {
       tableData: [],
       AgroData: [],
+      loading:false,
     };
   },
   mounted() {
@@ -105,6 +106,7 @@ export default {
     // 获取表格数据
     getAgroAll() {
       return new Promise((resolve) => {
+        this.loading = true;
         btnAgroAll().then((res) => {
           let chartData = res.data;
           chartData = chartData.map((item) => {
@@ -121,7 +123,9 @@ export default {
         .catch((error) => {
         console.log(error);
         this.$message.warning("暂无数据");
-      });
+      }).finally(() => {
+        this.loading=false;
+      })
 
         // 获取小提琴图数据
         btnAgro().then((res) => {
@@ -143,6 +147,7 @@ export default {
           console.log(this.AgroData, "this.AgroData");
           this.getAgroChartData();
         });
+         
       });
     },
     getAgroChartData() {

@@ -20,6 +20,7 @@
     <div class="content">
         <el-table
       ref="multipleTable"
+      v-loading="loading"
       :data="tableData"
       height="690"
       style="width: 100%; margin: auto"
@@ -1099,6 +1100,7 @@ export default {
   data() {
     return {
       tableData: [],
+      loading:'false',
     };
   },
   mounted() {
@@ -1109,7 +1111,7 @@ export default {
     };
     // const query = ['郑州', '安阳'];
     console.log(query, "opop");
-
+    this.loading = true;
     searchByLocation(query)
       .then((res) => {
         let chartData = res.data;
@@ -1127,7 +1129,9 @@ export default {
       .catch((error) => {
         console.log(error);
         this.$message.warning("暂无数据");
-      });
+      }).finally(() => {
+        this.loading = false;
+      })
   },
 };
 </script>

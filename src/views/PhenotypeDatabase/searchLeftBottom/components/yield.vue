@@ -1,5 +1,5 @@
 <template>
-  <div class="all-mor">
+  <div class="all-mor" v-loading="loading">
     <div class="chart-mor">
       <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
@@ -74,6 +74,7 @@ export default {
     return {
       tableData: [],
       YieldData: [],
+      loading: false,
     };
   },
   mounted() {
@@ -83,6 +84,7 @@ export default {
     // 获取表格数据
     getYieldAll() {
       return new Promise((resolve) => {
+        this.loading = true;
         btnYieldAll().then((res) => {
           let chartData = res.data;
           chartData = chartData.map((item) => {
@@ -99,8 +101,9 @@ export default {
         .catch((error) => {
         console.log(error);
         this.$message.warning("暂无数据");
-      });
-
+      }).finally(() => {
+        this.loading = false;
+      })
         // 获取小提琴图数据
         btnYield().then((res) => {
           let YieldData = res.data;

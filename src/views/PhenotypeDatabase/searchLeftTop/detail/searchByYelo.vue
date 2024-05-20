@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="search-tag">
-      <template v-for="value in Object.values(filteredQuery)">
+      <template v-for="(value, key) in filteredQuery">
         <template v-if="Array.isArray(value)">
           <el-tag
             v-for="(item, index) in value"
-            :key="'array_' + index + '_' + itemIndex"
+            :key="`array_${key}_${index}`"
             v-if="item !== ''"
           >
             {{ item }}
           </el-tag>
         </template>
         <template v-else>
-          <el-tag v-if="value !== ''" :key="'single_' + index">
+          <el-tag v-if="value !== ''" :key="`single_${key}`">
             {{ value }}
           </el-tag>
         </template>
@@ -29,61 +29,20 @@
       >
         <el-table-column
           label="序号"
-          type="index" 
+          type="index"
           ref="multipleTable"
           :align="'center'"
           width="80"
         >
         </el-table-column>
-        <!-- <el-table-column
-        prop="pedid"
-        label="系谱内部码"
-        :align="'center'"
-        width="120"
-        fixed="left"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="pedigree"
-        fixed="left"
-        label="系谱"
-        width="280"
-        class="charts-detail"
-        :align="'center'"
-      >
-      </el-table-column>
-      <el-table-column prop="year" label="年份" width="120" :align="'center'">
-      </el-table-column>
-      <el-table-column
-        prop="location"
-        label="试验地点"
-        width="120"
-        :align="'center'"
-      >
-      </el-table-column>
 
-      <el-table-column
-        prop="pedigreeSource1"
-        label="来源1"
-        width="100"
-        :align="'center'"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="pedigreeSource2"
-        label="来源2"
-        width="120"
-        :align="'center'"
-      >
-      </el-table-column> -->
         <el-table-column
-          v-for="(prop, index) in Object.keys(stateProp)"
+          v-for="(prop,index) in Object.keys(tableData[0])"
           :key="index"
           :prop="prop"
           :label="translatedTraitLabel(prop)"
           :align="'center'"
           width="240"
-          v-if="prop !== '0'"
         ></el-table-column>
       </el-table>
     </div>
@@ -97,9 +56,12 @@ export default {
     return {
       stateProp: {},
       tableData: [],
+      index: 0,
+      itemIndex:'',
     };
   },
   computed: {
+
     filteredQuery() {
       return Object.entries(this.$route.query).reduce(
         (filtered, [param, value]) => {
@@ -197,6 +159,7 @@ export default {
         huskThickness2: "苞叶厚度（mm,单层）",
         silkColor: "花丝花青甙显色",
         antherColor: "花药花青甙显色",
+        anther_color: "花药花青甙显色",
         stemRootColor: "茎支持根花青甙显色",
         rachisColor: "穗轴颜色",
         sheathColor1: "第一叶鞘花青甙显色",
@@ -367,8 +330,8 @@ export default {
       locations: location,
     };
     const propArray = trait.split(","); // 使用split方法将字符串拆分为数组
+    console.log(propArray, "propArray");
     this.stateProp = propArray;
-    console.log(this.stateProp, "query");
     // 获取表格数据
     searchByYelo(query).then((res) => {
       let chartData = res.data;
@@ -381,12 +344,13 @@ export default {
         return item;
       });
       this.tableData = chartData;
+
       this.tableData.forEach((item) => {
         Object.keys(item).forEach((key) => {
           this.stateProp[String(key)] = key;
         });
       });
-      this.$nextTick(() => {
+      Vue.$nextTick(() => {
             this.$refs.multipleTable.doLayout();
           });
       // this.traitLabel = traits;
@@ -398,6 +362,11 @@ export default {
     //   this.$message.warning("暂无数据");
     // });
   },
+  created(){
+    if (this.tableData.length > 0) {
+    this.stateProp = Object.keys(this.tableData[0]);
+  }
+  }
 };
 </script>
 <style scoped>
