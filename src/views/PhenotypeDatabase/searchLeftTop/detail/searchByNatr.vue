@@ -2,12 +2,21 @@
   <div class="allNatr">
     <div class="top-chart">
       <el-table :data="tableData" border style="width: 100%">
+        <el-table-column
+          prop="pedigree"
+          label="系谱"
+          width="280"
+          :align="'center'"
+        >
+        </el-table-column>
         <el-table-column prop="year" label="年份" :align="'center'">
         </el-table-column>
+
         <el-table-column prop="pedigreeSource1" label="来源1" :align="'center'">
         </el-table-column>
         <el-table-column prop="pedigreeSource2" label="来源2" :align="'center'">
         </el-table-column>
+
         <el-table-column
           v-for="prop in stateProp"
           :key="prop"
@@ -364,7 +373,7 @@ export default {
         if (!wrappedData[yearIndex]) {
           wrappedData[yearIndex] = [];
         }
-        wrappedData[yearIndex].push([data.location, data.trait, data.year]); 
+        wrappedData[yearIndex].push([data.location, data.trait, data.year]);
       });
 
       option = {
