@@ -560,9 +560,10 @@ export default {
             console.log(this.chartsData8, "this.chartsData8");
             resolve();
           })
-          .catch(() => {
-            this.$message.warning("暂无平均值数据");
-          }).finally(() => {
+          // .catch(() => {
+          //   this.$message.warning("暂无平均值数据");
+          // })
+          .finally(() => {
           this.loading = false;
         })
         // 获取y轴为数值柱状图数据
