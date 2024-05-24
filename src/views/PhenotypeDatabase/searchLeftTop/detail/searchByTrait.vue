@@ -34,6 +34,7 @@
         </el-table-column>
         <el-table-column
           prop="pedigreeSource1"
+          
           label="来源1"
           width="100"
           :align="'center'"
@@ -349,7 +350,7 @@ export default {
       } catch(error) {
             console.log(error);
             this.$message.warning("该性状不存在");
-          }; 
+          };
     },
     async getTraitData() {
       const trait = this.$route.query.trait.join(",");

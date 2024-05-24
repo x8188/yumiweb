@@ -81,7 +81,7 @@
 
       <el-table-column
         :fixed="false"
-        prop="pedigreesource1"
+        prop="pedigreeSource1"
         label="来源1"
         :align="'center'"
         width="200"
@@ -89,7 +89,7 @@
       </el-table-column>
       <el-table-column
         :fixed="false"
-        prop="pedigreesource2"
+        prop="pedigreeSource2"
         label="来源2"
         :align="'center'"
         width="200"
