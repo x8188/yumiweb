@@ -175,7 +175,7 @@ export default {
         date_harvested: "收获日期",
         days_to_anther2: "散粉期（补）",
         days_to_silk2: "吐丝期（补）",
-        "anther-tassel_interval": "散粉吐丝间隔",
+        anther_tassel_interval: "散粉吐丝间隔",
         grain_length: "粒长(mm)",
         grain_length_sd: "粒长标准差",
         grain_width: "粒宽(mm)",
@@ -308,11 +308,18 @@ export default {
         const tableData = tableDataRes.data;
         const chartData = chartDataRes.data;
         this.tableData = tableData;
-        this.chartNatrData = chartData.map((item) => ({
-          location: item.location,
-          trait: item.trait,
-          year: item.year,
-        }));
+        this.chartNatrData = chartData.map((item) => {
+          if (isNaN(parseFloat(item.trait))) {
+            this.$message.warning("字符型无散点图数据");
+            return null;
+          } else {
+            return {
+              location: item.location,
+              trait: item.trait,
+              year: item.year,
+            };
+          }
+        });
         return this.$route.query.trait.join(","); // 返回当前的trait参数
       } catch (error) {
         console.log(error);
@@ -374,6 +381,7 @@ export default {
           wrappedData[yearIndex] = [];
         }
         wrappedData[yearIndex].push([data.location, data.trait, data.year]);
+         
       });
 
       option = {

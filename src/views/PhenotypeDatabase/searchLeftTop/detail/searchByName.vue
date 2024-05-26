@@ -535,12 +535,13 @@ export default {
             console.log(this.chartsData7, "this.chartsData7");
             resolve();
           })
-          .catch(() => {
-            this.$message.warning("暂无柱状图数据");
-            setTimeout(() => {
-              // 返回上一页
-            }, 3000);
-          }).finally(() => {
+          // .catch(() => {
+          //   this.$message.warning("暂无柱状图数据");
+          //   setTimeout(() => {
+          //     // 返回上一页
+          //   }, 3000);
+          // })
+          .finally(() => {
           this.loading = false;
         })
         // 获取y轴为日期柱状图平均值数据
