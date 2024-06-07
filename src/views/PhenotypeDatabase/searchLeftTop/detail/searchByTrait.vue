@@ -331,8 +331,8 @@ export default {
         project: "表所属项目",
         year: "表所属年份及季节",
         location: "试验地点",
-        seq: "序号#",
-        "plot_number#": "区号#",
+        seq: "序号",
+        "plot_number#": "区号",
         plot_number_name: "区号文件名",
         pedId: "系谱内部码#",
         pedigree: "系谱名称",
@@ -920,4 +920,12 @@ element.style {
   width: 800px;
   height: 81vh;
 }
+.el-table__fixed{
+  height: auto !important;
+    bottom: 80px !important;
+     /* 这个得自己调试看多少合适 */
+}
+.el-table__fixed::before, .el-table__fixed-right::before {
+    display: none;
+  }
 </style>

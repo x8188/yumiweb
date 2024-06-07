@@ -1,5 +1,11 @@
 import request from '@/utils/request'
 
+export function getPedigree() {
+  return request({
+    url: '/zeamap/Wphenotype/allPedigree',
+    method: 'get'
+  })
+}
 export function getYear() {
   return request({
     url: '/zeamap/Wphenotype/allYear',

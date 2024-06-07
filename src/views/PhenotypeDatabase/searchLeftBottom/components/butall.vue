@@ -25,12 +25,10 @@
         label="系谱内部码"
         :align="'center'"
         width="120"
-        fixed="left"
       >
       </el-table-column>
       <el-table-column
         prop="pedigree"
-        fixed="left"
         label="系谱"
         width="280"
         class="charts-detail"
@@ -40,7 +38,6 @@
 
       <el-table-column
         prop="location"
-        fixed="left"
         label="试验地点"
         width="120"
         class="charts-detail"
@@ -50,7 +47,6 @@
       <el-table-column
         prop="year"
         class="charts-detail"
-        fixed="left"
         label="年份"
         :align="'center'"
       >

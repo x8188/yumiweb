@@ -284,6 +284,37 @@
         </el-table-column>
         <el-table-column prop="stemDiameter" label="茎粗" :align="'center'">
         </el-table-column>
+        <el-table-column prop="dateHarvested" label="收获期" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="datePlanted" label="播种期" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="daysToAnther" label="散粉期" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="dsysToMaturity" label="成熟期" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="daysToSeedling" label="出苗期" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="daysToSilk" label="吐丝期" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="daysToTassel" label="抽雄期" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="ustilagoMaydis" label="综合抗性" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="maizeEarRot" label="叶斑病（级）" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="maizeSheathBlight" label="玉米螟" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="southernCornRust" label="穗腐病" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="leafSpotDisease" label="纹枯病（级）" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="maizeBorer" label="大斑病" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="northernLeafBlight" label="锈病（级）" :align="'center'" width="150">
+        </el-table-column>
+        <el-table-column prop="comprehensiveResistance" label="瘤黑粉" :align="'center'" width="150">
+        </el-table-column>
+
       </el-table>
     </div>
   </div>

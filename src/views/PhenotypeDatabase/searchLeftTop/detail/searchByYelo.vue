@@ -22,7 +22,6 @@
       <el-table
         :data="tableData"
         border
-        height="650"
         tooltip-effect="dark"
         stripe
         style="width: 100%"
@@ -117,8 +116,8 @@ export default {
         project: "表所属项目",
         year: "表所属年份及季节",
         location: "试验地点",
-        seq: "序号#",
-        plotNumber: "区号#",
+        seq: "序号",
+        plotNumber: "区号",
         plotNumberName: "区号文件名",
         pedId: "系谱内部码",
         pedid: "系谱内部码",

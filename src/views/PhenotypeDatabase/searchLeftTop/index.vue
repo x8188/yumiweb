@@ -8,12 +8,29 @@
       style="margin: 40px"
     >
       <el-form-item :label="$i18n.t('name/pedigree')">
-        <el-input
+        <el-select
+          v-model="formLabelAlign.pedigree"
+          :multiple="false"
+          filterable
+          remote
+          :loading="loading"
+          :default-first-option="false"
+        >
+          <el-option
+            v-for="(item, index) in pedigrees"
+            :key="index"
+            :label="item"
+            :value="item"
+          >
+          </el-option>
+        </el-select>
+        <!-- <el-input
 
           class="input_chart"
           v-model="formLabelAlign.pedigree"
           placeholder="请输入"
-        ></el-input>
+          suffix-icon="xxxx"
+        ></el-input> -->
       </el-form-item>
       <el-form-item :label="$i18n.t('year')">
         <el-select
@@ -84,6 +101,7 @@ import { Message, MessageBox } from "element-ui";
 // import { $t } from 'vue-i18n';
 import en from "../../../locales/en";
 import {
+  getPedigree,
   getYear,
   getLocation,
   getTrait,
@@ -92,6 +110,7 @@ export default {
   data() {
     return {
       item: null,
+      pedigrees:[],
       years: [],
       traits: [],
       locations: [],
@@ -108,11 +127,18 @@ export default {
 
   created() {
     // 在组件创建时从后端获取可选的年份列表
+    this.getPedigreeData();
     this.getYearData();
     this.getTraitData();
     this.getLocationData();
   },
   methods: {
+    getPedigreeData() {
+      getPedigree().then((res) => {
+        this.pedigrees = [...res.data];
+        console.log(this.pedigrees, "ererer");
+      });
+    },
     getYearData() {
       getYear().then((res) => {
         this.years = [...res.data];
@@ -129,6 +155,7 @@ export default {
         this.locations = [...res.data];
         console.log(this.locations, "kkk");
       });
+
     },
 
     search() {
@@ -152,7 +179,7 @@ export default {
       let searchUrl = "/PhenotypeDatabase/searchLeftTop/detail";
       console.log(pedigree, year, trait, location, "vbvbvb");
      if (
-        pedigree.length !== 0 &&
+        Object(pedigree).length !== 0 &&
         Object.keys(year).length == 0 &&
         Object.keys(location).length == 0 &&
         Object.keys(trait).length == 0
@@ -160,7 +187,7 @@ export default {
         searchUrl += `/searchByName`;
         params = { pedigree: pedigree };
       } else if (
-        !pedigree &&
+        Object.keys(pedigree).length == 0 &&
         Object.keys(year).length !== 0 &&
         Object.keys(location).length == 0 &&
         Object.keys(trait).length == 0
@@ -168,7 +195,7 @@ export default {
         searchUrl += "/searchByYear";
         params.year = year;
       } else if (
-        !pedigree &&
+        Object.keys(pedigree).length == 0 &&
         Object.keys(year).length == 0 &&
         Object.keys(location).length !== 0 &&
         Object.keys(trait).length == 0
@@ -176,7 +203,7 @@ export default {
         searchUrl += `/searchByLocation`;
         params = { location: location };
       } else if (
-        !pedigree &&
+        Object.keys(pedigree).length == 0 &&
         Object.keys(year).length == 0 &&
         Object.keys(location).length == 0 &&
         Object.keys(trait).length !== 0
@@ -184,7 +211,7 @@ export default {
         searchUrl += `/searchByTrait`;
         params = { trait: trait };
       } else if (
-        pedigree &&
+        Object.keys(pedigree).length !== 0 &&
         Object.keys(year).length == 0 &&
         Object.keys(location).length == 0 &&
         Object.keys(trait).length !== 0
