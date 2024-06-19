@@ -342,7 +342,8 @@ export default {
   data() {
     return {
       pedigree: "",
-      newsource: "",
+      pedigreeSource1:"",
+      pedigreeSource2:"",
       year: "",
       group: "",
       describe: "",
@@ -396,22 +397,23 @@ export default {
           pedigree: encodeURIComponent(pedigree),
         };
         this.query = pedigree;
+        console.log(this.query,'klklkl')
         console.log(query, "query");
         resolve();
         this.loading = true;
 
         // 获取左上角数据
         searchByName(query).then((res) => {
-          if (res.data.length === 0) {
-            console.warn("没有该pedigree");
-            this.$message.error("没有该系谱");
-            setTimeout(() => {
-              this.$router.go(-1); // 返回上一页
-            }, 3000);
-            return;
-          }
-
+          // if (res.data.length === 0) {
+          //   this.$message.error("该系谱暂无数据");
+          //   setTimeout(() => {
+          //     this.$router.go(-1); // 返回上一页
+          //   }, 3000);
+          //   return;
+          // }
+          console.log(res.data,'opoppoopopoppopo');
           const data = res.data[0];
+
           this.pedigree = data.pedigree;
           this.pedigreeSource1 = data.pedigreeSource1;
           this.pedigreeSource2 = data.pedigreeSource2;
@@ -427,7 +429,7 @@ export default {
         })
         // 获取mor雷达图数据
         getMorByName(query).then((res) => {
-          let chartData = res.data[0];
+          let chartData = res.data;
           this.chartsData3 = [
             chartData.leafLength,
             chartData.leafWidth,
@@ -442,8 +444,9 @@ export default {
             chartData.rachisColor,
             chartData.grainColor,
           ];
-          resolve();
           console.log(this.chartsData3, "this.chartsData3");
+          resolve();
+
         }).finally(() => {
           this.loading = false;
         })
@@ -1005,6 +1008,15 @@ export default {
           }
           console.log(uniqueData, "uniqueData");
           option = {
+            title: {
+              text: "Growth period\n\n  生育期",
+              textStyle: {
+                fontSize: 16,
+                color:"#606266"
+              },
+              left: "left",
+              top: "top",
+            },
             legend: {
               data: [this.query, "平均值"],
             },
@@ -1074,6 +1086,16 @@ export default {
           var option;
 
           option = {
+            title: {
+              text: "Biotic Stress\n\n  生物胁迫",
+              textStyle: {
+                fontSize: 16,
+                color:"#606266",
+              },
+              left: "left",
+              top: "top",
+            },
+
             legend: {
               data: [this.query, "平均值"],
             },

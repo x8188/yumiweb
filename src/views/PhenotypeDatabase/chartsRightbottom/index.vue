@@ -66,15 +66,19 @@ export default {
         (sum, row) => sum + row.num,
         0
       );
-
+      this.recordNumSum = this.tableData.reduce(
+        (sum, row) => sum + row.recordNum,
+        0
+      );
       const totalSumRow = {
         class: "Total",
         num: this.totalSum,
-        recordNum: null,
+        recordNum: this.recordNumSum,
       };
 
       this.tableData.push(totalSumRow);
     },
+
   },
 };
 </script>

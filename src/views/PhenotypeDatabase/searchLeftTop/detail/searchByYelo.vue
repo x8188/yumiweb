@@ -544,7 +544,7 @@ export default {
     const year = this.$route.query.year.join(",");
     const location = this.$route.query.location.join(",");
     const query = {
-      pedigrees: pedigree,
+      pedigrees: encodeURIComponent(pedigree),
       traits: trait,
       years: year,
       locations: location,

@@ -576,11 +576,11 @@ export default {
       const trait = this.$route.query.trait.join(",");
 
       const query = {
-        pedigree: pedigree,
+        pedigree: encodeURIComponent(pedigree),
         traits: trait,
       };
       const querys = {
-        pedigree: pedigree,
+        pedigree: encodeURIComponent(pedigree),
         traits: trait,
       };
       const propArray = trait.split(","); // 使用split方法将字符串拆分为数组
