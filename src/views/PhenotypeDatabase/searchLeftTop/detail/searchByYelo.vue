@@ -530,13 +530,6 @@ export default {
       // 根据traitLabel的值进行中英文转换
       return (prop) => translationMap[prop] || prop;
     },
-    //   filteredProps() {
-    //   // 进行过滤的逻辑
-    //   return Object.keys(this.stateProp).filter(prop => {
-    //     // 返回需要保留的属性
-    //     return this.translatedTraitLabel(prop) !== prop;
-    //   });
-    // }
   },
   mounted() {
     const pedigree = this.$route.query.pedigree;
@@ -554,10 +547,8 @@ export default {
     // 获取表格数据
     searchByYelo(query).then((res) => {
       let chartData = res.data;
-      console.log(chartData, "chartData");
       chartData = chartData.map((item) => {
         const newItem = { ...item };
-        console.log(newItem, "newItem");
         for (let key in newItem) {
           if (newItem[key] === "null") {
             newItem[key] = "-";
@@ -566,18 +557,12 @@ export default {
         return newItem;
       });
       this.tableData = chartData;
-      console.log(this.tableData, "this.tableData");
 
       this.tableData.forEach((item) => {
         Object.keys(item).forEach((key) => {
           this.stateProp[String(key)] = key;
         });
-      });
-      // Vue.$nextTick(() => {
-      //       this.$refs.multipleTable.doLayout();
-      //     });
-      // // this.traitLabel = traits;
-      // console.log(this.tableData, "this.tableData");
+      }); 
       resolve();
     });
     // .catch((error) => {

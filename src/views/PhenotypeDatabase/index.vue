@@ -31,15 +31,15 @@ export default {
     chartTree,
     hisChart,
   },
-  methods: {
-    toggleLanguage() {
-      if (this.$i18n.locale === 'en') {
-        this.$i18n.locale = 'zh';
-      } else {
-        this.$i18n.locale = 'en';
-      }
-    }
-  }
+  // methods: {
+  //   toggleLanguage() {
+  //     if (this.$i18n.locale === 'en') {
+  //       this.$i18n.locale = 'zh';
+  //     } else {
+  //       this.$i18n.locale = 'en';
+  //     }
+  //   }
+  // }
 };
 </script>
 

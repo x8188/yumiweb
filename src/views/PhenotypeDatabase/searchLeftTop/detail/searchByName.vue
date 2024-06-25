@@ -2,12 +2,12 @@
   <div class="all" v-loading="loading">
     <div class="chartLeft">
       <div class="detailed">{{ $i18n.t("pedigree") }}：{{ pedigree }}</div>
-      <div class="detailed">来源1：{{ pedigreeSource1 }}</div>
-      <div class="detailed">来源2：{{ pedigreeSource2 }}</div>
-      <div class="detailed">日期：{{ year }}</div>
-      <div class="detailed">杂优群：{{ group }}</div>
-      <div class="detailed">描述：{{ describe }}</div>
-      <div class="detailed">IBD链接：{{ interlinkage }}</div>
+      <div class="detailed">{{ $i18n.t("pedigreeSource1") }} ：{{ pedigreeSource1 }}</div>
+      <div class="detailed"> {{ $i18n.t("pedigreeSource2") }} ： {{ pedigreeSource2 }}</div>
+      <div class="detailed">{{ $i18n.t("year") }} ： {{ year }}</div>
+      <div class="detailed">{{ $i18n.t("group") }} ： {{ group }}</div>
+      <div class="detailed">{{ $i18n.t("describe") }} ： {{ describe }}</div>
+      <div class="detailed">{{ $i18n.t("interlinkage") }} ： {{ interlinkage }}</div>
     </div>
     <div class="chartMid">
       <div id="main1" ref="chart" class="chartRight1"></div>
@@ -336,7 +336,8 @@ import {
   getPhenoTypeRateMeanByName,
 } from "@/api/jointCreation/searchLeftTop/index";
 import * as echarts from "echarts";
-import en from "@/locales/en";
+import en from "@/locales/phenotypeDB/en";
+import zh from "@/locales/phenotypeDB/zh";
 import moment from "moment";
 export default {
   data() {
@@ -381,11 +382,16 @@ export default {
       loading: false,
     };
   },
+
+  watch: {
+    '$i18n.locale'() {
+      this.updateChart(); // 当语言变化时更新图表
+    },
+  },
   mounted() {
     this.getData().then(() => {
       this.renderCharts();
       this.loading = true;
-      console.log(this.loading,'opop');
     });
   },
   methods: {
@@ -397,8 +403,6 @@ export default {
           pedigree: encodeURIComponent(pedigree),
         };
         this.query = pedigree;
-        console.log(this.query,'klklkl')
-        console.log(query, "query");
         resolve();
         this.loading = true;
 
@@ -411,7 +415,6 @@ export default {
           //   }, 3000);
           //   return;
           // }
-          console.log(res.data,'opoppoopopoppopo');
           const data = res.data[0];
 
           this.pedigree = data.pedigree;
@@ -659,6 +662,7 @@ export default {
         })
       });
     },
+
     renderCharts() {
       // 等待所以数据请求成功后再渲染echarts
       Promise.all([
@@ -691,7 +695,7 @@ export default {
 
           (option = {
             title: {
-              text: "Morphological",
+              text: this.$t(en.Morphological) ,
               textStyle: {
                 fontSize: 14,
               },
@@ -956,8 +960,6 @@ export default {
             });
           });
 
-          console.log(formattedData1, "formatteddata1");
-
           if (Array.isArray(this.chartsData8) && this.chartsData8.length > 0) {
             formattedData2 = this.chartsData8.map(function (dateString) {
               var dateParts = dateString.split("-");
@@ -984,11 +986,10 @@ export default {
 
           if (promises.length > 0) {
             Promise.all(promises).then((results) => {
-              console.log(results, "jjjj");
+              console.log(results);
             });
           }
           let formattedData3 = formattedData1.concat(formattedData2);
-          console.log(formattedData3, "3232323");
           const formattedData4 = formattedData3.map(
             (dateString) => new Date(dateString)
           );
@@ -1009,7 +1010,7 @@ export default {
           console.log(uniqueData, "uniqueData");
           option = {
             title: {
-              text: "Growth period\n\n  生育期",
+              text: "Growth period",
               textStyle: {
                 fontSize: 16,
                 color:"#606266"
@@ -1087,7 +1088,7 @@ export default {
 
           option = {
             title: {
-              text: "Biotic Stress\n\n  生物胁迫",
+              text: "Biotic Stress ",
               textStyle: {
                 fontSize: 16,
                 color:"#606266",
@@ -1150,7 +1151,10 @@ export default {
           option && myChart4.setOption(option);
         }
       );
+
     },
+
+    
   },
 };
 </script>

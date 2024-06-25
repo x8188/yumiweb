@@ -22,22 +22,22 @@ export default {
       // 根据点击的按钮跳转到不同的页面
       switch (category) {
         case 'all':
-          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/butall'); // 替换为实际的目标页面路径
+          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/butall');  
           break;
         case 'Morphological':
-          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/butmor'); // 替换为实际的目标页面路径
+          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/butmor');  
           break;
         case 'Agronomical':
-          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/agronomical'); // 替换为实际的目标页面路径
+          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/agronomical');  
           break;
         case 'Biotic stress':
-          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/bioticStress'); // 替换为实际的目标页面路径
+          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/bioticStress');  
           break;
         case 'Abiotic stress':
-          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/abioticStress'); // 替换为实际的目标页面路径
+          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/abioticStress');  
           break;
         case 'Yield':
-          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/yield'); // 替换为实际的目标页面路径
+          this.$router.push('/PhenotypeDatabase/searchLeftBottom/components/yield');  
           break;
         default:
           break;

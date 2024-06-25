@@ -147,21 +147,18 @@ export default {
     getTraitData() {
       getTrait().then((res) => {
         this.traits = [...res.data];
-        console.log(this.traits, "io");
       });
     },
     getLocationData() {
       getLocation().then((res) => {
         this.locations = [...res.data];
-        console.log(this.locations, "kkk");
       });
 
     },
 
     search() {
       const pedigree = this.formLabelAlign.pedigree;
-      const year = this.formLabelAlign.year;
-      console.log(year, "opo");
+      const year = this.formLabelAlign.year; 
       const trait = this.formLabelAlign.trait;
       const location = this.formLabelAlign.location;
       let params = {};

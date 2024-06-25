@@ -1101,13 +1101,12 @@ export default {
   },
   mounted() {
     const location = this.$route.query.location.join(",");
-    console.log(location, "location")
+
     const query = {
       locations: location,
     };
-    // const query = ['郑州', '安阳'];
-    console.log(query, "opop");
     this.loading = true;
+    // 获取表格数据
     searchByLocation(query)
       .then((res) => {
         let chartData = res.data;
@@ -1120,7 +1119,6 @@ export default {
           return item;
         });
         this.tableData = chartData;
-        console.log(this.tableData, "lll");
       })
       .catch((error) => {
         console.log(error);

@@ -1105,8 +1105,7 @@ export default {
     const queryYears=years.join(',');
     const query = {
       years: queryYears,
-    };
-    console.log(query, "ghgh");
+    }; 
     this.loading = true;
     // 获取表格数据
     searchByYear(query).then((res) => {

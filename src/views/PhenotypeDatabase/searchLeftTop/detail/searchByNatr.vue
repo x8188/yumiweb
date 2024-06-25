@@ -1,5 +1,21 @@
 <template>
   <div class="allNatr">
+    <div class="search-tag">
+      <el-tag
+        v-for="(value, param) in $route.query"
+        :key="param"
+      >
+        <template v-if="Array.isArray(value)">
+          <span v-for="(item, index) in value" :key="index">
+            {{ item }}
+            <span v-if="index !== value.length - 1">, </span>
+          </span>
+        </template>
+        <template v-else>
+          {{ value }}
+        </template>
+      </el-tag>
+    </div>
     <div class="top-chart">
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column
@@ -594,11 +610,11 @@ export default {
     async updateOptionChange(value) {
       console.log(value, "adad");
       const query = {
-        pedigree: this.$route.query.pedigree,
+        pedigree: encodeURIComponent(this.$route.query.pedigree),
         traits: this.trait,
       };
       const querys = {
-        pedigree: this.$route.query.pedigree,
+        pedigree: encodeURIComponent(this.$route.query.pedigree),
         traits: value, // 使用新选择的 value 作为 traits 查询参数
       };
 
@@ -613,7 +629,7 @@ export default {
       var option;
       if (this.chartNatrData.length === 0) {
         console.log("该性状不存在");
-        this.$message.warning("该性状不存在");
+        this.$message.warning("该性状暂无数据");
         return; // 终止执行
       }
       const yearData = this.chartNatrData.map((data) => data.year + "");
@@ -684,6 +700,10 @@ export default {
   flex-wrap: wrap;
   margin: 0 auto;
 }
+.search-tag {
+  margin-left: 20px;
+  margin-top: 10px;
+}
 .top-chart {
   width: 80%;
   margin: 0 auto;
@@ -703,7 +723,7 @@ export default {
   width: 100vw;
   height: 5vh;
   float: right;
-  margin-left: 51.5vw;
+  margin-left: 55vw;
 }
 .bottom-chart {
   width: 60%;

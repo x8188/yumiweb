@@ -1,5 +1,22 @@
 <template>
   <div class="trait">
+    <div class="left-part">
+      <div class="search-tag">
+      <el-tag
+        v-for="(value, param) in $route.query"
+        :key="param"
+      >
+        <template v-if="Array.isArray(value)">
+          <span v-for="(item, index) in value" :key="index">
+            {{ item }}
+            <span v-if="index !== value.length - 1">, </span>
+          </span>
+        </template>
+        <template v-else>
+          {{ value }}
+        </template>
+      </el-tag>
+    </div>
     <div class="left-chart">
       <el-table :data="tableData" border height="800" style="width: 100%">
         <el-table-column
@@ -58,6 +75,7 @@
         >
         </el-table-column>
       </el-table>
+    </div>
     </div>
     <div>
       <div class="chart-select">
@@ -553,7 +571,6 @@ export default {
       this.trait = trait;
       this.renderTraitCharts();
     });
-    console.log(this.trait, "this.trait");
   },
   methods: {
     async updateTraitData(query, querys) {
@@ -562,7 +579,6 @@ export default {
           searchByTrait(query),
           searchChartByTrait(querys),
         ]);
-        console.log(tableDataRes.data, "original tableDataRes.data");
         let tableData = tableDataRes.data
         tableData = tableData.map((item) => {
           const newItem = { ...item };
@@ -573,7 +589,6 @@ export default {
           }
           return newItem;
         });
-        console.log(tableData, "tableData");
         const chartData = chartDataRes.data;
         this.tableData = tableData;
 
@@ -583,7 +598,6 @@ export default {
           year: item.year,
           trait: item.trait !== null ? item.trait : 0,
         }));
-        console.log(this.chartData, "this.chartData");
         return this.$route.query.trait.join(",");
       } catch (error) {
         console.log(error);
@@ -638,8 +652,7 @@ export default {
       //     });
       // });
     },
-    async handleOptionChange(value) {
-      console.log(value, "adad");
+    async handleOptionChange(value) { 
       const query = {
         traits: this.trait,
       };
@@ -866,18 +879,26 @@ export default {
 </script>
 
 <style scoped>
+.search-tag {
+  margin-left: 20px;
+  margin-top: 10px;
+}
 .trait {
   width: 100%;
   display: flex;
 }
-.left-chart {
+.left-part{
   width: 40%;
+}
+.left-chart {
+
   /* margin:0 auto; */
   text-align: center;
   /* margin-left: 50px; */
   margin: 20px;
   padding: 10px;
-  height: 45vw;
+  /* height: 659px; */
+  height: 45.8vw;
   overflow: auto;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
@@ -885,7 +906,7 @@ export default {
   width: 50%;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   position: relative;
-
+  /* height: 45vw; */
   margin: 60px 20px;
 }
 .chart-select {
