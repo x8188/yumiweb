@@ -1,16 +1,26 @@
 import request from '@/utils/request'
 
+export const reqtraitMAP= () =>
+  request({ url: `trait/list`, method: "get" });
+
 export const reqselectaccession= () =>
   request({ url: `/genetics/search_qtl/association_qtl/selectaccession`, method: "get" });
 
 export const reqselectversion= (accession) =>
   request({ url: `/genetics/search_qtl/association_qtl/selectversion`, method: "get" ,params:{accession}});
 
-export const reqselecttraitcategory= () =>
-  request({ url: `/genetics/search_qtl/association_qtl/selecttraitcategory`, method: "get" });
+// export const reqselecttraitcategory= () =>
+//   request({ url: `/genetics/search_qtl/association_qtl/selecttraitcategory`, method: "get" });
 
-export const reqselecttraitid= (trait_id) =>
-  request({ url: `/genetics/search_qtl/association_qtl/selecttraitid`, method: "get",params:{trait_id} });
+export const reqselecttraitcategory= () =>
+  request({ url: `/zeamap/traitType/list`, method: "get" });
+
+export const reqselecttraitid= (category) =>
+  request({ url: `zeamap/type/traitTypeId/${category}`, method: "get" });
+
+//之前traitID是远程模糊匹配的功能 
+// export const reqselecttraitid= (trait_id) =>
+//   request({ url: `/genetics/search_qtl/association_qtl/selecttraitid`, method: "get",params:{trait_id} });
 
 export const reqselectchr= () =>
   request({ url: `/genetics/search_qtl/association_qtl/selectchr`, method: "get" });

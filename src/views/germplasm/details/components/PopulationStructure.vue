@@ -1,7 +1,7 @@
 <template>
   <div class="body">
-    <Title>Population Structure</Title>
-    <p>IIIustration of population structure based on the estimation of ancestral populations.Chose a proper number of ancestral populations(K) to load a stack histogram for the population.The X-axis represents individuals in the population,with stack bars colored according to the composition of each ancestral populations.See Tutorial for more details.</p>
+    <Title>{{$t('PopulationStructure')}}</Title>
+    <p class="populationDetailP">{{$t('PopulationStructureDe')}}</p>
     <div id="master" style="height: 450px;width: 100%"></div>
   </div>
 </template>

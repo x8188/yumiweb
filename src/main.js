@@ -6,8 +6,7 @@ import Element from 'element-ui'
 import './assets/styles/element-variables.scss'
 
 import VueI18n from 'vue-i18n';
-import en from './locales/en';
-import zh from './locales/zh';
+
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/ruoyi.scss' // ruoyi css
 import App from './App'
@@ -51,6 +50,11 @@ import BaiduMap from 'vue-baidu-map'
 import UI from '@/components/UnionStyle/index'
 // 定义API接口
 import API from "@/api"
+
+import VueCompositionAPI from '@vue/composition-api'
+//注册使用@vue/composition-api插件
+Vue.use(VueCompositionAPI)
+
 Vue.prototype.$API= API
 // import {
 //   Quasar,
@@ -100,7 +104,8 @@ DictData.install()
  */
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
+  size: Cookies.get('size') || 'medium', // set element-ui default size
+  i18n: (key, value) => i18n.t(key, value)
 })
 
 Vue.config.productionTip = false
@@ -108,14 +113,24 @@ Vue.config.productionTip = false
 import Meta from "vue-meta";
 Vue.use(Meta);
 
+import enLocale from 'element-ui/lib/locale/lang/en'
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import en from './locales/en';
+import zh from './locales/zh';
+
+// console.log(zh)
+// console.log({...zh,...zhLocale})
+
 Vue.use(VueI18n);
 const i18n = new VueI18n({
   locale: 'en', // 默认语言
   messages: {
-    en, // 英语翻译文本
-    zh // 中文翻译文本
+    'en':{...en,...enLocale}, // 英语翻译文本
+    'zh':{...zh,...zhLocale} // 中文翻译文本
   }
 });
+
+
 // const router = new VueRouter({
 //   routes: [
 //     {

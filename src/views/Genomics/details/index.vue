@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <div class="content_page">
-            <div class="left">
+            <!-- <div class="left">
                 <div class="navigation_bar">
                     <Title>Catalog</Title>
                     <el-tabs tab-position="left" style="height: 220px;" @tab-click="handleClick">
@@ -10,10 +10,10 @@
                         </el-tab-pane>
                     </el-tabs>
                 </div>
-            </div>
+            </div> -->
             <div class="right">
                 <div class="info_box">
-                    <el-card class="box-card">
+                    <el-card class="box-card bianKuang">
                         <div slot="header" class="clearfix">
                             <Title id="Summary">Summary</Title>
                         </div>
@@ -24,7 +24,7 @@
                             </el-table-column>
                         </el-table>
                     </el-card>
-                    <el-card class="box-card">
+                    <el-card class="box-card bianKuang" >
                         <div slot="header" class="clearfix">
                             <Title id="Function Annotation">Function Annotation</Title>
                         </div>
@@ -39,7 +39,7 @@
                             </el-table-column>
                         </el-table>
                     </el-card>
-                    <el-card class="box-card">
+                    <el-card class="box-card bianKuang">
                         <div slot="header" class="clearfix">
                             <Title id="Sequence">Sequence</Title>
                         </div>
@@ -116,10 +116,10 @@ export default {
 }
 </script>
   
-<style>
+<style scoped>
 .page {
     background-color: rgb(245, 246, 245);
-    padding: 2% 5% 0 5%;
+    /* padding: 2% 5% 0 5%; */
 }
 
 .content_page {
@@ -132,8 +132,13 @@ export default {
 }
 
 .right {
-    width: 70%;
+    /* width: 70%; */
     background-color: white;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    min-width: 900px;
 }
 
 .navigation_bar {
@@ -182,5 +187,24 @@ h2 {
 .box-card {
     margin-bottom: 3%;
     font-size: 20px;
+}
+.bianKuang{
+
+/* padding-top: 12%; */
+background: linear-gradient(to left, #04afaf, #04afaf) left top no-repeat,
+linear-gradient(to bottom, #04afaf, #04afaf) left top no-repeat,
+linear-gradient(to left, #04afaf, #04afaf) right top no-repeat,
+linear-gradient(to bottom, #04afaf, #04afaf) right top no-repeat,
+linear-gradient(to left, #04afaf, #04afaf) left bottom no-repeat,
+linear-gradient(to bottom, #04afaf, #04afaf) left bottom no-repeat,
+linear-gradient(to left, #04afaf, #04afaf) right bottom no-repeat,
+linear-gradient(to left, #04afaf, #04afaf) right bottom no-repeat,
+#f1f8f8;
+background-size: 4px 20px, 20px 4px, 4px 20px, 20px 4px;
+
+border: 1px solid #037a7a;
+position: relative;
+
+padding:10px;
 }
 </style>

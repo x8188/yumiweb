@@ -1,9 +1,11 @@
 <template>
   <div class="app">
-    <Title>Germplasm</Title>
+    <Title>{{$t('Germplasm')}}</Title>
     <div class="germplasm_content">
       <div>
-        <p>Collection of more than 500 inbreds for association mapping panel(AMP)with different populations including non-stiff-stock(NSS);Stiff-stock(SS);Tropical and Semi-tropical(TST).</p>
+        <!-- <p>Collection of more than 500 inbreds for association mapping panel(AMP)with different populations including non-stiff-stock(NSS);Stiff-stock(SS);Tropical and Semi-tropical(TST).</p> -->
+        <p class="populationDetailP">{{$t('GermplasmDe')}}</p>
+      </div>
       </div>
       <div>
           <el-row :gutter="15">
@@ -26,7 +28,7 @@
                     :value="item.value">
                   </el-option>
                 </el-select>
-                <el-button type="primary" @click="resetTable">重置</el-button>
+                <el-button type="primary" @click="resetTable" style="margin-left:10px">{{$t('reset')}}</el-button>
               </el-col>
             </el-form>
           </el-row>
@@ -35,25 +37,31 @@
         <el-table
           :data="tableData"
           border
-          style="width: 100%">
+          style="width: 100%"
+          stripe
+          >
           <el-table-column
             prop="name"
-            label="Name"
-            width="90">
+            :label="$t('Name')"
+            width="90"
+            sortable
+            >
           </el-table-column>
           <el-table-column
             prop="ngbId"
-            label="NGB ID"
+            :label="$t('NGBID')"
             width="150">
           </el-table-column>
           <el-table-column
             prop="origin"
-            label="Origin"
-            width="90">
+            :label="$t('Origin')"
+            width="90"
+            sortable
+            >
           </el-table-column>
           <el-table-column
             prop="comment"
-            label="Description">
+            :label="$t('Description')">
           </el-table-column>
         </el-table>
       </div>
@@ -88,7 +96,19 @@ export default {
       },
     }
   },
-  watch: {},
+  watch: {
+    tableData(newVal, oldVal){
+      return newVal.forEach(item => {
+        // item.createBy = userTrans[parseInt(item.createBy)]
+        // if (item.createBy == null) item.createBy = "-"
+        // if (item.createTime == null) item.createTime = "-"
+        // if (item.materialName == null) item.materialName = "-"
+        Object.keys(item).forEach(key => {
+          if (item[key] == null) item[key] = "-"
+        });
+      })
+    }
+  },
   created() {
     this.getTableData();
   },
@@ -110,11 +130,11 @@ export default {
     Screening(value) {
       if (value!== null){
         choose({name : value}).then(res=>{
-          console.log(res)
+          // console.log(res)
           //this.getTableData()
-          this.tableData=res.rows
-          console.log(res.rows)
-          console.log(this.tableData)
+          this.tableData=res.data
+          // console.log(res.data)
+          // console.log(this.tableData)
         })
       } else {
         this.getTableData()
@@ -137,20 +157,23 @@ export default {
       }
     },
     getTableData(){
-      listGermplasm().then(res=>{
+      var data={
+        populationId:2
+      }
+      // console.log(data)
+      listGermplasm(data).then(res=>{
         this.tableData=res.rows;
-        console.log(res);
         this.states = res.rows.map(function (item) {
           return item.name
         })
-        console.log(this.states,'9090')
+        // console.log(this.states,'9090')
       })
     },
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .app{
   width: 100%;
@@ -162,6 +185,15 @@ export default {
 .table{
   padding-top: 30px;
 }
+
+::v-deep .el-table .el-table__header-wrapper tr th {
+	// background-color: #1FB864 !important;
+  background-color: #40878f !important;
+	color: rgb(255, 255, 255);
+}
+::v-deep .el-form-item__label{
+    color: #337177;
+  }
 </style>
 
 

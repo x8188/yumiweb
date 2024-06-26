@@ -4,12 +4,13 @@
           <Title>Geno viewer</Title> 
       </template>
       <template>
-        <p class="tip-info" style="line-height: 26px;">Browse the genotype of certain germplasms.Simply select a analysis,and the select your interested germplasms and genomic regions to get the genotype information.</p>
+        <p class="tip-info" style="line-height: 26px;font-family: 'Times New Roman', Times, serif;">Browse the genotype of certain germplasms.Simply select a analysis,and the select your interested germplasms and genomic regions to get the genotype information.</p>
         <div class="form-container">
           <el-form>
-            <div class="gene-select">
+            <div style="display:flex">
+              <div class="gene-select" style="flex:1;display:flex;flex-direction: column; " >
               <div class="reference-item select-item">
-                <span>Reference</span>
+                <span class="filTitle">Reference</span>
                 <el-form-item>
                   <el-select @change="changeReference" clearable filterable="" v-model="formData.accession" placeholder="" >
                       <el-option
@@ -22,7 +23,7 @@
                 </el-form-item>
               </div>
               <div class="version-item select-item">
-                <span>Version</span>
+                <span class="filTitle">Version</span>
                 <el-form-item>
                   <el-select @change="changeVersion" clearable filterable v-model="formData.version" placeholder="" @focus="dropDownVersion" >
                     <div class="version-options-container" v-if="options.version.length > 0" >
@@ -37,7 +38,7 @@
                 </el-form-item>
               </div>
               <div class="population-item select-item">
-                <span>Population</span>
+                <span class="filTitle">Population</span>
                 <el-form-item>
                   <el-select @change="changePopulation" clearable filterable v-model="formData.alias" placeholder="">
                     <el-option
@@ -50,7 +51,7 @@
                 </el-form-item>
               </div>
               <div class="analysis-item select-item">
-                <span>Analysis</span>
+                <span class="filTitle">Analysis</span>
                 <el-form-item>
                   <el-select clearable filterable v-model="formData.description" placeholder="" @focus="checkAnalysis()">
                     <el-option
@@ -62,54 +63,57 @@
                 </el-select>
                 </el-form-item>
               </div>
-            </div>
-          <div class="germplasm-select-container">
-            <span>Germplasm</span>
-            <div class="germplasm-select-items">
-              <div class="germplasm-select-item" v-for="name in germplasmName">
-                <div  class="germplasm-checkbox-group">
-                  <el-collapse>
-                    <el-collapse-item>
-                      <template slot="title">
-                        <el-checkbox 
-                        :indeterminate="isIndeterminate[name]"
-                        @change="(val) => handleCheckAllGermplasm(name,val)" 
-                        v-model="checkAll[name]" 
-                        style="margin-left: 12px;">
-                        <span style="display: flex;">
-                          {{ name }}&nbsp;&nbsp;({{checkGermplasms[name].length }}/
-                          <template v-if="germplasmLoading[name]">
-                            <div style="display: flex;">
-                              <div class="skelection" ></div>
-                              <span>)</span>
-                            </div>
+              </div>
+              <div class="germplasm-select-container" style="flex:4 " >
+                <div class="germplasm-select-items">
+                  <span style="margin-bottom:10px;display: block;" class="filTitle">Germplasm</span>
+
+                  <div class="germplasm-select-item" v-for="name in germplasmName">
+                    <div  class="germplasm-checkbox-group">
+                      <el-collapse>
+                        <el-collapse-item>
+                          <template slot="title">
+                            <el-checkbox 
+                            :indeterminate="isIndeterminate[name]"
+                            @change="(val) => handleCheckAllGermplasm(name,val)" 
+                            v-model="checkAll[name]" 
+                            style="margin-left: 12px;">
+                            <span style="display: flex;">
+                              {{ name }}&nbsp;&nbsp;({{checkGermplasms[name].length }}/
+                              <template v-if="germplasmLoading[name]">
+                                <div style="display: flex;">
+                                  <div class="skelection" ></div>
+                                  <span>)</span>
+                                </div>
+                              </template>
+                              <span v-else>{{germplasmItems[name].length}})&nbsp;&nbsp;</span>
+                            </span>
+                            </el-checkbox>
                           </template>
-                           <span v-else>{{germplasmItems[name].length}})&nbsp;&nbsp;</span>
-                        </span>
-                        </el-checkbox>
-                      </template>
-                      <div class="germplasm-collapse-items">
-                        <div class="germplasm-collapse-item" v-for="item in germplasmItems[name]">
-                          <el-checkbox-group v-model="checkGermplasms[name]" @change="(val) => handleCheckedGermplasmChange(name,val)">
-                            <el-checkbox :label="item">{{ item }}</el-checkbox>
-                          </el-checkbox-group>
-                        </div>
-                      </div>
-                    </el-collapse-item>
-                  </el-collapse>
+                          <div class="germplasm-collapse-items">
+                            <div class="germplasm-collapse-item" v-for="item in germplasmItems[name]">
+                              <el-checkbox-group v-model="checkGermplasms[name]" @change="(val) => handleCheckedGermplasmChange(name,val)">
+                                <el-checkbox :label="item">{{ item }}</el-checkbox>
+                              </el-checkbox-group>
+                            </div>
+                          </div>
+                        </el-collapse-item>
+                      </el-collapse>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+
           <div class="region-select">
-            <span>Region</span>
+            <span class="filTitle">Region</span>
             <div class="region-select-form">
               <div class="form-radio">
                 <el-radio v-model="region" label="1">Gene flanking</el-radio>
               </div>
               <div class="form-item">
                 <div class="chr">
-                  <span>chr</span>
+                  <span class="filTitle">chr</span>
                   <el-form-item>
                   <el-select clearable  @focus="checkChr()" filterable v-model="formData.chorm" placeholder="">
                       <el-option
@@ -127,14 +131,14 @@
                 </el-form-item>
                 </div>
                 <div class="start">
-                  <span>start</span>
+                  <span class="filTitle">start</span>
                   <el-form-item>
                     <el-input v-model="formData.start"></el-input>
                   </el-form-item>
                 </div>
                 <span class="start-to-end"></span>
                 <div class="end">
-                  <span>end</span>
+                  <span class="filTitle">end</span>
                   <el-form-item>
                     <el-input v-model="formData.end"></el-input>
                 </el-form-item>
@@ -405,6 +409,7 @@ $deepMainColor: #19692C;
 margin: 20px 0;
 background: #F1F8F8;
 padding: 20px;
+box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 .gene-select {
 display: flex;
@@ -412,6 +417,7 @@ justify-content: space-between;
 padding-bottom: 20px;
 margin-bottom: 20px;
 border-bottom: 1px solid #E6ECEC;
+border-right: 1px solid #E6ECEC;
 .select-item {
   display: flex;
   flex-direction: column;
@@ -427,6 +433,7 @@ border-bottom: 1px solid #E6ECEC;
 display: flex;
 padding-bottom: 20px;
 margin-bottom: 20px;
+padding-left: 20px;
 border-bottom: 1px solid #E6ECEC;
 span {
   margin-right: 20px;
@@ -512,5 +519,10 @@ span {
   100% {
     transform: translateX(100%);
   }
+}
+.filTitle{
+  color: #025757;
+  font-weight: bolder;
+  font-family: 'Times New Roman', Times, serif;
 }
 </style>

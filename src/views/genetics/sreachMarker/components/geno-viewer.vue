@@ -6,23 +6,23 @@
           {{ viewerTitle }}
         </Title>
         <div class="tip-info" style="line-height: 26px">
-          Search QTLs by any combination of species, trait category, trait name
-          or regions.
+          {{$t('qtldeP')}}
         </div>
 
-        <div class="form-container">
+        <div class="form-container bianKuang">
           <div class="gene-select">
             <div class="">
-              <span>QTL Type</span>
+              <span class="filTitle">{{$t('QTLType')}}</span>
               <div class="oneMarginLeft">
                 <el-radio
                   v-model="qtlType"
                   label="association"
                   @input="changeType"
-                  >Association Mapping</el-radio
+                  class="QTLType"
+                  >{{$t('Association Mapping')}}</el-radio
                 >
-                <el-radio v-model="qtlType" label="linkage" @input="changeType"
-                  >Linkage Mapping</el-radio
+                <el-radio v-model="qtlType" label="linkage" @input="changeType" class="QTLType"
+                  >{{$t('Linkage Mapping')}}</el-radio
                 >
               </div>
             </div>
@@ -30,7 +30,7 @@
           <el-form ref="elform" :rules="rules" :model="formData">
             <div class="gene-select">
               <div class="reference-item select-item">
-                <span>Reference</span>
+                <span class="filTitle">{{$t('Reference')}}</span>
                 <el-form-item
                   class="oneMarginLeft"
                   style="margin-top: 12px"
@@ -53,7 +53,7 @@
                 </el-form-item>
               </div>
               <div class="version-item select-item">
-                <span>Version</span>
+                <span class="filTitle">{{$t('Version')}}</span>
                 <el-form-item
                   style="
                     position: absolute;
@@ -79,7 +79,7 @@
               </div>
             </div>
             <div class="germplasm-select">
-              <span>Trait Category</span>
+              <span class="filTitle">{{$t('Trait Category')}}</span>
               <div class="oneMarginLeft">
                 <el-select
                   v-model="formData.TraitCategory"
@@ -97,7 +97,7 @@
               </div>
             </div>
             <div class="germplasm-select">
-              <span>Trait ID</span>
+              <span class="filTitle">{{$t('Trait ID')}}</span>
               <div class="oneMarginLeft">
                 <el-select
                   v-model="formData.TraitId"
@@ -117,7 +117,7 @@
               </div>
             </div>
             <div class="germplasm-select" v-show="qtlType == 'linkage'">
-              <span>Link Map</span>
+              <span class="filTitle">{{$t('Link Map')}}</span>
               <div class="oneMarginLeft">
                 <el-select
                   v-model="formData.LinkMap"
@@ -135,7 +135,7 @@
               </div>
             </div>
             <div class="region-select" v-show="qtlType == 'linkage'">
-              <span>LG</span>
+              <span class="filTitle">LG</span>
               <div class="region-select-form">
                 <div class="form-item">
                   <div>
@@ -174,7 +174,7 @@
               </div>
             </div>
             <div class="region-select" v-show="qtlType == 'association'">
-              <span>Region</span>
+              <span class="filTitle">{{$t('Region')}}</span>
 
               <div class="region-select-form">
                 <el-radio-group v-model="region" @input="changeRegion">
@@ -185,7 +185,7 @@
                 <div class="form-item" v-show="region == 'range'">
                   <div>
                     <div class="chr">
-                      <span>chr</span>
+                      <span class="filTitle">{{$t('chr')}}</span>
                       <el-form-item>
                         <el-select
                           v-model="formData.chr"
@@ -203,14 +203,14 @@
                       </el-form-item>
                     </div>
                     <div class="start">
-                      <span>start</span>
+                      <span class="filTitle">{{$t('start')}}</span>
                       <el-form-item prop="start">
                         <el-input v-model="formData.start"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
-                      <span>end</span>
+                      <span class="filTitle">{{$t('end')}}</span>
                       <el-form-item prop="end">
                         <el-input v-model="formData.end"></el-input>
                       </el-form-item>
@@ -220,7 +220,7 @@
               </div>
             </div>
             <div class="region-select" v-show="qtlType == 'association'">
-              <span>Variant Type</span>
+              <span class="filTitle">{{$t('Variant Type')}}</span>
 
               <div class="region-select-form">
                 <!-- <el-radio-group v-model="varType">
@@ -242,17 +242,17 @@
                 <div class="form-item" style="flex-direction: column">
                   <div style="width: 100%">
                     <div class="chr" style="width: 20%">
-                      <span>Leading -log10(P)</span>
+                      <span class="filTitle">{{$t('Leading')}} -log10(P)</span>
                     </div>
                     <div class="start">
-                      <span>start</span>
+                      <span class="filTitle">{{$t('start')}}</span>
                       <el-form-item prop="log_min">
                         <el-input v-model="formData.log_min"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
-                      <span>end</span>
+                      <span class="filTitle">{{$t('end')}}</span>
                       <el-form-item prop="log_max">
                         <el-input v-model="formData.log_max"></el-input>
                       </el-form-item>
@@ -260,17 +260,17 @@
                   </div>
                   <div>
                     <div class="chr" style="width: 20%">
-                      <span>Effect Size</span>
+                      <span class="filTitle">{{$t('Effect Size')}}</span>
                     </div>
                     <div class="start">
-                      <span>start</span>
+                      <span class="filTitle">{{$t('start')}}</span>
                       <el-form-item prop="effect_min">
                         <el-input v-model="formData.effect_min"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
-                      <span>end</span>
+                      <span class="filTitle">{{$t('end')}}</span>
                       <el-form-item prop="effect_max">
                         <el-input v-model="formData.effect_max"></el-input>
                       </el-form-item>
@@ -278,17 +278,17 @@
                   </div>
                   <div>
                     <div class="chr" style="width: 20%">
-                      <span>PIP</span>
+                      <span class="filTitle">{{$t('PIP')}}</span>
                     </div>
                     <div class="start">
-                      <span>start</span>
+                      <span class="filTitle">{{$t('start')}}</span>
                       <el-form-item prop="pip_min">
                         <el-input v-model="formData.pip_min"></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
-                      <span>end</span>
+                      <span class="filTitle">{{$t('end')}}</span>
                       <el-form-item prop="pip_max">
                         <el-input v-model="formData.pip_max"></el-input>
                       </el-form-item>
@@ -307,10 +307,10 @@
                 ><SvgIcon
                   icon-class="refresh-left"
                   style="margin-right: 5px" /></i
-              >Reset
+              >{{$t('reset')}}
             </el-button>
             <el-button type="primary" icon="el-icon-check" @click="firstGet()"
-              >Submit</el-button
+              >{{$t('search')}}</el-button
             >
           </div>
         </div>
@@ -695,9 +695,9 @@ export default {
     },
   },
   mounted() {
-    this.$bus.$on("changeMarkerPage", () => {
-      this.getQtl();
-    });
+    // this.$bus.$on("changeMarkerPage", () => {
+    //   this.getQtl();
+    // });
   },
 };
 </script>
@@ -828,5 +828,36 @@ $deepMainColor: #19692c;
   display: inline;
   position: absolute;
   left: 200px;
+}
+
+.filTitle{
+  color: #025757;
+  font-weight: bolder;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+::v-deep .QTLType .el-radio__label{
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+.bianKuang{
+
+  /* padding-top: 12%; */
+  background: linear-gradient(to left, #04afaf, #04afaf) left top no-repeat,
+  linear-gradient(to bottom, #04afaf, #04afaf) left top no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) right top no-repeat,
+  linear-gradient(to bottom, #04afaf, #04afaf) right top no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) left bottom no-repeat,
+  linear-gradient(to bottom, #04afaf, #04afaf) left bottom no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) right bottom no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) right bottom no-repeat,
+  #f1f8f8;
+  background-size: 4px 20px, 20px 4px, 4px 20px, 20px 4px;
+  
+  border: 1px solid #037a7a;
+  position: relative;
+
+  padding:10px;
 }
 </style>

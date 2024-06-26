@@ -24,6 +24,13 @@ export default {
 .content{
   margin-left: 10px;
 }
+.catalog_content{
+  width: 90%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  top:30px
+}
 ul{
   width: 250px;
   border: #ebebeb solid 1px;

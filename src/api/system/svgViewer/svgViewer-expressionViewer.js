@@ -1,5 +1,7 @@
 // import axios from 'axios';
-import request from '../../../utils/request.js'
+// import request from '../../../utils/request.js'
+import request from '@/utils/request'
+// const request = reuqire('@/utils/request')
 // const instance = axios.create({
 //   baseURL: '/dev-api',
 //   timeout: 5000,
@@ -9,7 +11,7 @@ import request from '../../../utils/request.js'
 // });
 
 
-module.exports = function (t) {
+let svgV=function (t) {
   var n = {};
   function e(r) {
     if (n[r]) return n[r].exports;
@@ -11592,3 +11594,5 @@ module.exports = function (t) {
     })
   }
 }]);
+
+export default svgV

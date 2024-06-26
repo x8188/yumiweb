@@ -1,7 +1,7 @@
 <template>
   <div class="pca_content">
     <Title>PCA</Title>
-    <p>IIIustration of population structures based on Principal component analysis(PCA), chose the proper principal components(PCa)for X and Y axes to load a scatter plot. Each point represents an individual in the population, which is colored according to priori-knowledge-based classification. See Tutorial for more details.</p>
+    <p class="populationDetailP">{{$t('PCADe')}}</p>
     <div>
       <el-row :gutter="15">
         <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="80px">
@@ -11,7 +11,7 @@
                            :value="item.value" :disabled="item.disabled"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label-width="1px" label="" prop="field102" style="float: left;width: 120px">
+            <el-form-item label-width="1px" label="" prop="field102" style="float: left;width: 120px;margin-left:5px">
               <el-select v-model="formData.field102" @change="pcaChange(formData)">
                 <el-option v-for="(item, index) in field102Options" :key="index" :label="item.label"
                            :value="item.value" :disabled="item.disabled"></el-option>

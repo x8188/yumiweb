@@ -27,3 +27,11 @@ export const reqMultiFull = (type, fullData) =>
     method: "get",
     params: fullData
   });
+
+
+export const reqMultiFullNopage = (type, fullData) =>
+  request({
+    url: `/zeamap/expression/${type}Nopage`,
+    method: "get",
+    params: fullData
+  });

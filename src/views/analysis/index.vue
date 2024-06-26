@@ -3,8 +3,8 @@
       <div class="side-bar-container">
         <div class="menu-container" :class="{ hide }" >
       <div class="header">
-        <i v-show="!hide"  class="el-icon-s-fold" style="font-size: 30px;color: #489E38;" @click="changeShow"></i>
-        <i v-show="hide"  class="el-icon-s-unfold" style="font-size: 30px;color: #489E38;"  @click="changeShow"></i>
+        <i v-show="!hide"  class="el-icon-caret-top" style="font-size: 30px;color: #489E38;" @click="changeShow"></i>
+        <i v-show="hide"  class="el-icon-caret-bottom" style="font-size: 30px;color: #489E38;"  @click="changeShow"></i>
       </div>
         <div class="menu-list">
           <div class="menu-item">
