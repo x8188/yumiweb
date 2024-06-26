@@ -1,9 +1,9 @@
 <template>
   <div class="filter_page">
-    <div :class="{ fitershide: filterHide }" class="left-box">
+    <div :class="{ fitershide: filterHide }" class="left-box" style="background-color:#f4f4f4;padding: 10px 5px;">
       <span @click="filterHide = !filterHide" class="fiterShow">
-        <i v-if="filterHide" class="el-icon-s-fold"></i>
-        <i v-else class="el-icon-s-unfold"></i>
+        <i v-if="filterHide" class="el-icon-caret-top"></i>
+        <i v-else class="el-icon-caret-bottom"></i>
       </span>
 
       <el-form ref="elForm" v-show="filterHide" :model="formData" size="medium" :inline="true">
@@ -13,37 +13,43 @@
             <span @click="filter_page()" id="span-second">Filter</span>
             <span @click="resetForm">Reset</span>
           </el-col> -->
-              <el-form-item :label="$t('Germplasm')">
+              <el-form-item :label="`${$t('Germplasm')}：`">
                 <el-select v-model="formData.accession" placeholder="请选择Germplasm" clearable :style="{ width: '100%' }">
                   <el-option v-for="(item, index) in GermplasmOptions" :key="index" :label="item" :value="item"></el-option>
                 </el-select>
               </el-form-item>
 
-              <el-form-item :label="$t('Version')">
+              <el-form-item  :label="`${$t('Version')}：`">
                 <el-select v-model="formData.version" placeholder="请选择Version" clearable :style="{ width: '100%' }">
                   <el-option v-for="(item, index) in VersionOptions" :key="index" :label="item" :value="item"></el-option>
                 </el-select>
               </el-form-item>
 
-              <el-form-item :label="$t('UniqueName')">
-                <el-input placeholder="请输入Name" v-model="formData.uniquename"></el-input>
+              <el-form-item  :label="`${$t('UniqueName')}：`">
+                <!-- <el-input placeholder="请输入Name" v-model="formData.uniquename"></el-input> -->
+                <el-select v-model="formData.uniquename" placeholder="请选择Uniquename" clearable :style="{ width: '100%' }">
+                  <el-option v-for="(item, index) in UniqueNameOptions" :key="index" :label="item" :value="item"></el-option>
+                </el-select>
               </el-form-item>
 
-              <el-form-item :label="$t('CommonName')">
-                <el-input placeholder="请输入Name" v-model="formData.commonname"></el-input>
+              <el-form-item  :label="`${$t('CommonName')}：`">
+                <!-- <el-input placeholder="请输入Name" v-model="formData.commonname"></el-input> -->
+                <el-select v-model="formData.commonname" placeholder="请选择Commonname" clearable :style="{ width: '100%' }">
+                  <el-option v-for="(item, index) in CommonNameOptions" :key="index" :label="item" :value="item"></el-option>
+                </el-select>
               </el-form-item>
           
         </el-row>
 
                       <!-- <span style="color:#606266;font-size: 14px;font-weight: 700;">Chromosome</span> -->
         <el-row type="flex" justify="center">
-          <el-form-item :label="$t('Chr')">
+          <el-form-item :label="`${$t('Chr')}：`">
             <el-select v-model="formData.chrom" placeholder="请选择Chr" clearable :style="{ width: '100%' }">
               <el-option v-for="(item, index) in ChrOptions" :key="index" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <!-- <span style="color:#606266;font-size: 14px;font-weight: 700;">Location</span> -->
-          <el-form-item :label="$t('Location')">
+          <el-form-item :label="`${$t('Location')}：`">
             <div id="inner_input">
             <el-input placeholder="请输入最小值" v-model="formData.start" number @input="handleinput"></el-input>
             <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
@@ -69,12 +75,12 @@
             <el-row type="flex" justify="center">
               <div class="footer">
                 <el-button size="small" @click="resetForm()" style="margin-right: 15px;">
-                  <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
-                  <span style="color: #20AE35">{{$t('reset')}}</span>
+                  <SvgIcon icon-class="CLEAR" color="04afaf" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
+                  <span style="color: #04afaf">{{$t('reset')}}</span>
                 </el-button>
-                <el-button type="primary" size="small" @click="filter_page()">
-                  {{$t('search')}}
+                <el-button type="primary" size="small" @click="filter_page()" style="">
                   <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
+                  {{$t('search')}}
                 </el-button>
               </div>
             </el-row>
@@ -82,33 +88,33 @@
     </div>
     <div class="buttom_box">
       <div style="text-align: center;align-items: center; margin-bottom: 10px;line-height: 30px;margin-top: 10px;">
-        <p style="display:inline;font-size:25px;">{{$t('GenomicsTable')}}</p>
+        <p style="display:inline;font-size:25px;color:#136649;font-weight:bolder;font-family:'Times New Roman';">{{$t('GenomicsTable')}}</p>
         <el-button type="primary" icon="el-icon-download" @click="handleExport">{{$t('download')}}</el-button>
       </div>
 
-      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark"
+      <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" stripe
         @selection-change="handleSelectionChange" v-loading="loading" element-loading-text="拼命加载中....">
         <!-- 展示的条目 -->
         <el-table-column type="selection" width="55" @click="getVID()">
         </el-table-column>
 
-        <el-table-column :label="$t('Name')" show-overflow-tooltip>
+        <el-table-column :label="$t('Name')" show-overflow-tooltip min-width=180 sortable>
           <template slot-scope="scope">
             <span style="cursor:pointer;color:rgb(64,158,255)" @click="handleClick(scope.row)">{{ scope.row.name
             }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="uniquename" :label="$t('UniqueName')" width="180">
+        <el-table-column prop="uniquename" :label="$t('UniqueName')" min-width="180" sortable>
         </el-table-column>
-        <el-table-column prop="commonname" :label="$t('CommonName')" width="180">
+        <el-table-column prop="commonname" :label="$t('CommonName')" min-width="180" sortable>
         </el-table-column>
-        <el-table-column prop="chrom" :label="$t('CHROM')" width="180">
+        <el-table-column prop="chrom" :label="$t('CHROM')" max-width="80" sortable>
         </el-table-column>
-        <el-table-column prop="start" :label="$t('Start')" width="180">
+        <el-table-column prop="start" :label="$t('Start')" min-width="80" sortable>
         </el-table-column>
-        <el-table-column prop="end" :label="$t('End')" width="180">
+        <el-table-column prop="end" :label="$t('End')" min-width="80" sortable>
         </el-table-column>
-        <el-table-column prop="strand" :label="$t('Strand')" width="180">
+        <el-table-column prop="strand" :label="$t('Strand')" max-width="50" sortable>
         </el-table-column>
       </el-table>
       <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
@@ -121,7 +127,9 @@ import {
   getSelectGermplasm,
   getSelectVersion,
   getSelectChr,
-  getSelectType
+  getSelectType,
+  getUniqueName,
+  getCommonName
 } from '@/api/Genomics/getSelectOptions';
 import { toDetailPage } from '@/api/Genomics/toDetail';
 import { Search } from '@/api/Genomics/search';
@@ -151,15 +159,13 @@ export default {
       tableData: [],
       multipleSelection: [],
       formData: {
-        accession: "",
-        version: "",
+        accession: "LCDI1",
+        version: "1",
         chrom: "chr8",
-        start: "222267508",
+        start:"222267508",
         end: "239266180",
-        // name: "",
         commonname: "",
-        // description: "",
-        uniquename:"GENE",
+        uniquename:"GENE.asmbl_3.p1",
       },
       loading: true,
       rules: {
@@ -183,7 +189,9 @@ export default {
       ChrOptions: ['chr1','chr2','chr3','chr4','chr5','chr6','chr7','chr8','chr9','chr10'],
       filterHide: true,
       TypeOptions: [],
-      nameOptions: []
+      nameOptions: [],
+      UniqueNameOptions:[],
+      CommonNameOptions:[]
     }
   },
   computed: {},
@@ -306,6 +314,7 @@ export default {
     // 筛选页面
     filter_page() {
       this.loading = true
+
       Search(this.formData, this.queryParams).then(res => {
         const res11 = this.eidtMsg(res.rows)
         this.tableData = res11
@@ -329,6 +338,21 @@ export default {
           this.formData.version = this.VersionOptions[0]
         }).catch(err => {
         })
+
+        await getUniqueName().then(res => {
+          // this.UniqueNameOptions = res.rows.slice(0,100)
+          this.UniqueNameOptions = res.rows
+          this.formData.uniquename = this.UniqueNameOptions[0]
+        }).catch(err => {
+        })
+        
+        await getCommonName().then(res => {
+          this.CommonNameOptions = res.data
+          this.formData.commonname = this.CommonNameOptions[0]
+        }).catch(err => {
+
+        })
+        
       // getSelectChr().then(res => {
       //   this.ChrOptions = res.rows
       // }).catch(err => {
@@ -336,20 +360,28 @@ export default {
       // getSelectType().then(res => {
       //   this.nameOptions = res.rows
       // })
-      Search(this.formData, this.queryParams).then(res => {
-        const res11 = this.eidtMsg(res.rows)
-        this.tableData = res11
-        this.total = res.total
-        this.loading = false
-      })
+      this.formData={
+        accession: "LCDI1",
+        version: "1",
+        chrom: "chr8",
+        start:"222267508",
+        end: "239266180",
+        commonname: "",
+        uniquename:"GENE.asmbl_3.p1",
+      },
+      this.filter_page()
+      // Search(this.formData, this.queryParams).then(res => {
+      //   const res11 = this.eidtMsg(res.rows)
+      //   this.tableData = res11
+      //   this.total = res.total
+      //   this.loading = false
+      // })
     }
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .filter_page {
-  padding-right: 20px;
-  padding-left: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -400,11 +432,13 @@ export default {
 
 .fiterShow i {
   font-size: 30px;
-  color: #489e38;
+  color: #40878f;
   cursor: pointer;
   margin: 10px 10px 10px 5px;
   // margin: 10px;
   float: left;
+  z-index: 99;
+  position: relative;
 }
 
 .buttom_box {
@@ -413,9 +447,11 @@ export default {
   overflow: hidden;
   border: 0px solid;
 
+  padding-bottom: 5px;
+
   .el-button {
     float: right;
-
+    margin-right: 10px;
   }
 
   .el-table {
@@ -431,4 +467,13 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+
+::v-deep .el-table .el-table__header-wrapper tr th {
+	// background-color: #1FB864 !important;
+  background-color: #40878f !important;
+	color: rgb(255, 255, 255);
+}
+::v-deep .el-form-item__label{
+    color: #337177;
+  }
 </style>

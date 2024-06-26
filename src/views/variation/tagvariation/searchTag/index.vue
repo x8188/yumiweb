@@ -1,14 +1,14 @@
 <template>
     <div class="filter_page">
-        <div :class="{ fitershide: filterHide }" class="left-box">
-            <div @click="filterHide = !filterHide" class="fiterShow">
-                <i v-if="filterHide" class="el-icon-s-fold"></i>
-                <i v-else class="el-icon-s-unfold"></i>
-            </div>
+        <div :class="{ fitershide: filterHide }" class="left-box" style="background-color:#f4f4f4;padding: 10px 5px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);">
+            <span @click="filterHide = !filterHide" class="fiterShow">
+                <i v-if="filterHide" class="el-icon-caret-top"></i>
+                <i v-else class="el-icon-caret-bottom"></i>
+            </span>
             <el-row :gutter="12" class="filter_box">
-                <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium">
-                    
-                    <el-col :span="6">
+                <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium" :inline="true">
+
+                    <el-row :gutter="24" class="filter_box" type="flex" justify="center">
                         <el-form-item label="Reference" prop="accession">
                             <el-select v-model="formData.accession" placeholder="请选择Reference" clearable
                                 :style="{ width: '100%' }">
@@ -16,8 +16,6 @@
                                     :disabled="item.disabled"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
                         <el-form-item label="Version" prop="version">
                             <el-select v-model="formData.version" placeholder="请选择Version" clearable
                                 :style="{ width: '100%' }">
@@ -25,8 +23,6 @@
                                     :disabled="item.disabled"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
                         <el-form-item label="Population" prop="alias">
                             <el-select v-model="formData.population" placeholder="请选择Population" clearable
                                 :style="{ width: '100%' }">
@@ -34,8 +30,6 @@
                                     :disabled="item.disabled"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
                         <el-form-item label="Analysis" prop="description">
                             <el-select v-model="formData.description" placeholder="请选择Analysis" clearable
                                 :style="{ width: '100%' }">
@@ -43,34 +37,35 @@
                                     :disabled="item.disabled"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
+                    
+                    </el-row>
+                    <el-row :gutter="24" class="filter_box" type="flex" justify="center">
                         <el-form-item label="Chr" prop="chr">
                             <el-select v-model="formData.chr" placeholder="请选择Region" clearable :style="{ width: '100%' }">
                                 <el-option v-for="(item, index) in chrOptions" :key="index" :value="item"
                                     :disabled="item.disabled"></el-option>
                             </el-select>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
+
                         <div id="inner_input">
                             <el-input placeholder="start" v-model="formData.start" number @input="handleinput"></el-input>
                             <div style="height: 36px; line-height: 36px;font-size: 18px; font-weight: 700;">---</div>
                             <el-input placeholder="end" v-model="formData.end" number @input="handleinput1"></el-input>
                         </div>
-                    </el-col>
-                    <el-col>
-          <div  class="footer">
-        <el-button size="small" @click="resetForm" style="margin-right: 15px;">
-          <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
-          <span style="color: #20AE35">清空</span>
-        </el-button>
-        <el-button type="primary" size="small" @click="filter_page()">
-          查询
-            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
-        </el-button>
-      </div>
-        </el-col>
+
+                    </el-row>
+                    <el-row  type="flex" justify="center">
+                        <div  class="footer">
+                        <el-button size="small" @click="resetForm" style="margin-right: 15px;">
+                        <SvgIcon icon-class="CLEAR" color="20AE35" style="margin-right: 7px;margin-left: 0;"></SvgIcon>
+                        <span style="color: #20AE35">清空</span>
+                        </el-button>
+                        <el-button type="primary" size="small" @click="filter_page()">
+                        查询
+                            <SvgIcon icon-class="search" color="fff" style="margin-left: 7px;"></SvgIcon>
+                        </el-button>
+                    </div>
+                    </el-row>
                 </el-form>
             </el-row>
         </div>
@@ -364,10 +359,110 @@ export default {
     }
 }
 </script>
-<style lang="scss"> .filter_page {
+<style lang="scss" scoped> 
+.filter_page {
+  display: flex;
+  flex-direction: column;
+}
+#inner_input {
+  display: flex;
+  .el-input {
+    flex: 1;
+  }
+}
+.left-box {
+
+  .el-form {
+    width: 100%;
+    margin-top: 10px;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+
+    .el-col {
+      margin: 0 auto;
+      //  width: 300px;
+      width: 80%;
+
+
+    }
+
+    #col-one {
+      display: flex;
+      padding-left: 6px;
+      padding-right: 6px;
+
+      span {
+        flex: 1;
+        text-align: center;
+      }
+
+      #span-second {
+        color: #409EFF;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.filterDiv {
+  margin-right: 10px;
+}
+
+.fiterShow i{
+  font-size: 30px;
+  color: #489e38;
+  cursor: pointer;
+  margin: 10px 10px 10px 5px;
+  // margin: 10px;
+  float: left;
+  z-index: 99;
+  position: relative;
+}
+
+.buttom_box {
+  flex: 1;
+  overflow: hidden;
+  overflow: hidden;
+  border: 0px solid;
+
+  .el-button {
+    float: right;
+
+  }
+
+  .el-table {
+    margin-left: 15px;
+  }
+
+  .pagination-container {
+    margin-left: 15px;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+::v-deep .el-table .el-table__header-wrapper tr th {
+	// background-color: #1FB864 !important;
+  background-color: #40878f !important;
+	color: rgb(255, 255, 255);
+}
+::v-deep .el-form-item__label{
+    color: #337177;
+  }
+ </style>
+  
+
+<!-- <style lang="scss"> 
+.filter_page {
      padding-right: 20px;
      padding-left: 20px;
      display: flex;
+  flex-direction: column;
+
  }
 
  .filter_box {
@@ -463,4 +558,5 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
- </style>
+ </style> -->
+

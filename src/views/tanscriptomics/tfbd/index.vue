@@ -1,164 +1,11 @@
 <template>
-  <div class="app-container">
-    <!-- <el-form
-      :model="queryParams"
-      ref="queryForm"
-      size="small"
-      :inline="true"
-      v-show="showSearch"
-      label-width="68px"
-    >
-      <el-form-item label="基因名" prop="tfbdName">
-        <el-input
-          v-model="queryParams.tfbdName"
-          placeholder="请输入基因名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="组群" prop="tfbdFamily">
-        <el-input
-          v-model="queryParams.tfbdFamily"
-          placeholder="请输入组群"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="simplename" prop="tfbdSimplename">
-        <el-input
-          v-model="queryParams.tfbdSimplename"
-          placeholder="请输入simplename"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="genev4" prop="tfbdGenev4">
-        <el-input
-          v-model="queryParams.tfbdGenev4"
-          placeholder="请输入genev4"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="genev3" prop="tfbdGenev3">
-        <el-input
-          v-model="queryParams.tfbdGenev3"
-          placeholder="请输入genev3"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="class" prop="tfbdClass">
-        <el-input
-          v-model="queryParams.tfbdClass"
-          placeholder="请输入class"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="AtID" prop="tfbdAtid">
-        <el-input
-          v-model="queryParams.tfbdAtid"
-          placeholder="请输入AtID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="atsimplename" prop="tfbdAtsimplename">
-        <el-input
-          v-model="queryParams.tfbdAtsimplename"
-          placeholder="请输入atsimplename"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="description" prop="tfbdDescription">
-        <el-input
-          v-model="queryParams.tfbdDescription"
-          placeholder="请输入description"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="analysisID" prop="tfbdAnalysisid">
-        <el-input
-          v-model="queryParams.tfbdAnalysisid"
-          placeholder="请输入analysisID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          icon="el-icon-search"
-          size="mini"
-          @click="handleQuery"
-          >搜索</el-button
-        >
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-          >重置</el-button
-        >
-      </el-form-item>
-    </el-form>
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['zeamap:tfbd:add']"
-          >新增</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['zeamap:tfbd:edit']"
-          >修改</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['zeamap:tfbd:remove']"
-          >删除</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['zeamap:tfbd:export']"
-          >导出</el-button
-        >
-      </el-col>
-      <right-toolbar
-        :showSearch.sync="showSearch"
-        @queryTable="getList"
-      ></right-toolbar>
-    </el-row> -->
+  <div>
     <div class="tableDiv">
-      <div :class="{ fitershide: filterHide }" class="filterDiv">
-        <div @click="filterHide = !filterHide" class="fiterShow">
-          <i v-if="filterHide" class="el-icon-s-fold"></i>
-          <i v-else class="el-icon-s-unfold"></i>
-        </div>
+      <div :class="{ fitershide: filterHide }" class="filterDiv" style="background-color:#f4f4f4;padding: 10px 5px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);">
+        <span @click="filterHide = !filterHide" class="fiterShow">
+          <i v-if="filterHide" class="el-icon-caret-top"></i>
+          <i v-else class="el-icon-caret-bottom"></i>
+        </span>
         <div v-show="filterHide" v-loading="filterloading">
           <!-- <div>
             <i class="el-icon-refresh-left refFilter" @click="reset"></i>
@@ -168,10 +15,9 @@
             :model="formData"
             :rules="rules"
             size="medium"
-            label-width="100px"
-            label-position="top"
-            style="width: 90%"
+            :inline="true"
           >
+          <el-row :gutter="24" type="flex" justify="center">
             <el-form-item label="Reference" prop="reference">
               <el-select
                 filterable
@@ -242,6 +88,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+          
+          </el-row>
+          <el-row :gutter="24" type="flex" justify="center">
             <el-form-item label="TF Family" prop="tf">
               <el-select
                 filterable
@@ -303,61 +152,49 @@
                 autocomplete="off"
               ></el-input>
             </el-form-item>
+          
+        </el-row>
           </el-form>
           <!-- <el-button type="" @click="updata">筛选</el-button> -->
-          <div class="footer">
+          <el-row  type="flex" justify="center">
+            <div class="footer">
             <el-button size="small" @click="reset" style="margin-right: 15px">
               <SvgIcon
                 icon-class="CLEAR"
-                color="20AE35"
+                color="04afaf"
                 style="margin-right: 7px; margin-left: 0"
               ></SvgIcon>
-              <span style="color: #20ae35">清空</span>
+              <span style="color: #04afaf">清空</span>
             </el-button>
             <el-button type="primary" size="small" @click="updata">
-              查询
               <SvgIcon
                 icon-class="search"
                 color="fff"
                 style="margin-left: 7px"
-              ></SvgIcon>
+              ></SvgIcon>查询
             </el-button>
           </div>
+
+
+          </el-row>
+
         </div>
       </div>
-      <div class="tabelhide tableclass">
-        <div class="data-top">
-          <div class="info-nums">
-            <span>Show</span>
-            <el-select
-              filterable
-              @change="changeResultsNums"
-              v-model="page.pageSize"
-              style="width: 80px; margin: 0 10px"
-            >
-              <el-option label="10" :value="10"></el-option>
-              <el-option label="15" :value="15"></el-option>
-              <el-option label="20" :value="20"></el-option>
-              <el-option label="25" :value="25"></el-option>
-              <el-option label="50" :value="50"></el-option>
-            </el-select>
-            <span>results</span>
-          </div>
-          <div class="download-button">
+        <div style="text-align: center;align-items: center; margin-bottom: 10px;line-height: 30px;margin-top: 10px;">
+            <p style="display:inline;font-size:25px;color:#136649;font-weight:bolder;font-family:'Times New Roman';">Transcription factor binding site</p>
             <el-button
               @click="downloadData()"
               type="primary"
               icon="el-icon-download"
-              style="width: 100px"
+              style="width: 100px;float:right;"
               >下载</el-button
             >
           </div>
-        </div>
-        <!-- v-loading="loading" -->
         <el-table
           :data="tfbdList"
           @selection-change="handleSelectionChange"
           v-loading="tableloading"
+          
         >
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="accession" align="center" prop="accession" />
@@ -433,60 +270,6 @@
         />
       </div>
     </div>
-    <!-- @pagination="getList" -->
-
-    <!-- 添加或修改Transcriptomics对话框 -->
-    <!-- <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="基因名" prop="tfbdName">
-          <el-input v-model="form.tfbdName" placeholder="请输入基因名" />
-        </el-form-item>
-        <el-form-item label="组群" prop="tfbdFamily">
-          <el-input v-model="form.tfbdFamily" placeholder="请输入组群" />
-        </el-form-item>
-        <el-form-item label="simplename" prop="tfbdSimplename">
-          <el-input
-            v-model="form.tfbdSimplename"
-            placeholder="请输入simplename"
-          />
-        </el-form-item>
-        <el-form-item label="genev4" prop="tfbdGenev4">
-          <el-input v-model="form.tfbdGenev4" placeholder="请输入genev4" />
-        </el-form-item>
-        <el-form-item label="genev3" prop="tfbdGenev3">
-          <el-input v-model="form.tfbdGenev3" placeholder="请输入genev3" />
-        </el-form-item>
-        <el-form-item label="class" prop="tfbdClass">
-          <el-input v-model="form.tfbdClass" placeholder="请输入class" />
-        </el-form-item>
-        <el-form-item label="AtID" prop="tfbdAtid">
-          <el-input v-model="form.tfbdAtid" placeholder="请输入AtID" />
-        </el-form-item>
-        <el-form-item label="atsimplename" prop="tfbdAtsimplename">
-          <el-input
-            v-model="form.tfbdAtsimplename"
-            placeholder="请输入atsimplename"
-          />
-        </el-form-item>
-        <el-form-item label="description" prop="tfbdDescription">
-          <el-input
-            v-model="form.tfbdDescription"
-            placeholder="请输入description"
-          />
-        </el-form-item>
-        <el-form-item label="analysisID" prop="tfbdAnalysisid">
-          <el-input
-            v-model="form.tfbdAnalysisid"
-            placeholder="请输入analysisID"
-          />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog> -->
-  </div>
 </template>
 
 <script>
@@ -581,29 +364,29 @@ export default {
       filterloading: false,
     };
   },
-  async created() {
-    // this.getList();
-    await this.getFilterOp();
-    this.formData.reference = this.referenceOptions[0].value;
-    await this.getVersionOp();
+  // async created() {
+  //   // this.getList();
+  //   await this.getFilterOp();
+  //   this.formData.reference = this.referenceOptions[0].value;
+  //   await this.getVersionOp();
 
-    this.updata();
-    // let data = {
-    //   accession: this.formData.reference,
-    //   version: this.formData.version,
-    //   analysis_name: null,
-    //   info_name: null,
-    //   info_simplename: null,
-    //   info_family: null,
-    //   target_gene: null,
-    //   p_value: null,
-    // };
-    // let pageParams = {
-    //   pageNum: 1,
-    //   pageSize: 10,
-    // };
-    // this.getTaleData(data, pageParams);
-  },
+  //   this.updata();
+  //   // let data = {
+  //   //   accession: this.formData.reference,
+  //   //   version: this.formData.version,
+  //   //   analysis_name: null,
+  //   //   info_name: null,
+  //   //   info_simplename: null,
+  //   //   info_family: null,
+  //   //   target_gene: null,
+  //   //   p_value: null,
+  //   // };
+  //   // let pageParams = {
+  //   //   pageNum: 1,
+  //   //   pageSize: 10,
+  //   // };
+  //   // this.getTaleData(data, pageParams);
+  // },
   methods: {
     onInputRebate() {
       // 获取当前表单输入的返点
@@ -923,21 +706,70 @@ export default {
 <style lang="scss" scoped>
 .tableDiv {
   display: flex;
+  flex-direction: column;
+  
 }
 .tableclass {
   // 很神奇，加上width：0之后，flex才不会突破父元素宽度。
-  width: 0;
-  min-width: 0;
-  flex-grow: 1;
+  // width: 0;
+  // min-width: 0;
+  // flex-grow: 1;
+  flex: 1;
+  overflow: hidden;
+  overflow: hidden;
+  border: 0px solid;
+
+  .el-button {
+    float: right;
+
+  }
+
+  .el-table {
+    margin-left: 15px;
+  }
+
+  .pagination-container {
+    margin-left: 15px;
+  }
 }
 .filterDiv {
-  margin-right: 10px;
+  .el-form {
+    width: 100%;
+    margin-top: 10px;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+
+    .el-col {
+      margin: 0 auto;
+      //  width: 300px;
+      width: 80%;
+
+
+    }
+
+    #col-one {
+      display: flex;
+      padding-left: 6px;
+      padding-right: 6px;
+
+      span {
+        flex: 1;
+        text-align: center;
+      }
+
+      #span-second {
+        color: #409EFF;
+        cursor: pointer;
+      }
+    }
+  }
 }
-.fitershide {
-  // flex:none;
-  width: 300px;
-  flex-shrink: 0;
-}
+// .fitershide {
+//   // flex:none;
+//   width: 300px;
+//   flex-shrink: 0;
+// }
 
 .refFilter {
   font-size: 25px;
@@ -949,10 +781,14 @@ export default {
 }
 .fiterShow i {
   font-size: 30px;
-  color: #489e38;
+  color: #40878f;
   cursor: pointer;
   margin: 10px 10px 10px 5px;
   // margin: 10px;
+
+  float: left;
+  z-index: 99;
+  position: relative;
 }
 // // 此处要么去掉scoped，要么加上v-deep。推测原因是有el-button这个el自带组件
 // ::v-deep .hideclass {
@@ -969,9 +805,18 @@ export default {
   margin-bottom: 10px;
 }
 .footer {
-  margin-top: 20px;
-  margin-right: 20px;
+  // margin-top: 20px;
+  // margin-right: 20px;
   display: flex;
   justify-content: flex-end;
 }
+
+::v-deep .el-table .el-table__header-wrapper tr th {
+	// background-color: #1FB864 !important;
+  background-color: #40878f !important;
+	color: rgb(255, 255, 255);
+}
+::v-deep .el-form-item__label{
+    color: #337177;
+  }
 </style>

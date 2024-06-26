@@ -6,23 +6,23 @@
           {{ viewerTitle }}
         </Title>
         <div class="tip-info" style="line-height: 26px">
-          Search QTLs by any combination of species, trait category, trait name
-          or regions.
+          {{$t('qtldeP')}}
         </div>
 
-        <div class="form-container">
+        <div class="form-container bianKuang">
           <div class="gene-select">
-            <span>QTL Type</span>
+            <span class="filTitle">{{$t("QTLType")}}</span>
             <div class="oneMarginLeft">
               <div>
                 <el-radio
                   v-model="qtlType"
                   label="association"
                   @input="changeType"
-                  >Association Mapping</el-radio
+                  class="QTLType"
+                  >{{$t("Association Mapping")}}</el-radio
                 >
-                <el-radio v-model="qtlType" label="linkage" @input="changeType"
-                  >Linkage Mapping</el-radio
+                <el-radio v-model="qtlType" label="linkage" @input="changeType" class="QTLType"
+                  >{{$t("Linkage Mapping")}}</el-radio
                 >
               </div>
             </div>
@@ -30,7 +30,7 @@
           <el-form ref="elform" :rules="rules" :model="formData">
             <div class="gene-select">
               <div class="reference-item select-item">
-                <span>Reference</span>
+                <span class="filTitle">{{$t("Reference")}}</span>
                 <el-form-item
                   class="oneMarginLeft"
                   style="margin-top: 12px"
@@ -53,7 +53,7 @@
                 </el-form-item>
               </div>
               <div class="version-item select-item">
-                <span>Version</span>
+                <span class="filTitle">{{$t("Version")}}</span>
                 <el-form-item
                   style="
                     position: absolute;
@@ -79,13 +79,14 @@
               </div>
             </div>
             <div class="germplasm-select">
-              <span>Trait Category</span>
+              <span class="filTitle">{{$t("Trait Category")}}</span>
               <div class="oneMarginLeft">
                 <el-select
                   v-model="formData.TraitCategory"
                   placeholder=""
                   clearable
                   filterable
+                  @change="changeCategory"
                 >
                   <el-option
                     v-for="(item, i) in options.TraitCategory"
@@ -97,15 +98,13 @@
               </div>
             </div>
             <div class="germplasm-select">
-              <span>Trait ID</span>
+              <span class="filTitle">{{$t("Trait ID")}}</span>
               <div class="oneMarginLeft">
                 <el-select
                   v-model="formData.TraitId"
                   filterable
-                  remote
-                  :remote-method="remoteMethod"
-                  @blur="TraitIdBlur"
                   clearable
+                  :disabled="assTraitID==undefined"
                 >
                   <el-option
                     v-for="(item, i) in options.TraitId"
@@ -117,7 +116,7 @@
               </div>
             </div>
             <div class="germplasm-select" v-show="qtlType == 'linkage'">
-              <span>Link Map</span>
+              <span class="filTitle">{{$t("Link Map")}}</span>
               <div class="oneMarginLeft">
                 <el-select
                   v-model="formData.LinkMap"
@@ -135,18 +134,18 @@
               </div>
             </div>
             <div class="region-select">
-              <span>Region</span>
+              <span class="filTitle">{{$t("Region")}}</span>
 
               <div class="region-select-form">
                 <el-radio-group v-model="region" @input="changeRegion">
                   <el-radio label="all">all</el-radio>
                   <el-radio label="range">range</el-radio>
-                  <el-radio label="flank">flank</el-radio>
+                  <!-- <el-radio label="flank">flank</el-radio> -->
                 </el-radio-group>
                 <div class="form-item" v-show="region == 'range'">
                   <div>
                     <div class="chr">
-                      <span>chr</span>
+                      <span>{{$t("chr")}}</span>
                       <el-form-item>
                         <el-select
                           v-model="formData.chr"
@@ -164,14 +163,14 @@
                       </el-form-item>
                     </div>
                     <div class="start">
-                      <span>start</span>
+                      <span>{{$t("start")}}</span>
                       <el-form-item prop="start">
                         <el-input v-model="formData.start" clearable></el-input>
                       </el-form-item>
                     </div>
                     <span class="start-to-end"></span>
                     <div class="end">
-                      <span>end</span>
+                      <span>{{$t("end")}}</span>
                       <el-form-item prop="end">
                         <el-input v-model="formData.end" clearable></el-input>
                       </el-form-item>
@@ -182,11 +181,11 @@
             </div>
 
             <div class="region-select" v-show="qtlType == 'association'">
-              <span>QTLs</span>
+              <span class="filTitle">QTLs</span>
               <div class="region-select-form">
                 <div class="form-item">
                   <div class="start">
-                    <span>Leading -log10(P)</span>
+                    <span>{{$t("Leading")}} -log10(P)</span>
                     <el-form-item prop="QTLstart">
                       <el-input v-model="formData.QTLstart" clearable></el-input>
                     </el-form-item>
@@ -202,7 +201,7 @@
               </div>
             </div>
             <div class="region-select" v-show="qtlType == 'linkage'">
-              <span>QTLs</span>
+              <span class="filTitle">QTLs</span>
               <div class="region-select-form">
                 <div class="form-item">
                   <div class="start">
@@ -228,10 +227,10 @@
                 ><SvgIcon
                   icon-class="refresh-left"
                   style="margin-right: 5px" /></i
-              >Reset
+              >{{$t("reset")}}
             </el-button>
             <el-button type="primary" icon="el-icon-check" @click="firstGet()"
-              >Submit</el-button
+              >{{$t("search")}}</el-button
             >
           </div>
         </div>
@@ -295,6 +294,12 @@ export default {
         start: [{ validator: this.validatorNum, trigger: "change" }],
         end: [{ validator: this.validatorNum, trigger: "change" }],
       },
+
+      assTraitID:undefined,
+
+      traitMAP:{},
+
+      CategoryMAP:{}
     };
   },
   async created() {
@@ -322,6 +327,14 @@ export default {
     },
     async getdata() {
       this.$emit("loadingUpdata", true);
+
+      
+      let res = await this.$API.Qtl.reqtraitMAP();
+
+      res.rows.forEach((x)=>{
+        this.traitMAP[x['traitId']]=x['traitName']
+      })
+
       if (this.qtlType == "association") {
         let res1 = await this.$API.Qtl.reqselectaccession();
         if (res1.code == 200) {
@@ -333,18 +346,22 @@ export default {
 
         let res3 = await this.$API.Qtl.reqselecttraitcategory();
         if (res3.code == 200) {
-          this.options.TraitCategory = res3.data.map((x) => ({
-            label: x,
-            value: x,
+          this.options.TraitCategory = res3.rows.map((x) => ({
+            label: x['traitTypeName'],
+            value: x['traitTypeName'],
           }));
+
+          res3.rows.forEach(x => {
+            this.CategoryMAP[x['traitTypeName']]=x['traitTypeId']
+          });
         }
-        let res4 = await this.$API.Qtl.reqselecttraitid("null");
-        if (res4.code == 200) {
-          this.options.TraitId = res4.data.map((x) => ({
-            label: x,
-            value: x,
-          }));
-        }
+        // let res4 = await this.$API.Qtl.reqselecttraitid("null");
+        // if (res4.code == 200) {
+        //   this.options.TraitId = res4.data.map((x) => ({
+        //     label: x,
+        //     value: x,
+        //   }));
+        // }
       } else {
         let res1 = await this.$API.Qtl.reqlinkageaccession();
         if (res1.code == 200) {
@@ -361,13 +378,13 @@ export default {
             value: x,
           }));
         }
-        let res4 = await this.$API.Qtl.reqlinkagetraitid("null");
-        if (res4.code == 200) {
-          this.options.TraitId = res4.data.map((x) => ({
-            label: x,
-            value: x,
-          }));
-        }
+        // let res4 = await this.$API.Qtl.reqlinkagetraitid("null");
+        // if (res4.code == 200) {
+        //   this.options.TraitId = res4.data.map((x) => ({
+        //     label: x,
+        //     value: x,
+        //   }));
+        // }
         let res5 = await this.$API.Qtl.reqlinkagemap();
         if (res5.code == 200) {
           this.options.LinkMap = res5.data.map((x) => ({
@@ -407,52 +424,54 @@ export default {
       }
       this.formData.version = this.options.version[0].value;
     },
-    async TraitIdBlur() {
-      if (this.qtlType == "association") {
-        let res4 = await this.$API.Qtl.reqselecttraitid("null");
-        if (res4.code == 200) {
-          this.options.TraitId = res4.data.map((x) => ({
-            label: x,
-            value: x,
-          }));
-        }
-        // this.formData.TraitId="null"
-      } else {
-        let res4 = await this.$API.Qtl.reqlinkagetraitid("null");
-        if (res4.code == 200) {
-          this.options.TraitId = res4.data.map((x) => ({
-            label: x,
-            value: x,
-          }));
-        }
-        // this.formData.TraitId="null"
-      }
-    },
-    async remoteMethod(query) {
-      if (query !== "") {
-        if (this.qtlType == "association") {
-          let res4 = await this.$API.Qtl.reqselecttraitid(query);
-          if (res4.code == 200) {
-            this.options.TraitId = res4.data.map((x) => ({
-              label: x,
-              value: x,
-            }));
-          }
-          // this.formData.TraitId="null"
-        } else {
-          let res4 = await this.$API.Qtl.reqlinkagetraitid(query);
-          if (res4.code == 200) {
-            this.options.TraitId = res4.data.map((x) => ({
-              label: x,
-              value: x,
-            }));
-          }
-          // this.formData.TraitId="null"
-        }
-      } else {
-        this.options.TraitId = [];
-      }
-    },
+    //之前traitID是远程模糊匹配的功能 
+
+    // async TraitIdBlur() {
+    //   if (this.qtlType == "association") {
+    //     let res4 = await this.$API.Qtl.reqselecttraitid("null");
+    //     if (res4.code == 200) {
+    //       this.options.TraitId = res4.data.map((x) => ({
+    //         label: x,
+    //         value: x,
+    //       }));
+    //     }
+    //     // this.formData.TraitId="null"
+    //   } else {
+    //     let res4 = await this.$API.Qtl.reqlinkagetraitid("null");
+    //     if (res4.code == 200) {
+    //       this.options.TraitId = res4.data.map((x) => ({
+    //         label: x,
+    //         value: x,
+    //       }));
+    //     }
+    //     // this.formData.TraitId="null"
+    //   }
+    // },
+    // async remoteMethod(query) {
+    //   if (query !== "") {
+    //     if (this.qtlType == "association") {
+    //       let res4 = await this.$API.Qtl.reqselecttraitid(query);
+    //       if (res4.code == 200) {
+    //         this.options.TraitId = res4.data.map((x) => ({
+    //           label: x,
+    //           value: x,
+    //         }));
+    //       }
+    //       // this.formData.TraitId="null"
+    //     } else {
+    //       let res4 = await this.$API.Qtl.reqlinkagetraitid(query);
+    //       if (res4.code == 200) {
+    //         this.options.TraitId = res4.data.map((x) => ({
+    //           label: x,
+    //           value: x,
+    //         }));
+    //       }
+    //       // this.formData.TraitId="null"
+    //     }
+    //   } else {
+    //     this.options.TraitId = [];
+    //   }
+    // },
     async changeRegion() {
       if (this.region == "range") {
         let res = await this.$API.Qtl.reqselectchr();
@@ -584,6 +603,25 @@ export default {
     //       this.options = tem;
     //     }
     //   }
+
+    async changeCategory(){
+      this.formData.TraitId=undefined
+      this.assTraitID = this.CategoryMAP[this.formData.TraitCategory]
+      console.log(this.formData.TraitCategory)
+      
+      let res1 = await this.$API.Qtl.reqselecttraitid(this.assTraitID);
+      if (res1.code == 200) {
+          // console.log(res1.rows[0]['traitId'])
+          this.options.TraitId = res1.data.map((x) => ({
+            
+            label: this.traitMAP[x['traitId']],
+            value: this.traitMAP[x['traitId']],
+          }));
+      }
+
+      
+      
+    }
   },
   mounted() {
     this.$bus.$on("changeQtlPage", () => {
@@ -720,4 +758,51 @@ $deepMainColor: #19692c;
   position: absolute;
   left: 200px;
 }
+.filTitle{
+  color: #025757;
+  font-weight: bolder;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+::v-deep .QTLType .el-radio__label{
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+.bianKuang{
+
+  /* padding-top: 12%; */
+  background: linear-gradient(to left, #04afaf, #04afaf) left top no-repeat,
+  linear-gradient(to bottom, #04afaf, #04afaf) left top no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) right top no-repeat,
+  linear-gradient(to bottom, #04afaf, #04afaf) right top no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) left bottom no-repeat,
+  linear-gradient(to bottom, #04afaf, #04afaf) left bottom no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) right bottom no-repeat,
+  linear-gradient(to left, #04afaf, #04afaf) right bottom no-repeat,
+  #f1f8f8;
+  background-size: 4px 20px, 20px 4px, 4px 20px, 20px 4px;
+  
+  border: 1px solid #037a7a;
+  position: relative;
+
+  padding:10px;
+}
+
+// .box_right_Detail {
+//   display: inline-block;
+//   width: 25%;
+//   background:#037a7a;
+//   height: 30px;
+//   font-size: 18px;
+//   position: absolute;
+//   top: 0;
+//   left: 37%;
+//   padding: 4px 0px;
+//   color: #ffffff;
+//   border-radius: 0 0 10px 10px;
+
+//   text-align: center;
+// }
+
 </style>

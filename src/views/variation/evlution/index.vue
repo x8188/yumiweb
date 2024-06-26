@@ -2,8 +2,8 @@
     <div class="filter_page">
         <div :class="{ fitershide: filterHide }" class="left-box">
             <div @click="filterHide = !filterHide" class="fiterShow">
-                <i v-if="filterHide" class="el-icon-s-fold"></i>
-                <i v-else class="el-icon-s-unfold"></i>
+                <i v-if="filterHide" class="el-icon-caret-top"></i>
+                <i v-else class="el-icon-caret-bottom"></i>
             </div>
             <el-row :gutter="12" class="filter_box">
                 <el-form ref="elForm" v-show="filterHide" :model="formData" :rules="rules" size="medium">

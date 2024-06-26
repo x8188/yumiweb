@@ -32,3 +32,18 @@ export function getSelectType(){
         method:"get"
     })
 }
+
+export function getUniqueName(){
+    return request({
+        url:"/system/feature/selectUniqueName",
+        method:"get"
+    })
+}
+
+export function getCommonName(){
+    return request({
+        url:"/system/feature/selectCommonName",
+        method:"get"
+    })
+}
+

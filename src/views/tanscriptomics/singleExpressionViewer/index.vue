@@ -1,40 +1,48 @@
 <template>
-<div class="container-fluid">
-  <link rel="stylesheet" href="@/assets/styles/bootstrap.min.css">
   <div>
-    <div>
-      <p>Browse Gene expressions among different tissues. The overview plot on the left shows the highest value of each tissues in the subdivision plot on the right.
-        The gene expression data used here were from these researches:<br />
-        - B73: <a href="https://science.sciencemag.org/content/353/6301/814">Walley J W, Sartor R C, Shen Z, <i>et al</i>. Integration of omic networks in a developmental atlas of maize[J]. Science, 2016, 353(6301): 814-818.</a><br />
-        - SK: <a href="https://www.nature.com/articles/s41588-019-0427-6">Yang N, Liu J, Gao Q, <i>et al</i>. Genome assembly of a tropical maize inbred line provides insights into structural variation and crop improvement[J]. Nature genetics, 2019, 51(6): 1052.</a><br />
-        To search for Maize Gene expression on more tissues/treatments, please visit <a href="http://bar.utoronto.ca/eplant_maize/">ePlant_maize</a> and <a href="https://qteller.maizegdb.org/">MaizeGDB</a>.
-      </p>
-      <div class="form-group">
-        <input class="form-control" id="gene" value="" type="text" />
-        <input class="btn btn-primary"  id="search" type="button" value="search" >
-        <p id="geneExample" style="color: dodgerblue">click to use example gene Zm00001d000001</p>
-      </div>
-    </div>
-    <div>
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4>Expression Tissue Overview</h4></div>
-        <div class="panel-body">
-          <div id="example">
-            <div id="svgContainer"></div>
-            <div id="svgViewer">
-<!--              <input disabled="disabled" class="btn btn-primary" id="downloadTSV" type="button" value="download TSV">-->
+    <div class="app">
+    <el-card class="container-fluid bianKuang">
+      <link rel="stylesheet" href="@/assets/styles/bootstrap.min.css">
+      <div>
+        <div>
+          <p style="font-family:'Times New Roman'">{{$t('SingleDesP')}}<br />
+            <!-- - B73: <a href="https://science.sciencemag.org/content/353/6301/814">Walley J W, Sartor R C, Shen Z, <i>et al</i>. Integration of omic networks in a developmental atlas of maize[J]. Science, 2016, 353(6301): 814-818.</a><br />
+            - SK: <a href="https://www.nature.com/articles/s41588-019-0427-6">Yang N, Liu J, Gao Q, <i>et al</i>. Genome assembly of a tropical maize inbred line provides insights into structural variation and crop improvement[J]. Nature genetics, 2019, 51(6): 1052.</a><br />
+            To search for Maize Gene expression on more tissues/treatments, please visit <a href="http://bar.utoronto.ca/eplant_maize/">ePlant_maize</a> and <a href="https://qteller.maizegdb.org/">MaizeGDB</a>. -->
+          </p>
+          <div class="form-group">
+            <input class="form-control" id="gene" value="" type="text" />
+            <!-- <input class="btn btn-primary"  id="search" type="button" value="search" > -->
+            <el-button id="search" >{{$t('search')}}</el-button><span> ref:B73V5</span>
+            <p>{{$t('clickde')}} <span id="geneExample" style="color: dodgerblue">Zm00001eb000010</span></p>
+          </div>
+        </div>
+        <div style="background: #fff;;">
+          <div class="panel panel-default">
+            <div class="panel-heading"><Title>{{$t('Expression Tissue')}}</Title></div>
+            <div class="panel-body">
+              <div id="example">
+                <div id="svgContainer"></div>
+                <div id="svgViewer">
+    <!--              <input disabled="disabled" class="btn btn-primary" id="downloadTSV" type="button" value="download TSV">-->
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </el-card>
+
   </div>
-</div>
+
+
+  </div>
+
 </template>
 
 <script>
-  // import  svgViewer from '@/api/system/svgViewer/svgViewer-expressionViewer.js'
-  var svgViewer = require('@/api/system/svgViewer/svgViewer-expressionViewer.js')
+  import svgViewer from '@/api/system/svgViewer/svgViewer-expressionViewer.js'
+  // var svgViewer = require('@/api/system/svgViewer/svgViewer-expressionViewer.js')
   // import 'bootstrap/dist/css/bootstrap.css'
   // import '@/assets/styles/bootstrap.min.css';
   // import '@/assets/styles/style.css';
@@ -43,7 +51,10 @@
   // import '@/api/system/svgViewer/jquery-3.2.1.min.js'
 
   import request from '@/utils/request'
+  import title from '@/components/UnionStyle/title.vue';
+
   export default {
+  components: { title },
     mounted() {
       $(document).ready(function(){
         // var geneID = Drupal.settings.zmap_tissue_expression.geneID ? Drupal.settings.zmap_tissue_expression.geneID : '';
@@ -58,23 +69,17 @@
         console.log(ds)
 
 
-        // 伾H~]妾K伾L~V弾L~G幼 ~Glegend
-        // 第䷾@个伾O~B弾U°为伾L~E伾P«svg漾Z~Ddiv伾E~C糼
-        // 第乾L个伾O~B弾U°为弾L~G幼 ~Glabel漾Z~D个弾U°﻾L弾\~@壾Z10个
+
         var hotGradientSeparate = new svgViewer.HotGradientSeparate({
           el: '#svgContainer',
           width: 500,
           height: 32
         });
 
-        // 伾H~]妾K伾L~V表达輾G~Oviewer
-        // 第䷾@个伾O~B弾U°为伾L~E伾P«svg漾Z~Ddiv伾E~C糼
-        // 第乾L个伾O~B弾U°为svg漾Z~D路彾D﻾Lsvg輾\~@襾A弾L~I约孾Z纾X伾H¶﻾L伾M³伾\¨伾E~C糼 g漾Z~Dclass伾@¼为纾D纾G伾P~M
-        // 第䷾I个伾O~B弾U°为缾N·伾O~V漾Z~D弾I~@弾\~I纾D纾G弾U°纾D
-        // 第伾[~[个伾O~B弾U°为䷾J述伾H~]妾K伾L~V孾L弾H~P漾Z~DhotGradient孾^佾K
         var expressionViewer = new svgViewer.ExpressionViewer({
           el: '#svgViewer',
-          svgPath: '/svgViewer/ZEAMAP-MaizeDev-SVG-Stable.svg',
+          // svgPath: '/svgViewer/ZEAMAP-MaizeDev-SVG-Stable.svg',
+          svgPath: '/svgViewer/ZEAMAPtest.svg',
           // svgPath: 'http://www.zeamap.com/sites/all/modules/zmap_tissue_expression/theme/image/ZEAMAP-MaizeDev-SVG-Stable.svg',
           hotGradient: hotGradientSeparate,
           // downloadable: user_logged_in
@@ -88,7 +93,7 @@
         //点击默认值
         document.getElementById('geneExample').onclick = function () {
           // example 的值，按实际填写
-          document.getElementById('gene').value = 'Zm00001d000001';
+          document.getElementById('gene').value = 'Zm00001eb000010';
         }
 
         // 绑定输入gene ID，鼠标点击事件
@@ -131,6 +136,32 @@
             dataType: "json",
           });
 
+          // let data ={
+          //   "B73_6-7_internode": "Internode-short",
+          //   "B73_7-8_internode": "Internode-long",
+          //   "B73_Vegetative_Meristem_16-19_Day": "SAM",
+          //   "B73_Ear_Primordium_2-4_mm": "Ear-PrimordiumSmall",
+          //   "B73_Ear_Primordium_6-8_mm": "Ear-PrimordiumBig",
+          //   "B73_Embryo_20_DAP": "Kernel-GerminatingSmall",
+          //   "B73_Embryo_38_DAP": "Kernel-GerminatingBig",
+          //   "B73_Endosperm_12_DAP": "Kernel-Endosperm",
+          //   "B73_Endosperm_Crown_27_DAP": "Kernel-Crown",
+          //   "B73_Germinatin_Kernels_2_DAI": "Kernel-Kernel",
+          //   "B73_Pericarp_Aleurone_27_DAP": "Kernel-Pericarp",
+          //   "B73_Leaf_Zone_1_Symmetrical": "Leaf-YoungZone1",
+          //   "B73_Leaf_Zone_2_Stomatal": "Leaf-YoungZone2",
+          //   "B73_Leaf_Zone_3_Growth": "Leaf-YoungZone3",
+          //   "B73_Mature_Leaf_8": "Leaf-Mature",
+          //   "B73_Primary_Root_5_Days": "Root-Primary",
+          //   "B73_Root_Cortex_5_Days": "Root-Cortex",
+          //   "B73_Root_Elongation_Zone_5_Days": "Root-Elongation",
+          //   "B73_Root_Meristem_Zone_5_Days": "Root-Division",
+          //   "B73_Secondary_Root_7-8_Days": "Root-Secondary",
+          //   "B73_Mature_Pollen": "Tassel-Pollen",
+          //   "B73_Female_Spikelet_Collected_on_day_as_silk": "Ear-Ear",
+          //   "B73_Silk": "Ear-Silk"
+          // }
+
           tissueMap=data.data;
           //加
           // tissueMap = {
@@ -155,12 +186,37 @@
           ds.remoteSelectOne(retriveExpUrl).then(function (gene) {
           // 	console.log(gene)
 
+          // let gene={
+          //     "geneID": "Zm00001d000001",
+          //     "B73_6-7_internode": "534.3606667",
+          //     "B73_7-8_internode": "937.3466667",
+          //     "B73_Vegetative_Meristem_16-19_Day": "1466.885",
+          //     "B73_Ear_Primordium_2-4_mm": "50.9252",
+          //     "B73_Ear_Primordium_6-8_mm": "54.59923333",
+          //     "B73_Embryo_20_DAP": "1.584866667",
+          //     "B73_Embryo_38_DAP": "11.17333667",
+          //     "B73_Endosperm_12_DAP": "0",
+          //     "B73_Endosperm_Crown_27_DAP": "1.27837",
+          //     "B73_Germinatin_Kernels_2_DAI": "21.5213",
+          //     "B73_Pericarp_Aleurone_27_DAP": "11.22052333",
+          //     "B73_Leaf_Zone_1_Symmetrical": "565.1873333",
+          //     "B73_Leaf_Zone_2_Stomatal": "169.073",
+          //     "B73_Leaf_Zone_3_Growth": "48.85053333",
+          //     "B73_Mature_Leaf_8": "6.38015",
+          //     "B73_Primary_Root_5_Days": "4.403233333",
+          //     "B73_Root_Cortex_5_Days": "4.862066667",
+          //     "B73_Root_Elongation_Zone_5_Days": "2.22319",
+          //     "B73_Root_Meristem_Zone_5_Days": "7.265293333",
+          //     "B73_Secondary_Root_7-8_Days": "7.57871",
+          //     "B73_Mature_Pollen": "1.56354",
+          //     "B73_Female_Spikelet_Collected_on_day_as_silk": "136.839",
+          //     "B73_Silk": "1376.446667"
+          //   }
+
           //加测试数据
           // ds.selectOne(geneID).then(function (gene) {
             // gene = {"geneID":"Zm00001d000001","B73_6-7_internode":"534.3606667","B73_7-8_internode":"937.3466667","B73_Vegetative_Meristem_16-19_Day":"1466.885","B73_Ear_Primordium_2-4_mm":"50.9252","B73_Ear_Primordium_6-8_mm":"54.59923333","B73_Embryo_20_DAP":"1.584866667","B73_Embryo_38_DAP":"11.17333667","B73_Endosperm_12_DAP":"0","B73_Endosperm_Crown_27_DAP":"1.27837","B73_Germinatin_Kernels_2_DAI":"21.5213","B73_Pericarp_Aleurone_27_DAP":"11.22052333","B73_Leaf_Zone_1_Symmetrical":"565.1873333","B73_Leaf_Zone_2_Stomatal":"169.073","B73_Leaf_Zone_3_Growth":"48.85053333","B73_Mature_Leaf_8":"6.38015","B73_Primary_Root_5_Days":"4.403233333","B73_Root_Cortex_5_Days":"4.862066667","B73_Root_Elongation_Zone_5_Days":"2.22319","B73_Root_Meristem_Zone_5_Days":"7.265293333","B73_Secondary_Root_7-8_Days":"7.57871","B73_Mature_Pollen":"1.56354","B73_Female_Spikelet_Collected_on_day_as_silk":"136.839","B73_Silk":"1376.446667"},
             console.log("gene",gene)
-
-
 
 
 
@@ -242,11 +298,11 @@
             // bind操作的目的：用于绑定鼠标hover事件
             // 回调函数返回的字符串为要显示的内容Html
             expressionViewer.bind(function (tissue) {
-              return `<p>GeneID: <a href="/feature_info/${geneID}">${geneID}</a></p>`
+              return `<p>GeneID:${geneID}</p>`
                 + `<p>Tissue: ${vTok(tissueMap, tissue)}</p>`
                 + `<p>FPKM: ${tissueValueMap[vTok(tissueMap, tissue)]}</p>`
             }, function (tissue, vs) {
-              return `<p>GeneID: <a href="/feature_info/${geneID}">${geneID}</a></p>`
+              return `<p>GeneID:${geneID}</p>`
                 + `<p>Tissue: ${vs[0].tissue}</p>`
                 + `<p>FPKM:${vs[0].value}</p>`
             })
@@ -257,21 +313,31 @@
   };
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <style scoped>
   /* hot gradient style */
+  .app{
+  background: #f2f2f2;
+  color: #222222;
+  /* margin: 0 auto; */
+  border-radius: 5px;
+  height: 100%;
+  /* padding: 20px 60px; */
+
+}
+  .container-fluid{
+    width: 90%;
+  /* min-width: 900px; */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  top:30px
+    
+  }
+  .panel-heading{
+    display: flex;
+    justify-content: center;
+  }
+
   #geneExample {
     cursor: pointer;
   }

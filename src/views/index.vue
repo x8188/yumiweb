@@ -68,7 +68,8 @@
           >
         </p> -->
       </el-col>
-
+      <!-- <script type="text/javascript" src="//rf.revolvermaps.com/0/0/1.js?i=5qa7o4z6cbn&amp;s=220&amp;m=0&amp;v=true&amp;r=false&amp;b=000000&amp;n=true&amp;c=ff0000" async="async"></script> -->
+      <!-- <script type="text/javascript" src="//rf.revolvermaps.com/0/0/1.js?i=5gnoyhiz4is&amp;s=220&amp;m=0&amp;v=true&amp;r=false&amp;b=000000&amp;n=true&amp;c=ff0000" async="async"></script> -->
       <!-- <el-col :sm="24" :lg="12" style="padding-left: 50px">
         <el-row>
           <el-col :span="12">
@@ -104,6 +105,7 @@
       </el-col> -->
     </el-row>
     <el-divider />
+    <div ref="revolverMapsContainer"></div>
     <!-- <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :md="12" :lg="8">
         <el-card class="update-log">
@@ -913,10 +915,38 @@ export default {
       version: "3.8.5"
     };
   },
+  mounted(){
+    // 在组件挂载后插入 Revolver Maps 代码
+    this.insertRevolverMapsScript();
+  },
+  // beforeDestroy() {
+  //   // 在组件销毁前移除 Revolver Maps 代码
+  //   this.removeRevolverMapsScript();
+  // },
   methods: {
     goTarget(href) {
       window.open(href, "_blank");
-    }
+    },
+    insertRevolverMapsScript() {
+      // 创建 script 元素
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = '//rf.revolvermaps.com/0/0/4.js?i=5bvli5yq3jd&m=0&h=128&c=ff0000&r=0';
+      script.async = true;
+
+      // 将 script 插入到 revloverMapsContainer 中
+      this.$refs.revolverMapsContainer.appendChild(script);
+    },
+    // removeRevolverMapsScript() {
+    //   // 移除 Revolver Maps 的 script 元素
+    //   const scripts = document.getElementsByTagName('script');
+    //   for (let i = 0; i < scripts.length; i++) {
+    //     const script = scripts[i];
+    //     if (script.src.includes('revolvermaps.com')) {
+    //       script.parentNode.removeChild(script);
+    //     }
+    //   }
+    // },
   }
 };
 </script>

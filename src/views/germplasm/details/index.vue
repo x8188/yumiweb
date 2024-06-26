@@ -1,13 +1,13 @@
 <template>
-    <div class="content">
-      <div class="content_left">
-        <catalog />
-      </div>
-      <div class="content_right">
-        <germplasm />
-        <PCA />
-        <populationStructure />
-      </div>
+    <div class="content1">
+      <el-card class="content_right">
+        <div>
+          <germplasm />
+          <PCA />
+          <populationStructure />
+        </div>
+      </el-card>
+
     </div>
 </template>
 
@@ -26,15 +26,21 @@ export default {
   }
 }
 </script>
+<style>
+  .populationDetailP{
+    font-family: 'Times New Roman', Times, serif;
+    text-indent:40px;
+    line-height: 1.4
 
-<style scoped>
-  .content{
-    padding: 0 30px;
-    background-color: #f2f2f2;
-    width: 100%;
-    height: auto;
   }
-  .content_left{
+</style>
+<style scoped>
+  .content1{
+    background-color: #f5f6f5;
+    /* padding-top: 2%; */
+    /* width: 100%; */
+  }
+  /* .content_left{
     float: left;
     overflow: hidden;
     margin-right: 50px;
@@ -44,12 +50,16 @@ export default {
     margin-top: 20px;
     border-radius: 5px;
     padding-bottom: 20px;
-  }
+  } */
   .content_right{
-    width: 70%;
-    float: left;
-    overflow: hidden;
-    margin-bottom: 20px;
-    margin-top: 20px;
+
+  width: 90%;
+  /* min-width: 900px; */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  top:30px
+
+
   }
 </style>

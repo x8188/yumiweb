@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 
 // 查询详细信息的germplasm表
-export function listGermplasm() {
+export function listGermplasm(data) {
   return request({
     url: '/zeamap/germplasm/list',
-    method: 'get',
+    method: 'post',
+    data,
   })
 }
 
@@ -12,7 +13,7 @@ export function listGermplasm() {
 export function choose(params) {
   return request({
     url: '/zeamap/germplasm/choose',
-    method: 'post',
+    method: 'get',
     params: params
   })
 }
