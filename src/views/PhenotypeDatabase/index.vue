@@ -13,9 +13,9 @@
     <div class="right-bottom">
       <his-chart></his-chart>
     </div>
-    <div class="button">
+    <!-- <div class="button">
       <button @click="toggleLanguage">{{ $t('switchLanguage') }}</button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -31,15 +31,15 @@ export default {
     chartTree,
     hisChart,
   },
-  methods: {
-    toggleLanguage() {
-      if (this.$i18n.locale === 'en') {
-        this.$i18n.locale = 'zh';
-      } else {
-        this.$i18n.locale = 'en';
-      }
-    }
-  }
+  // methods: {
+  //   toggleLanguage() {
+  //     if (this.$i18n.locale === 'en') {
+  //       this.$i18n.locale = 'zh';
+  //     } else {
+  //       this.$i18n.locale = 'en';
+  //     }
+  //   }
+  // }
 };
 </script>
 
@@ -81,7 +81,7 @@ export default {
   margin-left: 50px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  margin-top: 30px; 
+  margin-top: 30px;
   border-top:60px solid rgb(9, 107, 117);
   border-radius: 10px;
 }

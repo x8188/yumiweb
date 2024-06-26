@@ -21,6 +21,7 @@ export default {
       Agronomical: "Agronomical",
       "Abiotic stress": "Abiotic stress",
       "Biotic stress": "Biotic stress",
+      Yield: "Yield",
     };
   },
   mounted() {
@@ -40,6 +41,7 @@ export default {
           { key: "Agronomical", value: this.Agronomical },
           { key: "Biotic stress", value: "this.Biotic stress" },
           { key: "Abiotic stress", value: "this.Abiotic stress" },
+          { key: "Yield", value: "this.Yield" },
         ];
         let index = 0;
 // 根据索引依次渲染每行数据
@@ -64,15 +66,19 @@ export default {
         (sum, row) => sum + row.num,
         0
       );
-
+      this.recordNumSum = this.tableData.reduce(
+        (sum, row) => sum + row.recordNum,
+        0
+      );
       const totalSumRow = {
         class: "Total",
         num: this.totalSum,
-        recordNum: null,
+        recordNum: this.recordNumSum,
       };
 
       this.tableData.push(totalSumRow);
     },
+
   },
 };
 </script>

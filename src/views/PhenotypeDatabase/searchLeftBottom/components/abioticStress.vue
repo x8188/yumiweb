@@ -1,14 +1,15 @@
 <template>
-  <div class="all-abio">
+  <div class="all-abio" v-loading="loading">
     <div class="chart-abio">
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="tableData" height="800" border style="width: 100%">
         <el-table-column
-          prop="code"
-          label="系谱内部码"
-          width="100"
-          :align="'center'"
-        >
-        </el-table-column>
+        label="序号"
+        type="index"
+        :align="'center'"
+        width="80"
+        fixed="left"
+      >
+      </el-table-column>
         <el-table-column
           prop="pedigree"
           label="系谱"
@@ -27,26 +28,42 @@
         </el-table-column>
 
         <el-table-column
-          prop="newsource"
-          label="新来源"
+          prop="pedigreesource1"
+          label="来源1"
           width="100"
           :align="'center'"
         >
         </el-table-column>
         <el-table-column
-          prop="pastsource"
-          label="旧来源"
+          prop="pedigreesource2"
+          label="来源2"
           width="120"
           :align="'center'"
         >
         </el-table-column>
-        <el-table-column prop="blackpowder" label="黑粉" :align="'center'">
+        <el-table-column prop="rootLodging" label="根倒性" :align="'center'">
         </el-table-column>
-        <el-table-column prop="roughdwarf" label="粗缩" :align="'center'">
+        <el-table-column prop="lodgingResistance" label="抗倒性" :align="'center'">
         </el-table-column>
-        <el-table-column prop="rust" label="锈病" width="100" :align="'center'">
+        <el-table-column prop="stemLodging" label="茎倒性" :align="'center'">
         </el-table-column>
-        <el-table-column prop="stemrot" label="茎腐病" :align="'center'">
+        <el-table-column prop="seedlingDeathPercent1" label="死苗率1" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="deadSeedlingNumber1" label="死苗数1" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="seedlingDeathPercent2" label="死苗率2" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="deadSeedlingNumber2" label="死苗数2" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="seedlingDeathPercent3" label="死苗率3" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="deadSeedlingNumber3" label="死苗数3" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="treatName" label="鉴定药品" :align="'center'">
+        </el-table-column>
+        <el-table-column prop="deformedSeedlingPercent" label="畸形苗率%" :align="'center'" width="200">
+        </el-table-column>
+        <el-table-column prop="deformedSeedlingNumber" label="畸形苗数" :align="'center'">
         </el-table-column>
       </el-table>
     </div>
@@ -67,6 +84,7 @@ export default {
     return {
       tableData: [],
       AbioData: [],
+      loading: false,
     };
   },
   mounted() {
@@ -76,10 +94,26 @@ export default {
     // 获取左侧表格数据
     getAbioAll() {
       return new Promise((resolve) => {
+        this.loading=true,
         btnAbioAll().then((res) => {
-          this.tableData = res.data;
+          let chartData = res.data;
+      chartData = chartData.map((item) => {
+        for (let key in item) {
+          if (item[key] === null) {
+            item[key] = "-";
+          }
+        }
+        return item;
+      });
+      this.tableData = chartData;
           resolve();
-        });
+        })
+        .catch((error) => {
+        console.log(error);
+        this.$message.warning("暂无数据");
+      }).finally(() => {
+        this.loading=false;
+      })
         // 获取小提琴图数据
         btnAbio().then((res) => {
           let AbioData = res.data;
@@ -93,16 +127,26 @@ export default {
           resolve();
           console.log(this.AbioData, "this.AbioData");
           this.getAbioChartData();
-        });
+        })
+
       });
+
     },
     getAbioChartData() {
       // 小提琴图x轴数据
       const xAxisData1 = this.AbioData.map((item) => [
-        item.year + "黑粉",
-        item.year + "粗缩",
-        item.year + "锈病",
-        item.year + "茎腐病",
+        item.year + "根倒性",
+        item.year + "抗倒性",
+        item.year + "茎倒性",
+        item.year + "死苗率1",
+        item.year + "死苗数1",
+        item.year + "死苗率2",
+        item.year + "死苗数2",
+        item.year + "死苗率3",
+        item.year + "死苗数3",
+        item.year + "鉴定药品",
+        item.year + "畸形苗率",
+        item.year + "畸形苗数",
       ]);
       // 形成year+text数据数组
       const xAxisData2 = [];
@@ -139,7 +183,19 @@ export default {
       // 将y轴数据按顺序放入一维数组，确保与x轴一一对应
       const yAxisData1 = this.AbioData.reduce((result, obj) => {
         const year = obj.year;
-        const attributes = ["blackpowder", "roughdwarf", "rust", "stemrot"];
+        const attributes = [
+          "lodgingResistance",
+          "stemLodging",
+          "seedingDeathPercent1",
+          "deadSeedingNumber1",
+          "seedingDeathPercent2",
+          "deadSeedingNumber2",
+          "seedingDeathPercent3",
+          "deadSeedingNumber3",
+          "treatName",
+          "deformedSeedlingPercent",
+          "deformedSeedlingNumber"
+        ];
         attributes.forEach((attribute) => {
           const key = `${year}${attribute
             .charAt(0)
@@ -194,7 +250,7 @@ export default {
 }
 .chart-abio {
   width: 40%;
-  height: 44vw;
+  height: 80vh;
   overflow: auto;
   margin: 0 auto;
   padding: 10px;
@@ -204,13 +260,14 @@ export default {
 }
 .echart-abio {
   margin: 0 auto;
-  height: 58vw;
+  width: 100%;
+  height: 80vh;
   margin-left: 20px;
   margin-top: 50px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 #main {
-  width: 600px;
+  width: 700px;
   height: 630px;
 }
 </style>
