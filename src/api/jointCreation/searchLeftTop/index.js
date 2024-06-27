@@ -27,7 +27,7 @@ export function getLocation() {
 
 export function getCheckTrait() {
   return request({
-    url: '/zeamap/Phenotype/checkTraitTypeName',
+    url: '/zeamap/Wphenotype/checkTraitTypeName',
     method: 'get'
   })
 }
